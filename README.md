@@ -10,7 +10,6 @@
 [![Codecov test
 coverage](https://codecov.io/gh/ipeaGIT/censobr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ipeaGIT/censobr?branch=main)
 
-
 **censobr** is an R package to download data from Brazil's Population Census. The package is still under development. Currently, it only includes microdata of the 2010 population census of Brazil. The package is being expanded to include more years and data sets.
 
 ## Installation
