@@ -1,7 +1,7 @@
-#' Download microdata of death records from Brazil's census
+#' Download microdata of household records from Brazil's census
 #'
 #' @description
-#' Download microdata of death records from Brazil's census.
+#' Download microdata of household records from Brazil's census.
 #'
 #' @template year
 #' @template columns
@@ -14,14 +14,14 @@
 #' @family download microdata
 #' @examples \dontrun{ if (interactive()) {
 #' # return data as data.frame
-#' df <- read_deaths(year = 2010, as_data_frame = TRUE)
+#' df <- read_households(year = 2010, as_data_frame = TRUE)
 #' head(df)
 #'
 #' # return data as arrow table
-#' df <- read_deaths(year = 2010, as_data_frame = FALSE)
+#' df <- read_households(year = 2010, as_data_frame = FALSE)
 #' head(df)
 #'}}
-read_deaths <- function(year = 2010,
+read_households <- function(year = 2010,
                         columns = NULL,
                         as_data_frame = TRUE,
                         showProgress = TRUE,
@@ -39,7 +39,8 @@ read_deaths <- function(year = 2010,
                                              paste(years), collapse = " "))}
 
   ### Get url
-  if (year==2010) { file_url <- 'https://github.com/ipeaGIT/censobr/releases/download/v0.1.0/2010_deaths.parquet' }
+  if (year==2010) { file_url <- 'https://github.com/ipeaGIT/censobr/releases/download/v0.1.0/2010_households.parquet'
+  }
 
 
   ### Download

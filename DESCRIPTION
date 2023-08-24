@@ -1,7 +1,7 @@
 Type: Package
 Package: censobr
 Title: Download Data from Brazil's Population Census
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     c(person(given="Rafael H. M.", family="Pereira", 
              email="rafa.pereira.br@gmail.com", 
@@ -14,7 +14,7 @@ License: MIT + file LICENSE
 URL: https://github.com/ipeaGIT/censobr
 BugReports: https://github.com/ipeaGIT/censobr/issues
 Depends: 
-    R (>= 2.10)
+    R (>= 3.4)
 Imports:
       arrow,
       checkmate,
