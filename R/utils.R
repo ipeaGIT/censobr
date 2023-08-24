@@ -1,53 +1,53 @@
-
-
 #' Download file from url
 #'
-#' @param file_url String. A url passed from.
-#' @param showProgress Logical, passed from
-#' @param dest_file String, passed from
-#'
-#' @return Silently saves downloaded file to temp dir.
+#' @param file_url String. A url.
+#' @param showProgress Logical.
+#' @param cache Logical.
+
+#' @return A string to the address of the file in a tempdir
 #'
 #' @keywords internal
 #' @examples \dontrun{ if (interactive()) {
 #' # Generate url
-#' file_url <- get_flights_url(type='basica', year=2000, month=11)
+#' file_url <- 'https://github.com/ipeaGIT/censobr/releases/download/v0.0.1/2010_deaths.parquet'
 #'
 #' # download data
-#' download_flightsbr_file(file_url=file_url,
-#'                         showProgress=TRUE,
-#'                         dest_file = tempfile(fileext = ".zip")
-#'                        )
+#' download_file(file_url = file_url,
+#'               showProgress = TRUE,
+#'               cache = TRUE)
 #'}}
-download_flightsbr_file <- function(file_url = parent.frame()$file_url,
-                                    showProgress = parent.frame()$showProgress,
-                                    dest_file = temp_local_file){
+download_file <- function(file_url = parent.frame()$file_url,
+                          showProgress = parent.frame()$showProgress,
+                          cache = parent.frame()$cache){ # nocov start
 
-  # download data
-  try(
-    httr::GET(url=file_url,
-              if(showProgress==T){ httr::progress()},
-              httr::write_disk(dest_file, overwrite = T),
-              config = httr::config(ssl_verifypeer = FALSE)
-    ), silent = TRUE)
+  # create temp local file
+  file_name <- basename(file_url)
+  temp_local_file <- paste0(tempdir(),"/",file_name)
 
-  # check if file has NOT been downloaded, try a 2nd time
-  if (!file.exists(dest_file) | file.info(dest_file)$size == 0) {
+  # use cached files or not
+  if (cache==FALSE & file.exists(temp_local_file)) {
+    unlink(temp_local_file, recursive = T)
+  }
 
-    # download data: try a 2nd time
-    try(
+  # has the file been downloaded already? If not, download it
+  if (cache==FALSE | !file.exists(temp_local_file) | file.info(temp_local_file)$size == 0) {
+
+    # download data
+    try(silent = TRUE,
       httr::GET(url=file_url,
-                if(showProgress==T){ httr::progress()},
-                httr::write_disk(dest_file, overwrite = T),
-                config = httr::config(ssl_verifypeer = FALSE)
-      ), silent = TRUE)
+                if(showProgress==TRUE){ httr::progress()},
+                httr::write_disk(temp_local_file, overwrite = T),
+                config = httr::config(ssl_verifypeer = FALSE))
+      )
   }
 
   # Halt function if download failed
-  if (!file.exists(dest_file) | file.info(dest_file)$size == 0) {
+  if (!file.exists(temp_local_file) | file.info(temp_local_file)$size == 0) {
     message('Internet connection not working.')
-    return(invisible(NULL)) }
-}
+    return(invisible(NULL))
 
-
+    } else {
+      return(temp_local_file)
+    }
+  } # nocov end
 

@@ -6,6 +6,8 @@
 #' @template year
 #' @template columns
 #' @template as_data_frame
+#' @template showProgress
+#' @template cache
 #'
 #' @return An Arrow table or a `"data.frame"` object.
 #' @export
@@ -20,45 +22,41 @@
 #'}}
 read_deaths <- function(year = 2010,
                         columns = NULL,
-                        as_data_frame = TRUE){
+                        as_data_frame = TRUE,
+                        showProgress = TRUE,
+                        cache = TRUE){
 
   ### check inputs
-  checkmate::assert_logical(as_data_frame)
-  checkmate::assert_vector(columns, null.ok = TRUE)
   checkmate::assert_numeric(year)
+  checkmate::assert_vector(columns, null.ok = TRUE)
+  checkmate::assert_logical(as_data_frame)
+  checkmate::assert_logical(showProgress)
+  checkmate::assert_logical(cache)
 
   years <- c(2010)
   if (isFALSE(year %in% years)) { stop(paste0("Error: Data set only available for the years ",
                                              paste(years), collapse = " "))}
 
   ### Get url
-  if (year==2010) { url <- '2010_deaths.parquet' }
+  if (year==2010) { file_url <- 'https://github.com/ipeaGIT/censobr/releases/download/v0.0.1/2010_deaths.parquet' }
 
 
   ### Download
-  df <- arrow::read_parquet(url, as_data_frame = FALSE)
+  local_file <- download_file(file_url = file_url,
+                              showProgress = showProgress,
+                              cache = cache)
 
-  # check downloaded
-    # if (is.null(df)) {message()}
+  # check if download worked
+  if(is.null(local_file)) { return(NULL) }
 
-      # load('R:/Dropbox/bases_de_dados/censo_demografico/censo_2010/data/censo2010_BRdeaths.Rdata')
-      #
-      # head(censo2010_BRdeaths)
-      #
-      # df <- arrow::as_arrow_table(censo2010_BRdeaths, )
-      #
-      # arrow::write_parquet(df, '2010_deaths.parquet')
+  # read data
+  df <- arrow::read_parquet(local_file, as_data_frame = FALSE)
 
 
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')
     df <- dplyr::select(df, columns)
   }
-
-
-
-      df |> dplyr::collect()
-
 
   ### output format
   if (isTRUE(as_data_frame)) { return( dplyr::collect(df) )

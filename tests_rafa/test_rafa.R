@@ -13,8 +13,8 @@ Sys.setenv(NOT_CRAN = "true")
 
 
 # each function separately
-t1 <- covr::function_coverage(fun=read_aircrafts, test_file("tests/testthat/test_read_aircrafts.R"))
-
+t1 <- covr::function_coverage(fun=read_deaths, test_file("tests/testthat/test_read_deaths.R"))
+t1
 
 # nocov start
 

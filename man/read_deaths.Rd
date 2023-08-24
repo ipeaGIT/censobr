@@ -4,7 +4,13 @@
 \alias{read_deaths}
 \title{Download microdata of death records from Brazil's census}
 \usage{
-read_deaths(year = 2010, columns = NULL, as_data_frame = TRUE)
+read_deaths(
+  year = 2010,
+  columns = NULL,
+  as_data_frame = TRUE,
+  showProgress = TRUE,
+  cache = TRUE
+)
 }
 \arguments{
 \item{year}{Numeric. Year of reference in the format \code{yyyymm}. Defaults to
@@ -15,6 +21,11 @@ columns are not read. Defaults to \code{NULL} and read all columns.}
 
 \item{as_data_frame}{Logical. Whether the function should return a
 \code{data.frame} (Default) or an Arrow Table. Defaults to \code{TRUE}.}
+
+\item{showProgress}{Logical. Defaults to \code{TRUE} display download progress bar.}
+
+\item{cache}{Logical. Whether the function should read cached data downloaded
+previously in the same R session. Defaults to \code{TRUE}.}
 }
 \value{
 An Arrow table or a \code{"data.frame"} object.
