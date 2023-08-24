@@ -38,6 +38,19 @@ covr::codecov( coverage = cov, token ='aaaaa' )
 urlchecker::url_update()
 
 
+df <- read_deaths(
+  year,                 # year of reference
+  columns,              # whether to return only selected columns
+  as_data_frame,        # whether to return an Arrow table or a data.frame
+  showProgress,         # whether to show a download progress bar
+  cache                 # whether to cahce data suring R session
+)
+
+df |> group_by(V0001) |>
+  summarize(mean_rent = weighted.mean(x=V2011, w=V0010, na.rm = TRUE))
+
+
+
 ### CMD Check ----------------
 # Check package errors
 

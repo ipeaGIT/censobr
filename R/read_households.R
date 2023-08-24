@@ -13,17 +13,17 @@
 #' @export
 #' @family download microdata
 #' @examples \dontrun{ if (interactive()) {
-#' # return data as data.frame
-#' df <- read_households(year = 2010, as_data_frame = TRUE)
+#' # return data as arrow table
+#' df <- read_households(year = 2010)
 #' head(df)
 #'
-#' # return data as arrow table
-#' df <- read_households(year = 2010, as_data_frame = FALSE)
-#' head(df)
+#' # # return data as data.frame
+#' # df <- read_households(year = 2010, as_data_frame = TRUE)
+#' # head(df)
 #'}}
 read_households <- function(year = 2010,
                         columns = NULL,
-                        as_data_frame = TRUE,
+                        as_data_frame = FALSE,
                         showProgress = TRUE,
                         cache = TRUE){
 
@@ -51,13 +51,13 @@ read_households <- function(year = 2010,
   # check if download worked
   if(is.null(local_file)) { return(NULL) }
 
-  # read data
+  ### read data
   df <- arrow::read_parquet(local_file, as_data_frame = FALSE)
 
 
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')
-    df <- dplyr::select(df, columns)
+    df <- dplyr::select(df, dplyr::all_of(columns))
   }
 
   ### output format

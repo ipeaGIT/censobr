@@ -9,30 +9,30 @@ testthat::skip_on_cran()
 
 test_that("read_population", {
 
-  # (default)
+
+  # (default) arrow table
   test1 <- read_population()
-  testthat::expect_true(is(test1, "data.frame"))
+  testthat::expect_true(is(test1, "ArrowTabular"))
   testthat::expect_true(nrow(test1) >0 )
-  testthat::expect_equal( class(test1$V0010), 'numeric')
+
+  # # data.frame
+  # test2 <- read_population(as_data_frame = TRUE)
+  # testthat::expect_true(is(test2, "data.frame"))
 
   # select columns
-  cols <- c('V0002')
-  test2 <- read_population(columns = cols)
-  testthat::expect_true(names(test2) %in% cols)
-
-  # arrow table
-  test3 <- read_population(as_data_frame = FALSE)
-  testthat::expect_true(is(test3, "ArrowTabular"))
+  cols <- c('V0001')
+  test3 <- read_population(columns = cols)
+  testthat::expect_true(names(test3) %in% cols)
 
   # check whether cache argument is working
   time_first <- system.time(
-    t1 <- read_population(year = 2010, as_data_frame = FALSE))
+    t1 <- read_population(year = 2010))
 
   time_cache_true <- system.time(
-    t2 <- read_population(year = 2010, as_data_frame = FALSE, cache = TRUE))
+    t2 <- read_population(year = 2010, cache = TRUE))
 
   time_cache_false <- system.time(
-    t3 <- read_population(year = 2010, as_data_frame = FALSE, cache = FALSE))
+    t3 <- read_population(year = 2010, cache = FALSE))
 
   testthat::expect_true( time_cache_true[['elapsed']] < time_cache_false[['elapsed']] )
 

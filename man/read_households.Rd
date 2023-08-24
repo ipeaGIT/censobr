@@ -7,7 +7,7 @@
 read_households(
   year = 2010,
   columns = NULL,
-  as_data_frame = TRUE,
+  as_data_frame = FALSE,
   showProgress = TRUE,
   cache = TRUE
 )
@@ -20,7 +20,7 @@ read_households(
 columns are not read. Defaults to \code{NULL} and read all columns.}
 
 \item{as_data_frame}{Logical. Whether the function should return a
-\code{data.frame} (Default) or an Arrow Table. Defaults to \code{TRUE}.}
+\code{data.frame} or an Arrow Table (Default).}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress bar.}
 
@@ -35,13 +35,13 @@ Download microdata of household records from Brazil's census.
 }
 \examples{
 \dontrun{ if (interactive()) {
-# return data as data.frame
-df <- read_households(year = 2010, as_data_frame = TRUE)
+# return data as arrow table
+df <- read_households(year = 2010)
 head(df)
 
-# return data as arrow table
-df <- read_households(year = 2010, as_data_frame = FALSE)
-head(df)
+# # return data as data.frame
+# df <- read_households(year = 2010, as_data_frame = TRUE)
+# head(df)
 }}
 }
 \seealso{

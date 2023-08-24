@@ -9,7 +9,10 @@ Authors@R:
              comment = c(ORCID = "0000-0003-2125-7465")),
       person(given = "Ipea - Institute for Applied Economic Research",
              role = c("cph", "fnd")))
-Description: Download data data from Brazil's population Census.
+Description: Download data data from Brazil's population Census. The package is 
+             still under development. Currently, it only includes microdata of 
+             the 2010 population census of Brazil. The package is being expanded 
+             to include more years and data sets.
 License: MIT + file LICENSE
 URL: https://github.com/ipeaGIT/censobr
 BugReports: https://github.com/ipeaGIT/censobr/issues
