@@ -14,7 +14,7 @@ Description: Download data data from Brazil's population Census. The package is
              the 2010 population census of Brazil. The package is being expanded 
              to include more years and data sets.
 License: MIT + file LICENSE
-URL: https://github.com/ipeaGIT/censobr
+URL: https://github.com/ipeaGIT/censobr, https://ipeagit.github.io/censobr/
 BugReports: https://github.com/ipeaGIT/censobr/issues
 Depends: 
     R (>= 3.4)

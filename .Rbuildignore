@@ -5,4 +5,7 @@
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
 ^codecov\.yml$
+^docs$
 .parquet
+^_pkgdown\.yml$
+^pkgdown$

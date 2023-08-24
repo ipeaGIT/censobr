@@ -3,4 +3,10 @@
 .RData
 .Ruserdata
 vignettes/*.html
-.parquet
+*.parquet
+*.o
+*.so
+*.swp
+*.dll
+/docs/
+docs
