@@ -11,11 +11,11 @@ download_flightsbr_file(
 )
 }
 \arguments{
-\item{file_url}{String. A url passed from \code{\link{get_flights_url}}.}
+\item{file_url}{String. A url passed from.}
 
-\item{showProgress}{Logical, passed from \code{\link{read_flights}}}
+\item{showProgress}{Logical, passed from}
 
-\item{dest_file}{String, passed from \code{\link{read_flights}}}
+\item{dest_file}{String, passed from}
 }
 \value{
 Silently saves downloaded file to temp dir.

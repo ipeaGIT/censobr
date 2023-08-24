@@ -2,9 +2,9 @@
 
 #' Download file from url
 #'
-#' @param file_url String. A url passed from \code{\link{get_flights_url}}.
-#' @param showProgress Logical, passed from \code{\link{read_flights}}
-#' @param dest_file String, passed from \code{\link{read_flights}}
+#' @param file_url String. A url passed from.
+#' @param showProgress Logical, passed from
+#' @param dest_file String, passed from
 #'
 #' @return Silently saves downloaded file to temp dir.
 #'

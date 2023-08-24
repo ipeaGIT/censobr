@@ -14,5 +14,6 @@
 
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
-utils::globalVariables( c('year') )
+utils::globalVariables( c('year',
+                          'temp_local_file') )
 

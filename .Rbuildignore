@@ -5,3 +5,4 @@
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
 ^codecov\.yml$
+.parquet

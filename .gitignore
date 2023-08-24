@@ -3,4 +3,4 @@
 .RData
 .Ruserdata
 vignettes/*.html
-*.parquet
+.parquet
