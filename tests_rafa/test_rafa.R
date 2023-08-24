@@ -99,6 +99,10 @@ system("R CMD build . --resave-data") # build tar.gz
 library(pkgdown)
 library(usethis)
 # usethis::use_pkgdown_github_pages() # only once
+## coverage
+usethis::use_coverage()
+usethis::use_github_action("test-coverage")
+
 pkgdown::build_site()
 
 
