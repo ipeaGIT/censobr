@@ -9,7 +9,6 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -56,7 +55,6 @@ utils::remove.packages('censobr')
 devtools::install_github("ipeaGIT/censobr")
 ```
 
-
 Now we can load the libraries we'll be using in this vignette.
 
 ```{r, eval=TRUE}
@@ -71,10 +69,15 @@ library(ggplot2)
 
 In this example we'll be calculating the propotion of people with higher education in different racial groups in the state of São Paulo. First, we need to use the `read_population()` function to download the of population.
 
+```{r, eval = TRUE, echo = FALSE}
+gc(T)
+```
 
 ```{r, eval = TRUE, warning = FALSE}
 pop <- read_population(year = 2010,
                        showProgress = FALSE)
+
+gc()
 ```
 
 Now, we use the `dplyr` syntax to (a) filter observations for the state of São Paulo, (b) group obervations by racial group, (c) summarise the data calculating the proportion of individuals with higher education.
