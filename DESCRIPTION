@@ -23,7 +23,7 @@ Imports:
       checkmate,
       dplyr,
       httr (>= 1.4.1),
-      rappdirs
+      tools
 Suggests: 
     ggplot2 (>= 3.3.1),
     rmarkdown (>= 2.6),
