@@ -69,31 +69,25 @@ library(ggplot2)
 
 In this example we'll be calculating the propotion of people with higher education in different racial groups in the state of São Paulo. First, we need to use the `read_population()` function to download the of population.
 
-```{r, eval = TRUE, echo = FALSE}
-gc(T)
-```
-
-```{r, eval = TRUE, warning = FALSE}
+```{r, eval = FALSE, warning = FALSE}
 pop <- read_population(year = 2010,
                        showProgress = FALSE)
 
-gc()
 ```
 
 Now, we use the `dplyr` syntax to (a) filter observations for the state of São Paulo, (b) group obervations by racial group, (c) summarise the data calculating the proportion of individuals with higher education.
 
-```{r, eval = TRUE, warning = FALSE}
+```{r, eval = FALSE, warning = FALSE}
 df <- pop |>
       filter(V0001 == 35) |>                                              # (a)
       group_by(V0606) |>                                                  # (b)
       summarise(higher_edu = sum(V0010[which(V6400==4)]) / sum(V0010)) |> # (c)
       collect()
 
-head(df)
 ```
 Now we only need to add labels to our query and plot the results.
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 df <- df |>
       mutate(cor = case_when(V0606 == 1 ~ 'Branca',
                              V0606 == 2 ~ 'Preta',
@@ -109,6 +103,10 @@ ggplot() +
   theme_classic()
   
 ```
+```{r detailed head, echo = FALSE, out.width='100%', message = FALSE, eval = FALSE}
+knitr::include_graphics("https://github.com/ipeaGIT/censo/blob/main/inst/img/vig_output_pop1.png?raw=true")
+```
+
 
 #### Using household data:
 
@@ -128,6 +126,8 @@ rent <- hs |>
         group_by(V0001) |>                                                 # (a)
         summarize(avgrent=weighted.mean(x=V2011, w=V0010, na.rm=TRUE)) |>  # (b)
         collect()                                                          # (c)
+
+head(rent)
 ```
 
 We can use the `geobr` package to download the geometries of Brazilian states.
