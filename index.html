@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="index.html">censobr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,7 @@
 <div class="page-header"><h1 id="censobr-download-data-from-brazils-population-census">censobr: Download Data from Brazil’s Population Census<a class="anchor" aria-label="anchor" href="#censobr-download-data-from-brazils-population-census"></a>
 </h1></div>
 <p><a href="https://CRAN.R-project.org/package=censobr" class="external-link"><img src="https://www.r-pkg.org/badges/version/censobr" alt="CRAN status"></a> <a href="https://github.com/ipeaGIT/censobr/actions" class="external-link"><img src="https://github.com/ipeaGIT/censobr/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a> <a href="https://CRAN.R-project.org/package=censobr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/censobr?color=yellow" alt="CRAN/METACRAN Total downloads"></a> <a href="https://app.codecov.io/gh/ipeaGIT/censobr?branch=main" class="external-link"><img src="https://codecov.io/gh/ipeaGIT/censobr/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></p>
-<p><strong>censobr</strong> is an R package to download data from Brazil’s Population Census. The package is still under development. Currently, it only includes microdata of the 2010 population census of Brazil. The package is being expanded to include more years and data sets.</p>
+<p><strong>censobr</strong> is an R package to download data from Brazil’s Population Census. The package is still under development. Currently, it only includes microdata from the 2010 population census. The package is being expanded to include more years and data sets.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -90,19 +90,19 @@
 </ol>
 <p>The syntax of all <strong>censobr</strong> functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:</p>
 <pre><code><span><span class="va">dfh</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_households.html">read_households</a></span><span class="op">(</span></span>
-<span>  <span class="va">year</span>,                 <span class="co"># year of reference</span></span>
-<span>  <span class="va">columns</span>,              <span class="co"># whether to return only selected columns</span></span>
-<span>  <span class="va">as_data_frame</span>,        <span class="co"># whether to return an Arrow table or a data.frame</span></span>
-<span>  <span class="va">showProgress</span>,         <span class="co"># whether to show a download progress bar</span></span>
-<span>  <span class="va">cache</span>                 <span class="co"># whether to cahce data suring R session</span></span>
-<span><span class="op">)</span></span></code></pre>
+<span>          <span class="va">year</span>,          <span class="co"># year of reference</span></span>
+<span>          <span class="va">columns</span>,       <span class="co"># whether to return only selected columns</span></span>
+<span>          <span class="va">as_data_frame</span>, <span class="co"># whether to return an Arrow table or a data.frame</span></span>
+<span>          <span class="va">showProgress</span>,  <span class="co"># whether to show a download progress bar</span></span>
+<span>          <span class="va">cache</span>          <span class="co"># whether to cahce data suring R session</span></span>
+<span>         <span class="op">)</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="data-too-big-for-memory">Data too big for memory<a class="anchor" aria-label="anchor" href="#data-too-big-for-memory"></a>
 </h2>
-<p>Microdata of Brazilian census might be too big to load in users’ RAM memory. To avoid this problem, <strong>censobr</strong> will by default return an Arrow table, which can be analyzed like a regular <code>data.frame</code> using the <code>dplyr</code> package without loading the full data to memory.</p>
+<p>Microdata of Brazilian census might be too big to load in users’ RAM memory. To avoid this problem, <strong>censobr</strong> will by default return an <a href="https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow" class="external-link">Arrow table</a>, which can be analyzed like a regular <code>data.frame</code> using the <code>dplyr</code> package without loading the full data to memory.</p>
 <p>This example below calcuates the average rent in by state.</p>
-<pre><code><span><span class="va">df</span> <span class="op">|&gt;</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">V0001</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<pre><code><span><span class="va">dfh</span> <span class="op">|&gt;</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">V0001</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">summarize</span><span class="op">(</span>mean_rent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html" class="external-link">weighted.mean</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">V2011</span>, w<span class="op">=</span><span class="va">V0010</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 <p>In case users want the output as a <code>data.frame</code>, though, they can pass the parameter <code>as_data_frame = TRUE</code>.</p>
 </div>

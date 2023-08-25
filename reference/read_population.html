@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">censobr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,12 +78,15 @@ columns are not read. Defaults to <code>NULL</code> and read all columns.</p></d
 
 
 <dt>showProgress</dt>
-<dd><p>Logical. Defaults to <code>TRUE</code> display download progress bar.</p></dd>
+<dd><p>Logical. Defaults to <code>TRUE</code> display download progress
+bar. The progress bar only reflects only the downloading
+time, not the time to load the data to memory.</p></dd>
 
 
 <dt>cache</dt>
-<dd><p>Logical. Whether the function should read cached data downloaded
-previously in the same R session. Defaults to <code>TRUE</code>.</p></dd>
+<dd><p>Logical. Whether the function should read the data cached
+locally in future calls, which is much faster. Defaults to <code>TRUE</code>.
+If <code>FALSE</code>, the function will download the file from the internet.</p></dd>
 
 </dl></div>
     <div class="section level2">
