@@ -106,3 +106,11 @@ usethis::use_github_action("test-coverage")
 pkgdown::build_site()
 
 
+### cache
+tigris
+https://github.com/walkerke/tigris/blob/0f0d7992e0208b4c55a9fe8ac6c52f9e438a3b0c/R/helpers.R#L78
+
+https://github.com/walkerke/tigris/blob/0f0d7992e0208b4c55a9fe8ac6c52f9e438a3b0c/R/helpers.R#L78
+
+tidycensus
+https://github.com/walkerke/tidycensus/blob/master/R/search_variables.R

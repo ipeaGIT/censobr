@@ -19,6 +19,7 @@ Please check the vignettes and data documentation on the
 Useful links:
 \itemize{
   \item \url{https://github.com/ipeaGIT/censobr}
+  \item \url{https://ipeagit.github.io/censobr/}
   \item Report bugs at \url{https://github.com/ipeaGIT/censobr/issues}
 }
 

@@ -1,0 +1,12 @@
+citHeader("To cite censobr in publications use:")
+
+bibentry(
+  bibtype  = "Article",
+  title       = "censobr: Download Data from Brazil's Population Census",
+  author      = "Rafael H. M. Pereira [aut, cre]",
+  month       = "Aug",
+  year        = 2023,
+  version     = "v0.1.0",
+  textVersion = "Pereira, R.H.M. (2023). censobr: Download Data from Brazil's Population Census. R package (Version 0.1.0)."
+)
+

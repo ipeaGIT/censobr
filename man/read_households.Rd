@@ -24,8 +24,9 @@ columns are not read. Defaults to \code{NULL} and read all columns.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress bar.}
 
-\item{cache}{Logical. Whether the function should read cached data downloaded
-previously in the same R session. Defaults to \code{TRUE}.}
+\item{cache}{Logical. Whether the function should cache the data for faster
+access in future calls. Defaults to \code{TRUE}. If \code{TRUE}, it only needs
+to be called once per dataset.}
 }
 \value{
 An Arrow table or a \code{"data.frame"} object.

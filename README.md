@@ -10,7 +10,7 @@
 [![Codecov test
 coverage](https://codecov.io/gh/ipeaGIT/censobr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ipeaGIT/censobr?branch=main)
 
-**censobr** is an R package to download data from Brazil's Population Census. The package is still under development. Currently, it only includes microdata of the 2010 population census of Brazil. The package is being expanded to include more years and data sets.
+**censobr** is an R package to download data from Brazil's Population Census. The package is still under development. Currently, it only includes microdata from the 2010 population census. The package is being expanded to include more years and data sets.
 
 ## Installation
 
@@ -33,23 +33,23 @@ The syntax of all **censobr** functions operate on the same logic so it becomes 
 
 ```
 dfh <- read_households(
-  year,                 # year of reference
-  columns,              # whether to return only selected columns
-  as_data_frame,        # whether to return an Arrow table or a data.frame
-  showProgress,         # whether to show a download progress bar
-  cache                 # whether to cahce data suring R session
-)
+          year,          # year of reference
+          columns,       # whether to return only selected columns
+          as_data_frame, # whether to return an Arrow table or a data.frame
+          showProgress,  # whether to show a download progress bar
+          cache          # whether to cahce data suring R session
+         )
 
 ```
 
 ## Data too big for memory
 
-Microdata of Brazilian census might be too big to load in users' RAM memory. To avoid this problem, **censobr** will by default return an Arrow table, which can be analyzed like a regular `data.frame` using the `dplyr` package without loading the full data to memory.
+Microdata of Brazilian census might be too big to load in users' RAM memory. To avoid this problem, **censobr** will by default return an [Arrow table](https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow), which can be analyzed like a regular `data.frame` using the `dplyr` package without loading the full data to memory.
 
 This example below calcuates the average rent in by state.
 
 ```
-df |> group_by(V0001) |>
+dfh |> group_by(V0001) |>
   summarize(mean_rent = weighted.mean(x=V2011, w=V0010, na.rm = TRUE))
 
 ```
