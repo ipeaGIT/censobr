@@ -7,17 +7,16 @@
      experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CRAN/METACRAN Total
    downloads](http://cranlogs.r-pkg.org/badges/grand-total/censobr?color=yellow)](https://CRAN.R-project.org/package=censobr)
-[![Codecov test
-coverage](https://codecov.io/gh/ipeaGIT/censobr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ipeaGIT/censobr?branch=main)
 
 **censobr** is an R package to download data from Brazil's Population Census. The package is still under development. Currently, it only includes microdata from the 2010 population census. The package is being expanded to include more years and data sets.
 
 ## Installation
 
+**censobr** is no on CRAN yet. For now, you can install the dev version from Github.
+
 ```R
-# or use the development version with latest features
-  utils::remove.packages('censobr')
-  devtools::install_github("ipeaGIT/censobr")
+utils::remove.packages('censobr')
+devtools::install_github("ipeaGIT/censobr")
 ```
 
 
@@ -37,14 +36,14 @@ dfh <- read_households(
           columns,       # whether to return only selected columns
           as_data_frame, # whether to return an Arrow table or a data.frame
           showProgress,  # whether to show a download progress bar
-          cache          # whether to cahce data suring R session
+          cache          # whether to cache data for faster access later
          )
 
 ```
 
 ## Data too big for memory
 
-Microdata of Brazilian census might be too big to load in users' RAM memory. To avoid this problem, **censobr** will by default return an [Arrow table](https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow), which can be analyzed like a regular `data.frame` using the `dplyr` package without loading the full data to memory.
+Microdata of Brazilian census are often be too big to load in users' RAM memory. To avoid this problem, **censobr** will by default return an [Arrow table](https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow), which can be analyzed like a regular `data.frame` using the `dplyr` package without loading the full data to memory.
 
 This example below calcuates the average rent in by state.
 
