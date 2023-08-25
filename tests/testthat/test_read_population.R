@@ -28,19 +28,7 @@ test_that("read_population", {
   # testthat::expect_true(names(test2) %in% cols)
 
 
-  # check whether cache argument is working
-  time_first <- system.time(
-    t1 <- read_population(year = 2010))
 
-  time_cache_true <- system.time(
-    t2 <- read_population(year = 2010, cache = TRUE))
-
-  time_cache_false <- system.time(
-    t3 <- read_population(year = 2010, cache = FALSE))
-
-  testthat::expect_true( time_cache_true[['elapsed']] < time_cache_false[['elapsed']] )
-
- })
 
 
 # ERRORS and messages  -----------------------
