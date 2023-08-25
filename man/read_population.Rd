@@ -22,11 +22,13 @@ columns are not read. Defaults to \code{NULL} and read all columns.}
 \item{as_data_frame}{Logical. Whether the function should return a
 \code{data.frame} or an Arrow Table (Default).}
 
-\item{showProgress}{Logical. Defaults to \code{TRUE} display download progress bar.}
+\item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
+bar. The progress bar only reflects only the downloading
+time, not the time to load the data to memory.}
 
-\item{cache}{Logical. Whether the function should cache the data for faster
-access in future calls. Defaults to \code{TRUE}. If \code{TRUE}, it only needs
-to be called once per dataset.}
+\item{cache}{Logical. Whether the function should read the data cached
+locally in future calls, which is much faster. Defaults to \code{TRUE}.
+If \code{FALSE}, the function will download the file from the internet.}
 }
 \value{
 An Arrow table or a \code{"data.frame"} object.

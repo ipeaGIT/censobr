@@ -23,19 +23,16 @@ download_file <- function(file_url = parent.frame()$file_url,
   # name of local file
   file_name <- basename(file_url)
 
-  # if caching the data, create dir
-  if (isTRUE(cache)) {
-    cache_dir <- rappdirs::user_cache_dir("censobr", version = 'v0.1.0')
+  # local dir
+  #if (isTRUE(cache)) {
+    cache_dir <- rappdirs::user_cache_dir("censobr", version = 'v0.0.9')
     if (!dir.exists(cache_dir)) { dir.create(cache_dir, recursive=TRUE) }
 
     # location of local file
     temp_local_file <- paste0(cache_dir,"/",file_name)
-  }
+  #}
 
-  # if not caching the data, store data in temp file
-  if (isFALSE(cache)) { temp_local_file <- paste0(tempdir(),"/",file_name) }
-
-  # use cached files or not
+  # If not caching, remove local file to download it again
   if (cache==FALSE & file.exists(temp_local_file)) {
     unlink(temp_local_file, recursive = T)
   }

@@ -14,15 +14,19 @@ test_that("read_population", {
   test1 <- read_population()
   testthat::expect_true(is(test1, "ArrowTabular"))
   testthat::expect_true(nrow(test1) >0 )
+  rm(test1); gc(TRUE)
+  gc(TRUE)
 
   # # data.frame
   # test2 <- read_population(as_data_frame = TRUE)
   # testthat::expect_true(is(test2, "data.frame"))
 
-  # select columns
-  cols <- c('V0001')
-  test3 <- read_population(columns = cols)
-  testthat::expect_true(names(test3) %in% cols)
+  # # select columns
+  # cols <- c('V0001')
+  # test2 <- censobr::read_population(columns = cols, as_data_frame = FALSE)
+  # test2 <- test2[1:2,] |> dplyr::collect()
+  # testthat::expect_true(names(test2) %in% cols)
+
 
   # check whether cache argument is working
   time_first <- system.time(

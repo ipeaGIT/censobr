@@ -35,12 +35,11 @@ read_population <- function(year = 2010,
   checkmate::assert_logical(cache)
 
   years <- c(2010)
-  if (isFALSE(year %in% years)) { stop(paste0("Error: Data set only available for the years ",
+  if (isFALSE(year %in% years)) { stop(paste0("Error: Data currently only available for the years ",
                                              paste(years), collapse = " "))}
 
   ### Get url
-  if (year==2010) { file_url <- 'https://github.com/ipeaGIT/censobr/releases/download/v0.1.0/2010_population.parquet'
-  }
+  file_url <- paste0('https://github.com/ipeaGIT/censobr/releases/download/v0.1.0/',year,'_population.parquet')
 
 
   ### Download
