@@ -1,4 +1,4 @@
-# censobr: Download Data from Brazil's Population Census
+# censobr: Download Data from Brazil's Population Census <img align="right" src="man/figures/logo.png?raw=true" alt="logo" width="180">
 
 [![CRAN
    status](https://www.r-pkg.org/badges/version/censobr)](https://CRAN.R-project.org/package=censobr)

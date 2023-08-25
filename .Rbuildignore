@@ -7,5 +7,7 @@
 ^codecov\.yml$
 ^docs$
 .parquet
+.Rhistory
+.RData
 ^_pkgdown\.yml$
 ^pkgdown$

@@ -25,7 +25,7 @@ test_that("read_households", {
   testthat::expect_true(names(test3) %in% cols)
 
 
-
+})
 
 
 # ERRORS and messages  -----------------------
