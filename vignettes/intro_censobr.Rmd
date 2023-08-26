@@ -103,10 +103,9 @@ ggplot() +
   theme_classic()
   
 ```
-```{r detailed head, echo = FALSE, out.width='100%', message = FALSE, eval = FALSE}
+```{r figure 1, eval=TRUE, echo=FALSE, message=FALSE, out.width='100%'}
 knitr::include_graphics("https://github.com/ipeaGIT/censobr/blob/main/inst/img/vig_output_pop1.png?raw=true")
 ```
-
 
 #### Using household data:
 

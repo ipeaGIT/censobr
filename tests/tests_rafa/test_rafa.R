@@ -1,5 +1,83 @@
 # devtools::install_github("ipeaGIT/r5r", subdir = "r-package", force=T)
 library(censobr)
+library(dplyr)
+
+### add labels
+
+df <- read_deaths()
+
+ds2 <- df |> mutate(V0001 = case_when(
+  V0001 == 11 ~'Rondônia',
+  V0001 == 12 ~'Acre',
+  V0001 == 13 ~'Amazonas',
+  V0001 == 14 ~'Roraima',
+  V0001 == 15 ~'Pará',
+  V0001 == 16 ~'Amapá',
+  V0001 == 17 ~'Tocantins',
+  V0001 == 21 ~'Maranhão',
+  V0001 == 22 ~'Piauí',
+  V0001 == 23 ~'Ceará',
+  V0001 == 24 ~'Rio Grande do Norte',
+  V0001 == 25 ~'Paraíba',
+  V0001 == 26 ~'Pernambuco',
+  V0001 == 27 ~'Alagoas',
+  V0001 == 28 ~'Sergipe',
+  V0001 == 29 ~'Bahia',
+  V0001 == 31 ~'Minas Gerais',
+  V0001 == 32 ~'Espírito Santo',
+  V0001 == 33 ~'Rio de Janeiro',
+  V0001 == 35 ~'São Paulo',
+  V0001 == 41 ~'Paraná',
+  V0001 == 42 ~'Santa Catarina',
+  V0001 == 43 ~'Rio Grande do Sul',
+  V0001 == 50 ~'Mato Grosso do Sul',
+  V0001 == 51 ~'Mato Grosso',
+  V0001 == 52 ~'Goiás',
+  V0001 == 53 ~'Distrito Federal'))
+
+ds2 <- ds2 |> collect()
+head(ds2)
+
+
+
+add_labels_households <- function(columns=NULL, arrw){
+
+  cols <- names(arrw)
+
+  if ('V0001' %in% cols) {
+    arrw <- arrw |> mutate(name_state = case_when(
+      V0001 == 11 ~'Rondônia',
+      V0001 == 12 ~'Acre',
+      V0001 == 13 ~'Amazonas',
+      V0001 == 14 ~'Roraima',
+      V0001 == 15 ~'Pará',
+      V0001 == 16 ~'Amapá',
+      V0001 == 17 ~'Tocantins',
+      V0001 == 21 ~'Maranhão',
+      V0001 == 22 ~'Piauí',
+      V0001 == 23 ~'Ceará',
+      V0001 == 24 ~'Rio Grande do Norte',
+      V0001 == 25 ~'Paraíba',
+      V0001 == 26 ~'Pernambuco',
+      V0001 == 27 ~'Alagoas',
+      V0001 == 28 ~'Sergipe',
+      V0001 == 29 ~'Bahia',
+      V0001 == 31 ~'Minas Gerais',
+      V0001 == 32 ~'Espírito Santo',
+      V0001 == 33 ~'Rio de Janeiro',
+      V0001 == 35 ~'São Paulo',
+      V0001 == 41 ~'Paraná',
+      V0001 == 42 ~'Santa Catarina',
+      V0001 == 43 ~'Rio Grande do Sul',
+      V0001 == 50 ~'Mato Grosso do Sul',
+      V0001 == 51 ~'Mato Grosso',
+      V0001 == 52 ~'Goiás',
+      V0001 == 53 ~'Distrito Federal'))
+    }
+
+  return(arrw)
+}
+
 
 
 ##### Coverage ------------------------
