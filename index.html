@@ -18,10 +18,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Download Data from Brazil's Population Census">
-<meta property="og:description" content="Download data data from Brazil's population Census. The package is 
-             still under development. Currently, it only includes microdata of 
-             the 2010 population census of Brazil. The package is being expanded 
-             to include more years and data sets.">
+<meta property="og:description" content="Download data data from Brazil's population census. The package is 
+             built on top of the Arrow platform &lt;https://arrow.apache.org/docs/r/&gt;, 
+             which allow users to work with larger-than-memory census data using 
+             dplyr &lt;https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr&gt;.
+             At the moment, censobr only includes microdata from the 2010 census, 
+             but it is being expanded to cover more years and data sets.">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -91,7 +93,8 @@
 <div class="page-header"><h1 id="censobr-download-data-from-brazils-population-census-">censobr: Download Data from Brazil’s Population Census <img align="right" src="reference/figures/logo.png?raw=true" alt="logo" width="180"><a class="anchor" aria-label="anchor" href="#censobr-download-data-from-brazils-population-census-"></a>
 </h1></div>
 <p><a href="https://CRAN.R-project.org/package=censobr" class="external-link"><img src="https://www.r-pkg.org/badges/version/censobr" alt="CRAN status"></a> <a href="https://github.com/ipeaGIT/censobr/actions" class="external-link"><img src="https://github.com/ipeaGIT/censobr/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a> <a href="https://CRAN.R-project.org/package=censobr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/censobr?color=yellow" alt="CRAN/METACRAN Total downloads"></a></p>
-<p><strong>censobr</strong> is an R package to download data from Brazil’s Population Census. The package is still under development. Currently, it only includes microdata from the 2010 population census. The package is being expanded to include more years and data sets.</p>
+<p><strong>censobr</strong> is an R package to download data from Brazil’s Population Census. The package is built on top of the Arrow patform, which allow users to work with larger-than-memory census data using dplyr familiar functions.</p>
+<p><em>obs.:</em> The package is still under development. At the moment, censobr only includes microdata from the 2010 census, but it is being expanded to cover more years and data sets.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -122,7 +125,7 @@
 <h2 id="larger-than-memory-data">Larger-than-memory Data<a class="anchor" aria-label="anchor" href="#larger-than-memory-data"></a>
 </h2>
 <p>Microdata of Brazilian census are often be too big to load in users’ RAM memory. To avoid this problem, <strong>censobr</strong> will by default return an <a href="https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow" class="external-link">Arrow table</a>, which can be analyzed like a regular <code>data.frame</code> using the <code>dplyr</code> package without loading the full data to memory.</p>
-<p>This example below calcuates the average rent in by state.</p>
+<p>This example below calculates the average rent in by state.</p>
 <pre><code><span><span class="va">dfh</span> <span class="op">|&gt;</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">V0001</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">summarize</span><span class="op">(</span>mean_rent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html" class="external-link">weighted.mean</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">V2011</span>, w<span class="op">=</span><span class="va">V0010</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 <p>In case users want the output as a <code>data.frame</code>, though, they can pass the parameter <code>as_data_frame = TRUE</code>.</p>
