@@ -41,7 +41,7 @@ dfh <- read_households(
 
 ```
 
-## Data too big for memory
+## Larger-than-memory Data
 
 Microdata of Brazilian census are often be too big to load in users' RAM memory. To avoid this problem, **censobr** will by default return an [Arrow table](https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow), which can be analyzed like a regular `data.frame` using the `dplyr` package without loading the full data to memory.
 

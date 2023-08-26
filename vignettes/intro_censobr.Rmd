@@ -39,7 +39,7 @@ dfh <- read_households(
 
 ```
 
-## Data too big for memory
+## Larger-than-memory Data
 
 Microdata of Brazilian census are often be too big to load in users' RAM memory. To avoid this problem, **censobr** will by default return an [Arrow table](https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow), which can be analyzed like a regular `data.frame` using the `dplyr` package without loading the full data to memory.
 
@@ -105,9 +105,6 @@ ggplot() +
   theme_classic()
   
 ```
-```{r figure 1, eval=FALSE, echo=FALSE, message=FALSE, out.width='100%'}
-knitr::include_graphics("https://github.com/ipeaGIT/censobr/blob/main/inst/img/vig_output_pop1.png?raw=true")
-```
 
 #### Using household data:
 
@@ -124,8 +121,9 @@ Now we're going to (a) group observations by state, (b) calculate the average re
 
 ```{r, eval = TRUE, warning = FALSE}
 rent <- hs |> 
+        collect() |>
         group_by(V0001) |>                                                 # (a)
-        summarize(avgrent=weighted.mean(x=V2011, w=V0010, na.rm=TRUE)) |>  # (b)
+        summarise(avgrent=weighted.mean(x=V2011, w=V0010, na.rm=TRUE)) |>  # (b)
         collect()                                                          # (c)
 
 head(rent)
