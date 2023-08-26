@@ -119,7 +119,7 @@
 <span>         <span class="op">)</span></span></code></pre>
 </div>
 <div class="section level2">
-<h2 id="data-too-big-for-memory">Data too big for memory<a class="anchor" aria-label="anchor" href="#data-too-big-for-memory"></a>
+<h2 id="larger-than-memory-data">Larger-than-memory Data<a class="anchor" aria-label="anchor" href="#larger-than-memory-data"></a>
 </h2>
 <p>Microdata of Brazilian census are often be too big to load in users’ RAM memory. To avoid this problem, <strong>censobr</strong> will by default return an <a href="https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow" class="external-link">Arrow table</a>, which can be analyzed like a regular <code>data.frame</code> using the <code>dplyr</code> package without loading the full data to memory.</p>
 <p>This example below calcuates the average rent in by state.</p>
