@@ -9,7 +9,7 @@
 #' @template showProgress
 #' @template cache
 #'
-#' @return An Arrow table or a `"data.frame"` object.
+#' @return An `ArrowObject Dataset` or a `"data.frame"` object.
 #' @export
 #' @family download microdata
 #' @examples \dontrun{ if (interactive()) {
@@ -51,7 +51,8 @@ read_households <- function(year = 2010,
   if(is.null(local_file)) { return(NULL) }
 
   ### read data
-  df <- arrow::read_parquet(local_file, as_data_frame = FALSE)
+  # df <- arrow::read_parquet(local_file, as_data_frame = FALSE)
+  df <- arrow::open_dataset(local_file)
 
 
   ### Select

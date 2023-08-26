@@ -31,7 +31,7 @@ locally in future calls, which is much faster. Defaults to \code{TRUE}.
 If \code{FALSE}, the function will download the file from the internet.}
 }
 \value{
-An Arrow table or a \code{"data.frame"} object.
+An \verb{ArrowObject Dataset} or a \code{"data.frame"} object.
 }
 \description{
 Download microdata of population records from Brazil's census.

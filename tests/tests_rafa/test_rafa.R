@@ -78,7 +78,13 @@ add_labels_households <- function(columns=NULL, arrw){
   return(arrw)
 }
 
+d <- 'C:/Users/user/AppData/Roaming/R/data/R/censobr_v0.1.0/2010_deaths.parquet'
+d <- open_dataset(d, )
 
+df <- d |> collect()
+
+d |>
+  filter(V0001 ==11)
 
 ##### Coverage ------------------------
 # usethis::use_coverage()
