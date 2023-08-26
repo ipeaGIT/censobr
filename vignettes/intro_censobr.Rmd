@@ -104,7 +104,7 @@ ggplot() +
   
 ```
 ```{r detailed head, echo = FALSE, out.width='100%', message = FALSE, eval = FALSE}
-knitr::include_graphics("https://github.com/ipeaGIT/censo/blob/main/inst/img/vig_output_pop1.png?raw=true")
+knitr::include_graphics("https://github.com/ipeaGIT/censobr/blob/main/inst/img/vig_output_pop1.png?raw=true")
 ```
 
 
