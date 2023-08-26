@@ -12,7 +12,8 @@ test_that("read_households", {
 
   # (default) arrow table
   test1 <- read_households()
-  testthat::expect_true(is(test1, "ArrowTabular"))
+  testthat::expect_true(is(test1, "ArrowObject"))
+  testthat::expect_true(is(test1, "FileSystemDataset"))
   testthat::expect_true(nrow(test1) >0 )
 
   # # data.frame

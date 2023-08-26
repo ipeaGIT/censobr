@@ -78,8 +78,9 @@ add_labels_households <- function(columns=NULL, arrw){
   return(arrw)
 }
 
-d <- 'C:/Users/user/AppData/Roaming/R/data/R/censobr_v0.1.0/2010_deaths.parquet'
-d <- open_dataset(d, )
+a <- 'C:/Users/user/AppData/Roaming/R/data/R/censobr_v0.1.0/2010_households.parquet'
+b <- open_dataset(a)
+c <- read_parquet(a, as_data_frame = F)
 
 df <- d |> collect()
 
@@ -115,23 +116,15 @@ x <- as.data.frame(cov)
 covr::codecov( coverage = cov, token ='aaaaa' )
 
 
+# checks spelling ----------------
+library(spelling)
+devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 
 
-### Check URL's----------------
+### Check URL's ----------------
 
 urlchecker::url_update()
 
-
-df <- read_deaths(
-  year,                 # year of reference
-  columns,              # whether to return only selected columns
-  as_data_frame,        # whether to return an Arrow table or a data.frame
-  showProgress,         # whether to show a download progress bar
-  cache                 # whether to cahce data suring R session
-)
-
-df |> group_by(V0001) |>
-  summarize(mean_rent = weighted.mean(x=V2011, w=V0010, na.rm = TRUE))
 
 
 

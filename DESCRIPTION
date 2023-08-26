@@ -9,10 +9,12 @@ Authors@R:
              comment = c(ORCID = "0000-0003-2125-7465")),
       person(given = "Ipea - Institute for Applied Economic Research",
              role = c("cph", "fnd")))
-Description: Download data data from Brazil's population Census. The package is 
-             still under development. Currently, it only includes microdata of 
-             the 2010 population census of Brazil. The package is being expanded 
-             to include more years and data sets.
+Description: Download data data from Brazil's population census. The package is 
+             built on top of the Arrow platform <https://arrow.apache.org/docs/r/>, 
+             which allow users to work with larger-than-memory census data using 
+             dplyr <https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr>.
+             At the moment, censobr only includes microdata from the 2010 census, 
+             but it is being expanded to cover more years and data sets.
 License: MIT + file LICENSE
 URL: https://github.com/ipeaGIT/censobr, https://ipeagit.github.io/censobr/
 BugReports: https://github.com/ipeaGIT/censobr/issues

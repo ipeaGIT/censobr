@@ -1,7 +1,8 @@
 #' Download microdata of death records from Brazil's census
 #'
 #' @description
-#' Download microdata of death records from Brazil's census.
+#' Download microdata of death records from Brazil's census. Data collected in
+#' the sample component of the questionnaire.
 #'
 #' @template year
 #' @template columns

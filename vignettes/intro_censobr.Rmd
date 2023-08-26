@@ -18,7 +18,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-**censobr** is an R package to download data from Brazil's Population Census. At the moment, it only includes microdata from the 2010 census, but the package is being expanded to include more years and data sets.
+**censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the Arrow patform, which allow users to work with larger-than-memory census data using dplyr familiar functions.
+
+*obs.:* The package is still under development. At the moment, censobr only includes microdata from the 2010 census, but it is being expanded to cover more years and data sets.
+
 
 The package currently includes 3 main functions to download Census microdata:
 
@@ -57,7 +60,7 @@ devtools::install_github("ipeaGIT/censobr")
 
 Now we can load the libraries we'll be using in this vignette.
 
-```{r, eval=TRUE}
+```{r, eval=TRUE, warning=FALSE}
 library(censobr)
 library(arrow)
 library(dplyr)
@@ -67,7 +70,7 @@ library(ggplot2)
 
 #### Using Population data:
 
-In this example we'll be calculating the propotion of people with higher education in different racial groups in the state of São Paulo. First, we need to use the `read_population()` function to download the of population.
+In this example we'll be calculating the proportion of people with higher education in different racial groups in the state of São Paulo. First, we need to use the `read_population()` function to download the of population.
 
 ```{r, eval = TRUE, warning = FALSE}
 pop <- read_population(year = 2010,
@@ -75,14 +78,15 @@ pop <- read_population(year = 2010,
 
 ```
 
-Now, we use the `dplyr` syntax to (a) filter observations for the state of São Paulo, (b) group obervations by racial group, (c) summarise the data calculating the proportion of individuals with higher education.
+Now, we use the `dplyr` syntax to (a) filter observations for the state of Rio de Janeiro, (b) group observations by racial group, (c) summarize the data calculating the proportion of individuals with higher education.
 
 ```{r, eval = TRUE, warning = FALSE}
 df <- pop |>
-      filter(V0001 == 35) |>                                              # (a)
+      filter(V0001 == 33) |>                                              # (a)
       collect() |>
       group_by(V0606) |>                                                  # (b)
-      summarise(higher_edu = sum(V0010[which(V6400==4)]) / sum(V0010)) |> # (c)
+      summarize(higher_edu = sum(V0010[which(V6400==4)]) / sum(V0010),    # (c)
+                pop = sum(V0010) ) |>
       collect()
 
 head(df)
@@ -97,7 +101,10 @@ df <- df |>
                              V0606 == 4 ~ 'Parda',
                              V0606 == 5 ~ 'Indígena'
                              ))
+head(df)
+```
 
+```{r, eval = TRUE}
 ggplot() +
   geom_col(data = na.omit(df), aes(x=cor, y=higher_edu), fill = '#5c997e') +
   scale_y_continuous(name = 'Proportion with higher education',
@@ -123,7 +130,7 @@ Now we're going to (a) group observations by state, (b) calculate the average re
 rent <- hs |> 
         collect() |>
         group_by(V0001) |>                                                 # (a)
-        summarise(avgrent=weighted.mean(x=V2011, w=V0010, na.rm=TRUE)) |>  # (b)
+        summarize(avgrent=weighted.mean(x=V2011, w=V0010, na.rm=TRUE)) |>  # (b)
         collect()                                                          # (c)
 
 head(rent)

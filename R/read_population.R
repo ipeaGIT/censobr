@@ -1,7 +1,8 @@
 #' Download microdata of population records from Brazil's census
 #'
 #' @description
-#' Download microdata of population records from Brazil's census.
+#' Download microdata of population records from Brazil's census. Data collected
+#' in the sample component of the questionnaire.
 #'
 #' @template year
 #' @template columns

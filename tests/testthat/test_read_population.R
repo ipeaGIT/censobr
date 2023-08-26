@@ -12,7 +12,8 @@ test_that("read_population", {
 
   # (default) arrow table
   test1 <- read_population()
-  testthat::expect_true(is(test1, "ArrowTabular"))
+  testthat::expect_true(is(test1, "ArrowObject"))
+  testthat::expect_true(is(test1, "FileSystemDataset"))
   testthat::expect_true(nrow(test1) >0 )
   rm(test1); gc(TRUE)
   gc(TRUE)

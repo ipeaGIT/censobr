@@ -34,7 +34,8 @@ If \code{FALSE}, the function will download the file from the internet.}
 An \verb{ArrowObject Dataset} or a \code{"data.frame"} object.
 }
 \description{
-Download microdata of death records from Brazil's census.
+Download microdata of death records from Brazil's census. Data collected in
+the sample component of the questionnaire.
 }
 \examples{
 \dontrun{ if (interactive()) {

@@ -8,7 +8,9 @@
 [![CRAN/METACRAN Total
    downloads](http://cranlogs.r-pkg.org/badges/grand-total/censobr?color=yellow)](https://CRAN.R-project.org/package=censobr)
 
-**censobr** is an R package to download data from Brazil's Population Census. The package is still under development. Currently, it only includes microdata from the 2010 population census. The package is being expanded to include more years and data sets.
+**censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the Arrow patform, which allow users to work with larger-than-memory census data using dplyr familiar functions.
+
+*obs.:* The package is still under development. At the moment, censobr only includes microdata from the 2010 census, but it is being expanded to cover more years and data sets.
 
 ## Installation
 
@@ -45,7 +47,7 @@ dfh <- read_households(
 
 Microdata of Brazilian census are often be too big to load in users' RAM memory. To avoid this problem, **censobr** will by default return an [Arrow table](https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow), which can be analyzed like a regular `data.frame` using the `dplyr` package without loading the full data to memory.
 
-This example below calcuates the average rent in by state.
+This example below calculates the average rent in by state.
 
 ```
 dfh |> group_by(V0001) |>
