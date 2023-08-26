@@ -80,10 +80,12 @@ Now, we use the `dplyr` syntax to (a) filter observations for the state of São 
 ```{r, eval = TRUE, warning = FALSE}
 df <- pop |>
       filter(V0001 == 35) |>                                              # (a)
+      collect() |>
       group_by(V0606) |>                                                  # (b)
       summarise(higher_edu = sum(V0010[which(V6400==4)]) / sum(V0010)) |> # (c)
       collect()
 
+head(df)
 ```
 Now we only need to add labels to our query and plot the results.
 
