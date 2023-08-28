@@ -38,19 +38,17 @@ Download microdata of household records from Brazil's census. Data collected
 in the sample component of the questionnaire.
 }
 \examples{
-\dontrun{ if (interactive()) {
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # return data as arrow table
 df <- read_households(year = 2010)
 head(df)
-
-# # return data as data.frame
-# df <- read_households(year = 2010, as_data_frame = TRUE)
-# head(df)
-}}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other download microdata: 
 \code{\link{read_deaths}()},
+\code{\link{read_emmigration}()},
+\code{\link{read_families}()},
 \code{\link{read_population}()}
 }
 \concept{download microdata}

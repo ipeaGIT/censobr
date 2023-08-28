@@ -9,12 +9,18 @@ testthat::skip_on_cran()
 
 test_that("read_households", {
 
-
   # (default) arrow table
   test1 <- read_households()
   testthat::expect_true(is(test1, "ArrowObject"))
   testthat::expect_true(is(test1, "FileSystemDataset"))
   testthat::expect_true(nrow(test1) >0 )
+
+  # year 2000
+  # (default) arrow table
+  test2 <- read_households(year = 2000)
+  testthat::expect_true(is(test2, "ArrowObject"))
+  testthat::expect_true(is(test2, "FileSystemDataset"))
+  testthat::expect_true(nrow(test2) >0 )
 
   # # data.frame
   # test2 <- read_households(as_data_frame = TRUE)
@@ -24,7 +30,6 @@ test_that("read_households", {
   cols <- c('V0001')
   test3 <- read_households(columns = cols)
   testthat::expect_true(names(test3) %in% cols)
-
 
 })
 

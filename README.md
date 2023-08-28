@@ -8,9 +8,9 @@
 [![CRAN/METACRAN Total
    downloads](http://cranlogs.r-pkg.org/badges/grand-total/censobr?color=yellow)](https://CRAN.R-project.org/package=censobr)
 
-**censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the Arrow patform, which allow users to work with larger-than-memory census data using dplyr familiar functions.
+**censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow patform](https://arrow.apache.org/docs/r/), which allow users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
 
-*obs.:* The package is still under development. At the moment, censobr only includes microdata from the 2010 census, but it is being expanded to cover more years and data sets.
+*obs.:* The package is still under development. At the moment, censobr only includes microdata from the 2000 and 2010 censuses, but it is being expanded to cover more years and data sets.
 
 ## Installation
 

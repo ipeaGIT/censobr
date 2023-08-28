@@ -18,6 +18,13 @@ test_that("read_population", {
   rm(test1); gc(TRUE)
   gc(TRUE)
 
+  # year 2000
+  # (default) arrow table
+  test2 <- read_population(year = 2000)
+  testthat::expect_true(is(test2, "ArrowObject"))
+  testthat::expect_true(is(test2, "FileSystemDataset"))
+  testthat::expect_true(nrow(test2) >0 )
+
   # # data.frame
   # test2 <- read_population(as_data_frame = TRUE)
   # testthat::expect_true(is(test2, "data.frame"))

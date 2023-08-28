@@ -13,15 +13,15 @@
 #' @return An `ArrowObject Dataset` or a `"data.frame"` object.
 #' @export
 #' @family download microdata
-#' @examples \dontrun{ if (interactive()) {
+#' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # return data as arrow table
 #' df <- read_deaths(year = 2010)
 #' head(df)
 #'
-#' # # return data as data.frame
-#' # df <- read_deaths(year = 2010, as_data_frame = TRUE)
-#' # head(df)
-#'}}
+#' # return data as data.frame
+#' df <- read_deaths(year = 2010, as_data_frame = TRUE)
+#' head(df)
+#'
 read_deaths <- function(year = 2010,
                         columns = NULL,
                         as_data_frame = FALSE,
@@ -35,7 +35,8 @@ read_deaths <- function(year = 2010,
   checkmate::assert_logical(showProgress)
   checkmate::assert_logical(cache)
 
-  years <- c(2010)
+  # data available for the years:
+  years <- c(2000, 2010)
   if (isFALSE(year %in% years)) { stop(paste0("Error: Data currently only available for the years ",
                                               paste(years), collapse = " "))}
 
@@ -54,7 +55,6 @@ read_deaths <- function(year = 2010,
   ### read data
   # df <- arrow::read_parquet(local_file, as_data_frame = FALSE)
   df <- arrow::open_dataset(local_file)
-
 
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')

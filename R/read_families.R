@@ -1,10 +1,10 @@
-#' Download microdata of household records from Brazil's census
+#' Download microdata of family records from Brazil's census
 #'
 #' @description
-#' Download microdata of household records from Brazil's census. Data collected
-#' in the sample component of the questionnaire.
+#' Download microdata of family records from Brazil's census. Data collected in
+#' the sample component of the questionnaire.
 #'
-#' @template year
+#' @param year Numeric. Year of reference in the format `yyyymm`. Defaults to `2000`.
 #' @template columns
 #' @template as_data_frame
 #' @template showProgress
@@ -15,10 +15,10 @@
 #' @family download microdata
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # return data as arrow table
-#' df <- read_households(year = 2010)
+#' df <- read_families(year = 2000)
 #' head(df)
 #'
-read_households <- function(year = 2010,
+read_families <- function(year = 2000,
                         columns = NULL,
                         as_data_frame = FALSE,
                         showProgress = TRUE,
@@ -32,12 +32,12 @@ read_households <- function(year = 2010,
   checkmate::assert_logical(cache)
 
   # data available for the years:
-  years <- c(2000, 2010)
+  years <- c(2000)
   if (isFALSE(year %in% years)) { stop(paste0("Error: Data currently only available for the years ",
                                               paste(years), collapse = " "))}
 
   ### Get url
-  file_url <- paste0('https://github.com/ipeaGIT/censobr/releases/download/v0.1.0/',year,'_households.parquet')
+  file_url <- paste0('https://github.com/ipeaGIT/censobr/releases/download/v0.1.0/',year,'_families.parquet')
 
 
   ### Download
@@ -51,7 +51,6 @@ read_households <- function(year = 2010,
   ### read data
   # df <- arrow::read_parquet(local_file, as_data_frame = FALSE)
   df <- arrow::open_dataset(local_file)
-
 
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')

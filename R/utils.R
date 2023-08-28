@@ -7,15 +7,6 @@
 #' @return A string to the address of the file in a tempdir
 #'
 #' @keywords internal
-#' @examples \dontrun{ if (interactive()) {
-#' # Generate url
-#' file_url <- 'https://github.com/ipeaGIT/censobr/releases/download/v0.0.1/2010_deaths.parquet'
-#'
-#' # download data
-#' download_file(file_url = file_url,
-#'               showProgress = TRUE,
-#'               cache = TRUE)
-#'}}
 download_file <- function(file_url = parent.frame()$file_url,
                           showProgress = parent.frame()$showProgress,
                           cache = parent.frame()$cache){ # nocov start
@@ -24,7 +15,6 @@ download_file <- function(file_url = parent.frame()$file_url,
   file_name <- basename(file_url)
 
   # local dir
-  # cache_dir <- rappdirs::user_cache_dir("censobr", version = 'v0.0.9')
   cache_dir <- tools::R_user_dir("censobr_v0.1.0", which = 'data')
   if (isTRUE(cache) & !dir.exists(cache_dir)) { dir.create(cache_dir, recursive=TRUE) }
 

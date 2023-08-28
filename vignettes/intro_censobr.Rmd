@@ -18,16 +18,18 @@ knitr::opts_chunk$set(
 )
 ```
 
-**censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the Arrow patform, which allow users to work with larger-than-memory census data using dplyr familiar functions.
+**censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow patform](https://arrow.apache.org/docs/r/), which allow users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
 
-*obs.:* The package is still under development. At the moment, censobr only includes microdata from the 2010 census, but it is being expanded to cover more years and data sets.
+*obs.:* The package is still under development. At the moment, censobr only includes microdata from the 2000 and 2010 censuses, but it is being expanded to cover more years and data sets.
 
 
-The package currently includes 3 main functions to download Census microdata:
+The package currently includes 5 main functions to download Census microdata:
 
 1. `read_population()`
 2. `read_households()`
 3. `read_deaths()`
+4. `read_families()`
+5. `read_emmigration()`
 
 The syntax of all **censobr** functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
 
@@ -147,6 +149,7 @@ head(uf)
 Now we only need to merge the spatial data with our rent estimates and map the results.
 
 ```{r, eval = TRUE, warning = FALSE}
+uf$code_state <- as.character(uf$code_state)
 rent_sf <- left_join(uf, rent, by = c('code_state' = 'V0001'))
 
 ggplot() +

@@ -23,15 +23,4 @@ A string to the address of the file in a tempdir
 \description{
 Download file from url
 }
-\examples{
-\dontrun{ if (interactive()) {
-# Generate url
-file_url <- 'https://github.com/ipeaGIT/censobr/releases/download/v0.0.1/2010_deaths.parquet'
-
-# download data
-download_file(file_url = file_url,
-              showProgress = TRUE,
-              cache = TRUE)
-}}
-}
 \keyword{internal}

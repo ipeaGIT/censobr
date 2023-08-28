@@ -7,76 +7,11 @@ library(dplyr)
 df <- read_deaths()
 
 ds2 <- df |> mutate(V0001 = case_when(
-  V0001 == 11 ~'Rondônia',
-  V0001 == 12 ~'Acre',
-  V0001 == 13 ~'Amazonas',
-  V0001 == 14 ~'Roraima',
-  V0001 == 15 ~'Pará',
-  V0001 == 16 ~'Amapá',
-  V0001 == 17 ~'Tocantins',
-  V0001 == 21 ~'Maranhão',
-  V0001 == 22 ~'Piauí',
-  V0001 == 23 ~'Ceará',
-  V0001 == 24 ~'Rio Grande do Norte',
-  V0001 == 25 ~'Paraíba',
-  V0001 == 26 ~'Pernambuco',
-  V0001 == 27 ~'Alagoas',
-  V0001 == 28 ~'Sergipe',
-  V0001 == 29 ~'Bahia',
-  V0001 == 31 ~'Minas Gerais',
-  V0001 == 32 ~'Espírito Santo',
-  V0001 == 33 ~'Rio de Janeiro',
-  V0001 == 35 ~'São Paulo',
-  V0001 == 41 ~'Paraná',
-  V0001 == 42 ~'Santa Catarina',
-  V0001 == 43 ~'Rio Grande do Sul',
-  V0001 == 50 ~'Mato Grosso do Sul',
-  V0001 == 51 ~'Mato Grosso',
-  V0001 == 52 ~'Goiás',
-  V0001 == 53 ~'Distrito Federal'))
-
-ds2 <- ds2 |> collect()
-head(ds2)
+  V0001 == 11 ~'Rondônia'))
 
 
 
-add_labels_households <- function(columns=NULL, arrw){
 
-  cols <- names(arrw)
-
-  if ('V0001' %in% cols) {
-    arrw <- arrw |> mutate(name_state = case_when(
-      V0001 == 11 ~'Rondônia',
-      V0001 == 12 ~'Acre',
-      V0001 == 13 ~'Amazonas',
-      V0001 == 14 ~'Roraima',
-      V0001 == 15 ~'Pará',
-      V0001 == 16 ~'Amapá',
-      V0001 == 17 ~'Tocantins',
-      V0001 == 21 ~'Maranhão',
-      V0001 == 22 ~'Piauí',
-      V0001 == 23 ~'Ceará',
-      V0001 == 24 ~'Rio Grande do Norte',
-      V0001 == 25 ~'Paraíba',
-      V0001 == 26 ~'Pernambuco',
-      V0001 == 27 ~'Alagoas',
-      V0001 == 28 ~'Sergipe',
-      V0001 == 29 ~'Bahia',
-      V0001 == 31 ~'Minas Gerais',
-      V0001 == 32 ~'Espírito Santo',
-      V0001 == 33 ~'Rio de Janeiro',
-      V0001 == 35 ~'São Paulo',
-      V0001 == 41 ~'Paraná',
-      V0001 == 42 ~'Santa Catarina',
-      V0001 == 43 ~'Rio Grande do Sul',
-      V0001 == 50 ~'Mato Grosso do Sul',
-      V0001 == 51 ~'Mato Grosso',
-      V0001 == 52 ~'Goiás',
-      V0001 == 53 ~'Distrito Federal'))
-    }
-
-  return(arrw)
-}
 
 a <- 'C:/Users/user/AppData/Roaming/R/data/R/censobr_v0.1.0/2010_households.parquet'
 b <- open_dataset(a)
@@ -160,7 +95,7 @@ tictoc::toc()
 
 
 # submit to CRAN -----------------
-usethis::use_cran_comments('teste 2222, , asdadsad')
+usethis::use_cran_comments()
 
 
 devtools::submit_cran()
@@ -192,4 +127,44 @@ pkgdown::build_site()
 # tidycensus
 # https://github.com/walkerke/tidycensus/blob/master/R/search_variables.R
 
+
+
+library(geobr)
+library(censobr)
+library(dplyr)
+library(ggplot2)
+
+fort_df <- geobr::lookup_muni(name_muni = 'Sao Paulo')
+fort_code <- fort_df$code_muni
+fort_wa <- read_weighting_area(code_weighting = fort_code,
+                               year = 2010,
+                               simplified = FALSE)
+
+
+
+ggplot() +
+  geom_sf(data=fort_wa)
+
+
+# download household data
+hs <- read_households(year = 2010,
+                      showProgress = FALSE)
+
+
+rent <- hs |>
+  mutate( V0011 = as.character(V0011)) |>
+  filter(V0011 %in% fort_wa$code_weighting) |>
+  collect() |>
+  group_by(V0011) |>                                                 # (a)
+  summarize(avgrent=weighted.mean(x=V2011, w=V0010, na.rm=TRUE)) |>  # (b)
+  collect()                                                          # (c)
+
+head(rent)
+
+
+for_sf <- left_join(fort_wa, rent, by = c('code_weighting'='V0011'))
+
+
+ggplot() +
+  geom_sf(data=for_sf, aes(fill = avgrent), color=NA)
 
