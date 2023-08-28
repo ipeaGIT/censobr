@@ -15,7 +15,7 @@ download_file <- function(file_url = parent.frame()$file_url,
   file_name <- basename(file_url)
 
   # local dir
-  cache_dir <- tools::R_user_dir("censobr_v0.1.0", which = 'data')
+  cache_dir <- tools::R_user_dir("censobr_v0.1", which = 'cache')
   if (isTRUE(cache) & !dir.exists(cache_dir)) { dir.create(cache_dir, recursive=TRUE) }
 
   # location of local file
