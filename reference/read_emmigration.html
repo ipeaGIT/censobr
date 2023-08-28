@@ -98,9 +98,13 @@ time, not the time to load the data to memory.</p></dd>
 
 
 <dt>cache</dt>
-<dd><p>Logical. Whether the function should read the data cached
-locally in future calls, which is much faster. Defaults to <code>TRUE</code>.
-If <code>FALSE</code>, the function will download the file from the internet.</p></dd>
+<dd><p>Logical. The first time the user runs the function, <code>censobr</code>
+will download the file from the internet and store it locally at
+<code>tools::R_user_dir('censobr', 'cache')</code>, so that the file only needs
+to be download once. When the <code>cache</code> parameter is set to <code>TRUE</code>
+(Default), the function will read the data cached locally, which is
+much faster. If <code>FALSE</code>, the function will download the file from the
+internet again.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -122,7 +126,7 @@ If <code>FALSE</code>, the function will download the file from the internet.</p
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># return data as arrow table</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_emmigration</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |=======                                                               |  10%  |                                                                              |==========                                                            |  14%  |                                                                              |=====================                                                 |  30%  |                                                                              |===============================                                       |  44%  |                                                                              |=========================================                             |  58%  |                                                                              |======================================================================| 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |=                                                                     |   1%  |                                                                              |=====                                                                 |   6%  |                                                                              |========                                                              |  12%  |                                                                              |============                                                          |  17%  |                                                                              |==========================================================            |  82%  |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Table</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 rows x 26 columns</span>
