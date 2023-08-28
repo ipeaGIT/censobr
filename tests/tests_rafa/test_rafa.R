@@ -1,10 +1,12 @@
 # devtools::install_github("ipeaGIT/r5r", subdir = "r-package", force=T)
 library(censobr)
 library(dplyr)
+library(arrow)
 
 ### add labels
 
-df <- read_deaths()
+df <- read_emmigration(year = 2010)
+head(df) |> collect()
 
 ds2 <- df |> mutate(V0001 = case_when(
   V0001 == 11 ~'Rondônia'))

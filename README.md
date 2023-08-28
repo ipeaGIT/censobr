@@ -24,11 +24,14 @@ devtools::install_github("ipeaGIT/censobr")
 
 ## Basic usage
 
-The package currently includes 3 main functions to download Census microdata:
+The package currently includes 5 main functions to download Census microdata:
 
 1. `read_population()`
 2. `read_households()`
 3. `read_deaths()`
+4. `read_families()`
+5. `read_emmigration()`
+
 
 The syntax of all **censobr** functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
 
