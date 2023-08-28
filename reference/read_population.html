@@ -18,7 +18,7 @@ in the sample component of the questionnaire."><meta property="og:image" content
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">censobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
@@ -113,20 +113,272 @@ If <code>FALSE</code>, the function will download the file from the internet.</p
     <h2>See also</h2>
     <div class="dont-index"><p>Other download microdata: 
 <code><a href="read_deaths.html">read_deaths</a>()</code>,
+<code><a href="read_emmigration.html">read_emmigration</a>()</code>,
+<code><a href="read_families.html">read_families</a>()</code>,
 <code><a href="read_households.html">read_households</a>()</code></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co"># return data as arrow table</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># return data as arrow table</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_population</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |                                                                      |   1%  |                                                                              |=                                                                     |   1%  |                                                                              |=                                                                     |   2%  |                                                                              |==                                                                    |   2%  |                                                                              |==                                                                    |   3%  |                                                                              |==                                                                    |   4%  |                                                                              |===                                                                   |   4%  |                                                                              |===                                                                   |   5%  |                                                                              |====                                                                  |   5%  |                                                                              |====                                                                  |   6%  |                                                                              |=====                                                                 |   6%  |                                                                              |=====                                                                 |   7%  |                                                                              |=====                                                                 |   8%  |                                                                              |======                                                                |   8%  |                                                                              |======                                                                |   9%  |                                                                              |=======                                                               |   9%  |                                                                              |=======                                                               |  10%  |                                                                              |=======                                                               |  11%  |                                                                              |========                                                              |  11%  |                                                                              |========                                                              |  12%  |                                                                              |=========                                                             |  12%  |                                                                              |=========                                                             |  13%  |                                                                              |=========                                                             |  14%  |                                                                              |==========                                                            |  14%  |                                                                              |==========                                                            |  15%  |                                                                              |===========                                                           |  15%  |                                                                              |===========                                                           |  16%  |                                                                              |============                                                          |  16%  |                                                                              |============                                                          |  17%  |                                                                              |============                                                          |  18%  |                                                                              |=============                                                         |  18%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |==============                                                        |  21%  |                                                                              |===============                                                       |  21%  |                                                                              |===============                                                       |  22%  |                                                                              |================                                                      |  22%  |                                                                              |================                                                      |  23%  |                                                                              |================                                                      |  24%  |                                                                              |=================                                                     |  24%  |                                                                              |=================                                                     |  25%  |                                                                              |==================                                                    |  25%  |                                                                              |==================                                                    |  26%  |                                                                              |===================                                                   |  26%  |                                                                              |===================                                                   |  27%  |                                                                              |===================                                                   |  28%  |                                                                              |====================                                                  |  28%  |                                                                              |====================                                                  |  29%  |                                                                              |=====================                                                 |  29%  |                                                                              |=====================                                                 |  30%  |                                                                              |=====================                                                 |  31%  |                                                                              |======================                                                |  31%  |                                                                              |======================                                                |  32%  |                                                                              |=======================                                               |  32%  |                                                                              |=======================                                               |  33%  |                                                                              |=======================                                               |  34%  |                                                                              |========================                                              |  34%  |                                                                              |========================                                              |  35%  |                                                                              |=========================                                             |  35%  |                                                                              |=========================                                             |  36%  |                                                                              |==========================                                            |  36%  |                                                                              |==========================                                            |  37%  |                                                                              |==========================                                            |  38%  |                                                                              |===========================                                           |  38%  |                                                                              |===========================                                           |  39%  |                                                                              |============================                                          |  39%  |                                                                              |============================                                          |  40%  |                                                                              |============================                                          |  41%  |                                                                              |=============================                                         |  41%  |                                                                              |=============================                                         |  42%  |                                                                              |==============================                                        |  42%  |                                                                              |==============================                                        |  43%  |                                                                              |==============================                                        |  44%  |                                                                              |===============================                                       |  44%  |                                                                              |===============================                                       |  45%  |                                                                              |================================                                      |  45%  |                                                                              |================================                                      |  46%  |                                                                              |=================================                                     |  46%  |                                                                              |=================================                                     |  47%  |                                                                              |=================================                                     |  48%  |                                                                              |==================================                                    |  48%  |                                                                              |==================================                                    |  49%  |                                                                              |===================================                                   |  49%  |                                                                              |===================================                                   |  50%  |                                                                              |===================================                                   |  51%  |                                                                              |====================================                                  |  51%  |                                                                              |====================================                                  |  52%  |                                                                              |=====================================                                 |  52%  |                                                                              |=====================================                                 |  53%  |                                                                              |=====================================                                 |  54%  |                                                                              |======================================                                |  54%  |                                                                              |======================================                                |  55%  |                                                                              |=======================================                               |  55%  |                                                                              |=======================================                               |  56%  |                                                                              |========================================                              |  56%  |                                                                              |========================================                              |  57%  |                                                                              |========================================                              |  58%  |                                                                              |=========================================                             |  58%  |                                                                              |=========================================                             |  59%  |                                                                              |==========================================                            |  59%  |                                                                              |==========================================                            |  60%  |                                                                              |==========================================                            |  61%  |                                                                              |===========================================                           |  61%  |                                                                              |===========================================                           |  62%  |                                                                              |============================================                          |  62%  |                                                                              |============================================                          |  63%  |                                                                              |============================================                          |  64%  |                                                                              |=============================================                         |  64%  |                                                                              |=============================================                         |  65%  |                                                                              |==============================================                        |  65%  |                                                                              |==============================================                        |  66%  |                                                                              |===============================================                       |  66%  |                                                                              |===============================================                       |  67%  |                                                                              |===============================================                       |  68%  |                                                                              |================================================                      |  68%  |                                                                              |================================================                      |  69%  |                                                                              |=================================================                     |  69%  |                                                                              |=================================================                     |  70%  |                                                                              |=================================================                     |  71%  |                                                                              |==================================================                    |  71%  |                                                                              |==================================================                    |  72%  |                                                                              |===================================================                   |  72%  |                                                                              |===================================================                   |  73%  |                                                                              |===================================================                   |  74%  |                                                                              |====================================================                  |  74%  |                                                                              |====================================================                  |  75%  |                                                                              |=====================================================                 |  75%  |                                                                              |=====================================================                 |  76%  |                                                                              |======================================================                |  76%  |                                                                              |======================================================                |  77%  |                                                                              |======================================================                |  78%  |                                                                              |=======================================================               |  78%  |                                                                              |=======================================================               |  79%  |                                                                              |========================================================              |  79%  |                                                                              |========================================================              |  80%  |                                                                              |========================================================              |  81%  |                                                                              |=========================================================             |  81%  |                                                                              |=========================================================             |  82%  |                                                                              |==========================================================            |  82%  |                                                                              |==========================================================            |  83%  |                                                                              |==========================================================            |  84%  |                                                                              |===========================================================           |  84%  |                                                                              |===========================================================           |  85%  |                                                                              |============================================================          |  85%  |                                                                              |============================================================          |  86%  |                                                                              |=============================================================         |  86%  |                                                                              |=============================================================         |  87%  |                                                                              |=============================================================         |  88%  |                                                                              |==============================================================        |  88%  |                                                                              |==============================================================        |  89%  |                                                                              |===============================================================       |  89%  |                                                                              |===============================================================       |  90%  |                                                                              |===============================================================       |  91%  |                                                                              |================================================================      |  91%  |                                                                              |================================================================      |  92%  |                                                                              |=================================================================     |  92%  |                                                                              |=================================================================     |  93%  |                                                                              |=================================================================     |  94%  |                                                                              |==================================================================    |  94%  |                                                                              |==================================================================    |  95%  |                                                                              |===================================================================   |  95%  |                                                                              |===================================================================   |  96%  |                                                                              |====================================================================  |  96%  |                                                                              |====================================================================  |  97%  |                                                                              |====================================================================  |  98%  |                                                                              |===================================================================== |  98%  |                                                                              |===================================================================== |  99%  |                                                                              |======================================================================|  99%  |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># # return data as data.frame</span></span></span>
-<span class="r-in"><span><span class="co"># df &lt;- read_population(year = 2010, as_data_frame = TRUE)</span></span></span>
-<span class="r-in"><span><span class="co"># head(df)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Table</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 rows x 251 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $code_muni &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $code_state &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $abbrev_state &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $name_state &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $code_region &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $name_region &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $code_weighting &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0001 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0002 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0011 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0300 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0010 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V1001 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V1002 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V1003 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V1004 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V1006 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0502 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0504 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0601 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6033 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6036 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6037 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6040 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0606 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0613 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0614 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0615 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0616 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0617 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0618 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0619 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0620 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0621 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0622 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6222 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6224 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0623 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0624 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0625 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6252 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6254 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6256 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0626 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6262 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6264 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6266 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0627 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0628 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0629 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0630 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0631 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0632 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0633 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0634 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0635 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6400 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6352 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6354 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6356 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0636 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6362 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6364 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6366 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0637 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0638 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0639 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0640 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0641 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0642 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0643 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0644 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0645 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6461 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6471 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0648 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0649 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0650 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0651 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6511 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6513 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6514 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0652 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6521 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6524 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6525 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6526 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6527 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6528 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6529 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6530 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6531 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6532 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0653 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0654 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0655 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0656 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0657 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0658 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0659 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6591 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0660 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6602 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6604 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6606 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0661 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0662 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0663 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6631 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6632 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6633 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0664 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6641 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6642 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6643 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0665 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6660 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6664 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0667 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0668 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6681 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6682 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0669 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6691 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6692 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6693 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6800 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0670 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0671 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6900 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6910 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6920 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6930 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6940 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6121 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0604 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V0605 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5020 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5060 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5070 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5080 &lt;double&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6462 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V6472 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5110 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5120 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5030 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5040 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5090 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5100 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V5130 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0502 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0601 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6033 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0606 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0613 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0614 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0615 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0616 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0617 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0618 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0619 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0620 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0621 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0622 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6222 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6224 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0623 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0624 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0625 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6252 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6254 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6256 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0626 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6262 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6264 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6266 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0627 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0628 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0629 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0630 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0631 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0632 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0633 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0634 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0635 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6352 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6354 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6356 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0636 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6362 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6364 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6366 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0637 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0638 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0639 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0640 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0641 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0642 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0643 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0644 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0645 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6461 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6471 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0648 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0649 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0650 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0651 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6511 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0652 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6521 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0653 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0654 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0655 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0656 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0657 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0658 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0659 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6591 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0660 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6602 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6604 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6606 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0661 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0662 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0663 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6631 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6632 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6633 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0664 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6641 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6642 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6643 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0665 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6660 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0667 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0668 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6681 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6682 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0669 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6691 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6692 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6693 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0670 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0671 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6800 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6121 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0604 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M0605 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6462 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $M6472 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $V1005 &lt;string&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See $metadata for additional Schema metadata</span>
 </code></pre></div>
     </div>
   </div>

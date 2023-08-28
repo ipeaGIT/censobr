@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">censobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to censobr</h1>
             
-            <h4 data-toc-skip class="date">2023-08-26</h4>
+            <h4 data-toc-skip class="date">2023-08-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/blob/HEAD/vignettes/intro_censobr.Rmd" class="external-link"><code>vignettes/intro_censobr.Rmd</code></a></small>
       <div class="hidden name"><code>intro_censobr.Rmd</code></div>
@@ -97,18 +97,20 @@
     
     
 <p><strong>censobr</strong> is an R package to download data from
-Brazil’s Population Census. The package is built on top of the Arrow
-patform, which allow users to work with larger-than-memory census data
-using dplyr familiar functions.</p>
+Brazil’s Population Census. The package is built on top of the <a href="https://arrow.apache.org/docs/r/" class="external-link">Arrow patform</a>, which allow
+users to work with larger-than-memory census data using <a href="https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr" class="external-link">{dplyr}
+familiar functions</a>.</p>
 <p><em>obs.:</em> The package is still under development. At the moment,
-censobr only includes microdata from the 2010 census, but it is being
-expanded to cover more years and data sets.</p>
-<p>The package currently includes 3 main functions to download Census
+censobr only includes microdata from the 2000 and 2010 censuses, but it
+is being expanded to cover more years and data sets.</p>
+<p>The package currently includes 5 main functions to download Census
 microdata:</p>
 <ol style="list-style-type: decimal">
 <li><code><a href="../reference/read_population.html">read_population()</a></code></li>
 <li><code><a href="../reference/read_households.html">read_households()</a></code></li>
 <li><code><a href="../reference/read_deaths.html">read_deaths()</a></code></li>
+<li><code><a href="../reference/read_families.html">read_families()</a></code></li>
+<li><code><a href="../reference/read_emmigration.html">read_emmigration()</a></code></li>
 </ol>
 <p>The syntax of all <strong>censobr</strong> functions operate on the
 same logic so it becomes intuitive to download any data set using a
@@ -187,13 +189,13 @@ higher education.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
 <span><span class="co">#&gt;   V0606 higher_edu      pop</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1     0.151  7<span style="text-decoration: underline;">579</span>023.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2     0.040<span style="text-decoration: underline;">5</span> 1<span style="text-decoration: underline;">937</span>291.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3     0.078<span style="text-decoration: underline;">2</span>  <span style="text-decoration: underline;">122</span>552.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4     0.044<span style="text-decoration: underline;">3</span> 6<span style="text-decoration: underline;">332</span>408.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     5     0.109    <span style="text-decoration: underline;">15</span>258.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     9     0         <span style="text-decoration: underline;">3</span>397.</span></span></code></pre></div>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1         0.151  7<span style="text-decoration: underline;">579</span>023.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2         0.040<span style="text-decoration: underline;">5</span> 1<span style="text-decoration: underline;">937</span>291.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 3         0.078<span style="text-decoration: underline;">2</span>  <span style="text-decoration: underline;">122</span>552.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 4         0.044<span style="text-decoration: underline;">3</span> 6<span style="text-decoration: underline;">332</span>408.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 5         0.109    <span style="text-decoration: underline;">15</span>258.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 9         0         <span style="text-decoration: underline;">3</span>397.</span></span></code></pre></div>
 <p>Now we only need to add labels to our query and plot the results.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
@@ -206,13 +208,13 @@ higher education.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   V0606 higher_edu      pop cor     </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1     0.151  7<span style="text-decoration: underline;">579</span>023. Branca  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2     0.040<span style="text-decoration: underline;">5</span> 1<span style="text-decoration: underline;">937</span>291. Preta   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3     0.078<span style="text-decoration: underline;">2</span>  <span style="text-decoration: underline;">122</span>552. Amarela </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4     0.044<span style="text-decoration: underline;">3</span> 6<span style="text-decoration: underline;">332</span>408. Parda   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     5     0.109    <span style="text-decoration: underline;">15</span>258. Indígena</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     9     0         <span style="text-decoration: underline;">3</span>397. <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1         0.151  7<span style="text-decoration: underline;">579</span>023. Branca  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2         0.040<span style="text-decoration: underline;">5</span> 1<span style="text-decoration: underline;">937</span>291. Preta   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 3         0.078<span style="text-decoration: underline;">2</span>  <span style="text-decoration: underline;">122</span>552. Amarela </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 4         0.044<span style="text-decoration: underline;">3</span> 6<span style="text-decoration: underline;">332</span>408. Parda   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 5         0.109    <span style="text-decoration: underline;">15</span>258. Indígena</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 9         0         <span style="text-decoration: underline;">3</span>397. <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">cor</span>, y<span class="op">=</span><span class="va">higher_edu</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">'#5c997e'</span><span class="op">)</span> <span class="op">+</span></span>
@@ -244,19 +246,20 @@ average rent, and (c) collect the results.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rent</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
 <span><span class="co">#&gt;   V0001 avgrent</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>    11    340.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>    12    295.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>    13    346.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>    14    298.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>    15    297.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>    16    322.</span></span></code></pre></div>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 11       340.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 12       295.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 13       346.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 14       298.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 15       297.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 16       322.</span></span></code></pre></div>
 <p>We can use the <code>geobr</code> package to download the geometries
 of Brazilian states.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">uf</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/geobr/man/read_state.html" class="external-link">read_state</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
 <span>                        showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using year 2010</span></span>
+<span><span class="co">#&gt; Problem connecting to data server. Please try again in a few minutes.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">uf</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Simple feature collection with 6 features and 5 fields</span></span>
 <span><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
@@ -280,7 +283,8 @@ of Brazilian states.</p>
 <p>Now we only need to merge the spatial data with our rent estimates
 and map the results.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rent_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">uf</span>, <span class="va">rent</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'code_state'</span> <span class="op">=</span> <span class="st">'V0001'</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">uf</span><span class="op">$</span><span class="va">code_state</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">uf</span><span class="op">$</span><span class="va">code_state</span><span class="op">)</span></span>
+<span><span class="va">rent_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">uf</span>, <span class="va">rent</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'code_state'</span> <span class="op">=</span> <span class="st">'V0001'</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">rent_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">avgrent</span><span class="op">)</span>, color<span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
