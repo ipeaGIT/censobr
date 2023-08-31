@@ -50,8 +50,8 @@ read_population <- function(year = 2010,
 
 
   ### read data
-  try1 <- try( df <- arrow::open_dataset(local_file), silent=FALSE)
-  check_parquet_file(try1)
+  df <- try(arrow::open_dataset(local_file), silent=FALSE)
+  check_parquet_file(df)
 
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')

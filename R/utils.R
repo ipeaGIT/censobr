@@ -53,14 +53,14 @@ download_file <- function(file_url = parent.frame()$file_url,
 
 #' Check if parquet file is corrupted
 #'
-#' @param try1 The output of a try passed from a function above
+#' @param df The output of a try() passed from a function above
 
 #' @return A string to the address of the file in a tempdir
 #'
 #' @keywords internal
-check_parquet_file <- function(try1){
+check_parquet_file <- function(df){
 
-  if (class(try1)=="try-error"){
+  if (class(df)[1] == "try-error") {
     message("\nFile cached locally seems to be corrupted. Please download it again using 'cache = FALSE'.\nAlernatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = )'")
   }
 }

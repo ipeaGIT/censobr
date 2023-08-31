@@ -4,10 +4,10 @@
 \alias{check_parquet_file}
 \title{Check if parquet file is corrupted}
 \usage{
-check_parquet_file(try1)
+check_parquet_file(df)
 }
 \arguments{
-\item{try1}{The output of a try passed from a function above}
+\item{df}{The output of a try() passed from a function above}
 }
 \value{
 A string to the address of the file in a tempdir
