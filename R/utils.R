@@ -14,7 +14,7 @@ download_file <- function(file_url = parent.frame()$file_url,
   # name of local file
   file_name <- basename(file_url)
 
-  # local dir
+  # create local dir
   cache_dir <- tools::R_user_dir("censobr_v0.1", which = 'cache')
   if (isTRUE(cache) & !dir.exists(cache_dir)) { dir.create(cache_dir, recursive=TRUE) }
 
@@ -27,24 +27,42 @@ download_file <- function(file_url = parent.frame()$file_url,
   }
 
   # has the file been downloaded already? If not, download it
-  if (cache==FALSE | !file.exists(temp_local_file) | file.info(temp_local_file)$size == 0) {
+  if (cache==FALSE |
+      !file.exists(temp_local_file) |
+      file.info(temp_local_file)$size == 0) {
 
     # download data
     try(silent = TRUE,
       httr::GET(url=file_url,
                 if(showProgress==TRUE){ httr::progress()},
-                httr::write_disk(temp_local_file, overwrite = T),
+                httr::write_disk(temp_local_file, overwrite = TRUE),
                 config = httr::config(ssl_verifypeer = FALSE))
       )
   }
 
-  # Halt function if download failed
-  if (!file.exists(temp_local_file) | file.info(temp_local_file)$size == 0) {
-    message('Internet connection not working.')
+  # Halt function if download failed (file must exist and be larger than 500 kb)
+  if (!file.exists(temp_local_file) | file.info(temp_local_file)$size < 500000) {
+    message('Internet connection not working properly.')
     return(invisible(NULL))
 
     } else {
       return(temp_local_file)
     }
   } # nocov end
+
+
+#' Check if parquet file is corrupted
+#'
+#' @param try1 The output of a try passed from a function above
+
+#' @return A string to the address of the file in a tempdir
+#'
+#' @keywords internal
+check_parquet_file <- function(try1){
+
+  if (class(try1)=="try-error"){
+    message("\nFile cached locally seems to be corrupted. Please download it again using 'cache = FALSE'.\nAlernatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = )'")
+  }
+}
+
 

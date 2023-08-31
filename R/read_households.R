@@ -49,8 +49,8 @@ read_households <- function(year = 2010,
   if(is.null(local_file)) { return(NULL) }
 
   ### read data
-  # df <- arrow::read_parquet(local_file, as_data_frame = FALSE)
-  df <- arrow::open_dataset(local_file)
+  try1 <- try( df <- arrow::open_dataset(local_file), silent=FALSE)
+  check_parquet_file(try1)
 
 
   ### Select

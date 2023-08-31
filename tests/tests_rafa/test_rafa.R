@@ -11,6 +11,14 @@ head(df) |> collect()
 ds2 <- df |> mutate(V0001 = case_when(
   V0001 == 11 ~'Rondônia'))
 
+### 666 --------------------------- se reclamaredm do defaul T
+
+chache = F
+
+whether to save data in cache. defaults to false  ,and saves in tempdir.
+when t, saves to cache, which Makes it faster. the user only needs to run cache=t once per data.
+
+by defautl, censobr will try to read data file sotred in chace, if htere is one.
 
 
 
@@ -36,6 +44,7 @@ Sys.setenv(NOT_CRAN = "true")
 
 # each function separately
 t1 <- covr::function_coverage(fun=read_deaths, test_file("tests/testthat/test_read_deaths.R"))
+t1 <- covr::function_coverage(fun=censobr_cache, test_file("tests/testthat/test_censobr_cache.R"))
 t1
 
 # nocov start
