@@ -18,10 +18,23 @@ knitr::opts_chunk$set(
 )
 ```
 
-**censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow patform](https://arrow.apache.org/docs/r/), which allow users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
+**censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow platform](https://arrow.apache.org/docs/r/), which allows users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
 
 *obs.:* The package is still under development. At the moment, censobr only includes microdata from the 2000 and 2010 censuses, but it is being expanded to cover more years and data sets.
 
+
+## Installation
+
+```R
+
+# or use the development version with latest features
+utils::remove.packages('censobr')
+devtools::install_github("ipeaGIT/censobr")
+library(censobr)
+```
+
+
+## Basic usage
 
 The package currently includes 5 main functions to download Census microdata:
 
@@ -44,6 +57,18 @@ dfh <- read_households(
 
 ```
 
+***Note:*** all data sets in **censobr** are enriched with geography columns following the name standards of the [{geobr} package](https://github.com/ipeaGIT/geobr/) to help data manipulation and integration with spatial data from the {geobr} package. The added columns are: `c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)`.
+
+### Data cache
+
+The first time the user runs a function, **censobr** will download the file from the internet and store it locally. This way, the data only needs to be downloaded once. When the `cache` parameter is set to `TRUE` (Default), the function will read the cached data, which is much faster. 
+
+The data is stored locally at `tools::R_user_dir('censobr_{{pkg_version}}', 'cache')`. So, for example, to find the directory where censobr v0.1 caches the data, users can run:
+
+```{r, eval=TRUE, warning=FALSE}
+tools::R_user_dir('censobr_v0.1', 'cache')
+```
+
 ## Larger-than-memory Data
 
 Microdata of Brazilian census are often be too big to load in users' RAM memory. To avoid this problem, **censobr** will by default return an [Arrow table](https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow), which can be analyzed like a regular `data.frame` using the `dplyr` package without loading the full data to memory.
@@ -51,16 +76,9 @@ Microdata of Brazilian census are often be too big to load in users' RAM memory.
 Let's see how it works in a couple examples:
 
 
-## Basic usage
+## Reproducible examples
 
-**censobr** is no on CRAN yet. For now, you can install the dev version from Github.
-
-```R
-utils::remove.packages('censobr')
-devtools::install_github("ipeaGIT/censobr")
-```
-
-Now we can load the libraries we'll be using in this vignette.
+First, let's load the libraries we'll be using in this vignette.
 
 ```{r, eval=TRUE, warning=FALSE}
 library(censobr)
@@ -72,7 +90,7 @@ library(ggplot2)
 
 #### Using Population data:
 
-In this example we'll be calculating the proportion of people with higher education in different racial groups in the state of São Paulo. First, we need to use the `read_population()` function to download the of population.
+In this example we'll be calculating the proportion of people with higher education in different racial groups in the state of Rio de Janeiro. First, we need to use the `read_population()` function to download the population data set.
 
 ```{r, eval = TRUE, warning = FALSE}
 pop <- read_population(year = 2010,
@@ -80,11 +98,11 @@ pop <- read_population(year = 2010,
 
 ```
 
-Now, we use the `dplyr` syntax to (a) filter observations for the state of Rio de Janeiro, (b) group observations by racial group, (c) summarize the data calculating the proportion of individuals with higher education.
+Next, we use the `dplyr` syntax to (a) filter observations for the state of Rio de Janeiro, (b) group observations by racial group, (c) summarize the data calculating the proportion of individuals with higher education.
 
 ```{r, eval = TRUE, warning = FALSE}
 df <- pop |>
-      filter(V0001 == 33) |>                                              # (a)
+      filter(code_state == 11) |>                                         # (a)
       collect() |>
       group_by(V0606) |>                                                  # (b)
       summarize(higher_edu = sum(V0010[which(V6400==4)]) / sum(V0010),    # (c)
@@ -117,10 +135,9 @@ ggplot() +
 
 #### Using household data:
 
-In this example, we going to map how much people spend with rent across different municipalities in the state of São Paulo . First, we can easily download the households data set with `read_households()`.
+In this example, we are going to map how much people spend with rent across different states in Brazil. First, we can easily download the households data set with the `read_households()` function.
 
 ```{r, eval = TRUE}
-# download household data
 hs <- read_households(year = 2010, 
                       showProgress = FALSE)
 
@@ -131,14 +148,13 @@ Now we're going to (a) group observations by state, (b) calculate the average re
 ```{r, eval = TRUE, warning = FALSE}
 rent <- hs |> 
         collect() |>
-        group_by(V0001) |>                                                 # (a)
+        group_by(code_state) |>                                            # (a)
         summarize(avgrent=weighted.mean(x=V2011, w=V0010, na.rm=TRUE)) |>  # (b)
         collect()                                                          # (c)
 
 head(rent)
 ```
-
-We can use the `geobr` package to download the geometries of Brazilian states.
+In order to create a map with of these values, we are going to use the `geobr` package to download the geometries of Brazilian states.
 
 ```{r, eval = TRUE, warning = FALSE}
 uf <- geobr::read_state(year = 2010, 
@@ -150,7 +166,7 @@ Now we only need to merge the spatial data with our rent estimates and map the r
 
 ```{r, eval = TRUE, warning = FALSE}
 uf$code_state <- as.character(uf$code_state)
-rent_sf <- left_join(uf, rent, by = c('code_state' = 'V0001'))
+rent_sf <- left_join(uf, rent, by = 'code_state')
 
 ggplot() +
   geom_sf(data = rent_sf, aes(fill = avgrent), color=NA) +
