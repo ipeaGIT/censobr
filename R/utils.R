@@ -65,7 +65,7 @@ download_file <- function(file_url = parent.frame()$file_url,
 check_parquet_file <- function(df){
 
   if (class(df)[1] == "try-error") {
-    stop("File cached locally seems to be corrupted. Please download it again using 'cache = FALSE'.\nAlernatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = )'")
+    stop("File cached locally seems to be corrupted. Please download it again using 'cache = FALSE'.\nAlternatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = )'")
   }
 }
 
