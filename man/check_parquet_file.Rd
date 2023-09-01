@@ -10,7 +10,7 @@ check_parquet_file(df)
 \item{df}{The output of a try() passed from a function above}
 }
 \value{
-A string to the address of the file in a tempdir
+A string with the address of the file in a tempdir
 }
 \description{
 Check if parquet file is corrupted

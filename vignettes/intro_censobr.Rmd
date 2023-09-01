@@ -66,6 +66,8 @@ The first time the user runs a function, **censobr** will download the file from
 Users can list and/or delete data files cached locally using the `censobr_cache()` function:
 
 ```{r, eval=TRUE, warning=FALSE}
+library(censobr)
+
 # list cached files
 censobr_cache(list_files = TRUE)
 ```
@@ -113,7 +115,7 @@ Next, we use the `dplyr` syntax to (a) filter observations for the state of Rio 
 
 ```{r, eval = TRUE, warning = FALSE}
 df <- pop |>
-      filter(abbrev_state == "RJ") |>                                         # (a)
+      filter(abbrev_state == "RJ") |>                                     # (a)
       collect() |>
       group_by(V0606) |>                                                  # (b)
       summarize(higher_edu = sum(V0010[which(V6400==4)]) / sum(V0010),    # (c)

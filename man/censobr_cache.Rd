@@ -22,6 +22,9 @@ Manage cached files from the censobr package
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # list all files cached
 censobr_cache(list_files = TRUE)
+
+# delete particular file
+censobr_cache(delete_file = '2010_deaths')
 \dontshow{\}) # examplesIf}
 }
 \concept{support}

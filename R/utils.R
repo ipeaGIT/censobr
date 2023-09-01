@@ -15,38 +15,42 @@ download_file <- function(file_url = parent.frame()$file_url,
   file_name <- basename(file_url)
 
   # create local dir
-  cache_dir <- tools::R_user_dir("censobr_v0.1", which = 'cache')
+  pkgv <- paste0('censobr_', utils::packageVersion("censobr") )
+  cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
   if (isTRUE(cache) & !dir.exists(cache_dir)) { dir.create(cache_dir, recursive=TRUE) }
 
   # location of local file
-  temp_local_file <- paste0(cache_dir,"/",file_name)
+  local_file <- paste0(cache_dir,"/",file_name)
+
+  # cache message
+  cache_message(local_file, cache)
 
   # If not caching, remove local file to download it again
-  if (cache==FALSE & file.exists(temp_local_file)) {
-    unlink(temp_local_file, recursive = T)
+  if (cache==FALSE & file.exists(local_file)) {
+    unlink(local_file, recursive = T)
   }
 
   # has the file been downloaded already? If not, download it
   if (cache==FALSE |
-      !file.exists(temp_local_file) |
-      file.info(temp_local_file)$size == 0) {
+      !file.exists(local_file) |
+      file.info(local_file)$size == 0) {
 
     # download data
     try(silent = TRUE,
       httr::GET(url=file_url,
                 if(showProgress==TRUE){ httr::progress()},
-                httr::write_disk(temp_local_file, overwrite = TRUE),
+                httr::write_disk(local_file, overwrite = TRUE),
                 config = httr::config(ssl_verifypeer = FALSE))
       )
   }
 
   # Halt function if download failed (file must exist and be larger than 500 kb)
-  if (!file.exists(temp_local_file) | file.info(temp_local_file)$size < 500000) {
+  if (!file.exists(local_file) | file.info(local_file)$size < 500000) {
     message('Internet connection not working properly.')
     return(invisible(NULL))
 
     } else {
-      return(temp_local_file)
+      return(local_file)
     }
   } # nocov end
 
@@ -55,7 +59,7 @@ download_file <- function(file_url = parent.frame()$file_url,
 #'
 #' @param df The output of a try() passed from a function above
 
-#' @return A string to the address of the file in a tempdir
+#' @return A string with the address of the file in a tempdir
 #'
 #' @keywords internal
 check_parquet_file <- function(df){
@@ -66,3 +70,42 @@ check_parquet_file <- function(df){
 }
 
 
+#' Message when chaching file
+#'
+#' @param local_file The address of a file passed from the download_file function.
+#' @param cache Logical.
+
+#' @return A message
+#'
+#' @keywords internal
+cache_message <- function(local_file = parent.frame()$local_file,
+                          cache = parent.frame()$cache){ # nocov start
+
+#  local_file <- 'C:\\Users\\user\\AppData\\Local/R/cache/R/censobr_v0.1/2010_deaths.parquet'
+
+  # name of local file
+  file_name <- basename(local_file[1])
+  dir_name <- dirname(local_file[1])
+
+  ## if file already exists
+    # YES cache
+    if (file.exists(local_file) & isTRUE(cache)) {
+       message('Reading data cached locally.')
+       }
+
+    # NO cache
+    if (file.exists(local_file) & isFALSE(cache)) {
+       message('Overwriting data cached locally.')
+       }
+
+  ## if file does not exist yet
+  # YES cache
+  if (!file.exists(local_file) & isTRUE(cache)) {
+     message(paste("Downloading data. File will be stored locally at:", dir_name))
+     }
+
+  # NO cache
+  if (!file.exists(local_file) & isFALSE(cache)) {
+     message(paste("Downloading data. Setting 'cache = TRUE' is strongly recommended to speed up future use. File will be stored locally at:", dir_name))
+     }
+  }

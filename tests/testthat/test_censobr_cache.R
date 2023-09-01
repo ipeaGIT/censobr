@@ -17,8 +17,11 @@ test_that("censobr_cache", {
   # download
   censobr::read_emmigration(year = 2010, showProgress = FALSE, cache = TRUE)
 
+  # cache dir
+  pkgv <- paste0('censobr_', utils::packageVersion("censobr") )
+  cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
+
   # list cached files
-  cache_dir <- tools::R_user_dir("censobr_v0.1", which = 'cache')
   files <- list.files(cache_dir, full.names = TRUE)
   fname <- '2010_emmigration.parquet'
   fname_full <- files[grepl(fname, files)]
@@ -29,7 +32,6 @@ test_that("censobr_cache", {
 
   ## delete ALL
   censobr::read_emmigration(year = 2010, showProgress = FALSE, cache = TRUE)
-  cache_dir <- tools::R_user_dir("censobr_v0.1", which = 'cache')
   files <- list.files(cache_dir, full.names = TRUE)
   fname <- '2010_emmigration.parquet'
   fname_full <- files[grepl(fname, files)]

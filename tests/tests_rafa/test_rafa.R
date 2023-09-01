@@ -72,6 +72,12 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 urlchecker::url_update()
 
 
+# download firt time
+message data being cached locally at
+
+if (!file.exists(file)) {
+  cache_mssg(file)
+
 
 
 ### CMD Check ----------------

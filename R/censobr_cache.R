@@ -12,6 +12,9 @@
 #' # list all files cached
 #' censobr_cache(list_files = TRUE)
 #'
+#' # delete particular file
+#' censobr_cache(delete_file = '2010_deaths')
+#'
 censobr_cache <- function(list_files = TRUE,
                           delete_file = NULL){
 
@@ -19,8 +22,10 @@ censobr_cache <- function(list_files = TRUE,
   checkmate::assert_logical(list_files)
   checkmate::assert_character(delete_file, null.ok = TRUE)
 
-  # find local cache dir
-  cache_dir <- tools::R_user_dir("censobr_v0.1", which = 'cache')
+  # find / create local dir
+  pkgv <- paste0('censobr_', utils::packageVersion("censobr") )
+  cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
+  if (!dir.exists(cache_dir)) { dir.create(cache_dir, recursive=TRUE) }
 
   # list cached files
   files <- list.files(cache_dir, full.names = TRUE)
@@ -44,11 +49,9 @@ censobr_cache <- function(list_files = TRUE,
     # Delete ALL file
     if (delete_file=='all') {
       unlink(files, recursive = TRUE)
-      message(paste0("All files been removed."))
+      message(paste0("All files have been removed."))
     }
-
   }
-
 
   # list cached files
   files <- list.files(cache_dir, full.names = TRUE)
@@ -58,6 +61,5 @@ censobr_cache <- function(list_files = TRUE,
     message('Files currently chached:')
     message(paste0(files, collapse = '\n'))
   }
-
 }
 

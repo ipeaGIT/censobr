@@ -26,13 +26,12 @@ columns are not read. Defaults to \code{NULL} and read all columns.}
 bar. The progress bar only reflects only the downloading
 time, not the time to load the data to memory.}
 
-\item{cache}{Logical. The first time the user runs the function, \code{censobr}
-will download the file from the internet and store it locally so that
-the file only needs to be download once. When the \code{cache} parameter is
-set to \code{TRUE} (Default), the function will read the cached data, which
-is much faster. If \code{FALSE}, the function will download the file from
-the internet again and overwrite an eventual local file. The data is
-stored locally at \code{tools::R_user_dir('censobr_v0.1', 'cache')}.}
+\item{cache}{Logical. Whether the function should read the data cached
+locallly, which is much faster. Defaults to \code{TRUE}. The first time the
+user runs the function, \code{censobr} will download the file and store it
+locally so that the file only needs to be download once. If \code{FALSE},
+the function will download the data again and overwrite the local file.
+Data sets are stored at \code{tools::R_user_dir('censobr_v0.1', 'cache')}.}
 }
 \value{
 An arrow \code{Dataset} or a \code{"data.frame"} object.
