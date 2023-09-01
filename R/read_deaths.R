@@ -16,7 +16,6 @@
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # return data as arrow Dataset
 #' df <- read_deaths(year = 2010)
-#' head(df)
 #'
 #' # return data as data.frame
 #' df <- read_deaths(year = 2010, as_data_frame = TRUE)
