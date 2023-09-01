@@ -35,7 +35,7 @@ the internet again and overwrite an eventual local file. The data is
 stored locally at \code{tools::R_user_dir('censobr_v0.1', 'cache')}.}
 }
 \value{
-An \verb{ArrowObject Dataset} or a \code{"data.frame"} object.
+An arrow \code{Dataset} or a \code{"data.frame"} object.
 }
 \description{
 Download microdata of household records from Brazil's census. Data collected
@@ -43,9 +43,8 @@ in the sample component of the questionnaire.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-# return data as arrow table
+# return data as arrow Dataset
 df <- read_households(year = 2010)
-head(df)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

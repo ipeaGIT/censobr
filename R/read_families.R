@@ -10,13 +10,12 @@
 #' @template showProgress
 #' @template cache
 #'
-#' @return An `ArrowObject Dataset` or a `"data.frame"` object.
+#' @return An arrow `Dataset` or a `"data.frame"` object.
 #' @export
 #' @family download microdata
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
-#' # return data as arrow table
+#' # return data as arrow Dataset
 #' df <- read_families(year = 2000)
-#' head(df)
 #'
 read_families <- function(year = 2000,
                         columns = NULL,
