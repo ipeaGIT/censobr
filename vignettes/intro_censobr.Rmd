@@ -113,12 +113,12 @@ pop <- read_population(year = 2010,
 
 Next, we use the `dplyr` syntax to (a) filter observations for the state of Rio de Janeiro, (b) group observations by racial group, (c) summarize the data calculating the proportion of individuals with higher education.
 
-```{r, eval = FALSE, warning = FALSE}
+```{r, eval = TRUE, warning = FALSE}
 df <- pop |>
-      filter(abbrev_state == "RJ") |>                                     # (a)
+      filter(abbrev_state == "RJ") |>                                   # (a)
       collect() |>
-      group_by(V0606) |>                                                  # (b)
-      summarize(higher_edu = sum(V0010[which(V6400==4)]) / sum(V0010),    # (c)
+      group_by(V0606) |>                                                # (b)
+      summarize(higher_edu = sum(V0010[which(V6400==4)]) / sum(V0010),  # (c)
                 pop = sum(V0010) ) |>
       collect()
 
@@ -126,7 +126,7 @@ head(df)
 ```
 Now we only need to add labels to our query and plot the results.
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 df <- df |>
       mutate(cor = case_when(V0606 == 1 ~ 'Branca',
                              V0606 == 2 ~ 'Preta',
@@ -137,7 +137,7 @@ df <- df |>
 head(df)
 ```
 
-```{r, eval = FALSE}
+```{r, eval = TRUE}
 ggplot() +
   geom_col(data = na.omit(df), aes(x=cor, y=higher_edu), fill = '#5c997e') +
   scale_y_continuous(name = 'Proportion with higher education',
