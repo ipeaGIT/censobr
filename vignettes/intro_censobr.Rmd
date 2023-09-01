@@ -26,7 +26,6 @@ knitr::opts_chunk$set(
 ## Installation
 
 ```R
-
 # or use the development version with latest features
 utils::remove.packages('censobr')
 devtools::install_github("ipeaGIT/censobr")
@@ -59,15 +58,24 @@ dfh <- read_households(
 
 ***Note:*** all data sets in **censobr** are enriched with geography columns following the name standards of the [{geobr} package](https://github.com/ipeaGIT/geobr/) to help data manipulation and integration with spatial data from the {geobr} package. The added columns are: `c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)`.
 
+
 ### Data cache
 
 The first time the user runs a function, **censobr** will download the file from the internet and store it locally. This way, the data only needs to be downloaded once. When the `cache` parameter is set to `TRUE` (Default), the function will read the cached data, which is much faster. 
 
-The data is stored locally at `tools::R_user_dir('censobr_{{pkg_version}}', 'cache')`. So, for example, to find the directory where censobr v0.1 caches the data, users can run:
+Users can list and/or delete data files cached locally using the `censobr_cache()` function:
 
 ```{r, eval=TRUE, warning=FALSE}
-tools::R_user_dir('censobr_v0.1', 'cache')
+# list cached files
+censobr_cache(list_files = TRUE)
 ```
+
+```{r, eval=TRUE, warning=FALSE}
+# delete particular file
+censobr_cache(delete_file = "2010_emmigration")
+
+```
+
 
 ## Larger-than-memory Data
 
@@ -92,8 +100,11 @@ library(ggplot2)
 
 In this example we'll be calculating the proportion of people with higher education in different racial groups in the state of Rio de Janeiro. First, we need to use the `read_population()` function to download the population data set.
 
+Since we don't need to load to memory all columns from the data, we can pass a vector the the columns we're going to use. This might be necessary in more constrained computing environments.
+
 ```{r, eval = TRUE, warning = FALSE}
 pop <- read_population(year = 2010,
+                       columns = c('abbrev_state', 'V0606', 'V0010', 'V6400'),
                        showProgress = FALSE)
 
 ```
@@ -102,7 +113,7 @@ Next, we use the `dplyr` syntax to (a) filter observations for the state of Rio 
 
 ```{r, eval = TRUE, warning = FALSE}
 df <- pop |>
-      filter(code_state == 11) |>                                         # (a)
+      filter(abbrev_state == "RJ") |>                                         # (a)
       collect() |>
       group_by(V0606) |>                                                  # (b)
       summarize(higher_edu = sum(V0010[which(V6400==4)]) / sum(V0010),    # (c)
