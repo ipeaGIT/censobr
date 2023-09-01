@@ -111,7 +111,7 @@ stored locally at <code>tools::R_user_dir('censobr_v0.1', 'cache')</code>.</p></
     <h2>Value</h2>
     
 
-<p>An <code>ArrowObject Dataset</code> or a <code>"data.frame"</code> object.</p>
+<p>An arrow <code>Dataset</code> or a <code>"data.frame"</code> object.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -124,65 +124,12 @@ stored locally at <code>tools::R_user_dir('censobr_v0.1', 'cache')</code>.</p></
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># return data as arrow table</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># return data as arrow Dataset</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_emmigration</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |=======                                                               |  10%  |                                                                              |========================================                              |  57%  |                                                                              |====================================================                  |  74%  |                                                                              |===========================================================           |  84%  |                                                                              |======================================================================| 100%</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Table</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 rows x 26 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $code_muni &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $code_state &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $abbrev_state &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $name_state &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $code_region &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $name_region &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $code_weighting &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V0001 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V0002 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V0011 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V0300 &lt;double&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V0010 &lt;double&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V1001 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V1002 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V1003 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V1004 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V1006 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V0303 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V0304 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V0305 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V3061 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $M0303 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $M0304 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $M0305 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $M3061 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $V1005 &lt;string&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> See $metadata for additional Schema metadata</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |====                                                                  |   5%  |                                                                              |=================                                                     |  25%  |                                                                              |=======================================                               |  55%  |                                                                              |==============================================                        |  65%  |                                                                              |=================================================                     |  71%  |                                                                              |======================================================                |  77%  |                                                                              |===================================================================   |  95%  |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># return data as data.frame</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_emmigration</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, as_data_frame <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   code_muni code_state abbrev_state name_state code_region name_region</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   code_weighting V0001 V0002         V0011  V0300     V0010 V1001 V1002 V1003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1100015001001    11 00015 1100015001001 610199  9.838758     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1100015001001    11 00015 1100015001001 666134 12.925726     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  1100015001001    11 00015 1100015001001 753970  9.232168     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1100015001001    11 00015 1100015001001 771835  8.966589     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1100015001001    11 00015 1100015001001 771835  8.966589     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1100015001001    11 00015 1100015001001 771835  8.966589     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   V1004 V1006 V0303 V0304 V0305   V3061 M0303 M0304 M0305 M3061 V1005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    00     1     1  1985  2008 8000724     2     2     2     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    00     1     1  1968  2010 8000724     2     2     2     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    00     2     1  1987  2010 8000024     2     2     2     2     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    00     2     2  1972  2006 8000724     2     2     2     2     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    00     2     2  1985  2009 8000724     2     2     2     2     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    00     2     1  1978  2007 8000620     2     2     2     2     8</span>
 </code></pre></div>
     </div>
   </div>
