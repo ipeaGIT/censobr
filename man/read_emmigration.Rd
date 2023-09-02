@@ -9,7 +9,7 @@ read_emmigration(
   columns = NULL,
   as_data_frame = FALSE,
   showProgress = TRUE,
-  cache = FALSE
+  cache = TRUE
 )
 }
 \arguments{

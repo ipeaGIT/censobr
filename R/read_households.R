@@ -21,7 +21,7 @@ read_households <- function(year = 2010,
                         columns = NULL,
                         as_data_frame = FALSE,
                         showProgress = TRUE,
-                        cache = FALSE){
+                        cache = TRUE){
 
   ### check inputs
   checkmate::assert_numeric(year)
