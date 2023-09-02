@@ -49,11 +49,10 @@ The syntax of all **censobr** functions operate on the same logic so it becomes 
 dfh <- read_households(
           year,          # year of reference
           columns,       # whether to return only selected columns
-          as_data_frame, # whether to return an Arrow table or a data.frame
+          as_data_frame, # whether to return an Arrow DataSet or a data.frame
           showProgress,  # whether to show a download progress bar
           cache          # whether to cache data for faster access later
          )
-
 ```
 
 ***Note:*** all data sets in **censobr** are enriched with geography columns following the name standards of the [{geobr} package](https://github.com/ipeaGIT/geobr/) to help data manipulation and integration with spatial data from the {geobr} package. The added columns are: `c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)`.
@@ -61,7 +60,7 @@ dfh <- read_households(
 
 ### Data cache
 
-The first time the user runs a function, **censobr** will download the file from the internet and store it locally. This way, the data only needs to be downloaded once. When the `cache` parameter is set to `TRUE` (Default), the function will read the cached data, which is much faster. 
+The first time the user runs a function, **censobr** will download the file and store it locally. This way, the data only needs to be downloaded once. When the `cache` parameter is set to `TRUE` (Default), the function will read the cached data, which is much faster. 
 
 Users can list and/or delete data files cached locally using the `censobr_cache()` function:
 

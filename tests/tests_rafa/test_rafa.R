@@ -13,14 +13,6 @@ ds2 <- df |> mutate(V0001 = case_when(
 
 ### 666 --------------------------- se reclamaredm do defaul T
 
-chache = F
-
-whether to save data in cache. defaults to false  ,and saves in tempdir.
-when t, saves to cache, which Makes it faster. the user only needs to run cache=t once per data.
-
-by defautl, censobr will try to read data file sotred in chace, if htere is one.
-
-
 
 
 a <- 'C:/Users/user/AppData/Roaming/R/data/R/censobr_v0.1.0/2010_households.parquet'

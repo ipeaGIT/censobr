@@ -19,8 +19,9 @@ read_population(
 \item{columns}{String. A vector of column names to keep. The rest of the
 columns are not read. Defaults to \code{NULL} and read all columns.}
 
-\item{as_data_frame}{Logical. Whether the function should return a
-\code{data.frame} or an Arrow Table (Default).}
+\item{as_data_frame}{Logical. When \code{FALSE} (Default), the function returns an
+Arrow Dataset, which allows users to work with larger-than-memory data.
+If \code{TRUE}, the function returns \code{data.frame}.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
 bar. The progress bar only reflects only the downloading
