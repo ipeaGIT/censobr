@@ -8,17 +8,21 @@
 [![CRAN/METACRAN Total
    downloads](http://cranlogs.r-pkg.org/badges/grand-total/censobr?color=yellow)](https://CRAN.R-project.org/package=censobr)
 
-**censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow patform](https://arrow.apache.org/docs/r/), which allow users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
+**censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow platform](https://arrow.apache.org/docs/r/), which allows users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
 
 *obs.:* The package is still under development. At the moment, censobr only includes microdata from the 2000 and 2010 censuses, but it is being expanded to cover more years and data sets.
 
 ## Installation
 
-**censobr** is no on CRAN yet. For now, you can install the dev version from Github.
-
 ```R
+# From CRAN
+install.packages("censobr")
+library(censobr)
+
+# or use the development version with latest features
 utils::remove.packages('censobr')
 devtools::install_github("ipeaGIT/censobr")
+library(censobr)
 ```
 
 
@@ -44,6 +48,18 @@ dfh <- read_households(
           cache          # whether to cache data for faster access later
          )
 
+```
+
+***Note:*** all data sets in **censobr** are enriched with geography columns following the name standards of the [{geobr} package](https://github.com/ipeaGIT/geobr/) to help data manipulation and integration with spatial data from the {geobr} package. The added columns are: `c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)`.
+
+### Data cache
+
+The first time the user runs a function, **censobr** will download the file from the internet and store it locally. This way, the data only needs to be downloaded once. When the `cache` parameter is set to `TRUE` (Default), the function will read the cached data, which is much faster. 
+
+The data is stored locally at `tools::R_user_dir('censobr_{{pkg_version}}', 'cache')`. So, for example, to find the directory where censobr v0.1 caches the data, users can run:
+
+```{r, eval=TRUE, warning=FALSE}
+tools::R_user_dir('censobr_v0.1', 'cache')
 ```
 
 ## Larger-than-memory Data
