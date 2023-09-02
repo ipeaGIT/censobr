@@ -87,6 +87,7 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
 <div class="section level1">
 <div class="page-header"><h1 id="censobr-download-data-from-brazils-population-census-">censobr: Download Data from Brazil’s Population Census <img align="right" src="reference/figures/logo.png?raw=true" alt="logo" width="180"><a class="anchor" aria-label="anchor" href="#censobr-download-data-from-brazils-population-census-"></a>
 </h1></div>
@@ -130,13 +131,39 @@
 <span>  <span class="fu">summarize</span><span class="op">(</span>mean_rent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html" class="external-link">weighted.mean</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">V2011</span>, w<span class="op">=</span><span class="va">V0010</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 <p>In case users want the output as a <code>data.frame</code>, though, they can pass the parameter <code>as_data_frame = TRUE</code>.</p>
 </div>
+</div>
+<div class="section level1">
+<h1 id="contributing-to-censobr">Contributing to censobr<a class="anchor" aria-label="anchor" href="#contributing-to-censobr"></a>
+</h1>
+<p>If you would like to contribute to censobr, you’re welcome to open an issue to explain the proposed a contribution.</p>
+<hr>
+<div class="section level4">
+<h4 id="related-projects">
+<strong>Related projects</strong><a class="anchor" aria-label="anchor" href="#related-projects"></a>
+</h4>
+<p>Afaik, <strong>censobr</strong> is the only R package that provides fast and convenient access to data of the population censuses of Brazil. The <a href="https://github.com/lucasmation/microdadosBrasil" class="external-link">microdadosBrasil</a> package used to provide access to microdata of several public data sets, but unfortunately, it has been discontinued.</p>
+</div>
+<div class="section level4">
+<h4 id="similar-packages-for-other-countriescontinents">
+<strong>Similar packages for other countries/continents</strong><a class="anchor" aria-label="anchor" href="#similar-packages-for-other-countriescontinents"></a>
+</h4>
+<ul>
+<li>Canada: <a href="https://mountainmath.github.io/cancensus/" class="external-link">cancensus</a>
+</li>
+<li>Chile: <a href="https://docs.ropensci.org/censo2017/" class="external-link">censo2017</a>
+</li>
+<li>US: <a href="https://walker-data.com/tidycensus/" class="external-link">tidycensus</a>
+</li>
+</ul>
+</div>
 <div class="section level2">
-<h2 id="acknowledgement-">Acknowledgement <a href="https://www.ipea.gov.br" class="external-link"><img align="right" src="reference/figures/ipea_logo.png" alt="IPEA" width="300"></a>
-<a class="anchor" aria-label="anchor" href="#acknowledgement-"></a>
+<h2 id="credits-">Credits <a href="https://www.ipea.gov.br" class="external-link"><img align="right" src="reference/figures/ipea_logo.png" alt="IPEA" width="300"></a>
+<a class="anchor" aria-label="anchor" href="#credits-"></a>
 </h2>
-<p>Original data is collected by the Brazilian Institute of Geography and Statistics (IBGE). The <strong>censobr</strong> package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil.</p>
+<p>Original Census data is collected by the Brazilian Institute of Geography and Statistics (IBGE). The <strong>censobr</strong> package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as: - Pereira, R.H.M. (2019) censobr: Download Data from Brazil’s Population Census. GitHub repository - <a href="https://github.com/ipeaGIT/censobr" class="external-link uri">https://github.com/ipeaGIT/censobr</a>.</p>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
