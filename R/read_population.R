@@ -21,7 +21,7 @@ read_population <- function(year = 2010,
                             columns = NULL,
                             as_data_frame = FALSE,
                             showProgress = TRUE,
-                            cache = TRUE){
+                            cache = FALSE){
 
   ### check inputs
   checkmate::assert_numeric(year)

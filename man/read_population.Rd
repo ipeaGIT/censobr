@@ -9,7 +9,7 @@ read_population(
   columns = NULL,
   as_data_frame = FALSE,
   showProgress = TRUE,
-  cache = TRUE
+  cache = FALSE
 )
 }
 \arguments{
