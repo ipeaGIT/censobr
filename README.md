@@ -43,7 +43,6 @@ dfh <- read_households(
           showProgress,  # whether to show a download progress bar
           cache          # whether to cache data for faster access later
          )
-
 ```
 
 ## Larger-than-memory Data
@@ -61,7 +60,22 @@ dfh |> group_by(V0001) |>
 In case users want the output as a `data.frame`, though, they can pass the parameter `as_data_frame = TRUE`.
 
 
+# Contributing to censobr
+If you would like to contribute to censobr, you're welcome to open an issue to explain the proposed a contribution.
 
-## Acknowledgement <a href="https://www.ipea.gov.br"><img align="right" src="man/figures/ipea_logo.png" alt="IPEA" width="300" /></a>
 
-Original data is collected by the Brazilian Institute of Geography and Statistics (IBGE). The **censobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. 
+-----
+
+#### **Related projects**
+
+Afaik, **censobr** is the only R package that provides fast and convenient access to data of the population censuses of Brazil. The [microdadosBrasil](https://github.com/lucasmation/microdadosBrasil) package used to provide access to microdata of several public data sets, but unfortunately, it has been discontinued.
+
+#### **Similar packages for other countries/continents**
+- Canada: [cancensus](https://mountainmath.github.io/cancensus/)
+- Chile: [censo2017](https://docs.ropensci.org/censo2017/)
+- US: [tidycensus](https://walker-data.com/tidycensus/)   
+
+## Credits <a href="https://www.ipea.gov.br"><img align="right" src="man/figures/ipea_logo.png" alt="IPEA" width="300" /></a>
+
+Original Census data is collected by the Brazilian Institute of Geography and Statistics (IBGE). The **censobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
+- Pereira, R.H.M. (2019) censobr: Download Data from Brazil's Population Census. GitHub repository - https://github.com/ipeaGIT/censobr.
