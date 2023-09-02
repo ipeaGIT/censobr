@@ -213,7 +213,7 @@ necessary in more constrained computing environments.</p>
 <code class="sourceCode R"><span><span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_population.html">read_population</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
 <span>                       columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'abbrev_state'</span>, <span class="st">'V0606'</span>, <span class="st">'V0010'</span>, <span class="st">'V6400'</span><span class="op">)</span>,</span>
 <span>                       showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Reading data cached locally.</span></span></code></pre></div>
+<span><span class="co">#&gt; Overwriting data cached locally.</span></span></code></pre></div>
 <p>Next, we use the <code>dplyr</code> syntax to (a) filter observations
 for the state of Rio de Janeiro, (b) group observations by racial group,
 (c) summarize the data calculating the proportion of individuals with
@@ -274,7 +274,7 @@ function.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_households.html">read_households</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
 <span>                      showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Reading data cached locally.</span></span></code></pre></div>
+<span><span class="co">#&gt; Overwriting data cached locally.</span></span></code></pre></div>
 <p>Now we’re going to (a) group observations by state, (b) calculate the
 average rent, and (c) collect the results.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
