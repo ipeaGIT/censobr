@@ -5,24 +5,47 @@ library(arrow)
 
 ### add labels
 
-df <- read_emmigration(year = 2010)
-head(df) |> collect()
 
-ds2 <- df |> mutate(V0001 = case_when(
-  V0001 == 11 ~'Rondônia'))
+
+
+# mortality
+df <- censobr::read_households(year = 2010) |>
+  filter(abbrev_state == 'CE')
+
+df2 <- add_labels_households(df, year=2010, lang = 'pt')
+head(df2) |> collect()
+
+
+df <- censobr::read_households(year = 2000) |>
+  filter(abbrev_state == 'CE')
+
+df2 <- add_labels_households(df, year=2000, lang = 'pt')
+head(df2) |> collect()
+
+# mortality
+df <- censobr::read_deaths(year = 2010) |>
+  filter(abbrev_state == 'CE')
+
+df2 <- add_labels_mortality(df, year=2010, lang = 'pt')
+head(df2) |> collect()
+
+
+
+# families
+df <- censobr::read_families(year = 2000) |>
+  filter(abbrev_state == 'CE')
+
+df2 <- add_labels_families(df, year=2000, lang = 'pt')
+head(df2) |> collect()
+
 
 ### 666 --------------------------- se reclamaredm do defaul T
 
 
 
-a <- 'C:/Users/user/AppData/Roaming/R/data/R/censobr_v0.1.0/2010_households.parquet'
-b <- open_dataset(a)
-c <- read_parquet(a, as_data_frame = F)
 
-df <- d |> collect()
 
-d |>
-  filter(V0001 ==11)
+
 
 ##### Coverage ------------------------
 # usethis::use_coverage()

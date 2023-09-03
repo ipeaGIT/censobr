@@ -1,0 +1,59 @@
+# Add labels to categorical variables of mortality data
+#' @keywords internal
+add_labels_mortality <- function(arrw, year, lang = 'pt'){
+
+
+  # names of columns present in the data
+  cols <- names(arrw)
+
+  ### YEAR 2010
+  if(year == 2010 & lang == 'pt'){
+    # urban vs rural
+    if ('V1006' %in% cols) {
+      arrw <- arrw |> mutate(V1006 = case_when(
+        V1006 == '1' ~'Urbana',
+        V1006 == '2' ~'Rural'))
+    }
+
+    # sex of deceased person
+    if ('V0704' %in% cols) {
+      arrw <- arrw |> mutate(V0704 = case_when(
+        V0704 == '1' ~ 'Masculino',
+        V0704 == '2' ~ 'Feminino',
+        V0704==  '9' ~ 'Ignorado'))
+    }
+
+    # month and year of death
+    if ('V0703' %in% cols) {
+      arrw <- arrw |> mutate(V0703 = case_when(
+        V0703 == '01' ~ 'Agosto de 2009',
+        V0703 == '02' ~ 'Setembro de 2009',
+        V0703 == '03' ~ 'Outubro de 2009',
+        V0703 == '04' ~ 'Novembro de 2009',
+        V0703 == '05' ~ 'Dezembro de 2009',
+        V0703 == '06' ~ 'Janeiro de 2010',
+        V0703 == '07' ~ 'Fevereiro de 2010',
+        V0703 == '08' ~ 'Março de 2010',
+        V0703 == '09' ~ 'Abril de 2010',
+        V0703 == '10' ~ 'Maio de 2010',
+        V0703 == '11' ~ 'Junho de 2010',
+        V0703 == '12' ~ 'Julho de 2010',
+        V0703 == '99' ~ 'Ignorado'))
+      }
+
+    # census tract type
+    if ('V1005' %in% cols) {
+      arrw <- arrw |> mutate(V1005 = case_when(
+        V1005 == '1' ~ 'Área urbanizada',
+        V1005 == '2' ~ 'Área não urbanizada',
+        V1005 == '3' ~ 'Área urbanizada isolada',
+        V1005 == '4' ~ 'Área rural de extensão urbana',
+        V1005 == '5' ~ 'Aglomerado rural (povoado)',
+        V1005 == '6' ~ 'Aglomerado rural (núcleo)',
+        V1005 == '7' ~ 'Aglomerado rural (outros)',
+        V1005 == '8' ~ 'Área rural exclusive aglomerado rural'))
+    }
+  }
+
+  return(arrw)
+}
