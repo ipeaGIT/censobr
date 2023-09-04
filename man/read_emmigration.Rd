@@ -28,7 +28,7 @@ bar. The progress bar only reflects only the downloading
 time, not the time to load the data to memory.}
 
 \item{cache}{Logical. Whether the function should read the data cached
-locallly, which is much faster. Defaults to \code{TRUE}. The first time the
+locally, which is much faster. Defaults to \code{TRUE}. The first time the
 user runs the function, \code{censobr} will download the file and store it
 locally so that the file only needs to be download once. If \code{FALSE},
 the function will download the data again and overwrite the local file.
@@ -52,9 +52,9 @@ df <- read_emmigration(year = 2010, as_data_frame = TRUE)
 }
 \seealso{
 Other download microdata: 
-\code{\link{read_deaths}()},
 \code{\link{read_families}()},
 \code{\link{read_households}()},
+\code{\link{read_mortality}()},
 \code{\link{read_population}()}
 }
 \concept{download microdata}

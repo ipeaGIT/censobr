@@ -1,9 +1,11 @@
 # Add labels to categorical variables of family datasets
 #' @keywords internal
-add_labels_families <- function(arrw, year, lang = 'pt'){
+add_labels_families <- function(arrw,
+                                year = parent.frame()$year,
+                                lang = 'pt'){
 
   # check languate input
-  checkmate::assert_string(lang, pattern = 'pt')
+  checkmate::assert_string(lang, pattern = 'pt', na.ok = TRUE)
 
   # names of columns present in the data
   cols <- names(arrw)

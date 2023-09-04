@@ -5,6 +5,11 @@ library(arrow)
 
 ### add labels
 
+parametro
+codigo
+test
+
+pop
 
 # mortality
 df <- censobr::read_population(year = 2010) |>

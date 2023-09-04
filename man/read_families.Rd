@@ -7,6 +7,7 @@
 read_families(
   year = 2000,
   columns = NULL,
+  add_labels = NULL,
   as_data_frame = FALSE,
   showProgress = TRUE,
   cache = TRUE
@@ -18,6 +19,10 @@ read_families(
 \item{columns}{String. A vector of column names to keep. The rest of the
 columns are not read. Defaults to \code{NULL} and read all columns.}
 
+\item{add_labels}{Character. Whether the function should add labels to the
+responses of categorical variables. When \code{add_labels = "pt"}, the
+function adds labels in Portuguese. Defaults to \code{NULL}.}
+
 \item{as_data_frame}{Logical. When \code{FALSE} (Default), the function returns an
 Arrow Dataset, which allows users to work with larger-than-memory data.
 If \code{TRUE}, the function returns \code{data.frame}.}
@@ -27,7 +32,7 @@ bar. The progress bar only reflects only the downloading
 time, not the time to load the data to memory.}
 
 \item{cache}{Logical. Whether the function should read the data cached
-locallly, which is much faster. Defaults to \code{TRUE}. The first time the
+locally, which is much faster. Defaults to \code{TRUE}. The first time the
 user runs the function, \code{censobr} will download the file and store it
 locally so that the file only needs to be download once. If \code{FALSE},
 the function will download the data again and overwrite the local file.
@@ -48,9 +53,9 @@ df <- read_families(year = 2000)
 }
 \seealso{
 Other download microdata: 
-\code{\link{read_deaths}()},
 \code{\link{read_emmigration}()},
 \code{\link{read_households}()},
+\code{\link{read_mortality}()},
 \code{\link{read_population}()}
 }
 \concept{download microdata}

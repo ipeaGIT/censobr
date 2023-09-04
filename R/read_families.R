@@ -6,6 +6,7 @@
 #'
 #' @param year Numeric. Year of reference in the format `yyyymm`. Defaults to `2000`.
 #' @template columns
+#' @template add_labels
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
@@ -18,10 +19,11 @@
 #' df <- read_families(year = 2000)
 #'
 read_families <- function(year = 2000,
-                        columns = NULL,
-                        as_data_frame = FALSE,
-                        showProgress = TRUE,
-                        cache = TRUE){
+                          columns = NULL,
+                          add_labels = NULL,
+                          as_data_frame = FALSE,
+                          showProgress = TRUE,
+                          cache = TRUE){
 
   ### check inputs
   checkmate::assert_numeric(year)
@@ -54,6 +56,13 @@ read_families <- function(year = 2000,
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')
     df <- dplyr::select(df, dplyr::all_of(columns))
+  }
+
+  ### Add labels
+  if (!is.null(add_labels)) { # add_labels = 'pt'
+    df <- add_labels_families(arrw = df,
+                               year = year,
+                               lang = add_labels)
   }
 
   ### output format

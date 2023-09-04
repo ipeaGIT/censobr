@@ -3,7 +3,7 @@
 add_labels_population <- function(arrw, year, lang = 'pt'){
 
   # check languate input
-  checkmate::assert_string(lang, pattern = 'pt')
+  checkmate::assert_string(lang, pattern = 'pt', na.ok = TRUE)
 
   # names of columns present in the data
   cols <- names(arrw)

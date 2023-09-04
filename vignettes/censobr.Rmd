@@ -39,7 +39,7 @@ The package currently includes 5 main functions to download Census microdata:
 
 1. `read_population()`
 2. `read_households()`
-3. `read_deaths()`
+3. `read_mortality()`
 4. `read_families()`
 5. `read_emmigration()`
 
