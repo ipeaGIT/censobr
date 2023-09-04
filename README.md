@@ -39,6 +39,7 @@ The syntax of all **censobr** functions operate on the same logic so it becomes 
 df <- read_households(
           year,          # year of reference
           columns,       # whether to return only selected columns
+          add_labels,    # whether to add labels to cateogrical variables
           as_data_frame, # whether to return an Arrow DataSet or a data.frame
           showProgress,  # whether to show a download progress bar
           cache          # whether to cache data for faster access later

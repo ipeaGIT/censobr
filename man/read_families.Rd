@@ -35,8 +35,7 @@ time, not the time to load the data to memory.}
 locally, which is much faster. Defaults to \code{TRUE}. The first time the
 user runs the function, \code{censobr} will download the file and store it
 locally so that the file only needs to be download once. If \code{FALSE},
-the function will download the data again and overwrite the local file.
-Data sets are stored at \code{tools::R_user_dir('censobr_v0.1', 'cache')}.}
+the function will download the data again and overwrite the local file.}
 }
 \value{
 An arrow \code{Dataset} or a \code{"data.frame"} object.

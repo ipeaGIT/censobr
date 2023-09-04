@@ -49,6 +49,7 @@ The syntax of all **censobr** functions operate on the same logic so it becomes 
 dfh <- read_households(
           year,          # year of reference
           columns,       # whether to return only selected columns
+          add_labels,    # whether to add labels to cateogrical variables
           as_data_frame, # whether to return an Arrow DataSet or a data.frame
           showProgress,  # whether to show a download progress bar
           cache          # whether to cache data for faster access later
@@ -106,6 +107,7 @@ Since we don't need to load to memory all columns from the data, we can pass a v
 ```{r, eval = TRUE, warning = FALSE}
 pop <- read_population(year = 2010,
                        columns = c('abbrev_state', 'V0606', 'V0010', 'V6400'),
+                       add_labels = 'pt',
                        showProgress = FALSE)
 
 ```
@@ -117,30 +119,22 @@ df <- pop |>
       filter(abbrev_state == "RJ") |>                                   # (a)
       collect() |>
       group_by(V0606) |>                                                # (b)
-      summarize(higher_edu = sum(V0010[which(V6400==4)]) / sum(V0010),  # (c)
+      summarize(higher_edu = sum(V0010[which(V6400=="Superior completo")]) / sum(V0010), # (c)
                 pop = sum(V0010) ) |>
       collect()
 
 head(df)
 ```
-Now we only need to add labels to our query and plot the results.
+Now we only need to plot the results.
 
 ```{r, eval = TRUE}
-df <- df |>
-      mutate(cor = case_when(V0606 == 1 ~ 'Branca',
-                             V0606 == 2 ~ 'Preta',
-                             V0606 == 3 ~ 'Amarela',
-                             V0606 == 4 ~ 'Parda',
-                             V0606 == 5 ~ 'Indígena'
-                             ))
-head(df)
-```
+df <- subset(df, V0606 != 'Ignorado')
 
-```{r, eval = TRUE}
 ggplot() +
-  geom_col(data = na.omit(df), aes(x=cor, y=higher_edu), fill = '#5c997e') +
+  geom_col(data = df, aes(x=V0606, y=higher_edu), fill = '#5c997e') +
   scale_y_continuous(name = 'Proportion with higher education',
                      labels = scales::percent) +
+  labs(x = 'Cor/raça') +
   theme_classic()
   
 ```
