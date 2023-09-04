@@ -3,10 +3,16 @@ library(censobr)
 library(dplyr)
 library(arrow)
 
-### add labels
 
+# add labels  ----------------
 
-# mortality
+parametro
+codigo
+test
+
+pop
+
+# population
 df <- censobr::read_population(year = 2010) |>
   filter(abbrev_state == 'CE')
 
@@ -14,7 +20,7 @@ df2 <- add_labels_population(df, year=2010, lang = 'pt')
 head(df2) |> collect()
 
 
-# mortality
+# households
 df <- censobr::read_households(year = 2010) |>
   filter(abbrev_state == 'CE')
 
@@ -28,21 +34,34 @@ df <- censobr::read_households(year = 2000) |>
 df2 <- add_labels_households(df, year=2000, lang = 'pt')
 head(df2) |> collect()
 
+
+
 # mortality
-df <- censobr::read_deaths(year = 2010) |>
+df <- censobr::read_mortality(year = 2010) |>
   filter(abbrev_state == 'CE')
 
 df2 <- add_labels_mortality(df, year=2010, lang = 'pt')
-head(df2) |> collect()
 
+df <- censobr::read_mortality(year = 2010, add_labels = 'pt') |>
+  filter(abbrev_state == 'CE')
+
+df2 <- as.data.frame(df)
+table(df2$V1005)
 
 
 # families
-df <- censobr::read_families(year = 2000) |>
+df <- censobr::read_families(year = 2000, add_labels = 'pt') |>
+  filter(abbrev_state == 'CE')
+df2 <- as.data.frame(df)
+table(df2$CODV0404)
+
+
+# emmigration
+df <- censobr::read_emmigration(year = 2010, add_labels = 'pt') |>
   filter(abbrev_state == 'CE')
 
-df2 <- add_labels_families(df, year=2000, lang = 'pt')
-head(df2) |> collect()
+df2 <- as.data.frame(df)
+table(df2$V1006)
 
 
 ### 666 --------------------------- se reclamaredm do defaul T
@@ -64,7 +83,7 @@ Sys.setenv(NOT_CRAN = "true")
 
 
 # each function separately
-t1 <- covr::function_coverage(fun=read_deaths, test_file("tests/testthat/test_read_deaths.R"))
+t1 <- covr::function_coverage(fun=read_mortality, test_file("tests/testthat/test_read_mortality.R"))
 t1 <- covr::function_coverage(fun=censobr_cache, test_file("tests/testthat/test_censobr_cache.R"))
 t1
 
@@ -83,6 +102,48 @@ x <- as.data.frame(cov)
 covr::codecov( coverage = cov, token ='aaaaa' )
 
 
+
+
+# fix non-ASCII characters  ----------------
+
+gtools::ASCIIfy('é')
+gtools::ASCIIfy('ú')
+gtools::ASCIIfy('í')
+gtools::ASCIIfy('ã')
+gtools::ASCIIfy('ô')
+gtools::ASCIIfy('ó')
+gtools::ASCIIfy('õ')
+
+gtools::ASCIIfy('â')
+gtools::ASCIIfy('á')
+gtools::ASCIIfy('ç')
+
+
+gtools::ASCIIfy('º')
+gtools::ASCIIfy('ª')
+
+gtools::ASCIIfy('Ú')
+gtools::ASCIIfy('Á')
+gtools::ASCIIfy('Ê')
+
+
+gtools::ASCIIfy('Belém')
+gtools::ASCIIfy('São Paulo')
+gtools::ASCIIfy('Rondônia')
+
+stringi::stri_encode('S\u00e3o Paulo', to="UTF-8")
+stringi::stri_encode("\\u00c1rea de", to="UTF-8")
+
+stringi::stri_escape_unicode("São Paulo")
+stringi::stri_escape_unicode("Área")
+
+
+stringi::stri_trans_general(str = 'S\u00e3o Paulo', "latin-ascii")
+
+
+
+
+
 # checks spelling ----------------
 library(spelling)
 devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
@@ -93,15 +154,9 @@ devtools::spell_check(pkg = ".", vignettes = TRUE, use_wordlist = TRUE)
 urlchecker::url_update()
 
 
-# download firt time
-message data being cached locally at
-
-if (!file.exists(file)) {
-  cache_mssg(file)
 
 
-
-### CMD Check ----------------
+# CMD Check --------------------------------
 # Check package errors
 
 # LOCAL

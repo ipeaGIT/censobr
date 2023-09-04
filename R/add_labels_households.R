@@ -1,9 +1,11 @@
 # Add labels to categorical variables of household datasets
 #' @keywords internal
-add_labels_households <- function(arrw, year, lang = 'pt'){
+add_labels_households <- function(arrw,
+                                  year = parent.frame()$year,
+                                  lang = 'pt'){
 
   # check languate input
-  checkmate::assert_string(lang, pattern = 'pt')
+  checkmate::assert_string(lang, pattern = 'pt', na.ok = TRUE)
 
   # names of columns present in the data
   cols <- names(arrw)
@@ -24,38 +26,38 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
       # Private vs collective household
       if ('V4001' %in% cols) {
         arrw <- mutate(arrw, V4001 = case_when(
-          V4001 == '1' ~'Domicílio particular permanente ocupado',
-          V4001 == '2' ~'Domicílio particular permanente ocupado sem entrevista realizada',
-          V4001 == '5' ~'Domicílio particular improvisado ocupado',
-          V4001 == '6' ~'Domicílio coletivo com morador'))
+          V4001 == '1' ~'Domic\u00edlio particular permanente ocupado',
+          V4001 == '2' ~'Domic\u00edlio particular permanente ocupado sem entrevista realizada',
+          V4001 == '5' ~'Domic\u00edlio particular improvisado ocupado',
+          V4001 == '6' ~'Domic\u00edlio coletivo com morador'))
       }
 
       # household type
       if ('V4002' %in% cols) {
         arrw <- mutate(arrw, V4002 = case_when(
           V4002 == '11' ~ 'Casa',
-          V4002 == '12' ~ 'Casa de vila ou em condomínio',
+          V4002 == '12' ~ 'Casa de vila ou em condom\u00ednio',
           V4002 == '13' ~ 'Apartamento',
-          V4002 == '14' ~ 'Habitação em: casa de cômodos, cortiço ou cabeça de porco',
+          V4002 == '14' ~ 'Habita\u00e7\u00e3o em: casa de c\u00f4modos, corti\u00e7o ou cabe\u00e7a de porco',
           V4002 == '15' ~ 'Oca ou maloca ',
           V4002 == '51' ~ 'Tenda ou barraca',
           V4002 == '52' ~ 'Dentro de estabelecimento',
-          V4002 == '53' ~ 'Outro (vagão, trailer, gruta, etc)',
+          V4002 == '53' ~ 'Outro (vag\u00e3o, trailer, gruta, etc)',
           V4002 == '61' ~ 'Asilo, orfanato e similares  com morador',
-          V4002 == '62' ~ 'Hotel, pensão e similares com morador',
+          V4002 == '62' ~ 'Hotel, pens\u00e3o e similares com morador',
           V4002 == '63' ~ 'Alojamento de trabalhadores com morador',
-          V4002 == '64' ~ 'Penitenciária, presídio ou casa de detenção com morador'))
+          V4002 == '64' ~ 'Penitenci\u00e1ria, pres\u00eddio ou casa de deten\u00e7\u00e3o com morador'))
       }
 
       # household tenure / occupancy status
       if ('V0201' %in% cols) {
         arrw <- mutate(arrw, V0201 = case_when(
-          V0201 == '1' ~ 'Próprio de algum morador - já pago',
-          V0201 == '2' ~ 'Próprio de algum morador - ainda pagando',
+          V0201 == '1' ~ 'Pr\u00f3prio de algum morador - j\u00e1 pago',
+          V0201 == '2' ~ 'Pr\u00f3prio de algum morador - ainda pagando',
           V0201 == '3' ~ 'Alugado',
           V0201 == '4' ~ 'Cedido por empregador',
           V0201 == '5' ~ 'Cedido de outra forma',
-          V0201 == '6' ~ 'Outra condição'))
+          V0201 == '6' ~ 'Outra condi\u00e7\u00e3o'))
       }
 
       # material used to build household wall
@@ -63,9 +65,9 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
         arrw <- mutate(arrw, V0202 = case_when(
           V0202 == '1' ~ 'Alvenaria com revestimento',
           V0202 == '2' ~ 'Alvenaria sem revestimento',
-          V0202 == '3' ~ 'Madeira apropriada para construção (aparelhada)',
+          V0202 == '3' ~ 'Madeira apropriada para constru\u00e7\u00e3o (aparelhada)',
           V0202 == '4' ~ 'Taipa revestida',
-          V0202 == '5' ~ 'Taipa não revestida',
+          V0202 == '5' ~ 'Taipa n\u00e3o revestida',
           V0202 == '6' ~ 'Madeira aproveitada',
           V0202 == '7' ~ 'Palha',
           V0202 == '8' ~ 'Outro material',
@@ -77,7 +79,7 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
       if ('V0207' %in% cols) {
         arrw <- mutate(arrw, V0207 = case_when(
           V0207 == '1' ~ 'Rede geral de esgoto ou pluvial',
-          V0207 == '2' ~ 'Fossa séptica',
+          V0207 == '2' ~ 'Fossa s\u00e9ptica',
           V0207 == '3' ~ 'Fossa rudimentar',
           V0207 == '4' ~ 'Vala',
           V0207 == '5' ~ 'Rio, lago ou mar',
@@ -87,31 +89,31 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
       # access to water
         if ('V0208' %in% cols) {
           arrw <- mutate(arrw, V0208 = case_when(
-            V0208 == '01' ~ 'Rede geral de distribuição',
-            V0208 == '02' ~ 'Poço ou nascente na propriedade',
-            V0208 == '03' ~ 'Poço ou nascente fora da propriedade',
+            V0208 == '01' ~ 'Rede geral de distribui\u00e7\u00e3o',
+            V0208 == '02' ~ 'Po\u00e7o ou nascente na propriedade',
+            V0208 == '03' ~ 'Po\u00e7o ou nascente fora da propriedade',
             V0208 == '04' ~ 'Carro-pipa',
-            V0208 == '05' ~ 'Água da chuva armazenada em cisterna',
-            V0208 == '06' ~ 'Água da chuva armazenada de outra forma',
-            V0208 == '07' ~ 'Rios, açudes, lagos e igarapés',
+            V0208 == '05' ~ '\u00c1gua da chuva armazenada em cisterna',
+            V0208 == '06' ~ '\u00c1gua da chuva armazenada de outra forma',
+            V0208 == '07' ~ 'Rios, a\u00e7udes, lagos e igarap\u00e9s',
             V0208 == '08' ~ 'Outra',
-            V0208 == '09' ~ 'Poço ou nascente na aldeia',
-            V0208 == '10' ~ 'Poço ou nascente fora da aldeia'))
+            V0208 == '09' ~ 'Po\u00e7o ou nascente na aldeia',
+            V0208 == '10' ~ 'Po\u00e7o ou nascente fora da aldeia'))
           }
 
       # water connection
       if ('V0209' %in% cols) {
         arrw <- mutate(arrw, V0209 = case_when(
-          V0209 == '1' ~ 'Sim, em pelo menos um cômodo',
-          V0209 == '2' ~ 'Sim, só na propriedade ou terreno',
-          V0209 == '3' ~ 'Não'))
+          V0209 == '1' ~ 'Sim, em pelo menos um c\u00f4modo',
+          V0209 == '2' ~ 'Sim, s\u00f3 na propriedade ou terreno',
+          V0209 == '3' ~ 'N\u00e3o'))
         }
 
       # waste treatment
       if ('V0210' %in% cols) {
         arrw <- mutate(arrw, V0210 = case_when(
-          V0210 == '1' ~ 'Coletado diretamente por serviço de limpeza',
-          V0210 == '2' ~ 'Colocado em caçamba de serviço de limpeza',
+          V0210 == '1' ~ 'Coletado diretamente por servi\u00e7o de limpeza',
+          V0210 == '2' ~ 'Colocado em ca\u00e7amba de servi\u00e7o de limpeza',
           V0210 == '3' ~ 'Queimado (na propriedade)',
           V0210 == '4' ~ 'Enterrado (na propriedade)',
           V0210 == '5' ~ 'Jogado em terreno baldio ou logradouro',
@@ -124,7 +126,7 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
         arrw <- mutate(arrw, V0211 = case_when(
           V0211 == '1' ~ 'Sim, de companhia distribuidora',
           V0211 == '2' ~ 'Sim, de outras fontes',
-          V0211 == '3' ~ 'Não existe energia elétrica'))
+          V0211 == '3' ~ 'N\u00e3o existe energia el\u00e9trica'))
       }
 
       # eletricity meter
@@ -132,7 +134,7 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
         arrw <- mutate(arrw, V0212 = case_when(
           V0212 == '1' ~'Sim, de uso exclusivo',
           V0212 == '2' ~'Sim, de uso comum ',
-          V0212 == '3' ~'Não tem medidor ou relógio'))
+          V0212 == '3' ~'N\u00e3o tem medidor ou rel\u00f3gio'))
       }
 
       # shared household head
@@ -163,14 +165,14 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
       # census tract type
       if ('V1005' %in% cols) {
         arrw <- mutate(arrw, V1005 = case_when(
-          V1005 == '1' ~ 'Área urbanizada',
-          V1005 == '2' ~ 'Área não urbanizada',
-          V1005 == '3' ~ 'Área urbanizada isolada',
-          V1005 == '4' ~ 'Área rural de extensão urbana',
+          V1005 == '1' ~ '\u00c1rea urbanizada',
+          V1005 == '2' ~ '\u00c1rea n\u00e3o urbanizada',
+          V1005 == '3' ~ '\u00c1rea urbanizada isolada',
+          V1005 == '4' ~ '\u00c1rea rural de extens\u00e3o urbana',
           V1005 == '5' ~ 'Aglomerado rural (povoado)',
-          V1005 == '6' ~ 'Aglomerado rural (núcleo)',
+          V1005 == '6' ~ 'Aglomerado rural (n\u00facleo)',
           V1005 == '7' ~ 'Aglomerado rural (outros)',
-          V1005 == '8' ~ 'Área rural exclusive aglomerado rural'))
+          V1005 == '8' ~ '\u00c1rea rural exclusive aglomerado rural'))
       }
 
       ### Yes (1) or No (2) columns
@@ -193,48 +195,48 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
   # YEAR 2000----------------------------------------------------------------
   if(year == 2000 & lang == 'pt'){
 
-      # REGIÃO METROPOLITANA
+      # REGIAO METROPOLITANA
       if ('V1004' %in% cols) {
         arrw <- mutate(arrw, V1004 = case_when(
-          V1004 == '01' ~ 'Belém',
-          V1004 == '02' ~ 'Grande São Luís',
+          V1004 == '01' ~ 'Bel\u00e9m',
+          V1004 == '02' ~ 'Grande S\u00e3o Lu\u00eds',
           V1004 == '03' ~ 'Fortaleza',
           V1004 == '04' ~ 'Natal',
           V1004 == '05' ~ 'Recife',
-          V1004 == '06' ~ 'Maceió',
+          V1004 == '06' ~ 'Macei\u00f3',
           V1004 == '07' ~ 'Salvador',
           V1004 == '08' ~ 'Belo Horizonte',
           V1004 == '09' ~ 'Colar Metropolitano da RM de Belo Horizonte',
-          V1004 == '10' ~ 'Vale do Aço',
-          V1004 == '11' ~ 'Colar Metropolitano da RM do Vale do Aço',
-          V1004 == '12' ~ 'Grande Vitória',
+          V1004 == '10' ~ 'Vale do A\u00e7o',
+          V1004 == '11' ~ 'Colar Metropolitano da RM do Vale do A\u00e7o',
+          V1004 == '12' ~ 'Grande Vit\u00f3ria',
           V1004 == '13' ~ 'Rio de Janeiro',
-          V1004 == '14' ~ 'São Paulo',
+          V1004 == '14' ~ 'S\u00e3o Paulo',
           V1004 == '15' ~ 'Baixada Santista',
           V1004 == '16' ~ 'Campinas',
           V1004 == '17' ~ 'Curitiba',
           V1004 == '18' ~ 'Londrina',
-          V1004 == '19' ~ 'Maringá',
-          V1004 == '20' ~ 'Florianópolis',
-          V1004 == '21' ~ 'Área de Expansão Metropolitana da RM de Florianópolis',
-          V1004 == '22' ~ 'Núcleo Metropolitano da RM Vale do Itajaí',
-          V1004 == '23' ~ 'Área de Expansão Metropolitana da RM Vale do Itajaí',
+          V1004 == '19' ~ 'Maring\u00e1',
+          V1004 == '20' ~ 'Florian\u00f3polis',
+          V1004 == '21' ~ '\u00c1rea de Expans\u00e3o Metropolitana da RM de Florian\u00f3polis',
+          V1004 == '22' ~ 'N\u00facleo Metropolitano da RM Vale do Itaja\u00ed',
+          V1004 == '23' ~ '\u00c1rea de Expans\u00e3o Metropolitana da RM Vale do Itaja\u00ed',
           V1004 == '24' ~ 'Norte/Nordeste Catarinense',
-          V1004 == '25' ~ 'Área de Expansão Metropolitana da RM Norte/Nordeste Catarinense',
+          V1004 == '25' ~ '\u00c1rea de Expans\u00e3o Metropolitana da RM Norte/Nordeste Catarinense',
           V1004 == '26' ~ 'Porto Alegre',
-          V1004 == '27' ~ 'Goiânia',
-          V1004 == '28' ~ 'RIDE (Região Integrada de Desenvolvimento do Distrito Federal e Entorno)'))
+          V1004 == '27' ~ 'Goi\u00e2nia',
+          V1004 == '28' ~ 'RIDE (Regi\u00e3o Integrada de Desenvolvimento do Distrito Federal e Entorno)'))
       }
 
-      # SITUAÇÃO DO SETOR
+      # SITUACAO DO SETOR
       if ('V1005' %in% cols) {
         arrw <- mutate(arrw, V1005 = case_when(
-          V1005 == '1' ~ 'Área urbanizada de vila ou cidade',
-          V1005 == '2' ~ 'Área não urbanizada de vila ou cidade',
-          V1005 == '3' ~ 'Área urbanizada isolada',
-          V1005 == '4' ~ 'Rural - extensão urbana',
+          V1005 == '1' ~ '\u00c1rea urbanizada de vila ou cidade',
+          V1005 == '2' ~ '\u00c1rea n\u00e3o urbanizada de vila ou cidade',
+          V1005 == '3' ~ '\u00c1rea urbanizada isolada',
+          V1005 == '4' ~ 'Rural - extens\u00e3o urbana',
           V1005 == '5' ~ 'Rural - povoado',
-          V1005 == '6' ~ 'Rural - núcleo',
+          V1005 == '6' ~ 'Rural - n\u00facleo',
           V1005 == '7' ~ 'Rural - outros aglomerados',
           V1005 == '8' ~ 'Rural - exclusive os aglomerados rurais'))
         }
@@ -242,17 +244,17 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
       # TIPO DO SETOR
       if ('V1007' %in% cols) {
         arrw <- mutate(arrw, V1007 = case_when(
-          V1007 == '0' ~ 'Setor comum ou não especial',
+          V1007 == '0' ~ 'Setor comum ou n\u00e3o especial',
           V1007 == '1' ~ 'Setor especial de aglomerado subnormal',
-          V1007 == '2' ~ 'Setor especial de quartéis, bases militares, etc.',
+          V1007 == '2' ~ 'Setor especial de quart\u00e9is, bases militares, etc.',
           V1007 == '3' ~ 'Setor especial de alojamento, acampamentos, etc.',
-          V1007 == '4' ~ 'Setor especial de embarcações, barcos, navios, etc.',
-          V1007 == '5' ~ 'Setor especial de aldeia indígena',
-          V1007 == '6' ~ 'Setor especial de penitenciárias, colônias penais, presídios, cadeias, etc.',
+          V1007 == '4' ~ 'Setor especial de embarca\u00e7\u00f5es, barcos, navios, etc.',
+          V1007 == '5' ~ 'Setor especial de aldeia ind\u00edgena',
+          V1007 == '6' ~ 'Setor especial de penitenci\u00e1rias, col\u00f4nias penais, pres\u00eddios, cadeias, etc.',
           V1007 == '7' ~ 'Setor especial de asilos, orfanatos, conventos, hospitais, etc.'))
         }
 
-      # ESPÉCIE DE DOMICILIO
+      # ESPECIE DE DOMICILIO
       if ('V0201' %in% cols) {
         arrw <- mutate(arrw, V0201 = case_when(
           V0201 == '1' ~ 'Particular permanente',
@@ -260,54 +262,54 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
           V0201 == '3' ~ 'Coletivo'))
         }
 
-      # TIPO DO DOMICÍLIO
+      # TIPO DO DOMICILIO
       if ('V0202' %in% cols) {
         arrw <- mutate(arrw, V0202 = case_when(
           V0202 == '1' ~ 'Casa',
           V0202 == '2' ~ 'Apartamento',
-          V0202 == '3' ~ 'Cômodo'))
+          V0202 == '3' ~ 'C\u00f4modo'))
         }
 
-      # CONDIÇÃO DO DOMICÍLIO
+      # CONDICAO DO DOMICILIO
       if ('V0205' %in% cols) {
         arrw <- mutate(arrw, V0205 = case_when(
-          V0205 == '1' ~ 'Próprio, já pago',
-          V0205 == '2' ~ 'Próprio, ainda pagando',
+          V0205 == '1' ~ 'Pr\u00f3prio, j\u00e1 pago',
+          V0205 == '2' ~ 'Pr\u00f3prio, ainda pagando',
           V0205 == '3' ~ 'Alugado',
           V0205 == '4' ~ 'Cedido por empregador',
           V0205 == '5' ~ 'Cedido de outra forma',
-          V0205 == '6' ~ 'Outra Condição'))
+          V0205 == '6' ~ 'Outra Condi\u00e7\u00e3o'))
         }
 
-      # CONDIÇÃO DO TERRENO
+      # CONDICAO DO TERRENO
       if ('V0206' %in% cols) {
         arrw <- mutate(arrw, V0206 = case_when(
-          V0206 == '1' ~ 'Próprio',
+          V0206 == '1' ~ 'Pr\u00f3prio',
           V0206 == '2' ~ 'Cedido',
-          V0206 == '3' ~ 'Outra condição'))
+          V0206 == '3' ~ 'Outra condi\u00e7\u00e3o'))
         }
 
-      # FORMA DE ABASTECIMENTO DE ÁGUA
+      # FORMA DE ABASTECIMENTO DE AGUA
       if ('V0207' %in% cols) {
         arrw <- mutate(arrw, V0207 = case_when(
           V0207 == '1' ~ 'Rede geral',
-          V0207 == '2' ~ 'Poço ou nascente (na propriedade)',
+          V0207 == '2' ~ 'Po\u00e7o ou nascente (na propriedade)',
           V0207 == '3' ~ 'Outra'))
         }
 
-      # TIPO DE CANALIZAÇÃO
+      # TIPO DE CANALIZACAO
       if ('V0208' %in% cols) {
         arrw <- mutate(arrw, V0208 = case_when(
-          V0208 == '1' ~ 'Canalizada em pelo menos um cômodo',
-          V0208 == '2' ~ 'Canalizada só na propriedade ou terreno',
-          V0208 == '3' ~ 'Não canalizada'))
+          V0208 == '1' ~ 'Canalizada em pelo menos um c\u00f4modo',
+          V0208 == '2' ~ 'Canalizada s\u00f3 na propriedade ou terreno',
+          V0208 == '3' ~ 'N\u00e3o canalizada'))
       }
 
       # TIPO DE ESCOADOURO
       if ('V0211' %in% cols) {
         arrw <- mutate(arrw, V0211 = case_when(
           V0211 == '1' ~ 'Rede geral de esgoto ou pluvial',
-          V0211 == '2' ~ 'Fossa séptica',
+          V0211 == '2' ~ 'Fossa s\u00e9ptica',
           V0211 == '3' ~ 'Fossa rudimentar',
           V0211 == '4' ~ 'Vala',
           V0211 == '5' ~ 'Rio, lago ou mar',
@@ -317,8 +319,8 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
       # COLETA DE LIXO
       if ('V0212' %in% cols) {
         arrw <- mutate(arrw, V0212 = case_when(
-          V0212 == '1' ~ 'Coletado por serviço de limpeza',
-          V0212 == '2' ~ 'Colocado em caçamba de serviço de limpeza',
+          V0212 == '1' ~ 'Coletado por servi\u00e7o de limpeza',
+          V0212 == '2' ~ 'Colocado em ca\u00e7amba de servi\u00e7o de limpeza',
           V0212 == '3' ~ 'Queimado (na propriedade)',
           V0212 == '4' ~ 'Enterrado (na propriedade)',
           V0212 == '5' ~ 'Jogado em terreno baldio ou logradouro',
@@ -326,12 +328,12 @@ add_labels_households <- function(arrw, year, lang = 'pt'){
           V0212 == '7' ~ 'Tem outro destino'))
         }
 
-      # EXISTÊNCIA DE CALÇAMENTO/PAVIMENTAÇÃO
+      # EXISTENCIA DE CALCAMENTO/PAVIMENTACAO
       if ('V1113' %in% cols) {
         arrw <- mutate(arrw, V1113 = case_when(
           V1113 == '1' ~ 'Total',
           V1113 == '2' ~ 'Parcial',
-          V1113 == '3' ~ 'Não Existe'))
+          V1113 == '3' ~ 'N\u00e3o Existe'))
         }
 
 

@@ -1,9 +1,11 @@
 # Add labels to categorical variables of mortality datasets
 #' @keywords internal
-add_labels_mortality <- function(arrw, year, lang = 'pt'){
+add_labels_mortality <- function(arrw,
+                                 year = parent.frame()$year,
+                                 lang = 'pt'){
 
   # check languate input
-  checkmate::assert_string(lang, pattern = 'pt')
+  checkmate::assert_string(lang, pattern = 'pt', na.ok = TRUE)
 
   # names of columns present in the data
   cols <- names(arrw)
@@ -35,7 +37,7 @@ add_labels_mortality <- function(arrw, year, lang = 'pt'){
         V0703 == '05' ~ 'Dezembro de 2009',
         V0703 == '06' ~ 'Janeiro de 2010',
         V0703 == '07' ~ 'Fevereiro de 2010',
-        V0703 == '08' ~ 'Março de 2010',
+        V0703 == '08' ~ 'Mar\u00e7o de 2010',
         V0703 == '09' ~ 'Abril de 2010',
         V0703 == '10' ~ 'Maio de 2010',
         V0703 == '11' ~ 'Junho de 2010',
@@ -46,14 +48,14 @@ add_labels_mortality <- function(arrw, year, lang = 'pt'){
     # census tract type
     if ('V1005' %in% cols) {
       arrw <- arrw |> mutate(V1005 = case_when(
-        V1005 == '1' ~ 'Área urbanizada',
-        V1005 == '2' ~ 'Área não urbanizada',
-        V1005 == '3' ~ 'Área urbanizada isolada',
-        V1005 == '4' ~ 'Área rural de extensão urbana',
+        V1005 == '1' ~ paste0('\u00c1rea urbanizada'),
+        V1005 == '2' ~ paste0('\u00c1rea n\u00e3o urbanizada'),
+        V1005 == '3' ~ paste0('\u00c1rea urbanizada isolada'),
+        V1005 == '4' ~ paste0('\u00c1rea rural de extens\u00e3o urbana'),
         V1005 == '5' ~ 'Aglomerado rural (povoado)',
-        V1005 == '6' ~ 'Aglomerado rural (núcleo)',
+        V1005 == '6' ~ paste0('Aglomerado rural (n\u00facleo)'),
         V1005 == '7' ~ 'Aglomerado rural (outros)',
-        V1005 == '8' ~ 'Área rural exclusive aglomerado rural'))
+        V1005 == '8' ~ paste0('\u00c1rea rural exclusive aglomerado rural')))
     }
   }
 

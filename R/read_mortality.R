@@ -6,6 +6,7 @@
 #'
 #' @template year
 #' @template columns
+#' @template add_labels
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
@@ -15,13 +16,14 @@
 #' @family download microdata
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # return data as arrow Dataset
-#' df <- read_deaths(year = 2010)
+#' df <- read_mortality(year = 2010)
 #'
 #' # return data as data.frame
-#' df <- read_deaths(year = 2010, as_data_frame = TRUE)
+#' df <- read_mortality(year = 2010, as_data_frame = TRUE)
 #'
-read_deaths <- function(year = 2010,
+read_mortality <- function(year = 2010,
                         columns = NULL,
+                        add_labels = NULL,
                         as_data_frame = FALSE,
                         showProgress = TRUE,
                         cache = TRUE){
@@ -30,8 +32,6 @@ read_deaths <- function(year = 2010,
   checkmate::assert_numeric(year)
   checkmate::assert_vector(columns, null.ok = TRUE)
   checkmate::assert_logical(as_data_frame)
-  checkmate::assert_logical(showProgress)
-  checkmate::assert_logical(cache)
 
   # data available for the years:
   years <- c(2010)
@@ -59,12 +59,12 @@ read_deaths <- function(year = 2010,
     df <- dplyr::select(df, dplyr::all_of(columns))
   }
 
-  # ### Add labels
-  # if (!is.null(add_labels)) { # add_labels = 'pt'
-  #   df <- add_labels_mortality(arrw = df,
-  #                              year = year,
-  #                              lang = add_labels)
-  #   }
+  ### Add labels
+  if (!is.null(add_labels)) { # add_labels = 'pt'
+    df <- add_labels_mortality(arrw = df,
+                               year = year,
+                               lang = add_labels)
+    }
 
   ### output format
   if (isTRUE(as_data_frame)) { return( dplyr::collect(df) )

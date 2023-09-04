@@ -24,6 +24,11 @@ test_that("read_families", {
   test3 <- read_families(columns = cols)
   testthat::expect_true(names(test3) %in% cols)
 
+  # add labels
+  test4 <- read_families(add_labels = 'pt', columns = c('abbrev_state', 'V1004'))
+  test4 <- test4 |> filter(abbrev_state == 'CE') |> as.data.frame()
+  testthat::expect_true('Fortaleza' %in% test4$V1004)
+
 })
 
 
@@ -37,6 +42,7 @@ test_that("read_families", {
   testthat::expect_error(read_families(as_data_frame = 'banana'))
   testthat::expect_error(read_families(showProgress = 'banana' ))
   testthat::expect_error(read_families(cache = 'banana'))
+  testthat::expect_error(read_families(add_labels = 'banana'))
 
 
 })

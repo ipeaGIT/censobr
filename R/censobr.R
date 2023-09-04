@@ -10,6 +10,9 @@
 #' @name censobr
 #' @aliases censobr-package
 #'
+#' @importFrom dplyr mutate select across case_when all_of
+#'
+#' @keywords internal
 "_PACKAGE"
 
 
@@ -17,3 +20,4 @@
 utils::globalVariables( c('year',
                           'temp_local_file') )
 
+NULL

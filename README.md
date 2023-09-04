@@ -28,7 +28,7 @@ The package currently includes 5 main functions to download Census microdata:
 
 1. `read_population()`
 2. `read_households()`
-3. `read_deaths()`
+3. `read_mortality()`
 4. `read_families()`
 5. `read_emmigration()`
 
@@ -39,6 +39,7 @@ The syntax of all **censobr** functions operate on the same logic so it becomes 
 df <- read_households(
           year,          # year of reference
           columns,       # whether to return only selected columns
+          add_labels,    # whether to add labels to cateogrical variables
           as_data_frame, # whether to return an Arrow DataSet or a data.frame
           showProgress,  # whether to show a download progress bar
           cache          # whether to cache data for faster access later

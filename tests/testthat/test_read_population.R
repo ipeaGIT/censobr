@@ -35,6 +35,11 @@ test_that("read_population", {
   # test2 <- test2[1:2,] |> dplyr::collect()
   # testthat::expect_true(names(test2) %in% cols)
 
+  # add labels
+  test4 <- read_population(add_labels = 'pt', columns = c('abbrev_state', 'V1005'))
+  test4 <- test4 |> filter(abbrev_state == 'CE') |> as.data.frame()
+  testthat::expect_true(paste('\u00c1rea urbanizada') %in% test4$V1005)
+
 })
 
 

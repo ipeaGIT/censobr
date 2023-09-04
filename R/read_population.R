@@ -6,6 +6,7 @@
 #'
 #' @template year
 #' @template columns
+#' @template add_labels
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
@@ -19,6 +20,7 @@
 #'
 read_population <- function(year = 2010,
                             columns = NULL,
+                            add_labels = NULL,
                             as_data_frame = FALSE,
                             showProgress = TRUE,
                             cache = TRUE){
@@ -27,8 +29,6 @@ read_population <- function(year = 2010,
   checkmate::assert_numeric(year)
   checkmate::assert_vector(columns, null.ok = TRUE)
   checkmate::assert_logical(as_data_frame)
-  checkmate::assert_logical(showProgress)
-  checkmate::assert_logical(cache)
 
   # data available for the years:
   years <- c(2000, 2010)
@@ -55,6 +55,13 @@ read_population <- function(year = 2010,
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')
     df <- dplyr::select(df, dplyr::all_of(columns))
+  }
+
+  ### Add labels
+  if (!is.null(add_labels)) { # add_labels = 'pt'
+    df <- add_labels_population(arrw = df,
+                                year = year,
+                                lang = add_labels)
   }
 
   ### output format
