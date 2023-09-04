@@ -24,6 +24,11 @@ test_that("read_emmigration", {
   test3 <- read_emmigration(columns = cols)
   testthat::expect_true(names(test3) %in% cols)
 
+  # add labels
+  test4 <- read_emmigration(add_labels = 'pt', columns = c('abbrev_state', 'V1006'))
+  test4 <- test4 |> filter(abbrev_state == 'CE') |> as.data.frame()
+  testthat::expect_true('Urbana' %in% test4$V1006)
+
 
   # check whether cache argument is working
   time_first <- system.time(

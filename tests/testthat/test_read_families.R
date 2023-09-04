@@ -25,8 +25,8 @@ test_that("read_families", {
   testthat::expect_true(names(test3) %in% cols)
 
   # add labels
-  test4 <- read_families(add_labels = 'pt', columns = 'V1004')
-  test4 <- test4 |> na.omit() |> as.data.frame()
+  test4 <- read_families(add_labels = 'pt', columns = c('abbrev_state', 'V1004'))
+  test4 <- test4 |> filter(abbrev_state == 'CE') |> as.data.frame()
   testthat::expect_true('Fortaleza' %in% test4$V1004)
 
 })

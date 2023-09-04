@@ -50,11 +50,18 @@ table(df2$V1005)
 
 
 # families
-df <- censobr::read_families(year = 2000) |>
+df <- censobr::read_families(year = 2000, add_labels = 'pt') |>
+  filter(abbrev_state == 'CE')
+df2 <- as.data.frame(df)
+table(df2$CODV0404)
+
+
+# emmigration
+df <- censobr::read_emmigration(year = 2010, add_labels = 'pt') |>
   filter(abbrev_state == 'CE')
 
-df2 <- add_labels_families(df, year=2000, lang = 'pt')
-head(df2) |> collect()
+df2 <- as.data.frame(df)
+table(df2$V1006)
 
 
 ### 666 --------------------------- se reclamaredm do defaul T
@@ -109,6 +116,8 @@ gtools::ASCIIfy('â')
 gtools::ASCIIfy('Á')
 gtools::ASCIIfy('á')
 gtools::ASCIIfy('ç')
+
+gtools::ASCIIfy('Ú')
 
 
 gtools::ASCIIfy('Belém')

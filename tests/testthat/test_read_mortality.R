@@ -25,9 +25,10 @@ test_that("read_mortality", {
   testthat::expect_true(names(test3) %in% cols)
 
   # add labels
-  test4 <- read_mortality(add_labels = 'pt', columns = 'V1005')
-  test4 <- head(test4) |> dplyr::collect()
+  test4 <- read_mortality(add_labels = 'pt', columns = c('abbrev_state', 'V1005'))
+  test4 <- test4 |> filter(abbrev_state == 'CE') |> as.data.frame()
   testthat::expect_true(paste('\u00c1rea urbanizada') %in% test4$V1005)
+
 
   # check whether cache argument is working
   time_first <- system.time(

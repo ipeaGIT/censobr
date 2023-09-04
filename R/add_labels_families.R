@@ -49,12 +49,12 @@ add_labels_families <- function(arrw,
     # TIPO DE FAMILIA (1)
     if ('CODV0404' %in% cols) {
       arrw <- arrw |> mutate(CODV0404 = case_when(
-        CODV0404 == '0' ~ 'Única (uma s\u00f3 fam\u00edlia vive no domic\u00edlio)',
-        CODV0404 == '1' ~ 'Fam\u00edlias conviventes: 1ª fam\u00edlia',
-        CODV0404 == '2' ~ 'Fam\u00edlias conviventes: 2ª fam\u00edlia',
-        CODV0404 == '3' ~ 'Fam\u00edlias conviventes: 3ª fam\u00edlia',
-        CODV0404 == '4' ~ 'Fam\u00edlias conviventes: 4ª fam\u00edlia',
-        CODV0404 == '5' ~ 'Fam\u00edlias conviventes: 5ª fam\u00edlia e mais',
+        CODV0404 == '0' ~ '\u00danica (uma s\u00f3 fam\u00edlia vive no domic\u00edlio)',
+        CODV0404 == '1' ~ 'Fam\u00edlias conviventes: 1\u00aa fam\u00edlia',
+        CODV0404 == '2' ~ 'Fam\u00edlias conviventes: 2\u00aa fam\u00edlia',
+        CODV0404 == '3' ~ 'Fam\u00edlias conviventes: 3\u00aa fam\u00edlia',
+        CODV0404 == '4' ~ 'Fam\u00edlias conviventes: 4\u00aa fam\u00edlia',
+        CODV0404 == '5' ~ 'Fam\u00edlias conviventes: 5\u00aa fam\u00edlia e mais',
         CODV0404 == '9' ~ 'Morador individual'))
       }
 

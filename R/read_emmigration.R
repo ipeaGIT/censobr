@@ -6,6 +6,7 @@
 #'
 #' @template year
 #' @template columns
+#' @template add_labels
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
@@ -21,10 +22,11 @@
 #' df <- read_emmigration(year = 2010, as_data_frame = TRUE)
 #'
 read_emmigration <- function(year = 2010,
-                        columns = NULL,
-                        as_data_frame = FALSE,
-                        showProgress = TRUE,
-                        cache = TRUE){
+                             columns = NULL,
+                             add_labels = NULL,
+                             as_data_frame = FALSE,
+                             showProgress = TRUE,
+                             cache = TRUE){
 
   ### check inputs
   checkmate::assert_numeric(year)
@@ -57,6 +59,13 @@ read_emmigration <- function(year = 2010,
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')
     df <- dplyr::select(df, dplyr::all_of(columns))
+  }
+
+  ### Add labels
+  if (!is.null(add_labels)) { # add_labels = 'pt'
+    df <- add_labels_emmigration(arrw = df,
+                                 year = year,
+                                 lang = add_labels)
   }
 
   ### output format
