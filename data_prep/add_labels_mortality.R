@@ -2,6 +2,8 @@
 #' @keywords internal
 add_labels_mortality <- function(arrw, year, lang = 'pt'){
 
+  # check languate input
+  checkmate::assert_string(lang, pattern = 'pt')
 
   # names of columns present in the data
   cols <- names(arrw)

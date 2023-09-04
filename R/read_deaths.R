@@ -59,6 +59,13 @@ read_deaths <- function(year = 2010,
     df <- dplyr::select(df, dplyr::all_of(columns))
   }
 
+  # ### Add labels
+  # if (!is.null(add_labels)) { # add_labels = 'pt'
+  #   df <- add_labels_mortality(arrw = df,
+  #                              year = year,
+  #                              lang = add_labels)
+  #   }
+
   ### output format
   if (isTRUE(as_data_frame)) { return( dplyr::collect(df) )
   } else {
