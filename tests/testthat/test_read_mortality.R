@@ -27,7 +27,7 @@ test_that("read_mortality", {
   # add labels
   test4 <- read_mortality(add_labels = 'pt', columns = 'V1005')
   test4 <- head(test4) |> dplyr::collect()
-  testthat::expect_true('Área urbanizada' %in% test4$V1005)
+  testthat::expect_true(paste('\u00c1rea urbanizada') %in% test4$V1005)
 
   # check whether cache argument is working
   time_first <- system.time(
