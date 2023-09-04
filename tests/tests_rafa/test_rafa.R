@@ -112,12 +112,19 @@ gtools::ASCIIfy('í')
 gtools::ASCIIfy('ã')
 gtools::ASCIIfy('ô')
 gtools::ASCIIfy('ó')
+gtools::ASCIIfy('õ')
+
 gtools::ASCIIfy('â')
-gtools::ASCIIfy('Á')
 gtools::ASCIIfy('á')
 gtools::ASCIIfy('ç')
 
+
+gtools::ASCIIfy('º')
+gtools::ASCIIfy('ª')
+
 gtools::ASCIIfy('Ú')
+gtools::ASCIIfy('Á')
+gtools::ASCIIfy('Ê')
 
 
 gtools::ASCIIfy('Belém')

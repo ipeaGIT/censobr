@@ -32,8 +32,6 @@ read_emmigration <- function(year = 2010,
   checkmate::assert_numeric(year)
   checkmate::assert_vector(columns, null.ok = TRUE)
   checkmate::assert_logical(as_data_frame)
-  checkmate::assert_logical(showProgress)
-  checkmate::assert_logical(cache)
 
   # data available for the years:
   years <- c(2010)

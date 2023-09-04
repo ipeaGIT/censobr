@@ -7,6 +7,7 @@
 read_households(
   year = 2010,
   columns = NULL,
+  add_labels = NULL,
   as_data_frame = FALSE,
   showProgress = TRUE,
   cache = TRUE
@@ -18,6 +19,10 @@ read_households(
 
 \item{columns}{String. A vector of column names to keep. The rest of the
 columns are not read. Defaults to \code{NULL} and read all columns.}
+
+\item{add_labels}{Character. Whether the function should add labels to the
+responses of categorical variables. When \code{add_labels = "pt"}, the
+function adds labels in Portuguese. Defaults to \code{NULL}.}
 
 \item{as_data_frame}{Logical. When \code{FALSE} (Default), the function returns an
 Arrow Dataset, which allows users to work with larger-than-memory data.
