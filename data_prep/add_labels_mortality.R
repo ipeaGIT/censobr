@@ -1,4 +1,4 @@
-# Add labels to categorical variables of mortality data
+# Add labels to categorical variables of mortality datasets
 #' @keywords internal
 add_labels_mortality <- function(arrw, year, lang = 'pt'){
 

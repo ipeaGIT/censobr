@@ -6,6 +6,12 @@ library(arrow)
 ### add labels
 
 
+# mortality
+df <- censobr::read_population(year = 2010) |>
+  filter(abbrev_state == 'CE')
+
+df2 <- add_labels_population(df, year=2010, lang = 'pt')
+head(df2) |> collect()
 
 
 # mortality

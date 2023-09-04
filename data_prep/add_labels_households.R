@@ -1,27 +1,4 @@
-# Add labels "Sim", "Nao"
-#' @keywords internal
-add_sim_nao_labels <- function(.x) {
-  if_else(.x == '1', 'Sim', 'N\u00e3o')
-  }
-
-
-# Add labels "Sim", "Nao"
-#' @keywords internal
-add_sim_nao_labels2 <- function(arrw, column_names) {
-
-  # names of columns present in the data
-  cols_present <- names(arrw)
-
-  for (col in column_names) {
-    if (col %in% cols_present) {
-      arrw <- arrw |> mutate( {{col}} := if_else(
-        get(col) == '1', 'Sim', 'N\u00e3o'))
-    }
-  }
-  return(arrw)
-}
-
-# Add labels to categorical variables
+# Add labels to categorical variables of household datasets
 #' @keywords internal
 add_labels_households <- function(arrw, year, lang = 'pt'){
 

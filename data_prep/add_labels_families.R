@@ -1,4 +1,4 @@
-# Add labels to categorical variables of family data set
+# Add labels to categorical variables of family datasets
 #' @keywords internal
 add_labels_families <- function(arrw, year, lang = 'pt'){
 
