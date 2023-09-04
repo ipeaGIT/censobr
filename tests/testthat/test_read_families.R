@@ -42,6 +42,7 @@ test_that("read_families", {
   testthat::expect_error(read_families(as_data_frame = 'banana'))
   testthat::expect_error(read_families(showProgress = 'banana' ))
   testthat::expect_error(read_families(cache = 'banana'))
+  testthat::expect_error(read_families(add_labels = 'banana'))
 
 
 })

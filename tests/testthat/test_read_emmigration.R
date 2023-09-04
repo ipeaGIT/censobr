@@ -55,6 +55,7 @@ test_that("read_emmigration", {
   testthat::expect_error(read_emmigration(as_data_frame = 'banana'))
   testthat::expect_error(read_emmigration(showProgress = 'banana' ))
   testthat::expect_error(read_emmigration(cache = 'banana'))
+  testthat::expect_error(read_emmigration(add_labels = 'banana'))
 
 
 })
