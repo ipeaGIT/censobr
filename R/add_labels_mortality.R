@@ -48,14 +48,14 @@ add_labels_mortality <- function(arrw,
     # census tract type
     if ('V1005' %in% cols) {
       arrw <- arrw |> mutate(V1005 = case_when(
-        V1005 == '1' ~ 'Área urbanizada',
-        V1005 == '2' ~ 'Área não urbanizada',
-        V1005 == '3' ~ 'Área urbanizada isolada',
-        V1005 == '4' ~ 'Área rural de extensão urbana',
+        V1005 == '1' ~ paste0('\u00c1rea urbanizada'),
+        V1005 == '2' ~ paste0('\u00c1rea não urbanizada'),
+        V1005 == '3' ~ paste0('\u00c1rea urbanizada isolada'),
+        V1005 == '4' ~ paste0('\u00c1rea rural de extens\u00e3o urbana'),
         V1005 == '5' ~ 'Aglomerado rural (povoado)',
-        V1005 == '6' ~ 'Aglomerado rural (núcleo)',
+        V1005 == '6' ~ paste0('Aglomerado rural (n\u00facleo)'),
         V1005 == '7' ~ 'Aglomerado rural (outros)',
-        V1005 == '8' ~ 'Área rural exclusive aglomerado rural'))
+        V1005 == '8' ~ paste0('\u00c1rea rural exclusive aglomerado rural')))
     }
   }
 

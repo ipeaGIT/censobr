@@ -10,11 +10,7 @@
 #' @name censobr
 #' @aliases censobr-package
 #'
-#' @importFrom dplyr mutate
-#' @importFrom dplyr select
-#' @importFrom dplyr across
-#' @importFrom dplyr case_when
-#' @importFrom dplyr all_of
+#' @importFrom dplyr mutate select across case_when all_of
 #'
 #' @keywords internal
 "_PACKAGE"
