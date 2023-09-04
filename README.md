@@ -30,7 +30,7 @@ The package currently includes 5 main functions to download Census microdata:
 2. `read_households()`
 3. `read_mortality()`
 4. `read_families()`
-5. `read_emmigration()`
+5. `read_emigration()`
 
 
 The syntax of all **censobr** functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:

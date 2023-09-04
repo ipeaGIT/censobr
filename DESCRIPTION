@@ -23,8 +23,7 @@ Imports:
       checkmate,
       dplyr,
       httr (>= 1.4.1),
-      tools,
-      utils
+      tools
 Suggests: 
     geobr,
     ggplot2 (>= 3.3.1),

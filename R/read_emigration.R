@@ -1,7 +1,7 @@
-#' Download microdata of emmigration records from Brazil's census
+#' Download microdata of emigration records from Brazil's census
 #'
 #' @description
-#' Download microdata of emmigration records from Brazil's census. Data collected in
+#' Download microdata of emigration records from Brazil's census. Data collected in
 #' the sample component of the questionnaire.
 #'
 #' @template year
@@ -16,12 +16,12 @@
 #' @family download microdata
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # return data as arrow Dataset
-#' df <- read_emmigration(year = 2010)
+#' df <- read_emigration(year = 2010)
 #'
 #' # return data as data.frame
-#' df <- read_emmigration(year = 2010, as_data_frame = TRUE)
+#' df <- read_emigration(year = 2010, as_data_frame = TRUE)
 #'
-read_emmigration <- function(year = 2010,
+read_emigration <- function(year = 2010,
                              columns = NULL,
                              add_labels = NULL,
                              as_data_frame = FALSE,
@@ -39,7 +39,7 @@ read_emmigration <- function(year = 2010,
                                               paste(years), collapse = " "))}
 
   ### Get url
-  file_url <- paste0('https://github.com/ipeaGIT/censobr/releases/download/v0.1.0/',year,'_emmigration.parquet')
+  file_url <- paste0('https://github.com/ipeaGIT/censobr/releases/download/v0.1.0/',year,'_emigration.parquet')
 
 
   ### Download
@@ -61,7 +61,7 @@ read_emmigration <- function(year = 2010,
 
   ### Add labels
   if (!is.null(add_labels)) { # add_labels = 'pt'
-    df <- add_labels_emmigration(arrw = df,
+    df <- add_labels_emigration(arrw = df,
                                  year = year,
                                  lang = add_labels)
   }
