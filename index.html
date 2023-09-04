@@ -100,7 +100,7 @@
 <ol style="list-style-type: decimal">
 <li><code><a href="reference/read_population.html">read_population()</a></code></li>
 <li><code><a href="reference/read_households.html">read_households()</a></code></li>
-<li><code><a href="reference/read_deaths.html">read_deaths()</a></code></li>
+<li><code><a href="reference/read_mortality.html">read_mortality()</a></code></li>
 <li><code><a href="reference/read_families.html">read_families()</a></code></li>
 <li><code><a href="reference/read_emmigration.html">read_emmigration()</a></code></li>
 </ol>
@@ -108,6 +108,7 @@
 <pre><code><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_households.html">read_households</a></span><span class="op">(</span></span>
 <span>          <span class="va">year</span>,          <span class="co"># year of reference</span></span>
 <span>          <span class="va">columns</span>,       <span class="co"># whether to return only selected columns</span></span>
+<span>          <span class="va">add_labels</span>,    <span class="co"># whether to add labels to cateogrical variables</span></span>
 <span>          <span class="va">as_data_frame</span>, <span class="co"># whether to return an Arrow DataSet or a data.frame</span></span>
 <span>          <span class="va">showProgress</span>,  <span class="co"># whether to show a download progress bar</span></span>
 <span>          <span class="va">cache</span>          <span class="co"># whether to cache data for faster access later</span></span>
