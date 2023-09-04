@@ -26,7 +26,7 @@ test_that("read_families", {
 
   # add labels
   test4 <- read_families(add_labels = 'pt', columns = 'V1004')
-  test4 <- head(test4) |> dplyr::collect()
+  test4 <- test4 |> na.omit() |> as.data.frame()
   testthat::expect_true('Fortaleza' %in% test4$V1004)
 
 })
