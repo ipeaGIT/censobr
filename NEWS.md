@@ -1,9 +1,9 @@
-# censobr DEV v0.1.09
+# censobr v0.1.0999 
 
 * Minor changes
   * Using cache_dir and data_release as global variables. Closes [#13](https://github.com/ipeaGIT/censobr/issues/13)
   * Running `censobr_cache(delete_file = 'all')`now also remove data from old data releases. Closes [#14](https://github.com/ipeaGIT/censobr/issues/14).
-  
+  * Large improvement in code coverage 
   
 # censobr v0.1.0
 
