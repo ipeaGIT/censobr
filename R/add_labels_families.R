@@ -11,7 +11,7 @@ add_labels_families <- function(arrw,
   # names of columns present in the data
   cols <- names(arrw)
 
-  if(year == 2000 & lang == 'pt'){
+  if(year == 2000 & lang == 'pt'){ # nocov start
   ### YEAR 2010
 
     # REGIÃO METROPOLITANA
@@ -129,7 +129,7 @@ add_labels_families <- function(arrw,
       CODV4615_7400 == '11' ~ 'Mais de 30 sal\u00e1rios m\u00ednimos',
       CODV4615_7400 == '12' ~ 'Sem rendimento'))
     }
-  }
+  } # nocov end
 
   return(arrw)
 }

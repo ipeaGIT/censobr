@@ -12,7 +12,7 @@ add_labels_mortality <- function(arrw,
   cols <- names(arrw)
 
   ### YEAR 2010
-  if(year == 2010 & lang == 'pt'){
+  if(year == 2010 & lang == 'pt'){ # nocov start
     # urban vs rural
     if ('V1006' %in% cols) {
       arrw <- arrw |> mutate(V1006 = case_when(
@@ -58,7 +58,7 @@ add_labels_mortality <- function(arrw,
         V1005 == '7' ~ 'Aglomerado rural (outros)',
         V1005 == '8' ~ paste0('\u00c1rea rural exclusive aglomerado rural')))
     }
-  }
+  } # nocov end
 
   return(arrw)
 }

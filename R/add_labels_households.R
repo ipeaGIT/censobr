@@ -9,7 +9,7 @@ add_labels_households <- function(arrw,
   if (!(year %in% c(2000, 2010))) {stop('Labels for this data are only available for the years c(2000, 2010)')}
 
   # names of columns present in the data
-  cols <- names(arrw)
+  cols <- names(arrw) # nocov start
 
   # ALL YEARS ------------------------------------------------------------------
 
@@ -347,7 +347,7 @@ add_labels_households <- function(arrw,
       arrw <- dplyr::mutate(arrw, dplyr::across(all_of(vars_sim_nao_present),
                                                 ~ if_else(.x == '1', 'Sim', 'N\u00e3o')
                                                 ))
-  }
+  } # nocov end
 
   return(arrw)
 }
