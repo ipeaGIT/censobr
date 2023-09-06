@@ -66,6 +66,14 @@ table(df2$V1006)
 
 ### 666 --------------------------- se reclamaredm do defaul T
 
+# NEXT CHANGES
+
+#> global variable for package version
+https://stackoverflow.com/questions/12598242/global-variables-in-packages-in-r
+pkg_env <- new.env()
+pkg_env$data_release <- 'v0.1.0'
+
+#> cache function delete data from previous package versions
 
 
 
@@ -168,23 +176,12 @@ Sys.setenv(NOT_CRAN = "false")
 devtools::check(pkg = ".",  cran = TRUE, env_vars = c(NOT_CRAN = "false"))
 
 
+# extrachecks -----------------
+#' https://github.com/JosiahParry/extrachecks
+#' remotes::install_github("JosiahParry/extrachecks")
 
-# quick no vignettes
-devtools::check(pkg = ".",  cran = TRUE, env_vars = c(NOT_CRAN = "false"),vignettes = F)
-
-devtools::check_win_release(pkg = ".")
-
-# devtools::check_win_oldrelease()
-# devtools::check_win_devel()
-
-
-beepr::beep()
-
-
-
-tictoc::tic()
-devtools::check(pkg = ".",  cran = TRUE, env_vars = c(NOT_CRAN = "false"))
-tictoc::toc()
+library(extrachecks)
+extrachecks::extrachecks()
 
 
 # submit to CRAN -----------------

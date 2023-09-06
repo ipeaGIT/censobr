@@ -9,7 +9,7 @@
 #' @keywords internal
 download_file <- function(file_url = parent.frame()$file_url,
                           showProgress = parent.frame()$showProgress,
-                          cache = parent.frame()$cache){ # nocovstart
+                          cache = parent.frame()$cache){ # nocov start
 
   # check input
   checkmate::assert_logical(showProgress)
@@ -57,7 +57,7 @@ download_file <- function(file_url = parent.frame()$file_url,
     } else {
       return(local_file)
     }
-  } # nocovend
+  } # nocov end
 
 
 #' Check if parquet file is corrupted
@@ -67,12 +67,12 @@ download_file <- function(file_url = parent.frame()$file_url,
 #' @return A string with the address of the file in a tempdir
 #'
 #' @keywords internal
-check_parquet_file <- function(df){ # nocovstart
+check_parquet_file <- function(df){ # nocov start
 
   if (class(df)[1] == "try-error") {
     stop("File cached locally seems to be corrupted. Please download it again using 'cache = FALSE'.\nAlternatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = )'")
   }
-} # nocovend
+} # nocov end
 
 
 #' Message when chaching file
@@ -84,7 +84,7 @@ check_parquet_file <- function(df){ # nocovstart
 #'
 #' @keywords internal
 cache_message <- function(local_file = parent.frame()$local_file,
-                          cache = parent.frame()$cache){ # nocovstart
+                          cache = parent.frame()$cache){ # nocov start
 
 #  local_file <- 'C:\\Users\\user\\AppData\\Local/R/cache/R/censobr_v0.1/2010_deaths.parquet'
 
@@ -113,4 +113,4 @@ cache_message <- function(local_file = parent.frame()$local_file,
   if (!file.exists(local_file) & isFALSE(cache)) {
      message(paste("Downloading data. Setting 'cache = TRUE' is strongly recommended to speed up future use. File will be stored locally at:", dir_name))
      }
-  } # nocovend
+  } # nocov end

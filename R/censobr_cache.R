@@ -6,6 +6,9 @@
 #'        cached locally that should be deleted. Defaults to `NULL`, so that no
 #'        file is deleted. If `delete_file = "all"`, then all cached censobr
 #'        files are deleted.
+#'
+#' @return A message indicating which file exist and/or which ones have been
+#'         deleted from local cache directory.
 #' @export
 #' @family support
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
