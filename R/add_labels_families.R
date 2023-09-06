@@ -4,7 +4,7 @@ add_labels_families <- function(arrw,
                                 year = parent.frame()$year,
                                 lang = 'pt'){
 
-  # check languate input
+  # check input
   checkmate::assert_string(lang, pattern = 'pt', na.ok = TRUE)
   if (!(year %in% c(2000, 2010))) {stop('Labels for this data are only available for the years c(2000, 2010)')}
 

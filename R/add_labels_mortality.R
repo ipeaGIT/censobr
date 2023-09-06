@@ -4,7 +4,7 @@ add_labels_mortality <- function(arrw,
                                  year = parent.frame()$year,
                                  lang = 'pt'){
 
-  # check languate input
+  # check input
   checkmate::assert_string(lang, pattern = 'pt', na.ok = TRUE)
   if (!(year %in% c(2010))) {stop('Labels for this data are only available for the year c(2010)')}
 

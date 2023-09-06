@@ -104,7 +104,10 @@ Sys.setenv(NOT_CRAN = "true")
 t1 <- covr::function_coverage(fun=read_mortality, test_file("tests/testthat/test_read_mortality.R"))
 t1 <- covr::function_coverage(fun=censobr_cache, test_file("tests/testthat/test_censobr_cache.R"))
 t1 <- covr::function_coverage(fun=censobr:::add_labels_emigration, test_file("tests/testthat/test_labels_emigration.R"))
+t1 <- covr::function_coverage(fun=censobr:::add_labels_mortality, test_file("tests/testthat/test_labels_mortality.R"))
+t1 <- covr::function_coverage(fun=censobr:::add_labels_households, test_file("tests/testthat/test_labels_households.R"))
 t1
+
 
 # nocov start
 
