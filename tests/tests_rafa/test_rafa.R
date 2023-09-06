@@ -64,16 +64,15 @@ df2 <- as.data.frame(df)
 table(df2$V1006)
 
 
-### 666 --------------------------- se reclamaredm do defaul T
 
-# NEXT CHANGES
-
-#> using cache_dir and data_release as global variables
-https://stackoverflow.com/questions/12598242/global-variables-in-packages-in-r
-
-censobr_env <- new.env()
-censobr_env$data_release <- 'v0.1.0'
-
+# NEXT CHANGES  ---------------------------
+#
+# #> using cache_dir and data_release as global variables
+# https://stackoverflow.com/questions/12598242/global-variables-in-packages-in-r
+#
+# censobr_env <- new.env()
+# censobr_env$data_release <- 'v0.1.0'
+#
 
 
 #> cache function delete data from previous package versions

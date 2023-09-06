@@ -1,3 +1,10 @@
+# censobr DEV v0.1.09
+
+* Minor changes
+  * Using cache_dir and data_release as global variables. Closes [#13](https://github.com/ipeaGIT/censobr/issues/13)
+  * Running `censobr_cache(delete_file = 'all')`now also remove data from old data releases. Closes [#14](https://github.com/ipeaGIT/censobr/issues/14).
+  
+  
 # censobr v0.1.0
 
 * Launch of **censobr** v0.1.0 on CRAN https://cran.r-project.org/package=censobr
