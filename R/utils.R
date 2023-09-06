@@ -19,13 +19,10 @@ download_file <- function(file_url = parent.frame()$file_url,
   file_name <- basename(file_url)
 
   # create local dir
-  # pkgv <- paste0('censobr_', utils::packageVersion("censobr") )
-  pkgv <- paste0('censobr_', 'v0.1.0' )
-  cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
-  if (isTRUE(cache) & !dir.exists(cache_dir)) { dir.create(cache_dir, recursive=TRUE) }
+  if (isTRUE(cache) & !dir.exists(censobr_env$cache_dir)) { dir.create(censobr_env$cache_dir, recursive=TRUE) }
 
   # location of local file
-  local_file <- paste0(cache_dir,"/",file_name)
+  local_file <- paste0(censobr_env$cache_dir,"/",file_name)
 
   # cache message
   cache_message(local_file, cache)

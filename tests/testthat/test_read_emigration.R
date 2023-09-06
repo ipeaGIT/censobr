@@ -57,5 +57,7 @@ test_that("read_emigration", {
   testthat::expect_error(read_emigration(cache = 'banana'))
   testthat::expect_error(read_emigration(add_labels = 'banana'))
 
+  # missing labels
+  testthat::expect_error(read_emigration(year=2000, add_labels = 'pt'))
 
 })

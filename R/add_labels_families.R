@@ -6,6 +6,7 @@ add_labels_families <- function(arrw,
 
   # check languate input
   checkmate::assert_string(lang, pattern = 'pt', na.ok = TRUE)
+  if (!(year %in% c(2000, 2010))) {stop('Labels for this data are only available for the years c(2000, 2010)')}
 
   # names of columns present in the data
   cols <- names(arrw)

@@ -1,11 +1,12 @@
 # Add labels to categorical variables of emigration datasets
 #' @keywords internal
 add_labels_emigration <- function(arrw,
-                                   year = parent.frame()$year,
-                                   lang = 'pt'){
+                                  year = parent.frame()$year,
+                                  lang = 'pt'){
 
   # check languate input
   checkmate::assert_string(lang, pattern = 'pt', na.ok = TRUE)
+  if (year != 2010){stop('Labels for this data are only available for the year 2010')}
 
   # names of columns present in the data
   cols <- names(arrw)

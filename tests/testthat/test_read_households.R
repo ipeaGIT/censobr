@@ -32,9 +32,13 @@ test_that("read_households", {
   testthat::expect_true(names(test3) %in% cols)
 
   # add labels
-  test4 <- read_households(add_labels = 'pt', columns = c('abbrev_state', 'V1005'))
+  test4 <- read_households(year=2010, add_labels = 'pt', columns = c('abbrev_state', 'V1005'))
   test4 <- test4 |> filter(abbrev_state == 'CE') |> as.data.frame()
   testthat::expect_true(paste('\u00c1rea urbanizada') %in% test4$V1005)
+
+  test5 <- read_households(year=2000, add_labels = 'pt', columns = c('abbrev_state', 'V1005'))
+  test5 <- test5 |> filter(abbrev_state == 'CE') |> as.data.frame()
+  testthat::expect_true(paste('\u00c1rea urbanizada de vila ou cidade') %in% test5$V1005)
 
 })
 
@@ -49,6 +53,9 @@ test_that("read_households", {
   testthat::expect_error(read_households(as_data_frame = 'banana'))
   testthat::expect_error(read_households(showProgress = 'banana' ))
   testthat::expect_error(read_households(cache = 'banana'))
+  testthat::expect_error(read_households(add_labels = 'banana'))
+
+  # missing labels
 
 
 })
