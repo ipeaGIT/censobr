@@ -15,6 +15,10 @@ cached locally that should be deleted. Defaults to \code{NULL}, so that no
 file is deleted. If \code{delete_file = "all"}, then all cached censobr
 files are deleted.}
 }
+\value{
+A message indicating which file exist and/or which ones have been
+deleted from local cache directory.
+}
 \description{
 Manage cached files from the censobr package
 }

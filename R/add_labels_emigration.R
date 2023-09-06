@@ -1,6 +1,6 @@
-# Add labels to categorical variables of emmigration datasets
+# Add labels to categorical variables of emigration datasets
 #' @keywords internal
-add_labels_emmigration <- function(arrw,
+add_labels_emigration <- function(arrw,
                                    year = parent.frame()$year,
                                    lang = 'pt'){
 

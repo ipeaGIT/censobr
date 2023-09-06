@@ -1,7 +1,7 @@
 ## R CMD check results
 
-── R CMD check results ───────────────────────────────────────────────── censobr 0.1.0 ────
-Duration: 5m 22.1s
+── R CMD check results ─────────────────────────────────────────── censobr 0.1.0 ────
+Duration: 5m 20.9s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 

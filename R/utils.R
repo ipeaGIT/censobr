@@ -67,12 +67,12 @@ download_file <- function(file_url = parent.frame()$file_url,
 #' @return A string with the address of the file in a tempdir
 #'
 #' @keywords internal
-check_parquet_file <- function(df){
+check_parquet_file <- function(df){ # nocov start
 
   if (class(df)[1] == "try-error") {
     stop("File cached locally seems to be corrupted. Please download it again using 'cache = FALSE'.\nAlternatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = )'")
   }
-}
+} # nocov end
 
 
 #' Message when chaching file
@@ -113,4 +113,4 @@ cache_message <- function(local_file = parent.frame()$local_file,
   if (!file.exists(local_file) & isFALSE(cache)) {
      message(paste("Downloading data. Setting 'cache = TRUE' is strongly recommended to speed up future use. File will be stored locally at:", dir_name))
      }
-  }
+  } # nocov end

@@ -56,7 +56,7 @@ df <- read_mortality(year = 2010, as_data_frame = TRUE)
 }
 \seealso{
 Other download microdata: 
-\code{\link{read_emmigration}()},
+\code{\link{read_emigration}()},
 \code{\link{read_families}()},
 \code{\link{read_households}()},
 \code{\link{read_population}()}

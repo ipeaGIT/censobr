@@ -41,18 +41,18 @@ The package currently includes 5 main functions to download Census microdata:
 2. `read_households()`
 3. `read_mortality()`
 4. `read_families()`
-5. `read_emmigration()`
+5. `read_emigration()`
 
 The syntax of all **censobr** functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
 
 ```{r, eval = FALSE}
 dfh <- read_households(
           year,          # year of reference
-          columns,       # whether to return only selected columns
-          add_labels,    # whether to add labels to cateogrical variables
-          as_data_frame, # whether to return an Arrow DataSet or a data.frame
-          showProgress,  # whether to show a download progress bar
-          cache          # whether to cache data for faster access later
+          columns,       # select columns to read
+          add_labels,    # add labels to categorical variables
+          as_data_frame, # return an Arrow DataSet or a data.frame
+          showProgress,  # show download progress bar
+          cache          # cache data for faster access later
          )
 ```
 
@@ -74,7 +74,7 @@ censobr_cache(list_files = TRUE)
 
 ```{r, eval=TRUE, warning=FALSE}
 # delete particular file
-censobr_cache(delete_file = "2010_emmigration")
+censobr_cache(delete_file = "2010_emigration")
 
 ```
 
@@ -102,7 +102,7 @@ library(ggplot2)
 
 In this example we'll be calculating the proportion of people with higher education in different racial groups in the state of Rio de Janeiro. First, we need to use the `read_population()` function to download the population data set.
 
-Since we don't need to load to memory all columns from the data, we can pass a vector the the columns we're going to use. This might be necessary in more constrained computing environments.
+Since we don't need to load to memory all columns from the data, we can pass a vector the the columns we're going to use. This might be necessary in more constrained computing environments. Note that by setting `add_labels = 'pt'`, the function returns labeled values for categorical variables.
 
 ```{r, eval = TRUE, warning = FALSE}
 pop <- read_population(year = 2010,
@@ -116,9 +116,9 @@ Next, we use the `dplyr` syntax to (a) filter observations for the state of Rio 
 
 ```{r, eval = TRUE, warning = FALSE}
 df <- pop |>
-      filter(abbrev_state == "RJ") |>                                   # (a)
+      filter(abbrev_state == "RJ") |>                                                    # (a)
       collect() |>
-      group_by(V0606) |>                                                # (b)
+      group_by(V0606) |>                                                                 # (b)
       summarize(higher_edu = sum(V0010[which(V6400=="Superior completo")]) / sum(V0010), # (c)
                 pop = sum(V0010) ) |>
       collect()
@@ -176,7 +176,7 @@ rent_sf <- left_join(uf, rent, by = 'code_state')
 
 ggplot() +
   geom_sf(data = rent_sf, aes(fill = avgrent), color=NA) +
-  scale_fill_distiller(palette = "Oranges", direction = 1, 
+  scale_fill_distiller(palette = "Greens", direction = 1, 
                        name='Avgerage\nRent in R$') +
   theme_void()
 

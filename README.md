@@ -6,7 +6,8 @@
 [![Lifecycle:
      experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CRAN/METACRAN Total
-   downloads](http://cranlogs.r-pkg.org/badges/grand-total/censobr?color=yellow)](https://CRAN.R-project.org/package=censobr)
+   downloads](http://cranlogs.r-pkg.org/badges/grand-total/censobr?color=yellow)](https://CRAN.R-project.org/package=censobr) [![Codecov test
+coverage](https://codecov.io/gh/ipeaGIT/censobr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ipeaGIT/censobr?branch=main)
 
 **censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow platform](https://arrow.apache.org/docs/r/), which allows users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
 
@@ -30,7 +31,7 @@ The package currently includes 5 main functions to download Census microdata:
 2. `read_households()`
 3. `read_mortality()`
 4. `read_families()`
-5. `read_emmigration()`
+5. `read_emigration()`
 
 
 The syntax of all **censobr** functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
@@ -38,11 +39,11 @@ The syntax of all **censobr** functions operate on the same logic so it becomes 
 ```
 df <- read_households(
           year,          # year of reference
-          columns,       # whether to return only selected columns
-          add_labels,    # whether to add labels to cateogrical variables
-          as_data_frame, # whether to return an Arrow DataSet or a data.frame
-          showProgress,  # whether to show a download progress bar
-          cache          # whether to cache data for faster access later
+          columns,       # select columns to read
+          add_labels,    # add labels to categorical variables
+          as_data_frame, # return an Arrow DataSet or a data.frame
+          showProgress,  # show download progress bar
+          cache          # cache data for faster access later
          )
 ```
 

@@ -6,4 +6,4 @@
   * 2000 Census
     * Microdata of population, households and families.
   * 2010 Census
-    * Microdata of population, households, deaths and emmigration.
+    * Microdata of population, households, deaths and emigration.

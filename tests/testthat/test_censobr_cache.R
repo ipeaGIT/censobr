@@ -15,7 +15,7 @@ test_that("censobr_cache", {
   ## delete existing
 
   # download
-  censobr::read_emmigration(year = 2010, showProgress = FALSE, cache = TRUE)
+  censobr::read_emigration(year = 2010, showProgress = FALSE, cache = TRUE)
 
   # cache dir
   # pkgv <- paste0('censobr_', utils::packageVersion("censobr") )
@@ -24,17 +24,17 @@ test_that("censobr_cache", {
 
   # list cached files
   files <- list.files(cache_dir, full.names = TRUE)
-  fname <- '2010_emmigration.parquet'
+  fname <- '2010_emigration.parquet'
   fname_full <- files[grepl(fname, files)]
 
   testthat::expect_true( file.exists(fname_full) )
-  testthat::expect_message( censobr_cache(delete_file = '2010_emmigration.parquet') )
+  testthat::expect_message( censobr_cache(delete_file = '2010_emigration.parquet') )
   testthat::expect_false( file.exists(fname_full) )
 
   ## delete ALL
-  censobr::read_emmigration(year = 2010, showProgress = FALSE, cache = TRUE)
+  censobr::read_emigration(year = 2010, showProgress = FALSE, cache = TRUE)
   files <- list.files(cache_dir, full.names = TRUE)
-  fname <- '2010_emmigration.parquet'
+  fname <- '2010_emigration.parquet'
   fname_full <- files[grepl(fname, files)]
   testthat::expect_true( file.exists(fname_full) )
   testthat::expect_message( censobr_cache(delete_file = 'all') )
