@@ -10,7 +10,7 @@ testthat::skip_on_cran()
 test_that("add_labels_families", {
 
   # sem labels
-  test1a <- read_families(year = 2000, add_labels = NULL) |>
+  test1a <- read_families(year = 2000, add_labels = NULL, columns = c('abbrev_state', 'CODV0404_2')) |>
             filter(abbrev_state == 'RO')
 
   # com labels

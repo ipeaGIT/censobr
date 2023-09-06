@@ -11,7 +11,7 @@ test_that("add_labels_households", {
 
   ################################################################### 2010
   # sem labels
-  test1a <- read_households(year = 2010, add_labels = NULL) |>
+  test1a <- read_households(year = 2010, add_labels = NULL, columns = c('abbrev_state', 'V1006')) |>
             filter(abbrev_state == 'RO')
 
   # com labels
