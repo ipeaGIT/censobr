@@ -15,8 +15,7 @@
 #' @keywords internal
 "_PACKAGE"
 
-
-## quiets concerns of R CMD check re: the .'s that appear in pipelines
+## quiets concerns of R CMD check:
 utils::globalVariables( c('year',
                           'temp_local_file') )
 

@@ -26,13 +26,10 @@ censobr_cache <- function(list_files = TRUE,
   checkmate::assert_character(delete_file, null.ok = TRUE)
 
   # find / create local dir
-  # pkgv <- paste0('censobr_', utils::packageVersion("censobr") )
-  pkgv <- paste0('censobr_', 'v0.1.0' )
-  cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
-  if (!dir.exists(cache_dir)) { dir.create(cache_dir, recursive=TRUE) }
+  if (!dir.exists(censobr_env$cache_dir)) { dir.create(censobr_env$cache_dir, recursive=TRUE) }
 
   # list cached files
-  files <- list.files(cache_dir, full.names = TRUE)
+  files <- list.files(censobr_env$cache_dir, full.names = TRUE)
 
   # if wants to dele file
   # delete_file = "2_families.parquet"
@@ -58,7 +55,7 @@ censobr_cache <- function(list_files = TRUE,
   }
 
   # list cached files
-  files <- list.files(cache_dir, full.names = TRUE)
+  files <- list.files(censobr_env$cache_dir, full.names = TRUE)
 
   # print file names
   if(isTRUE(list_files)){

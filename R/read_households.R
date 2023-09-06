@@ -29,6 +29,7 @@ read_households <- function(year = 2010,
   checkmate::assert_numeric(year)
   checkmate::assert_vector(columns, null.ok = TRUE)
   checkmate::assert_logical(as_data_frame)
+  checkmate::assert_string(add_labels, pattern = 'pt', null.ok = TRUE)
 
   # data available for the years:
   years <- c(2000, 2010)
@@ -36,7 +37,7 @@ read_households <- function(year = 2010,
                                               paste(years), collapse = " "))}
 
   ### Get url
-  file_url <- paste0('https://github.com/ipeaGIT/censobr/releases/download/v0.1.0/',year,'_households.parquet')
+  file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/", censobr_env$data_release, "/", year, "_households.parquet")
 
 
   ### Download

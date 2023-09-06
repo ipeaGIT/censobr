@@ -68,23 +68,34 @@ table(df2$V1006)
 
 # NEXT CHANGES
 
-#> global variable for package version
+#> using cache_dir and data_release as global variables
 https://stackoverflow.com/questions/12598242/global-variables-in-packages-in-r
-pkg_env <- new.env()
-pkg_env$data_release <- 'v0.1.0'
+
+censobr_env <- new.env()
+censobr_env$data_release <- 'v0.1.0'
+
+
 
 #> cache function delete data from previous package versions
 
+# current cache
+pkgv <- paste0('censobr_', 'v0.1.0' )
+cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
+
+# determine old cache
+dir_above <- dirname(cache_dir)
+all_cache <- list.files(dir_above, pattern = 'censobr',full.names = TRUE)
+old_cache <- all_cache[!grepl(pkgv, all_cache)]
+
+# delete
+unlink(old_cache, recursive = TRUE)
 
 
 
-
-
-##### Coverage ------------------------
+# Coverage ------------------------
 # usethis::use_coverage()
 # usethis::use_github_action("test-coverage")
 
-library(censobr)
 library(testthat)
 library(covr)
 Sys.setenv(NOT_CRAN = "true")
@@ -140,7 +151,7 @@ gtools::ASCIIfy('São Paulo')
 gtools::ASCIIfy('Rondônia')
 
 stringi::stri_encode('S\u00e3o Paulo', to="UTF-8")
-stringi::stri_encode("\\u00c1rea de", to="UTF-8")
+stringi::stri_encode("/u00c1rea de", to="UTF-8")
 
 stringi::stri_escape_unicode("São Paulo")
 stringi::stri_escape_unicode("Área")
