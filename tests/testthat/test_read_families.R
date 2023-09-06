@@ -44,5 +44,7 @@ test_that("read_families", {
   testthat::expect_error(read_families(cache = 'banana'))
   testthat::expect_error(read_families(add_labels = 'banana'))
 
+  # missing labels
+  testthat::expect_error(read_families(year=2010, add_labels = 'pt'))
 
 })

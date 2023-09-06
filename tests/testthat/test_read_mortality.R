@@ -57,5 +57,8 @@ test_that("read_mortality", {
   testthat::expect_error(read_mortality(cache = 'banana'))
   testthat::expect_error(read_mortality(add_labels = 'banana'))
 
+  # missing labels
+  testthat::expect_error(read_mortality(year=2000, add_labels = 'pt'))
+
 
 })
