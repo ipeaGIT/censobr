@@ -10,4 +10,3 @@ vignettes/*.html
 *.dll
 /docs/
 docs
-/pkgdown/
