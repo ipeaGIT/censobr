@@ -91,6 +91,46 @@ unlink(old_cache, recursive = TRUE)
 
 
 
+
+
+##### downloads ------------------------
+library(ggplot2)
+library(dlstats)
+library(data.table)
+library(ggplot2)
+
+
+x <- dlstats::cran_stats(c('censobr', 'geobr', 'flightsbr'))
+
+if (!is.null(x)) {
+  head(x)
+  ggplot(x, aes(end, downloads, group=package, color=package)) +
+    geom_line() + geom_point(aes(shape=package))
+}
+
+setDT(x)
+
+x[, .(total = sum(downloads)) , by=package][order(total)]
+
+x[ start > as.Date('2022-01-01'), .(total = sum(downloads)) , by=package][order(total)]
+
+xx <- x[package=='r5r',]
+
+ggplot() +
+  geom_line(data=x, aes(x=end, y=downloads, color=package))
+
+
+library(cranlogs)
+
+a <- cranlogs::cran_downloads( package = c("censobr"), from = "2020-01-01", to = "last-day")
+
+a
+ggplot() +
+  geom_line(data=a, aes(x=date, y=count, color=package))
+
+
+
+
 # Coverage ------------------------
 # usethis::use_coverage()
 # usethis::use_github_action("test-coverage")

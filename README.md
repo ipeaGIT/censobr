@@ -73,10 +73,12 @@ If you would like to contribute to **censobr**, you're welcome to open an issue 
 
 Afaik, **censobr** is the only R package that provides fast and convenient access to data of Brazilian censuses. The [microdadosBrasil](https://github.com/lucasmation/microdadosBrasil) package used to provide access to microdata of several public data sets, but unfortunately, it has been discontinued.
 
-#### **Similar packages for other countries/continents**
+#### **Similar packages for other countries**
 - Canada: [cancensus](https://mountainmath.github.io/cancensus/)
 - Chile: [censo2017](https://docs.ropensci.org/censo2017/)
-- US: [tidycensus](https://walker-data.com/tidycensus/)   
+- US: [tidycensus](https://walker-data.com/tidycensus/)
+- World: [ipumsr](https://tech.popdata.org/ipumsr/)
+
 
 ## Credits <a href="https://www.ipea.gov.br"><img align="right" src="man/figures/ipea_logo.png" alt="IPEA" width="300" /></a>
 
