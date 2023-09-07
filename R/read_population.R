@@ -13,7 +13,7 @@
 #'
 #' @return An arrow `Dataset` or a `"data.frame"` object.
 #' @export
-#' @family download microdata
+#' @family Microdata
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # return data as arrow Dataset
 #' df <- read_population(year = 2010)

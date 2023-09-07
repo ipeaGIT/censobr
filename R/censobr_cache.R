@@ -10,7 +10,7 @@
 #' @return A message indicating which file exist and/or which ones have been
 #'         deleted from local cache directory.
 #' @export
-#' @family support
+#' @family Cache data
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # list all files cached
 #' censobr_cache(list_files = TRUE)
