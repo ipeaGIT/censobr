@@ -197,13 +197,15 @@ In this final example, we're going to visualize how the amount of money people s
 
 First, let's download the municipalities of the metro area of São Paulo.
 ```{r, eval = TRUE, warning = FALSE}
-metro_muni <- geobr::read_metro_area(year = 2010) |> 
+metro_muni <- geobr::read_metro_area(year = 2010,
+                                     showProgress = FALSE) |> 
                      subset(name_metro == "RM São Paulo")
 ```
 We also need the polygons of the weighting areas (áreas de ponderação). With the code below, we download all weighting areas in the state of São Paulo, and then keep only the areas in the metropolitan regions of São Paulo.
 
 ```{r, eval = TRUE, warning = FALSE}
 wt_areas <- geobr::read_weighting_area(code_weighting = "SP",
+                                       showProgress = FALSE,
                                        year = 2010)
 
 wt_areas <- subset(wt_areas, code_muni %in% metro_muni$code_muni)
