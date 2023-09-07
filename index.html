@@ -88,7 +88,10 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># or use the development version with latest features</span></span>
+<code class="sourceCode R"><span><span class="co"># install from CRAN</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"censobr"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or use the development version with latest features</span></span>
 <span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html" class="external-link">remove.packages</a></span><span class="op">(</span><span class="st">'censobr'</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ipeaGIT/censobr"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/censobr" class="external-link">censobr</a></span><span class="op">)</span></span></code></pre></div>
@@ -105,14 +108,14 @@
 <li><code><a href="reference/read_emigration.html">read_emigration()</a></code></li>
 </ol>
 <p>The syntax of all <strong>censobr</strong> functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:</p>
-<pre><code><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_households.html">read_households</a></span><span class="op">(</span></span>
-<span>          <span class="va">year</span>,          <span class="co"># year of reference</span></span>
-<span>          <span class="va">columns</span>,       <span class="co"># select columns to read</span></span>
-<span>          <span class="va">add_labels</span>,    <span class="co"># add labels to categorical variables</span></span>
-<span>          <span class="va">as_data_frame</span>, <span class="co"># return an Arrow DataSet or a data.frame</span></span>
-<span>          <span class="va">showProgress</span>,  <span class="co"># show download progress bar</span></span>
-<span>          <span class="va">cache</span>          <span class="co"># cache data for faster access later</span></span>
-<span>         <span class="op">)</span></span></code></pre>
+<pre><code><span><span class="fu"><a href="reference/read_households.html">read_households</a></span><span class="op">(</span></span>
+<span>  <span class="va">year</span>,          <span class="co"># year of reference</span></span>
+<span>  <span class="va">columns</span>,       <span class="co"># select columns to read</span></span>
+<span>  <span class="va">add_labels</span>,    <span class="co"># add labels to categorical variables</span></span>
+<span>  <span class="va">as_data_frame</span>, <span class="co"># return an Arrow DataSet or a data.frame</span></span>
+<span>  <span class="va">showProgress</span>,  <span class="co"># show download progress bar</span></span>
+<span>  <span class="va">cache</span>          <span class="co"># cache data for faster access later</span></span>
+<span>  <span class="op">)</span></span></code></pre>
 <p><strong><em>Note:</em></strong> all data sets in <strong>censobr</strong> are enriched with geography columns following the name standards of the <a href="https://github.com/ipeaGIT/geobr/" class="external-link">{geobr} package</a> to help data manipulation and integration with spatial data from {geobr}. The added columns are: <code>c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)</code>.</p>
 <div class="section level3">
 <h3 id="data-cache">Data cache<a class="anchor" aria-label="anchor" href="#data-cache"></a>
@@ -129,13 +132,13 @@
 <div class="section level2">
 <h2 id="contributing-to-censobr">Contributing to censobr<a class="anchor" aria-label="anchor" href="#contributing-to-censobr"></a>
 </h2>
-<p>If you would like to contribute to censobr, you’re welcome to open an issue to explain the proposed a contribution.</p>
+<p>If you would like to contribute to <strong>censobr</strong>, you’re welcome to open an issue to explain the proposed a contribution.</p>
 <hr>
 <div class="section level4">
 <h4 id="related-projects">
 <strong>Related projects</strong><a class="anchor" aria-label="anchor" href="#related-projects"></a>
 </h4>
-<p>Afaik, <strong>censobr</strong> is the only R package that provides fast and convenient access to data of the population censuses of Brazil. The <a href="https://github.com/lucasmation/microdadosBrasil" class="external-link">microdadosBrasil</a> package used to provide access to microdata of several public data sets, but unfortunately, it has been discontinued.</p>
+<p>Afaik, <strong>censobr</strong> is the only R package that provides fast and convenient access to data of Brazilian censuses. The <a href="https://github.com/lucasmation/microdadosBrasil" class="external-link">microdadosBrasil</a> package used to provide access to microdata of several public data sets, but unfortunately, it has been discontinued.</p>
 </div>
 <div class="section level4">
 <h4 id="similar-packages-for-other-countriescontinents">
@@ -155,7 +158,10 @@
 <h2 id="credits-">Credits <a href="https://www.ipea.gov.br" class="external-link"><img align="right" src="reference/figures/ipea_logo.png" alt="IPEA" width="300"></a>
 <a class="anchor" aria-label="anchor" href="#credits-"></a>
 </h2>
-<p>Original Census data is collected by the Brazilian Institute of Geography and Statistics (IBGE). The <strong>censobr</strong> package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as: - Pereira, R.H.M. (2023) censobr: Download Data from Brazil’s Population Census. GitHub repository - <a href="https://github.com/ipeaGIT/censobr" class="external-link uri">https://github.com/ipeaGIT/censobr</a>.</p>
+<p>Original Census data is collected by the Brazilian Institute of Geography and Statistics (IBGE). The <strong>censobr</strong> package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:</p>
+<ul>
+<li>Pereira, R.H.M. (2023) censobr: Download Data from Brazil’s Population Census. GitHub repository - <a href="https://github.com/ipeaGIT/censobr" class="external-link uri">https://github.com/ipeaGIT/censobr</a>.</li>
+</ul>
 </div>
 </div>
   </div>
@@ -164,6 +170,7 @@
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=censobr" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/ipeaGIT/censobr/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/ipeaGIT/censobr/issues" class="external-link">Report a bug</a></li>
 </ul>

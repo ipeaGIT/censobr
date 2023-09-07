@@ -98,7 +98,10 @@ is being expanded to cover more years and data sets.</p>
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># or use the development version with latest features</span></span>
+<code class="sourceCode R"><span><span class="co"># install from CRAN</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"censobr"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or use the development version with latest features</span></span>
 <span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html" class="external-link">remove.packages</a></span><span class="op">(</span><span class="st">'censobr'</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ipeaGIT/censobr"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/censobr" class="external-link">censobr</a></span><span class="op">)</span></span></code></pre></div>
@@ -119,19 +122,19 @@ microdata:</p>
 same logic so it becomes intuitive to download any data set using a
 single line of code. Like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dfh</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_households.html">read_households</a></span><span class="op">(</span></span>
-<span>          <span class="va">year</span>,          <span class="co"># year of reference</span></span>
-<span>          <span class="va">columns</span>,       <span class="co"># select columns to read</span></span>
-<span>          <span class="va">add_labels</span>,    <span class="co"># add labels to categorical variables</span></span>
-<span>          <span class="va">as_data_frame</span>, <span class="co"># return an Arrow DataSet or a data.frame</span></span>
-<span>          <span class="va">showProgress</span>,  <span class="co"># show download progress bar</span></span>
-<span>          <span class="va">cache</span>          <span class="co"># cache data for faster access later</span></span>
-<span>         <span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/read_households.html">read_households</a></span><span class="op">(</span></span>
+<span>  <span class="va">year</span>,          <span class="co"># year of reference</span></span>
+<span>  <span class="va">columns</span>,       <span class="co"># select columns to read</span></span>
+<span>  <span class="va">add_labels</span>,    <span class="co"># add labels to categorical variables</span></span>
+<span>  <span class="va">as_data_frame</span>, <span class="co"># return an Arrow DataSet or a data.frame</span></span>
+<span>  <span class="va">showProgress</span>,  <span class="co"># show download progress bar</span></span>
+<span>  <span class="va">cache</span>          <span class="co"># cache data for faster access later</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><strong><em>Note:</em></strong> all data sets in
 <strong>censobr</strong> are enriched with geography columns following
 the name standards of the <a href="https://github.com/ipeaGIT/geobr/" class="external-link">{geobr} package</a> to help
-data manipulation and integration with spatial data from the {geobr}
-package. The added columns are:
+data manipulation and integration with spatial data from {geobr}. The
+added columns are:
 <code>c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)</code>.</p>
 <div class="section level3">
 <h3 id="data-cache">Data cache<a class="anchor" aria-label="anchor" href="#data-cache"></a>
@@ -183,22 +186,8 @@ memory.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/censobr" class="external-link">censobr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/apache/arrow/" class="external-link">arrow</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'arrow'</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:utils':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     timestamp</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/geobr" class="external-link">geobr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required namespace: sf</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="using-population-data">Using Population data:<a class="anchor" aria-label="anchor" href="#using-population-data"></a>
@@ -208,9 +197,9 @@ higher education in different racial groups in the state of Rio de
 Janeiro. First, we need to use the <code><a href="../reference/read_population.html">read_population()</a></code>
 function to download the population data set.</p>
 <p>Since we don’t need to load to memory all columns from the data, we
-can pass a vector the the columns we’re going to use. This might be
-necessary in more constrained computing environments. Note that by
-setting <code>add_labels = 'pt'</code>, the function returns labeled
+can pass a vector with the names of the columns we’re going to use. This
+might be necessary in more constrained computing environments. Note that
+by setting <code>add_labels = 'pt'</code>, the function returns labeled
 values for categorical variables.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_population.html">read_population</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
@@ -257,64 +246,64 @@ higher education.</p>
 <h4 id="using-household-data">Using household data:<a class="anchor" aria-label="anchor" href="#using-household-data"></a>
 </h4>
 <p>In this example, we are going to map how much people spend with rent
-across different states in Brazil. First, we can easily download the
-households data set with the <code><a href="../reference/read_households.html">read_households()</a></code>
+across different municipalities in Brazil. First, we can easily download
+the households data set with the <code><a href="../reference/read_households.html">read_households()</a></code>
 function.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_households.html">read_households</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
 <span>                      showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reading data cached locally.</span></span></code></pre></div>
-<p>Now we’re going to (a) group observations by state, (b) calculate the
-average rent, and (c) collect the results.</p>
+<p>Now we’re going to (a) group observations by municipality, (b)
+calculate the average rent, and (c) collect the results.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rent</span> <span class="op">&lt;-</span> <span class="va">hs</span> <span class="op">|&gt;</span> </span>
 <span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">code_state</span><span class="op">)</span> <span class="op">|&gt;</span>                                            <span class="co"># (a)</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">code_muni</span><span class="op">)</span> <span class="op">|&gt;</span>                                             <span class="co"># (a)</span></span>
 <span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>avgrent<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html" class="external-link">weighted.mean</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">V2011</span>, w<span class="op">=</span><span class="va">V0010</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># (b)</span></span>
 <span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span>                                                          <span class="co"># (c)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rent</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
-<span><span class="co">#&gt;   code_state avgrent</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 11            340.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 12            295.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 13            346.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 14            298.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 15            297.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 16            322.</span></span></code></pre></div>
+<span><span class="co">#&gt;   code_muni avgrent</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1100015      205.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 1100023      307.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 1100031      366.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1100049      314.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1100056      249.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1100064      281.</span></span></code></pre></div>
 <p>In order to create a map with of these values, we are going to use
 the <code>geobr</code> package to download the geometries of Brazilian
-states.</p>
+municipalities.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">uf</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/geobr/man/read_state.html" class="external-link">read_state</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
-<span>                        showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">muni_sf</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/geobr/man/read_municipality.html" class="external-link">read_municipality</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
+<span>                                    showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using year 2010</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">uf</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Simple feature collection with 6 features and 5 fields</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">muni_sf</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Simple feature collection with 6 features and 4 fields</span></span>
 <span><span class="co">#&gt; Geometry type: MULTIPOLYGON</span></span>
 <span><span class="co">#&gt; Dimension:     XY</span></span>
-<span><span class="co">#&gt; Bounding box:  xmin: -73.99045 ymin: -13.6937 xmax: -46.06095 ymax: 5.271841</span></span>
+<span><span class="co">#&gt; Bounding box:  xmin: -63.61822 ymin: -13.6937 xmax: -60.33317 ymax: -9.66916</span></span>
 <span><span class="co">#&gt; Geodetic CRS:  SIRGAS 2000</span></span>
-<span><span class="co">#&gt;   code_state abbrev_state name_state code_region name_region</span></span>
-<span><span class="co">#&gt; 1         11           RO   Rondônia           1       Norte</span></span>
-<span><span class="co">#&gt; 2         12           AC       Acre           1       Norte</span></span>
-<span><span class="co">#&gt; 3         13           AM   Amazonas           1       Norte</span></span>
-<span><span class="co">#&gt; 4         14           RR    Roraima           1       Norte</span></span>
-<span><span class="co">#&gt; 5         15           PA       Pará           1       Norte</span></span>
-<span><span class="co">#&gt; 6         16           AP      Amapá           1       Norte</span></span>
+<span><span class="co">#&gt;   code_muni             name_muni code_state abbrev_state</span></span>
+<span><span class="co">#&gt; 1   1100015 Alta Floresta D'oeste         11           RO</span></span>
+<span><span class="co">#&gt; 2   1100023             Ariquemes         11           RO</span></span>
+<span><span class="co">#&gt; 3   1100031                Cabixi         11           RO</span></span>
+<span><span class="co">#&gt; 4   1100049                Cacoal         11           RO</span></span>
+<span><span class="co">#&gt; 5   1100056            Cerejeiras         11           RO</span></span>
+<span><span class="co">#&gt; 6   1100064     Colorado Do Oeste         11           RO</span></span>
 <span><span class="co">#&gt;                             geom</span></span>
-<span><span class="co">#&gt; 1 MULTIPOLYGON (((-63.32721 -...</span></span>
-<span><span class="co">#&gt; 2 MULTIPOLYGON (((-73.18253 -...</span></span>
-<span><span class="co">#&gt; 3 MULTIPOLYGON (((-67.32609 2...</span></span>
-<span><span class="co">#&gt; 4 MULTIPOLYGON (((-60.20051 5...</span></span>
-<span><span class="co">#&gt; 5 MULTIPOLYGON (((-54.95431 2...</span></span>
-<span><span class="co">#&gt; 6 MULTIPOLYGON (((-51.1797 4....</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 MULTIPOLYGON (((-62.2462 -1...</span></span>
+<span><span class="co">#&gt; 2 MULTIPOLYGON (((-63.13712 -...</span></span>
+<span><span class="co">#&gt; 3 MULTIPOLYGON (((-60.52408 -...</span></span>
+<span><span class="co">#&gt; 4 MULTIPOLYGON (((-61.42679 -...</span></span>
+<span><span class="co">#&gt; 5 MULTIPOLYGON (((-61.41347 -...</span></span>
+<span><span class="co">#&gt; 6 MULTIPOLYGON (((-60.66352 -...</span></span></code></pre></div>
 <p>Now we only need to merge the spatial data with our rent estimates
 and map the results.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">uf</span><span class="op">$</span><span class="va">code_state</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">uf</span><span class="op">$</span><span class="va">code_state</span><span class="op">)</span></span>
-<span><span class="va">rent_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">uf</span>, <span class="va">rent</span>, by <span class="op">=</span> <span class="st">'code_state'</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">muni_sf</span><span class="op">$</span><span class="va">code_muni</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">muni_sf</span><span class="op">$</span><span class="va">code_muni</span><span class="op">)</span></span>
+<span><span class="va">rent_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">muni_sf</span>, <span class="va">rent</span>, by <span class="op">=</span> <span class="st">'code_muni'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">rent_sf</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">avgrent</span><span class="op">)</span>, color<span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
