@@ -61,25 +61,9 @@ read_households(
 
 ***Note:*** all data sets in **censobr** are enriched with geography columns following the name standards of the [{geobr} package](https://github.com/ipeaGIT/geobr/) to help data manipulation and integration with spatial data from {geobr}. The added columns are: `c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)`.
 
+***Data Cache:***
 
-## Data cache
-
-The first time the user runs a function, **censobr** will download the file and store it locally. This way, the data only needs to be downloaded once. When the `cache` parameter is set to `TRUE` (Default), the function will read the cached data, which is much faster. 
-
-Users can list and/or delete data files cached locally using the `censobr_cache()` function:
-
-```{r, eval=TRUE, warning=FALSE}
-library(censobr)
-
-# list cached files
-censobr_cache(list_files = TRUE)
-```
-
-```{r, eval=TRUE, warning=FALSE}
-# delete particular file
-censobr_cache(delete_file = "2010_emigration")
-
-```
+The first time the user runs a function, **censobr** will download the file and store it locally. This way, the data only needs to be downloaded once. More info in the [Data cache section](https://ipeagit.github.io/censobr/articles/censobr.html#data-cache) below.
 
 
 # Larger-than-memory Data
@@ -236,5 +220,30 @@ ggplot() +
   scale_fill_distiller(palette = "Greens", direction = 1, 
                        name='Avgerage\nRent in R$') +
   theme_void()
+
+```
+
+
+
+## Data cache
+
+The first time the user runs a function, **censobr** will download the file and store it locally. This way, the data only needs to be downloaded once. When the `cache` parameter is set to `TRUE` (Default), the function will read the cached data, which is much faster. 
+
+Users can manage the cached data sets using the `censobr_cache()` function. For example, users can:
+
+List cached files:
+```{r, eval=TRUE, warning=FALSE}
+censobr_cache(list_files = TRUE)
+```
+
+Delete a particular file:
+```{r, eval=TRUE, warning=FALSE}
+censobr_cache(delete_file = "2010_emigration")
+
+```
+
+Delete all files:
+```{r, eval=TRUE, warning=FALSE}
+censobr_cache(delete_file = "all")
 
 ```
