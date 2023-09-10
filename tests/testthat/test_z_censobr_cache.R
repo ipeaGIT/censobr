@@ -18,7 +18,7 @@ test_that("censobr_cache", {
   censobr::read_emigration(year = 2010, showProgress = FALSE, cache = TRUE)
 
   # cache dir
-  pkgv <- paste0('censobr_', data_release)
+  pkgv <- paste0('censobr/data_release_', data_release)
   cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
 
   # list cached files
