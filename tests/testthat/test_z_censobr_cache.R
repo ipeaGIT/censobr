@@ -52,3 +52,7 @@ test_that("censobr_cache", {
   testthat::expect_error(censobr_cache(list_files= 999))
   testthat::expect_error(censobr_cache(delete_file = 999))
   })
+
+
+# clean cache
+censobr_cache(delete_file = 'all')

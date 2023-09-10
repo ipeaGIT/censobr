@@ -48,3 +48,6 @@ test_that("read_families", {
   testthat::expect_error(read_families(year=2010, add_labels = 'pt'))
 
 })
+
+# clean cache
+censobr_cache(delete_file = 'all')
