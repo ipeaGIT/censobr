@@ -5,8 +5,8 @@ library(data.table)
 library(pbapply)
 
 data.table::setDTthreads(percent = 100)
-source('./data_prep/convert_raw_to_parquet.R')
-source('./data_prep/add_geography_cols.R')
+source('./R/convert_raw_to_parquet.R')
+source('./R/add_geography_cols.R')
 
 
 # 1) download raw data from IBGE ftp -------------------------------------------
@@ -18,7 +18,7 @@ source('./data_prep/add_geography_cols.R')
   ## 3.1) Parse every file and covert them to parquet --------------------------
 
   # read guide to parse the data
-  dic <- fread('./data_prep/read_guides/readguide_2010_households.csv')
+  dic <- fread('./read_guides/readguide_2010_households.csv')
   head(dic)
 
   # list all files
@@ -31,7 +31,7 @@ source('./data_prep/add_geography_cols.R')
 
 
   ## 3.2) read all files and pile them up --------------------------------------
-  parqt_files <- list.files('./data_prep/data/2010/',
+  parqt_files <- list.files('./data/microdata_sample/2010/',
                             pattern = 'Domicilios_[[:digit:]]',
                             recursive = TRUE,
                             full.names = TRUE)
@@ -50,7 +50,7 @@ source('./data_prep/add_geography_cols.R')
   head(AT) |> collect()
 
   ## 3.4) save single parquet tile ----------------------------------------------
-  arrow::write_parquet(AT, './data_prep/data/2010/2010_households.parquet')
+  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_households.parquet')
 
 
 
@@ -62,7 +62,7 @@ source('./data_prep/add_geography_cols.R')
   ## 4.1) Parse every file and covert them to parquet ----------------------------------------------
 
   # read guide to parse the data
-  dic <- fread('./data_prep/read_guides/readguide_2010_population.csv')
+  dic <- fread('./read_guides/readguide_2010_population.csv')
   head(dic)
 
   # list all files
@@ -75,7 +75,7 @@ source('./data_prep/add_geography_cols.R')
 
 
   ## 4.2) read all files and pile them up ----------------------------------------------
-  parqt_files <- list.files('./data_prep/data/2010/',
+  parqt_files <- list.files('./data/microdata_sample/2010/',
                             pattern = 'Pessoas_[[:digit:]]',
                             recursive = TRUE,
                             full.names = TRUE)
@@ -94,7 +94,7 @@ source('./data_prep/add_geography_cols.R')
   head(AT) |> collect()
 
   ## 4.4) save single parquet tile ----------------------------------------------
-  arrow::write_parquet(AT, './data_prep/data/2010/2010_population.parquet')
+  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_population.parquet')
 
 
 
@@ -109,7 +109,7 @@ source('./data_prep/add_geography_cols.R')
   ## 5.1) Parse every file and covert them to parquet ----------------------------------------------
 
   # read guide to parse the data
-  dic <- fread('./data_prep/read_guides/readguide_2010_deaths.csv')
+  dic <- fread('./read_guides/readguide_2010_deaths.csv')
   head(dic)
 
   # list all files
@@ -123,7 +123,7 @@ source('./data_prep/add_geography_cols.R')
 
 
   ## 5.2) read all files and pile them up ----------------------------------------------
-  parqt_files <- list.files('./data_prep/data/2010/',
+  parqt_files <- list.files('./data/microdata_sample/2010/',
                             pattern = 'Mortalidade_[[:digit:]]',
                             recursive = TRUE,
                             full.names = TRUE)
@@ -143,7 +143,7 @@ source('./data_prep/add_geography_cols.R')
   head(AT) |> collect()
 
   ## 5.4) save single parquet tile ----------------------------------------------
-  arrow::write_parquet(AT, './data_prep/data/2010/2010_deaths.parquet')
+  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_deaths.parquet')
 
 
 
@@ -154,7 +154,7 @@ source('./data_prep/add_geography_cols.R')
   ## 5.1) read all files and pile them up ----------------------------------------------
 
   # read guide to parse the data
-  dic <- fread('./data_prep/read_guides/readguide_2010_emmigration.csv')
+  dic <- fread('./read_guides/readguide_2010_emmigration.csv')
   head(dic)
 
   # list all files
@@ -167,7 +167,7 @@ source('./data_prep/add_geography_cols.R')
 
 
   ## 3.2) read all files and pile them up ----------------------------------------------
-  parqt_files <- list.files('./data_prep/data/2010/',
+  parqt_files <- list.files('./data/microdata_sample/2010/',
                             pattern = 'Emigracao_[[:digit:]]',
                             recursive = TRUE,
                             full.names = TRUE)
@@ -186,7 +186,7 @@ source('./data_prep/add_geography_cols.R')
   head(AT) |> collect()
 
   ## 6.4) save single parquet tile ----------------------------------------------
-  arrow::write_parquet(AT, './data_prep/data/2010/2010_emmigration.parquet')
+  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_emmigration.parquet')
 
 
 

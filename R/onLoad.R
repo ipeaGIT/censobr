@@ -10,4 +10,5 @@ censobr_env <- new.env(parent = emptyenv()) # nocov start
   pkgv <- paste0('censobr_', censobr_env$data_release)
   censobr_env$pkgv <- pkgv
   censobr_env$cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
+  # gsub("\\\\", "/", censobr_env$cache_dir)
 } # nocov end
