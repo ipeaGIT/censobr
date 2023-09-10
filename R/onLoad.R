@@ -7,10 +7,14 @@ censobr_env <- new.env(parent = emptyenv()) # nocov start
   censobr_env$data_release <- 'v0.1.0'
 
   # local cache dir
-  censobr_env$cache_dir <- tools::R_user_dir('censobr', which = 'cache')
-  censobr_env$cache_dir <- paste0(censobr_env$cache_dir,'/',censobr_env$data_release)
+  cache_d <- paste0('censobr/data_release_',censobr_env$data_release)
+  censobr_env$cache_dir <- tools::R_user_dir(cache_d, which = 'cache')
   # gsub("\\\\", "/", censobr_env$cache_dir)
 
-
+  ## delete any files from old data releases
+  dir_above <- dirname(censobr_env$cache_dir)
+  all_cache <- list.files(dir_above, pattern = 'data_release',full.names = TRUE)
+  old_cache <- all_cache[!grepl(censobr_env$data_release, all_cache)]
+  unlink(old_cache, recursive = TRUE)
 
 } # nocov end

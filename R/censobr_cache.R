@@ -57,7 +57,7 @@ censobr_cache <- function(list_files = TRUE,
       ## also delete any files from old data releases
         # determine old cache
         dir_above <- dirname(censobr_env$cache_dir)
-        all_cache <- list.files(dir_above, pattern = 'v',full.names = TRUE)
+        all_cache <- list.files(dir_above, pattern = 'data_release',full.names = TRUE)
         old_cache <- all_cache[!grepl(censobr_env$data_release, all_cache)]
         # delete
         unlink(old_cache, recursive = TRUE)
