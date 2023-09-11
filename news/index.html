@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">censobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -51,12 +51,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.1.0999" id="censobr-v010999">censobr v0.1.0999<a class="anchor" aria-label="anchor" href="#censobr-v010999"></a></h2>
+<h2 class="page-header" data-toc-text="0.1.1" id="censobr-v011">censobr v0.1.1<a class="anchor" aria-label="anchor" href="#censobr-v011"></a></h2>
 <ul><li>Minor changes
 <ul><li>Using cache_dir and data_release as global variables. Closes <a href="https://github.com/ipeaGIT/censobr/issues/13" class="external-link">#13</a>
 </li>
 <li>Running <code>censobr_cache(delete_file = 'all')</code>now also remove data from old data releases. Closes <a href="https://github.com/ipeaGIT/censobr/issues/14" class="external-link">#14</a>.</li>
 <li>Large improvement in code coverage</li>
+</ul></li>
+<li>Changes requested by CRAN team
+<ul><li>Changed location of cached data to directory inside tools::R_user_dir(“censobr”, which = “cache”).</li>
+<li>The package now automatically deletes cached data from previous data releases that might exist from previous versions of the package</li>
 <li>Clean cache after intro vignette and testhat checks</li>
 </ul></li>
 </ul></div>
