@@ -1,3 +1,10 @@
+# censobr v0.1.1999999
+
+* Minor changes
+  * Running `censobr_cache(delete_file = 'all')` now removes all data and directories related from censobr.
+  
+  
+
 # censobr v0.1.1
 
 * Minor changes

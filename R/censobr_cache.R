@@ -50,17 +50,10 @@ censobr_cache <- function(list_files = TRUE,
     # Delete ALL file
     if (delete_file=='all') {
 
-      # delete files from current release
-      unlink(files, recursive = TRUE)
+      # delete any files from censobr, current and old data releases
+      dir_above <- dirname(censobr_env$cache_dir)
+      unlink(dir_above, recursive = TRUE)
       message(paste0("All files have been removed."))
-
-      ## also delete any files from old data releases
-        # determine old cache
-        dir_above <- dirname(censobr_env$cache_dir)
-        all_cache <- list.files(dir_above, pattern = 'data_release',full.names = TRUE)
-        old_cache <- all_cache[!grepl(censobr_env$data_release, all_cache)]
-        # delete
-        unlink(old_cache, recursive = TRUE)
 
     }
   }
