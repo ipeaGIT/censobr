@@ -10,7 +10,7 @@
 #' @return A message indicating which file exist and/or which ones have been
 #'         deleted from local cache directory.
 #' @export
-#' @family support
+#' @family Cache data
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # list all files cached
 #' censobr_cache(list_files = TRUE)
@@ -49,16 +49,11 @@ censobr_cache <- function(list_files = TRUE,
 
     # Delete ALL file
     if (delete_file=='all') {
-      unlink(files, recursive = TRUE)
-      message(paste0("All files have been removed."))
 
-      ## also delete any files from old data releases
-        # determine old cache
-        dir_above <- dirname(censobr_env$cache_dir)
-        all_cache <- list.files(dir_above, pattern = 'censobr',full.names = TRUE)
-        old_cache <- all_cache[!grepl(censobr_env$pkgv, all_cache)]
-        # delete
-        unlink(old_cache, recursive = TRUE)
+      # delete any files from censobr, current and old data releases
+      dir_above <- dirname(censobr_env$cache_dir)
+      unlink(dir_above, recursive = TRUE)
+      message(paste0("All files have been removed."))
 
     }
   }

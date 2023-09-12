@@ -16,6 +16,9 @@ coverage](https://codecov.io/gh/ipeaGIT/censobr/branch/main/graph/badge.svg)](ht
 ## Installation
 
 ```R
+# install from CRAN
+install.packages("censobr")
+
 # or use the development version with latest features
 utils::remove.packages('censobr')
 devtools::install_github("ipeaGIT/censobr")
@@ -37,14 +40,14 @@ The package currently includes 5 main functions to download Census microdata:
 The syntax of all **censobr** functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
 
 ```
-df <- read_households(
-          year,          # year of reference
-          columns,       # select columns to read
-          add_labels,    # add labels to categorical variables
-          as_data_frame, # return an Arrow DataSet or a data.frame
-          showProgress,  # show download progress bar
-          cache          # cache data for faster access later
-         )
+read_households(
+  year,          # year of reference
+  columns,       # select columns to read
+  add_labels,    # add labels to categorical variables
+  as_data_frame, # return an Arrow DataSet or a data.frame
+  showProgress,  # show download progress bar
+  cache          # cache data for faster access later
+  )
 ```
 
 ***Note:*** all data sets in **censobr** are enriched with geography columns following the name standards of the [{geobr} package](https://github.com/ipeaGIT/geobr/) to help data manipulation and integration with spatial data from {geobr}. The added columns are: `c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)`.
@@ -62,20 +65,23 @@ More info in the package [vignette](https://ipeagit.github.io/censobr/).
 
 
 ## Contributing to censobr
-If you would like to contribute to censobr, you're welcome to open an issue to explain the proposed a contribution.
+If you would like to contribute to **censobr**, you're welcome to open an issue to explain the proposed a contribution.
 
 -----
 
 #### **Related projects**
 
-Afaik, **censobr** is the only R package that provides fast and convenient access to data of the population censuses of Brazil. The [microdadosBrasil](https://github.com/lucasmation/microdadosBrasil) package used to provide access to microdata of several public data sets, but unfortunately, it has been discontinued.
+Afaik, **censobr** is the only R package that provides fast and convenient access to data of Brazilian censuses. The [microdadosBrasil](https://github.com/lucasmation/microdadosBrasil) package used to provide access to microdata of several public data sets, but unfortunately, it has been discontinued.
 
-#### **Similar packages for other countries/continents**
+#### **Similar packages for other countries**
 - Canada: [cancensus](https://mountainmath.github.io/cancensus/)
 - Chile: [censo2017](https://docs.ropensci.org/censo2017/)
-- US: [tidycensus](https://walker-data.com/tidycensus/)   
+- US: [tidycensus](https://walker-data.com/tidycensus/)
+- World: [ipumsr](https://tech.popdata.org/ipumsr/)
+
 
 ## Credits <a href="https://www.ipea.gov.br"><img align="right" src="man/figures/ipea_logo.png" alt="IPEA" width="300" /></a>
 
 Original Census data is collected by the Brazilian Institute of Geography and Statistics (IBGE). The **censobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
+
 - Pereira, R.H.M. (2023) censobr: Download Data from Brazil's Population Census. GitHub repository - https://github.com/ipeaGIT/censobr.

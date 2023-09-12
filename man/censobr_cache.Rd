@@ -31,4 +31,4 @@ censobr_cache(list_files = TRUE)
 censobr_cache(delete_file = '2010_deaths')
 \dontshow{\}) # examplesIf}
 }
-\concept{support}
+\concept{Cache data}

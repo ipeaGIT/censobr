@@ -4,12 +4,12 @@ add_labels_population <- function(arrw,
                                   year = parent.frame()$year,
                                   lang = 'pt'){
 
-  # check languate input
+  # check input
   checkmate::assert_string(lang, pattern = 'pt', na.ok = TRUE)
   if (!(year %in% c(2010))) {stop('Labels for this data are only available for the year c(2010)')}
 
   # names of columns present in the data
-  cols <- names(arrw)
+  cols <- names(arrw) # nocov start
 
   # ALL YEARS ------------------------------------------------------------------
 
@@ -434,7 +434,7 @@ add_labels_population <- function(arrw,
           V1005 == '8' ~ '\u00c1rea rural exclusive aglomerado rural'))
         }
 
-    }
+    } # nocov end
 
   # YEAR 2000----------------------------------------------------------------
 

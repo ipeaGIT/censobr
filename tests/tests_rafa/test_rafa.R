@@ -3,6 +3,44 @@ library(censobr)
 library(dplyr)
 library(arrow)
 
+# data dictionary  ----------------
+
+
+data_dic(year)
+
+utils::browseURL('./data_prep/data_raw/layout_2010.html')
+
+temp.f <- tempfile(fileext = '.html')
+
+knitr::knit2html('./data_prep/data_raw/layout_2010_dom.md',
+                 output = temp.f)
+
+rstudioapi::viewer(temp.f)
+utils::browseURL(temp.f)
+
+utils::browseURL(url = "./data_prep/data_raw/test.html")
+
+
+data_dictionary <- function(year, table){
+  year = '2010'
+  table = 'microdata'
+  # load all dictionary files currenlty available
+  data_path <- system.file("extdata", package = "censobr")
+  all_dic <- list.files(data_path, full.names = TRUE, pattern = '.html')
+
+  temp_dic <- all_dic[grepl(year, all_dic)]
+  temp_dic <- temp_dic[grepl(table, temp_dic)]
+
+  utils::browseURL(url = temp_dic)
+
+
+}
+
+data_dictionary(year = 2010, table = 'households')
+
+year=2010
+
+
 
 # add labels  ----------------
 
@@ -91,6 +129,46 @@ unlink(old_cache, recursive = TRUE)
 
 
 
+
+
+##### downloads ------------------------
+library(ggplot2)
+library(dlstats)
+library(data.table)
+library(ggplot2)
+
+
+x <- dlstats::cran_stats(c('censobr', 'geobr', 'flightsbr'))
+
+if (!is.null(x)) {
+  head(x)
+  ggplot(x, aes(end, downloads, group=package, color=package)) +
+    geom_line() + geom_point(aes(shape=package))
+}
+
+setDT(x)
+
+x[, .(total = sum(downloads)) , by=package][order(total)]
+
+x[ start > as.Date('2023-01-01'), .(total = sum(downloads)) , by=package][order(total)]
+
+xx <- x[package=='censobr',]
+
+ggplot() +
+  geom_line(data=xx, aes(x=end, y=downloads, color=package))
+
+
+library(cranlogs)
+
+a <- cranlogs::cran_downloads( package = c("censobr"), from = "2020-01-01", to = "last-day")
+
+a
+ggplot() +
+  geom_line(data=a, aes(x=date, y=count, color=package))
+
+
+
+
 # Coverage ------------------------
 # usethis::use_coverage()
 # usethis::use_github_action("test-coverage")
@@ -103,7 +181,11 @@ Sys.setenv(NOT_CRAN = "true")
 # each function separately
 t1 <- covr::function_coverage(fun=read_mortality, test_file("tests/testthat/test_read_mortality.R"))
 t1 <- covr::function_coverage(fun=censobr_cache, test_file("tests/testthat/test_censobr_cache.R"))
+t1 <- covr::function_coverage(fun=censobr:::add_labels_emigration, test_file("tests/testthat/test_labels_emigration.R"))
+t1 <- covr::function_coverage(fun=censobr:::add_labels_mortality, test_file("tests/testthat/test_labels_mortality.R"))
+t1 <- covr::function_coverage(fun=censobr:::add_labels_households, test_file("tests/testthat/test_labels_households.R"))
 t1
+
 
 # nocov start
 
@@ -177,9 +259,9 @@ urlchecker::url_update()
 # CMD Check --------------------------------
 # Check package errors
 
-# LOCAL
-Sys.setenv(NOT_CRAN = "true")
-devtools::check(pkg = ".",  cran = FALSE, env_vars = c(NOT_CRAN = "true"))
+  # LOCAL
+  Sys.setenv(NOT_CRAN = "true")
+  devtools::check(pkg = ".",  cran = FALSE, env_vars = c(NOT_CRAN = "true"))
 
 # CRAN
 Sys.setenv(NOT_CRAN = "false")

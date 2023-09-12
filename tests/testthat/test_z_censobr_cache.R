@@ -18,7 +18,7 @@ test_that("censobr_cache", {
   censobr::read_emigration(year = 2010, showProgress = FALSE, cache = TRUE)
 
   # cache dir
-  pkgv <- paste0('censobr_', data_release)
+  pkgv <- paste0('censobr/data_release_', data_release)
   cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
 
   # list cached files
@@ -52,3 +52,7 @@ test_that("censobr_cache", {
   testthat::expect_error(censobr_cache(list_files= 999))
   testthat::expect_error(censobr_cache(delete_file = 999))
   })
+
+
+# clean cache
+censobr_cache(delete_file = 'all')

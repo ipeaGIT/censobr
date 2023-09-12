@@ -10,4 +10,5 @@ vignettes/*.html
 *.dll
 /docs/
 docs
-/pkgdown/
+/data_prep/data/*
+/data_prep/data_raw/*

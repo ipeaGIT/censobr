@@ -60,5 +60,7 @@ test_that("read_mortality", {
   # missing labels
   testthat::expect_error(read_mortality(year=2000, add_labels = 'pt'))
 
-
 })
+
+# clean cache
+censobr_cache(delete_file = 'all')

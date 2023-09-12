@@ -23,9 +23,12 @@ knitr::opts_chunk$set(
 *obs.:* The package is still under development. At the moment, censobr only includes microdata from the 2000 and 2010 censuses, but it is being expanded to cover more years and data sets.
 
 
-## Installation
+# Installation
 
 ```R
+# install from CRAN
+install.packages("censobr")
+
 # or use the development version with latest features
 utils::remove.packages('censobr')
 devtools::install_github("ipeaGIT/censobr")
@@ -33,7 +36,7 @@ library(censobr)
 ```
 
 
-## Basic usage
+# Basic usage
 
 The package currently includes 5 main functions to download Census microdata:
 
@@ -46,51 +49,35 @@ The package currently includes 5 main functions to download Census microdata:
 The syntax of all **censobr** functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
 
 ```{r, eval = FALSE}
-dfh <- read_households(
-          year,          # year of reference
-          columns,       # select columns to read
-          add_labels,    # add labels to categorical variables
-          as_data_frame, # return an Arrow DataSet or a data.frame
-          showProgress,  # show download progress bar
-          cache          # cache data for faster access later
-         )
+read_households(
+  year,          # year of reference
+  columns,       # select columns to read
+  add_labels,    # add labels to categorical variables
+  as_data_frame, # return an Arrow DataSet or a data.frame
+  showProgress,  # show download progress bar
+  cache          # cache data for faster access later
+  )
 ```
 
-***Note:*** all data sets in **censobr** are enriched with geography columns following the name standards of the [{geobr} package](https://github.com/ipeaGIT/geobr/) to help data manipulation and integration with spatial data from the {geobr} package. The added columns are: `c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)`.
+***Note:*** all data sets in **censobr** are enriched with geography columns following the name standards of the [{geobr} package](https://github.com/ipeaGIT/geobr/) to help data manipulation and integration with spatial data from {geobr}. The added columns are: `c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)`.
+
+***Data Cache:***
+
+The first time the user runs a function, **censobr** will download the file and store it locally. This way, the data only needs to be downloaded once. More info in the [Data cache section](https://ipeagit.github.io/censobr/articles/censobr.html#data-cache) below.
 
 
-### Data cache
-
-The first time the user runs a function, **censobr** will download the file and store it locally. This way, the data only needs to be downloaded once. When the `cache` parameter is set to `TRUE` (Default), the function will read the cached data, which is much faster. 
-
-Users can list and/or delete data files cached locally using the `censobr_cache()` function:
-
-```{r, eval=TRUE, warning=FALSE}
-library(censobr)
-
-# list cached files
-censobr_cache(list_files = TRUE)
-```
-
-```{r, eval=TRUE, warning=FALSE}
-# delete particular file
-censobr_cache(delete_file = "2010_emigration")
-
-```
-
-
-## Larger-than-memory Data
+# Larger-than-memory Data
 
 Microdata of Brazilian census are often be too big to load in users' RAM memory. To avoid this problem, **censobr** will by default return an [Arrow table](https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow), which can be analyzed like a regular `data.frame` using the `dplyr` package without loading the full data to memory.
 
 Let's see how it works in a couple examples:
 
 
-## Reproducible examples
+# Reproducible examples
 
 First, let's load the libraries we'll be using in this vignette.
 
-```{r, eval=TRUE, warning=FALSE}
+```{r, eval=TRUE, warning=FALSE, message=FALSE}
 library(censobr)
 library(arrow)
 library(dplyr)
@@ -98,11 +85,11 @@ library(geobr)
 library(ggplot2)
 ```
 
-#### Using Population data:
+### Using Population data:
 
 In this example we'll be calculating the proportion of people with higher education in different racial groups in the state of Rio de Janeiro. First, we need to use the `read_population()` function to download the population data set.
 
-Since we don't need to load to memory all columns from the data, we can pass a vector the the columns we're going to use. This might be necessary in more constrained computing environments. Note that by setting `add_labels = 'pt'`, the function returns labeled values for categorical variables.
+Since we don't need to load to memory all columns from the data, we can pass a vector with the names of the columns we're going to use. This might be necessary in more constrained computing environments. Note that by setting `add_labels = 'pt'`, the function returns labeled values for categorical variables.
 
 ```{r, eval = TRUE, warning = FALSE}
 pop <- read_population(year = 2010,
@@ -139,9 +126,11 @@ ggplot() +
   
 ```
 
-#### Using household data:
+### Using household data:
 
-In this example, we are going to map how much people spend with rent across different states in Brazil. First, we can easily download the households data set with the `read_households()` function.
+#### Sewage coverage:
+
+In this example, we are going to map the proportion of households connected to a sewage network in Brazilian municipalities First, we can easily download the households data set with the `read_households()` function.
 
 ```{r, eval = TRUE}
 hs <- read_households(year = 2010, 
@@ -149,35 +138,112 @@ hs <- read_households(year = 2010,
 
 ```
 
-Now we're going to (a) group observations by state, (b) calculate the average rent, and (c) collect the results.
+Now we're going to (a) group observations by municipality, (b) get the number of households connected to a sewage network, (c) calculate the proportion of households connected, and (d) collect the results.
 
 ```{r, eval = TRUE, warning = FALSE}
-rent <- hs |> 
+esg <- hs |> 
         collect() |>
-        group_by(code_state) |>                                            # (a)
-        summarize(avgrent=weighted.mean(x=V2011, w=V0010, na.rm=TRUE)) |>  # (b)
-        collect()                                                          # (c)
+        group_by(code_muni) |>                                             # (a)
+        summarize(rede = sum(V0010[which(V0207=='1')]),                    # (b)
+                  total = sum(V0010)) |>                                   # (b)
+        mutate(cobertura = rede / total) |>                                # (c)
+        collect()                                                          # (d)
+
+head(esg)
+```
+In order to create a map with these values, we are going to use the [{geobr} package](https://ipeagit.github.io/geobr/) to download the geometries of Brazilian municipalities.
+
+```{r, eval = TRUE, warning = FALSE}
+muni_sf <- geobr::read_municipality(year = 2010,
+                                    showProgress = FALSE)
+head(muni_sf)
+```
+
+Now we only need to merge the spatial data with our estimates and map the results.
+
+```{r, eval = TRUE, warning = FALSE}
+muni_sf$code_muni <- as.character(muni_sf$code_muni)
+esg_sf <- left_join(muni_sf, esg, by = 'code_muni')
+
+ggplot() +
+  geom_sf(data = esg_sf, aes(fill = cobertura), color=NA) +
+  labs(title = "Share of households connected to a sewage network") +
+  scale_fill_distiller(palette = "Greens", direction = 1, 
+                       name='Share of\nhouseholds', 
+                       labels = scales::percent) +
+  theme_void()
+
+```
+
+#### Spatial distribution of rents:
+
+In this final example, we're going to visualize how the amount of money people spend on rent varies spatially across the metropolitan area of São Paulo.
+
+First, let's download the municipalities of the metro area of São Paulo.
+```{r, eval = TRUE, warning = FALSE}
+metro_muni <- geobr::read_metro_area(year = 2010,
+                                     showProgress = FALSE) |> 
+                     subset(name_metro == "RM São Paulo")
+```
+We also need the polygons of the weighting areas (áreas de ponderação). With the code below, we download all weighting areas in the state of São Paulo, and then keep only the areas in the metropolitan regions of São Paulo.
+
+```{r, eval = TRUE, warning = FALSE}
+wt_areas <- geobr::read_weighting_area(code_weighting = "SP",
+                                       showProgress = FALSE,
+                                       year = 2010)
+
+wt_areas <- subset(wt_areas, code_muni %in% metro_muni$code_muni)
+head(wt_areas)
+```
+
+
+Now we need to calculate the average rent spent in each weighting area. Using the national household data set, we're going to (a) filter only observations in our municipalities of interest, (b) group observations by weighting area, (c) calculate the average rent, and (d) collect the results.
+
+```{r, eval = TRUE, warning = FALSE}
+rent <- hs |>
+        filter(code_muni %in% metro_muni$code_muni) |>                     # (a)
+        collect() |>
+        group_by(code_weighting) |>                                        # (b)
+        summarize(avgrent=weighted.mean(x=V2011, w=V0010, na.rm=TRUE)) |>  # (c)
+        collect()                                                          # (d)
 
 head(rent)
 ```
-In order to create a map with of these values, we are going to use the `geobr` package to download the geometries of Brazilian states.
+Finally, we can merge the spatial data with our rent estimates and map the results.
 
 ```{r, eval = TRUE, warning = FALSE}
-uf <- geobr::read_state(year = 2010, 
-                        showProgress = FALSE)
-head(uf)
-```
-
-Now we only need to merge the spatial data with our rent estimates and map the results.
-
-```{r, eval = TRUE, warning = FALSE}
-uf$code_state <- as.character(uf$code_state)
-rent_sf <- left_join(uf, rent, by = 'code_state')
+rent_sf <- left_join(wt_areas, rent, by = 'code_weighting')
 
 ggplot() +
   geom_sf(data = rent_sf, aes(fill = avgrent), color=NA) +
+  geom_sf(data = metro_muni, color='gray', fill=NA) +
   scale_fill_distiller(palette = "Greens", direction = 1, 
                        name='Avgerage\nRent in R$') +
   theme_void()
+
+```
+
+
+
+## Data cache
+
+The first time the user runs a function, **censobr** will download the file and store it locally. This way, the data only needs to be downloaded once. When the `cache` parameter is set to `TRUE` (Default), the function will read the cached data, which is much faster. 
+
+Users can manage the cached data sets using the `censobr_cache()` function. For example, users can:
+
+List cached files:
+```{r, eval=TRUE, warning=FALSE}
+censobr_cache(list_files = TRUE)
+```
+
+Delete a particular file:
+```{r, eval=TRUE, warning=FALSE}
+censobr_cache(delete_file = "2010_emigration")
+
+```
+
+Delete all files:
+```{r, eval=TRUE, warning=FALSE}
+censobr_cache(delete_file = "all")
 
 ```

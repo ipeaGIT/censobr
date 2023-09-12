@@ -4,14 +4,14 @@ add_labels_families <- function(arrw,
                                 year = parent.frame()$year,
                                 lang = 'pt'){
 
-  # check languate input
+  # check input
   checkmate::assert_string(lang, pattern = 'pt', na.ok = TRUE)
   if (!(year %in% c(2000, 2010))) {stop('Labels for this data are only available for the years c(2000, 2010)')}
 
   # names of columns present in the data
   cols <- names(arrw)
 
-  if(year == 2000 & lang == 'pt'){
+  if(year == 2000 & lang == 'pt'){ # nocov start
   ### YEAR 2010
 
     # REGIÃO METROPOLITANA
@@ -129,7 +129,7 @@ add_labels_families <- function(arrw,
       CODV4615_7400 == '11' ~ 'Mais de 30 sal\u00e1rios m\u00ednimos',
       CODV4615_7400 == '12' ~ 'Sem rendimento'))
     }
-  }
+  } # nocov end
 
   return(arrw)
 }

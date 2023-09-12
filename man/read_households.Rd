@@ -52,10 +52,10 @@ df <- read_households(year = 2010)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other download microdata: 
+Other Microdata: 
 \code{\link{read_emigration}()},
 \code{\link{read_families}()},
 \code{\link{read_mortality}()},
 \code{\link{read_population}()}
 }
-\concept{download microdata}
+\concept{Microdata}

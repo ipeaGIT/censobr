@@ -1,10 +1,22 @@
-# censobr DEV v0.1.09
+# censobr v0.1.1999 dev
+
+* Minor changes
+  * Running `censobr_cache(delete_file = 'all')` now removes all data and directories related from censobr.
+  
+  
+
+# censobr v0.1.1
 
 * Minor changes
   * Using cache_dir and data_release as global variables. Closes [#13](https://github.com/ipeaGIT/censobr/issues/13)
   * Running `censobr_cache(delete_file = 'all')`now also remove data from old data releases. Closes [#14](https://github.com/ipeaGIT/censobr/issues/14).
-  
-  
+  * Large improvement in code coverage 
+
+* Changes requested by CRAN team
+  * Changed location of cached data to directory inside tools::R_user_dir("censobr", which = "cache"). 
+  * The package now automatically deletes cached data from previous data releases that might exist from previous versions of the package
+  * Clean cache after intro vignette and testhat checks
+
 # censobr v0.1.0
 
 * Launch of **censobr** v0.1.0 on CRAN https://cran.r-project.org/package=censobr
