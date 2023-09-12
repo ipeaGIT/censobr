@@ -1223,13 +1223,11 @@ knitr::opts_chunk$set(
   de imputação de renda parcial</td>
   <td class=xl67 width=515 style='border-top:none;border-left:none;width:387pt'>&nbsp;</td>
  </tr>
- <![if supportMisalignedColumns]>
  <tr height=0 style='display:none'>
   <td width=116 style='width:87pt'></td>
   <td width=280 style='width:210pt'></td>
   <td width=515 style='width:387pt'></td>
  </tr>
- <![endif]>
 </table>
 
 
@@ -1818,13 +1816,11 @@ knitr::opts_chunk$set(
     2 – Não<br>
     9 – Ignorado</td>
  </tr>
- <![if supportMisalignedColumns]>
  <tr height=0 style='display:none'>
   <td width=116 style='width:87pt'></td>
   <td width=280 style='width:210pt'></td>
   <td width=515 style='width:387pt'></td>
  </tr>
- <![endif]>
 </table>
 
 
@@ -2188,12 +2184,10 @@ knitr::opts_chunk$set(
   <td class=xl68 style='border-top:none;border-left:none'>Peso atribuído ao
   domicílio</td>
  </tr>
- <![if supportMisalignedColumns]>
  <tr height=0 style='display:none'>
   <td width=102 style='width:77pt'></td>
   <td width=278 style='width:209pt'></td>
   <td width=533 style='width:400pt'></td>
  </tr>
- <![endif]>
 </table>
 
