@@ -259,9 +259,9 @@ urlchecker::url_update()
 # CMD Check --------------------------------
 # Check package errors
 
-  # LOCAL
-  Sys.setenv(NOT_CRAN = "true")
-  devtools::check(pkg = ".",  cran = FALSE, env_vars = c(NOT_CRAN = "true"))
+# LOCAL
+Sys.setenv(NOT_CRAN = "true")
+devtools::check(pkg = ".",  cran = FALSE, env_vars = c(NOT_CRAN = "true"))
 
 # CRAN
 Sys.setenv(NOT_CRAN = "false")
