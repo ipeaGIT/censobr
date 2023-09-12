@@ -3,6 +3,44 @@ library(censobr)
 library(dplyr)
 library(arrow)
 
+# data dictionary  ----------------
+
+
+data_dic(year)
+
+utils::browseURL('./data_prep/data_raw/layout_2010.html')
+
+temp.f <- tempfile(fileext = '.html')
+
+knitr::knit2html('./data_prep/data_raw/layout_2010_dom.md',
+                 output = temp.f)
+
+rstudioapi::viewer(temp.f)
+utils::browseURL(temp.f)
+
+utils::browseURL(url = "./data_prep/data_raw/test.html")
+
+
+data_dictionary <- function(year, table){
+  year = '2010'
+  table = 'microdata'
+  # load all dictionary files currenlty available
+  data_path <- system.file("extdata", package = "censobr")
+  all_dic <- list.files(data_path, full.names = TRUE, pattern = '.html')
+
+  temp_dic <- all_dic[grepl(year, all_dic)]
+  temp_dic <- temp_dic[grepl(table, temp_dic)]
+
+  utils::browseURL(url = temp_dic)
+
+
+}
+
+data_dictionary(year = 2010, table = 'households')
+
+year=2010
+
+
 
 # add labels  ----------------
 
@@ -112,12 +150,12 @@ setDT(x)
 
 x[, .(total = sum(downloads)) , by=package][order(total)]
 
-x[ start > as.Date('2022-01-01'), .(total = sum(downloads)) , by=package][order(total)]
+x[ start > as.Date('2023-01-01'), .(total = sum(downloads)) , by=package][order(total)]
 
-xx <- x[package=='r5r',]
+xx <- x[package=='censobr',]
 
 ggplot() +
-  geom_line(data=x, aes(x=end, y=downloads, color=package))
+  geom_line(data=xx, aes(x=end, y=downloads, color=package))
 
 
 library(cranlogs)
