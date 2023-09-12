@@ -7,7 +7,7 @@
 #' @param table Character. The table of data dictionary to be opened. Options
 #'        include `c("microdata")`.
 #'
-#' @return Opens .html file in browser
+#' @return Opens .html file on browser
 #' @export
 #' @family Data Dictionary
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
@@ -24,7 +24,7 @@ data_dictionary <- function(year = NULL,
   checkmate::assert_string(table)
 
   # data available for the years:
-  years <- c(2010)
+  years <- c(2000, 2010)
   if (isFALSE(year %in% years)) { stop(  paste0("Error: Dictionary currently only available for the years: ",
                                               paste(years), collapse = " ")
                                         )}
@@ -40,9 +40,10 @@ data_dictionary <- function(year = NULL,
   data_path <- system.file("extdata", package = "censobr")
   all_dic <- list.files(data_path, full.names = TRUE, pattern = '.html')
 
+  # filter data dic by year and type of data
   temp_dic <- all_dic[grepl(year, all_dic)]
   temp_dic <- temp_dic[grepl(table, temp_dic)]
 
+  # open data dic on browser
   utils::browseURL(url = temp_dic)
-
 }
