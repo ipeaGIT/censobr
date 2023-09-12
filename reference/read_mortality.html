@@ -36,6 +36,9 @@ the sample component of the questionnaire."><meta property="og:image" content="/
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/data_dictionary_2000.html">Dictionary 2000</a>
+    </li>
+    <li>
       <a href="../articles/data_dictionary_2010.html">Dictionary 2010</a>
     </li>
   </ul></li>
@@ -134,60 +137,13 @@ the function will download the data again and overwrite the local file.</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># return data as arrow Dataset</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_mortality</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span></span>
-<span class="r-in"><span>                     showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_mortality</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading data. File will be stored locally at: /home/runner/.cache/R/censobr/data_release_v0.1.0</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   code_muni code_state abbrev_state name_state code_region name_region</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   code_weighting V0001 V0002         V0011   V0300     V0010 V1001 V1002 V1003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1100015001001    11 00015 1100015001001 1061597 10.811192     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1100015001001    11 00015 1100015001001 1460419 10.418260     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  1100015001001    11 00015 1100015001001 2903970 13.104927     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1100015001001    11 00015 1100015001001 3508873  9.694958     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1100015001001    11 00015 1100015001001 3922312  5.334208     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1100015001001    11 00015 1100015001001 4219372 10.002353     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   V1004 V1006 V0703 V0704 V7051 V7052 M0703 M0704 M7051 M7052 V1005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    00     1    08     2    34    NA     2     2     2     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    00     1    09     2     2    NA     2     2     2     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    00     2    07     1    77    NA     2     2     2     2     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    00     2    02     2    66    NA     2     2     2     2     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    00     1    07     1    NA     2     2     2     2     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    00     1    08     2    79    NA     2     2     2     2     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |=                                                                     |   2%  |                                                                              |=====                                                                 |   8%  |                                                                              |=======                                                               |  10%  |                                                                              |=========                                                             |  12%  |                                                                              |=============                                                         |  19%  |                                                                              |==============                                                        |  20%  |                                                                              |================                                                      |  23%  |                                                                              |==================                                                    |  25%  |                                                                              |====================                                                  |  29%  |                                                                              |========================                                              |  34%  |                                                                              |=============================                                         |  41%  |                                                                              |==================================                                    |  49%  |                                                                              |=======================================                               |  55%  |                                                                              |============================================                          |  62%  |                                                                              |================================================                      |  69%  |                                                                              |=====================================================                 |  76%  |                                                                              |==========================================================            |  83%  |                                                                              |===============================================================       |  90%  |                                                                              |======================================================================| 100%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># return data as data.frame</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_mortality</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span></span>
-<span class="r-in"><span>                     as_data_frame <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>                     showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_mortality</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, as_data_frame <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Reading data cached locally.</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   code_muni code_state abbrev_state name_state code_region name_region</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   code_weighting V0001 V0002         V0011   V0300     V0010 V1001 V1002 V1003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1100015001001    11 00015 1100015001001 1061597 10.811192     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1100015001001    11 00015 1100015001001 1460419 10.418260     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  1100015001001    11 00015 1100015001001 2903970 13.104927     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1100015001001    11 00015 1100015001001 3508873  9.694958     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1100015001001    11 00015 1100015001001 3922312  5.334208     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1100015001001    11 00015 1100015001001 4219372 10.002353     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   V1004 V1006 V0703 V0704 V7051 V7052 M0703 M0704 M7051 M7052 V1005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    00     1    08     2    34    NA     2     2     2     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    00     1    09     2     2    NA     2     2     2     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    00     2    07     1    77    NA     2     2     2     2     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    00     2    02     2    66    NA     2     2     2     2     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    00     1    07     1    NA     2     2     2     2     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    00     1    08     2    79    NA     2     2     2     2     1</span>
 </code></pre></div>
     </div>
   </div>
