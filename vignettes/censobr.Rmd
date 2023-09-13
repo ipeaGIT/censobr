@@ -46,7 +46,14 @@ The package currently includes 5 main functions to download Census microdata:
 4. `read_families()`
 5. `read_emigration()`
 
-The syntax of all **censobr** functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
+It also includes a couple support functions:
+
+6. `data_dictionary()` to open the data dictionary of variables
+7. `censobr_cache()` to manage the data chached locally.
+
+
+
+The syntax of all **censobr** functions to read data operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
 
 ```{r, eval = FALSE}
 read_households(
@@ -70,8 +77,7 @@ The first time the user runs a function, **censobr** will download the file and 
 
 Microdata of Brazilian census are often be too big to load in users' RAM memory. To avoid this problem, **censobr** will by default return an [Arrow table](https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow), which can be analyzed like a regular `data.frame` using the `dplyr` package without loading the full data to memory.
 
-Let's see how it works in a couple examples:
-
+Let's see how **censobr** works in a couple examples:
 
 # Reproducible examples
 
@@ -97,9 +103,20 @@ pop <- read_population(year = 2010,
                        add_labels = 'pt',
                        showProgress = FALSE)
 
+class(pop)
+```
+By default, the ouput of the function is an `"arrow_dplyr_query"`. This is makes it possible for you to work with the census data in a super fast and efficient way, even though the data set might be to big for your computer memory.
+
+> By setting the parameter `as_data_frame = TRUE`, the read functions load the entire output to memory as a `data.frame`. *Warning:* This can cause the R session to crash in computationally constrained enviroments.
+
+The output of the read functions in **censobr** can be analyzed like a regular `data.frame` using the `{dplyr}` package. For example, it's to have a quick peak into the data with `glimpse()`
+
+```{r, eval = TRUE, warning = FALSE}
+dplyr::glimpse(pop)
 ```
 
-Next, we use the `dplyr` syntax to (a) filter observations for the state of Rio de Janeiro, (b) group observations by racial group, (c) summarize the data calculating the proportion of individuals with higher education.
+
+In the example below, we use the `dplyr` syntax to (a) filter observations for the state of Rio de Janeiro, (b) group observations by racial group, (c) summarize the data calculating the proportion of individuals with higher education. Note that we need do add a `collect()` call at the end of our query.
 
 ```{r, eval = TRUE, warning = FALSE}
 df <- pop |>
