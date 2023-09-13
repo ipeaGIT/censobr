@@ -140,42 +140,43 @@ the function will download the data again and overwrite the local file.</p></dd>
 <span class="r-in"><span>                    showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading data. File will be stored locally at: /home/runner/.cache/R/censobr/data_release_v0.1.0</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   code_muni code_state abbrev_state name_state code_region name_region</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   code_weighting V0102 V1002 V1003   V0103     V0104       V0105   V0300 V0404</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1100015001001    11  1102 11006 1100015 110001505 11000150599 5188550     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1100015001001    11  1102 11006 1100015 110001505 11000150599 1252632     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  1100015001001    11  1102 11006 1100015 110001505 11000150599 3472851     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1100015001001    11  1102 11006 1100015 110001505 11000150599 2030293     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1100015001001    11  1102 11006 1100015 110001505 11000150599 4065906     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1100015001001    11  1102 11006 1100015 110001505 11000150599 1932380     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   V1001 V1004         AREAP CODV0404 CODV0404_2 V4614B CODV4615B V4614C</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1  &lt;NA&gt; 1100015001001        0         11   3086        10   2950</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     1  &lt;NA&gt; 1100015001001        0         01    301        04    301</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     1  &lt;NA&gt; 1100015001001        0         03    250        04    250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     1  &lt;NA&gt; 1100015001001        0         02    740        06    740</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     1  &lt;NA&gt; 1100015001001        0         02    953        07    953</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     1  &lt;NA&gt; 1100015001001        0         02    300        04    300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   CODV4615C V4616_7400 CODV4615_7400 V7400 CODV7400 V7400A CODV7400A V7400B</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        12     514.33            06     6       06      3        03      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        07     150.50            03     2       02      1        01      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        07      83.33            03     3       03      2        02      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        09     246.67            04     3       03      1        01      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        10     238.25            04     4       04      1        01      3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        07     100.00            03     3       03      1        01      2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   CODV7400B      P001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        03  8.382025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        01  9.491570</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        01  8.938103</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        02 12.508102</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        03 11.325142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        02  9.425035</span>
+<span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> FileSystemDataset with 1 Parquet file</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5,691,294 rows x 33 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_muni      <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1100015", "1100015", "1100015", "1100015", "1100015",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_state     <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "11", "11", "11", "11", "11", "11", "11", "11", "11", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ abbrev_state   <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ name_state     <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "Rondônia", "Rondônia", "Rondônia", "Rondônia", "Rondô…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_region    <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ name_region    <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "Norte", "Norte", "Norte", "Norte", "Norte", "Norte", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_weighting <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1100015001001", "1100015001001", "1100015001001", "11…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0102          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "11", "11", "11", "11", "11", "11", "11", "11", "11", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1002          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1102", "1102", "1102", "1102", "1102", "1102", "1102"…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1003          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "11006", "11006", "11006", "11006", "11006", "11006", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0103          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1100015", "1100015", "1100015", "1100015", "1100015",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0104          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "110001505", "110001505", "110001505", "110001505", "1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0105          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "11000150599", "11000150599", "11000150599", "11000150…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0300           <span style="color: #949494; font-style: italic;">&lt;int32&gt;</span> 5188550, 1252632, 3472851, 2030293, 4065906, 1932380, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0404           <span style="color: #949494; font-style: italic;">&lt;int32&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1001          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1004          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ AREAP          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1100015001001", "1100015001001", "1100015001001", "11…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ CODV0404       <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "1",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ CODV0404_2     <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "11", "01", "03", "02", "02", "02", "03", "01", "02", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V4614B          <span style="color: #949494; font-style: italic;">&lt;int32&gt;</span> 3086, 301, 250, 740, 953, 300, 1297, 2400, 60, 700, 0,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ CODV4615B      <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "10", "04", "04", "06", "07", "04", "07", "09", "02", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V4614C          <span style="color: #949494; font-style: italic;">&lt;int32&gt;</span> 2950, 301, 250, 740, 953, 300, 808, 2400, 60, 0, 0, 13…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ CODV4615C      <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "12", "07", "07", "09", "10", "07", "10", "12", "02", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V4616_7400     <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 514.33, 150.50, 83.33, 246.67, 238.25, 100.00, 432.33,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ CODV4615_7400  <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "06", "03", "03", "04", "04", "03", "05", "07", "01", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V7400           <span style="color: #949494; font-style: italic;">&lt;int32&gt;</span> 6, 2, 3, 3, 4, 3, 3, 2, 3, 4, 3, 2, 2, 6, 2, 5, 3, 2, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ CODV7400       <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "06", "02", "03", "03", "04", "03", "03", "02", "03", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V7400A          <span style="color: #949494; font-style: italic;">&lt;int32&gt;</span> 3, 1, 2, 1, 1, 1, 1, 1, 2, 3, 0, 1, 1, 4, 1, 2, 2, 1, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ CODV7400A      <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "03", "01", "02", "01", "01", "01", "01", "01", "02", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V7400B          <span style="color: #949494; font-style: italic;">&lt;int32&gt;</span> 3, 1, 1, 2, 3, 2, 2, 1, 1, 1, 3, 1, 1, 2, 1, 3, 1, 1, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ CODV7400B      <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "03", "01", "01", "02", "03", "02", "02", "01", "01", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ P001           <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 8.382025, 9.491570, 8.938103, 12.508102, 11.325142, 9.…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call `print()` for full schema details</span>
 </code></pre></div>
     </div>
   </div>

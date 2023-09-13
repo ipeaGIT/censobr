@@ -137,65 +137,97 @@ the function will download the data again and overwrite the local file.</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># return data as arrow Dataset</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_households</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_households</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span></span>
+<span class="r-in"><span>                      showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading data. File will be stored locally at: /home/runner/.cache/R/censobr/data_release_v0.1.0</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   code_muni code_state abbrev_state name_state code_region name_region</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   1100015         11           RO   Rondônia           1       Norte</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   code_weighting V0001 V0002         V0011 V0300     V0010 V1001 V1002 V1003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1100015001001    11 00015 1100015001001  3624  8.705865     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1100015001001    11 00015 1100015001001  6647  9.818689     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  1100015001001    11 00015 1100015001001 14596  9.495608     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1100015001001    11 00015 1100015001001 15524  9.122642     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1100015001001    11 00015 1100015001001 15840 11.999527     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1100015001001    11 00015 1100015001001 29337 12.964511     1    02   006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   V1004 V1006 V4001 V4002 V0201 V2011   V2012 V0202 V0203 V6203 V0204 V6204</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    00     1    01    11     3    60 0.11765     4     4   0.5     1   2.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    00     1    01    11     1    NA      NA     1     7   0.1     1   1.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    00     1    01    11     1    NA      NA     3     7   1.4     3   3.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    00     2    01    11     1    NA      NA     3    10   0.3     2   1.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    00     1    01    11     1    NA      NA     1     4   0.8     2   1.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    00     1    01    11     1    NA      NA     3     6   0.8     2   2.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   V0205 V0206 V0207 V0208 V0209 V0210 V0211 V0212 V0213 V0214 V0215 V0216 V0217</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1  &lt;NA&gt;     3    01     1     1     1     2     2     1     2     1     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2  &lt;NA&gt;     3    01     1     1     1     1     1     1     2     1     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     1  &lt;NA&gt;     3    02     1     1     1     1     1     1     2     1     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     1  &lt;NA&gt;     3    02     1     3     1     2     1     1     2     1     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     1  &lt;NA&gt;     3    02     1     1     1     1     2     1     2     1     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     1  &lt;NA&gt;     3    02     1     1     1     1     1     1     2     1     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   V0218 V0219 V0220 V0221 V0222 V0301 V0401 V0402 V0701 V6529   V6530   V6531</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2     2  &lt;NA&gt;     1     2     2     2     1     2  1000 1.96078  500.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2     1     1     1     2     2     1     1     2  1800 3.52941 1800.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     2     1     1     1     2     2    10     2     2  3689 7.23333  368.90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     2     1     1     1     2     2     3     1     2  1550 3.03922  516.67</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     2     2  &lt;NA&gt;     1     2     2     3     2     2  2510 4.92157  836.67</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     2     2  &lt;NA&gt;     2     2     2     5     2     2   970 1.90196  194.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     V6532 V6600 V6210 M0201 M2011 M0202 M0203 M0204 M0205 M0206 M0207 M0208</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.98039     2     2     2     2     2     2     2     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 3.52941     1     2     2     2     2     2     1     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.72333     3     2     2     2     2     2     2     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 1.01307     2     2     2     2     2     2     1     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 1.64052     3     2     2     2     2     2     2     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.38039     2     2     2     2     2     2     2     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   M0209 M0210 M0211 M0212 M0213 M0214 M0215 M0216 M0217 M0218 M0219 M0220 M0221</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2     2     2     2     2     2     2     2     2     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2     2     2     2     2     2     2     2     2     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     2     2     2     2     2     2     2     2     2     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     2     2     2     2     2     2     2     2     2     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     2     2     2     2     2     2     2     2     2     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     2     2     2     2     2     2     2     2     2     2     2     2     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   M0222 M0301 M0401 M0402 M0701 V1005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2     2     2     2     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2     2     2     1     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     2     2     2     2     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     2     2     2     2     2     8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     2     2     2     2     2     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     2     2     2     2     2     1</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> FileSystemDataset with 1 Parquet file</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6,192,332 rows x 83 columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_muni      <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1100015", "1100015", "1100015", "1100015", "1100015",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_state     <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "11", "11", "11", "11", "11", "11", "11", "11", "11", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ abbrev_state   <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ name_state     <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "Rondônia", "Rondônia", "Rondônia", "Rondônia", "Rondô…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_region    <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ name_region    <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "Norte", "Norte", "Norte", "Norte", "Norte", "Norte", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_weighting <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1100015001001", "1100015001001", "1100015001001", "11…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0001          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "11", "11", "11", "11", "11", "11", "11", "11", "11", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0002          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "00015", "00015", "00015", "00015", "00015", "00015", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0011          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1100015001001", "1100015001001", "1100015001001", "11…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0300          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 3624, 6647, 14596, 15524, 15840, 29337, 38146, 45797, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0010          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 8.705865, 9.818689, 9.495608, 9.122642, 11.999527, 12.…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1001          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1002          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "02", "02", "02", "02", "02", "02", "02", "02", "02", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1003          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "006", "006", "006", "006", "006", "006", "006", "006"…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1004          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "00", "00", "00", "00", "00", "00", "00", "00", "00", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1006          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "2", "1", "1", "1", "1", "1", "2", "1",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V4001          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "01", "01", "01", "01", "01", "01", "01", "01", "01", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V4002          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "11", "11", "11", "11", "11", "11", "11", "11", "11", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0201          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "3", "1", "1", "1", "1", "1", "2", "1", "1", "4", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V2011          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 60, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V2012          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 0.11765, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0202          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "4", "1", "3", "3", "1", "3", "1", "6", "3", "1", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0203          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 4, 7, 7, 10, 4, 6, 9, 6, 6, 7, NA, 3, 3, 5, 8, 10, 5, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V6203          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 0.5, 0.1, 1.4, 0.3, 0.8, 0.8, 0.3, 0.3, 0.5, 0.4, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0204          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 1, 1, 3, 2, 2, 2, 3, 1, 2, 2, NA, 2, 2, 4, 2, 2, 1, 3,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V6204          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 2.0, 1.0, 3.3, 1.5, 1.5, 2.5, 1.0, 2.0, 1.5, 1.5, NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0205          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "2", "1", "1", "1", "1", "2", "1", "1", "1", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0206          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0207          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "3", "3", "3", "3", "3", "3", "3", "4", "3", "3", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0208          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "01", "01", "02", "02", "02", "02", "01", "02", "02", …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0209          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0210          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "3", "1", "1", "1", "1", "1", "3", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0211          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0212          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "1", "1", "2", "1", "1", "1", "1", "1", "1", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0213          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "1", "1", "1", "2", "1", "1", "1", "1", "1", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0214          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0215          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "1", "2", "1", "2", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0216          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0217          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0218          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0219          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "1", "1", "1", "2", "2", "1", "2", "2", "2", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0220          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> NA, "1", "1", "1", NA, NA, "1", NA, NA, NA, NA, NA, NA…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0221          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "2", "1", "1", "1", "2", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0222          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "1", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0301          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0401          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 2, 1, 10, 3, 3, 5, 3, 2, 3, 3, 1, 3, 2, 5, 2, 3, 1, 3,…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0402          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "2", "1", "2", "2", "1", "2", "2", "2", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0701          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V6529          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 1000, 1800, 3689, 1550, 2510, 970, 1530, 1020, 1900, 1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V6530          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 1.96078, 3.52941, 7.23333, 3.03922, 4.92157, 1.90196, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V6531          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 500.00, 1800.00, 368.90, 516.67, 836.67, 194.00, 510.0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V6532          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 0.98039, 3.52941, 0.72333, 1.01307, 1.64052, 0.38039, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V6600          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "1", "3", "2", "3", "2", "2", "2", "2", "2", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V6210          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", NA, …</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0201          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M2011          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0202          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0203          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0204          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "1", "2", "1", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0205          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0206          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0207          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0208          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0209          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0210          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0211          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0212          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0213          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0214          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0215          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0216          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0217          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0218          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0219          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0220          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0221          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0222          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0301          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0401          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0402          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "1", "2", "2", "2", "2", "2", "2", "2", "2", "1",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0701          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1005          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "8", "1", "1", "1", "1", "1", "8", "1",…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call `print()` for full schema details</span>
 </code></pre></div>
     </div>
   </div>
