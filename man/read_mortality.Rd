@@ -51,13 +51,13 @@ the sample component of the questionnaire.
 df <- read_mortality(year = 2010,
                      showProgress = FALSE)
 
-head(df) |> dplyr::collect()
+dplyr::collect( head(df) )
 
 # return data as data.frame
 df <- read_mortality(year = 2010,
                      as_data_frame = TRUE,
                      showProgress = FALSE)
-head(df)
+dplyr::collect( head(df) )
 \dontshow{\}) # examplesIf}
 }
 \seealso{

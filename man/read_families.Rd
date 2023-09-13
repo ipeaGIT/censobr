@@ -50,7 +50,7 @@ the sample component of the questionnaire.
 df <- read_families(year = 2000,
                     showProgress = FALSE)
 
-head(df) |> dplyr::collect()
+dplyr::collect( head(df) )
 \dontshow{\}) # examplesIf}
 }
 \seealso{
