@@ -85,3 +85,12 @@ Afaik, **censobr** is the only R package that provides fast and convenient acces
 Original Census data is collected by the Brazilian Institute of Geography and Statistics (IBGE). The **censobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
 
 - Pereira, R.H.M. (2023) censobr: Download Data from Brazil's Population Census. GitHub repository - https://github.com/ipeaGIT/censobr.
+
+
+::: {.pkgdown-devel}
+tests only on dev branch
+`2+2`
+:::
+
+
+
