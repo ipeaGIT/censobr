@@ -49,5 +49,5 @@ test_that("read_families", {
 
 })
 
-# clean cache
-censobr_cache(delete_file = 'all')
+# # clean cache
+# censobr_cache(delete_file = 'all')

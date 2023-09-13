@@ -61,5 +61,5 @@ test_that("read_population", {
 
 })
 
-# clean cache
-censobr_cache(delete_file = 'all')
+# # clean cache
+# censobr_cache(delete_file = 'all')
