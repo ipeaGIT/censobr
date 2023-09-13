@@ -1,8 +1,14 @@
 destination: ./docs
+
+development:
+  mode: auto
+
+
 repo:
   url:
     home: https://github.com/ipeaGIT/censobr/
     source: https://github.com/ipeaGIT/censobr/tree/main/
+
 reference:
   - title: "Microdata"
   - contents:
