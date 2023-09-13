@@ -19,6 +19,7 @@
 #' df <- read_population(year = 2010,
 #'                       showProgress = FALSE)
 #'
+#' dplyr::glimpse(df)
 #'
 read_population <- function(year = 2010,
                             columns = NULL,

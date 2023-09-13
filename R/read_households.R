@@ -16,8 +16,10 @@
 #' @family Microdata
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # return data as arrow Dataset
-#' df <- read_households(year = 2010, showProgress = FALSE)
-#' dplyr::collect( head(df) )
+#' df <- read_households(year = 2010,
+#'                       showProgress = FALSE)
+#'
+#' dplyr::glimpse(df)
 #'
 read_households <- function(year = 2010,
                             columns = NULL,

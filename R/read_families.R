@@ -19,7 +19,7 @@
 #' df <- read_families(year = 2000,
 #'                     showProgress = FALSE)
 #'
-#' dplyr::collect( head(df) )
+#' dplyr::glimpse(df)
 #'
 read_families <- function(year = 2000,
                           columns = NULL,

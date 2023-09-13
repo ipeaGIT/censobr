@@ -51,6 +51,7 @@ in the sample component of the questionnaire.
 df <- read_population(year = 2010,
                       showProgress = FALSE)
 
+dplyr::glimpse(df)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

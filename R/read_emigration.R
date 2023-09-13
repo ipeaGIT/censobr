@@ -19,13 +19,14 @@
 #' df <- read_emigration(year = 2010,
 #'                       showProgress = FALSE)
 #'
-#' dplyr::collect( head(df) )
+#' dplyr::glimpse(df)
 #'
 #' # return data as data.frame
 #' df <- read_emigration(year = 2010,
 #'                       as_data_frame = TRUE,
 #'                       showProgress = FALSE)
-#' dplyr::collect( head(df) )
+#'
+#' dplyr::glimpse(df)
 #'
 read_emigration <- function(year = 2010,
                              columns = NULL,
