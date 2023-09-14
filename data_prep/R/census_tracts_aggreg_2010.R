@@ -6,6 +6,7 @@ library(pbapply)
 library(rvest)
 library(purrr)
 library(stringr)
+library(readxl)
 
 data.table::setDTthreads(percent = 100)
 
@@ -92,7 +93,7 @@ data.table::setDTthreads(percent = 100)
 # list all csv files
 all_csv_files <- list.files(path = './data_raw/tracts/2010',
                         full.names = T, recursive = T,
-                        pattern = '.csv')
+                        pattern = '.xls')
 
 # rename file of Alagoas pessoa05
 file_to_rename <- all_csv_files[all_csv_files %like% 'pessoa']
@@ -104,7 +105,7 @@ file.rename(file_to_rename, str_replace_all(file_to_rename, 'responsavel', 'Resp
 # update list of all csv files
 all_csv_files <- list.files(path = './data_raw/tracts/2010',
                             full.names = T, recursive = T,
-                            pattern = '.csv')
+                            pattern = '.xls')
 
 # get all tables
 root_names <- basename(all_csv_files)
@@ -121,6 +122,8 @@ if(isFALSE(length(all_states) == 27)){ stop('Error')}
 all_states <- all_states[!grepl("SP",all_states)]
 all_states <- c(all_states, 'SP_Capital', 'SP_Exceto')
 all_states
+
+all_states <- paste0(all_states, '_')
 
 # remove CE
 all_states <- all_states[!grepl("CE",all_states)]
@@ -146,10 +149,13 @@ for (t in table_names){ # t = 'Basico'
 
   # rbind all states
   final_df <- data.table::rbindlist(final_list, use.names=TRUE)
+  gc(T)
 
   # save data
   arrow::write_parquet(final_df, paste0('./data/tracts/2010/2010_tracts', t, '.parquet'))
-}
+  rm(final_df)
+  gc(T)
+  }
 
 
 
@@ -162,7 +168,7 @@ for (t in table_names){ # t = 'Basico'
 
 ### merge tables in the same state ----------------------------
 
-prep_state <- function(abbrev){ # abbrev = "SP_Capital"     abbrev = "CE"
+prep_state <- function(abbrev){ # abbrev = "SP_Capital"     abbrev = "CE_"
 
   message(abbrev)
 
@@ -173,10 +179,10 @@ prep_state <- function(abbrev){ # abbrev = "SP_Capital"     abbrev = "CE"
   df_list <- lapply(X=uf_files, FUN=read_and_rename)
 
   # left join them all
-  if(length(df_list)>1){
-    temp_uf <- purrr::reduce(.x = df_list, .f = dplyr::left_join, by=c('code_muni', 'code_tract', 'Situacao_setor'))
+  if (length(df_list)>1) {
+    temp_uf <- purrr::reduce(.x = df_list, .f = dplyr::left_join, by=c('code_muni', 'code_tract'))
   }
-  if(length(df_list)==1){
+  if (length(df_list)==1) {
     temp_uf <- rbindlist(df_list)
     }
 
@@ -203,14 +209,15 @@ read_and_rename <- function(f){ # f = uf_files[1]
   enc <- ifelse(st=='ES', 'UTF-8', 'Latin-1')
 
   # read data
-  temp_df <- data.table::fread(f,  encoding = enc, sep = ';',dec = ',', fill=TRUE)
-  temp_df <- data.table::fread(f,  encoding = enc, sep = ';',dec = ',', fill=TRUE, nrows = 22328)
-  # temp_df2 <- data.table::fread(f, sep = ';', dec = ',')
+  temp_df <- readxl::read_xls(f)
+  # temp_df <- data.table::fread(f,  encoding = enc, sep = ';',dec = ',', fill=TRUE)
+  # temp_df <- data.table::fread(f,  encoding = enc, sep = ';',dec = ',', fill=TRUE, nrows = 22328)
   # temp_df2 <- vroom::vroom(f, delim = ';')
   # temp_df <- read_csv2(f)
 
 
   # determine columns with 100% of NA and drop them
+  setDT(temp_df)
   all_NA_cols <- sapply(temp_df, function(x)all(is.na(x)))
   all_NA_cols <- names(all_NA_cols[all_NA_cols > 0])
   if(length(all_NA_cols)>0){ temp_df[, {{all_NA_cols}} := NULL] }
@@ -223,13 +230,14 @@ read_and_rename <- function(f){ # f = uf_files[1]
   root_name <- tolower(root_name)
 
   # rename columns
-  cols_to_rename <- names(temp_df)[3:ncol(temp_df)]
-  names(temp_df)[3:ncol(temp_df)] <- paste0(root_name,'_', cols_to_rename)
-
   setnames(temp_df, 'Cod_setor', 'code_tract')
   temp_df[, code_tract := as.character(code_tract)]
   temp_df[, code_muni := substr(code_tract, 1, 7)]
   setcolorder(temp_df, c('code_muni', 'code_tract'))
+
+  cols_to_rename <- names(temp_df)[3:ncol(temp_df)]
+  names(temp_df)[3:ncol(temp_df)] <- paste0(root_name,'_', cols_to_rename)
+
 
   return(temp_df)
 }

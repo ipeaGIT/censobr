@@ -51,14 +51,12 @@ the sample component of the questionnaire.
 df <- read_emigration(year = 2010,
                       showProgress = FALSE)
 
-dplyr::glimpse(df)
 
 # return data as data.frame
 df <- read_emigration(year = 2010,
                       as_data_frame = TRUE,
                       showProgress = FALSE)
 
-dplyr::glimpse(df)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

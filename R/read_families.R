@@ -19,7 +19,6 @@
 #' df <- read_families(year = 2000,
 #'                     showProgress = FALSE)
 #'
-#' dplyr::glimpse(df)
 #'
 read_families <- function(year = 2000,
                           columns = NULL,
