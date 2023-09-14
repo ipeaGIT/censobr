@@ -141,36 +141,6 @@ the function will download the data again and overwrite the local file.</p></dd>
 <span class="r-in"><span>                      showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading data. File will be stored locally at: /home/runner/.cache/R/censobr/data_release_v0.1.0</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> FileSystemDataset with 1 Parquet file</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53,777 rows x 26 columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_muni      <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1100015", "1100015", "1100015", "1100015", "1100015",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_state     <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "11", "11", "11", "11", "11", "11", "11", "11", "11", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ abbrev_state   <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ name_state     <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "Rondônia", "Rondônia", "Rondônia", "Rondônia", "Rondô…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_region    <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ name_region    <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "Norte", "Norte", "Norte", "Norte", "Norte", "Norte", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_weighting <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1100015001001", "1100015001001", "1100015001001", "11…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0001          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "11", "11", "11", "11", "11", "11", "11", "11", "11", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0002          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "00015", "00015", "00015", "00015", "00015", "00015", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0011          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1100015001001", "1100015001001", "1100015001001", "11…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0300          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 610199, 666134, 753970, 771835, 771835, 771835, 894115…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0010          <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 9.838758, 12.925726, 9.232168, 8.966589, 8.966589, 8.9…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1001          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1002          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "02", "02", "02", "02", "02", "02", "02", "02", "02", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1003          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "006", "006", "006", "006", "006", "006", "006", "006"…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1004          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "00", "00", "00", "00", "00", "00", "00", "00", "00", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1006          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "2", "2", "2", "2", "1", "1", "1", "2", "2",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0303          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "1", "2", "2", "1", "2", "1", "2", "1", "1",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0304          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1985", "1968", "1987", "1972", "1985", "1978", "1971"…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0305          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2008", "2010", "2010", "2006", "2009", "2007", "2006"…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V3061          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "8000724", "8000724", "8000024", "8000724", "8000724",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0303          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0304          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0305          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ M3061          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1005          <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "1", "1", "8", "8", "8", "8", "1", "1", "1", "8", "8",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call `print()` for full schema details</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># return data as data.frame</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_emigration</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span></span>
@@ -178,35 +148,6 @@ the function will download the data again and overwrite the local file.</p></dd>
 <span class="r-in"><span>                      showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Reading data cached locally.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 53,777</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_muni      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1100015", "1100015", "1100015", "1100015", "1100015", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_state     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "11", "11", "11", "11", "11", "11", "11", "11", "11", "…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ abbrev_state   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", "…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ name_state     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Rondônia", "Rondônia", "Rondônia", "Rondônia", "Rondôn…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_region    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ name_region    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Norte", "Norte", "Norte", "Norte", "Norte", "Norte", "…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ code_weighting <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1100015001001", "1100015001001", "1100015001001", "110…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0001          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "11", "11", "11", "11", "11", "11", "11", "11", "11", "…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0002          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "00015", "00015", "00015", "00015", "00015", "00015", "…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0011          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1100015001001", "1100015001001", "1100015001001", "110…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0300          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 610199, 666134, 753970, 771835, 771835, 771835, 894115,…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0010          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9.838758, 12.925726, 9.232168, 8.966589, 8.966589, 8.96…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1001          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1002          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "02", "02", "02", "02", "02", "02", "02", "02", "02", "…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1003          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "006", "006", "006", "006", "006", "006", "006", "006",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1004          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "00", "00", "00", "00", "00", "00", "00", "00", "00", "…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1006          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1", "1", "2", "2", "2", "2", "1", "1", "1", "2", "2", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0303          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1", "1", "1", "2", "2", "1", "2", "1", "2", "1", "1", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0304          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1985", "1968", "1987", "1972", "1985", "1978", "1971",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V0305          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2008", "2010", "2010", "2006", "2009", "2007", "2006",…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V3061          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "8000724", "8000724", "8000024", "8000724", "8000724", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0303          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0304          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ M0305          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ M3061          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ V1005          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1", "1", "8", "8", "8", "8", "1", "1", "1", "8", "8", …</span>
 </code></pre></div>
     </div>
   </div>
