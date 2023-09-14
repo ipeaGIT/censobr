@@ -2,6 +2,10 @@
 library(censobr)
 library(dplyr)
 library(arrow)
+library(data.table)
+
+# read
+# https://stackoverflow.com/questions/58439966/read-partitioned-parquet-directory-all-files-in-one-r-dataframe-with-apache-ar
 
 # data dictionary  ----------------
 
@@ -129,6 +133,26 @@ unlink(old_cache, recursive = TRUE)
 
 
 
+##### tracts data ------------------------
+
+df_ba <- read_tracts(year = 2010,
+                  dataset = 'Basico',
+                  showProgress = TRUE
+                  )
+
+df_do <- read_tracts(year = 2010,
+                     dataset = 'Domicilio',
+                     showProgress = TRUE
+                     )
+
+df_pr <- read_tracts(year = 2010,
+                  dataset = 'PessoaRenda',
+                  showProgress = TRUE
+                  )
+
+dplyr::glimpse(df)
+
+df$domicilio03
 
 
 ##### downloads ------------------------

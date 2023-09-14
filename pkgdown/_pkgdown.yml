@@ -17,6 +17,9 @@ reference:
     - read_mortality
     - read_emigration
     - read_families
+  - title: "Census tract data"
+  - contents:
+    - read_tracts
   - title: "Data Dictionary"
   - contents:
     - data_dictionary

@@ -111,6 +111,7 @@ all_csv_files <- list.files(path = './data_raw/tracts/2010',
 root_names <- basename(all_csv_files)
 root_names <- stringr::str_split(root_names, '_', simplify = TRUE)[,1]
 table_names <- str_replace_all(root_names, "[:digit:]", "") |> unique()
+table_names <- table_names[!grepl("-MG.xls",table_names)]  |> unique()
 table_names
 
 
@@ -125,11 +126,11 @@ all_states
 
 all_states <- paste0(all_states, '_')
 
-# remove CE
-all_states <- all_states[!grepl("CE",all_states)]
+# # remove CE
+# all_states <- all_states[!grepl("CE",all_states)]
 
 
-for (t in table_names){ # t = 'Basico'
+for (t in table_names){ # t = 'Basico'         t = 'Pessoa'
 
   message(t)
 
@@ -142,19 +143,20 @@ for (t in table_names){ # t = 'Basico'
   }
 
   # process each state
-  final_list <- pblapply(X = all_states, FUN = prep_state)
-
-  # final_list[[8]]$`Cod_Grandes RegiÃµes`
-  # final_list[[1]]$`Cod_Grandes Regiões`
-
-  # rbind all states
-  final_df <- data.table::rbindlist(final_list, use.names=TRUE)
-  gc(T)
-
-  # save data
-  arrow::write_parquet(final_df, paste0('./data/tracts/2010/2010_tracts', t, '.parquet'))
-  rm(final_df)
-  gc(T)
+  pblapply(X = all_states, FUN = prep_state, tabl = t)
+  # final_list <- pblapply(X = all_states, FUN = prep_state)
+  #
+  # # final_list[[8]]$`Cod_Grandes RegiÃµes`
+  # # final_list[[1]]$`Cod_Grandes Regiões`
+  #
+  # # rbind all states
+  # final_df <- data.table::rbindlist(final_list, use.names=TRUE)
+  # gc(T)
+  #
+  # # save data
+  # arrow::write_parquet(final_df, paste0('./data/tracts/2010/2010_tracts', t, '.parquet'))
+  # rm(final_df)
+  # gc(T)
   }
 
 
@@ -168,7 +170,7 @@ for (t in table_names){ # t = 'Basico'
 
 ### merge tables in the same state ----------------------------
 
-prep_state <- function(abbrev){ # abbrev = "SP_Capital"     abbrev = "CE_"
+prep_state <- function(abbrev, tabl){ # abbrev = "SP_Capital"     abbrev = "CE_"
 
   message(abbrev)
 
@@ -176,22 +178,26 @@ prep_state <- function(abbrev){ # abbrev = "SP_Capital"     abbrev = "CE_"
   uf_files <- csv_tables[csv_tables %like% abbrev]
 
   # read all tables into a list
-  df_list <- lapply(X=uf_files, FUN=read_and_rename)
+  df_list <- lapply(X=uf_files, FUN=read_and_rename, tabl = tabl)
 
   # left join them all
   if (length(df_list)>1) {
     temp_uf <- purrr::reduce(.x = df_list, .f = dplyr::left_join, by=c('code_muni', 'code_tract'))
   }
   if (length(df_list)==1) {
-    temp_uf <- rbindlist(df_list)
+    temp_uf <- rbindlist(df_list, fill=TRUE)
     }
 
-  return(temp_uf)
+  gc(T)
+  # return(temp_uf)
+  fname <- paste0(tabl,'_tracts_', abbrev, '.parquet')
+  arrow::write_parquet(temp_uf, paste0('./data/tracts/2010/', fname))
+
 }
 
 ### read and rename tables ----------------------------
 
-read_and_rename <- function(f){ # f = uf_files[1]
+read_and_rename <- function(f, tabl){ # f = uf_files[1]
 
 #  f = "./data_raw/tracts/2010/CE_20171016/CE/Base informaçoes setores2010 universo CE/CSV/Pessoa07_CE.csv"
 ### replace "X" with NA
@@ -235,8 +241,11 @@ read_and_rename <- function(f){ # f = uf_files[1]
   temp_df[, code_muni := substr(code_tract, 1, 7)]
   setcolorder(temp_df, c('code_muni', 'code_tract'))
 
-  cols_to_rename <- names(temp_df)[3:ncol(temp_df)]
-  names(temp_df)[3:ncol(temp_df)] <- paste0(root_name,'_', cols_to_rename)
+  if( tabl == 'Pessoa' | tabl == 'Domicilio' | tabl == 'Responsavel'){
+    cols_to_rename <- names(temp_df)[3:ncol(temp_df)]
+    names(temp_df)[3:ncol(temp_df)] <- paste0(root_name,'_', cols_to_rename)
+  }
+
 
 
   return(temp_df)
@@ -247,3 +256,39 @@ read_and_rename <- function(f){ # f = uf_files[1]
 ### rowbind across states  ----------------------------
 
 
+files <- list.files(path = './data/tracts/2010', full.names = T)
+
+# get all tables
+root_names <- basename(files)
+table_names <- stringr::str_extract(root_names, "[^_]+") |> unique()
+table_names <- paste0(table_names, '_')
+
+bind_all <- function(tbl){ # tbl = 'Basico_'
+
+  # select type
+  temp_f <- files[files %like% tbl]
+
+  ## Define the dataset
+  DS <- arrow::open_dataset(sources = temp_f)
+
+  ## Create a scanner
+  SO <- Scanner$create(DS)
+
+  ## Load it as n Arrow Table in memory
+  AT <- SO$ToTable()
+
+  # ## Convert it to an R data frame
+  # DF <- as.data.frame(AT)
+  # head(DF)
+
+  # add variables
+
+
+  # save
+  dest_file <- paste0('2010_tracts_', tbl, '.parquet')
+  arrow::write_parquet(AT, paste0('./data/tracts/2010/', dest_file))
+
+}
+
+
+bind_all(tbl = 'Pessoa_')

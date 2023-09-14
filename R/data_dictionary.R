@@ -32,7 +32,7 @@ data_dictionary <- function(year = NULL,
   # data available for data sets:
   data_sets <- c('microdata')
   if (isFALSE(table %in% data_sets)) { stop( paste0("Error: Dictionary currently only available for the tables: ",
-                                              paste(data_sets), collapse = " ")
+                                              paste(data_sets, collapse = ", "))
                                             )}
 
 

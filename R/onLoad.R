@@ -4,7 +4,7 @@ censobr_env <- new.env(parent = emptyenv()) # nocov start
 .onAttach <- function(libname, pkgname){
 
   # data release
-  censobr_env$data_release <- 'v0.1.0'
+  censobr_env$data_release <- 'v0.2.0'
 
   # local cache dir
   cache_d <- paste0('censobr/data_release_',censobr_env$data_release)
