@@ -7,6 +7,10 @@ Authors@R:
              email="rafa.pereira.br@gmail.com", 
              role=c("aut", "cre"), 
              comment = c(ORCID = "0000-0003-2125-7465")),
+      person(given="Rogério J.", family="Barbosa", 
+             email="antrologos@gmail.com", 
+             role=c("aut"), 
+             comment = c(ORCID = "0000-0002-6796-4547")),  
       person(given = "Ipea - Institute for Applied Economic Research",
              role = c("cph", "fnd")))
 Description: Download data from Brazil's population census. The package is built 
