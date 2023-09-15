@@ -88,9 +88,12 @@ data.table::setDTthreads(percent = 100)
 # rm(xls_files)
 
 
-# 3) Households data -----------------------------------------------------------
 
-# list all csv files
+
+
+# 3) Create 1 parquet file for each table / state -----------------------------------------------------------
+
+# list all excel files
 all_csv_files <- list.files(path = './data_raw/tracts/2010',
                         full.names = T, recursive = T,
                         pattern = '.xls')
@@ -126,9 +129,6 @@ all_states
 
 all_states <- paste0(all_states, '_')
 
-# # remove CE
-# all_states <- all_states[!grepl("CE",all_states)]
-
 
 for (t in table_names){ # t = 'Basico'         t = 'Pessoa'
 
@@ -162,13 +162,10 @@ for (t in table_names){ # t = 'Basico'         t = 'Pessoa'
 
 
 
-# df12 <- fread(csv_files[1])
-# df12 <- fread(csv_files[12])
-# df14 <- fread(csv_files[14])
 
+### support functions  ----------------------------
 
-
-### merge tables in the same state ----------------------------
+### merge tables in the same state
 
 prep_state <- function(abbrev, tabl){ # abbrev = "SP_Capital"     abbrev = "CE_"
 
@@ -195,7 +192,7 @@ prep_state <- function(abbrev, tabl){ # abbrev = "SP_Capital"     abbrev = "CE_"
 
 }
 
-### read and rename tables ----------------------------
+### read and rename tables
 
 read_and_rename <- function(f, tabl){ # f = uf_files[1]
 
@@ -247,14 +244,14 @@ read_and_rename <- function(f, tabl){ # f = uf_files[1]
   }
 
 
-
   return(temp_df)
 }
 
 
 
-### rowbind across states  ----------------------------
+# 4) create national data - 1 parquet file for each table -----------------------------------------------------------
 
+### rowbind across states
 
 files <- list.files(path = './data/tracts/2010', full.names = T)
 
@@ -262,33 +259,97 @@ files <- list.files(path = './data/tracts/2010', full.names = T)
 root_names <- basename(files)
 table_names <- stringr::str_extract(root_names, "[^_]+") |> unique()
 table_names <- paste0(table_names, '_')
+table_names <- table_names[!grepl("2010_",table_names)]  |> unique()
+table_names
 
-bind_all <- function(tbl){ # tbl = 'Basico_'
+bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'
+
+  message(tbl)
 
   # select type
   temp_f <- files[files %like% tbl]
 
   ## Define the dataset
   DS <- arrow::open_dataset(sources = temp_f)
+#  DS <- arrow::open_dataset(sources = temp_f[2])
 
   ## Create a scanner
   SO <- Scanner$create(DS)
 
-  ## Load it as n Arrow Table in memory
+  ## Load it as Arrow Table in memory
   AT <- SO$ToTable()
 
-  # ## Convert it to an R data frame
-  # DF <- as.data.frame(AT)
-  # head(DF)
+      # # Convert it to an R data frame
+      # AT <- as.data.frame(AT)
+      # head(AT)
 
-  # add variables
+  # fix missing values ("X") and then convert to numeric
+  vars <- names(AT)
+  vars <- vars[grep('V', vars)]
 
+  AT <- mutate(AT, across(all_of(vars),
+                          ~ as.character(.x)))
+  AT <- mutate(AT, across(all_of(vars),
+                          ~ if_else(.x=='X', NA_character_, .x)))
+  AT <- mutate(AT, across(all_of(vars),
+                          ~ as.numeric(.x)))
+
+
+  # add geography variables
+  if(tbl != 'Basico_'){
+    AT <- add_geography_cols_tracts(AT, year = 2010)
+  }
+
+
+  # rename columns
+  if(tbl == 'Basico_'){
+    AT <- dplyr::mutate(AT, code_state = substr(code_muni, 1, 2))
+    AT <- dplyr::rename(AT,
+                        code_tract = code_tract,
+                        name_muni = Nome_do_municipio,
+                        code_muni = code_muni,
+                        abbrev_state = Cod_UF ,
+                        name_state = Nome_da_UF ,
+                        code_state = code_state,
+                        code_region = `Cod_Grandes Regiões`,
+                        name_region = Nome_Grande_Regiao,
+                        code_meso = Cod_meso,
+                        name_meso = Nome_da_meso,
+                        code_micro = Cod_micro,
+                        name_micro = Nome_da_micro,
+                        code_metro = Cod_RM,
+                        name_metro = Nome_da_RM,
+                        name_neighborhood = Nome_do_bairro,
+                        code_neighborhood = Cod_bairro,
+                        code_district = Cod_distrito,
+                        name_district = Nome_do_distrito,
+                        code_subdistrict = Cod_subdistrito,
+                        name_subdistrict = Nome_do_subdistrito,
+                        V1005 = Situacao_setor,
+                        tipo_setor = Tipo_setor
+                        )
+    }
+
+  # rename column Situacao_setor
+  all_cols <- names(AT)
+  old_names <- all_cols[str_detect(all_cols, 'Situacao_setor')]
+  new_names <- str_replace(old_names, 'Situacao_setor', 'V1005')
+
+  dplyr::rename(AT, domicilio01_V1005 = domicilio01_Situacao_setor)
+
+  dplyr::rename(AT, domicilio01_V1005 = domicilio01_Situacao_setor)
+
+
+  # names(AT) <- new_names
+  # dplyr::rename(AT, new_names)
 
   # save
   dest_file <- paste0('2010_tracts_', tbl, '.parquet')
-  arrow::write_parquet(AT, paste0('./data/tracts/2010/', dest_file))
-
+  arrow::write_parquet(AT, paste0('./data/tracts/2010/clean/', dest_file))
+  return(NULL)
 }
 
 
-bind_all(tbl = 'Pessoa_')
+bind_all(tbl = 'Basico_')
+
+lapply(X=table_names, FUN = bind_all)

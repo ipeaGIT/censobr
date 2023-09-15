@@ -47,6 +47,8 @@ the sample component of the questionnaire.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+library(censobr)
+
 # return data as arrow Dataset
 df <- read_mortality(year = 2010,
                      showProgress = FALSE)

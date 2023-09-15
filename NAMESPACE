@@ -2,6 +2,8 @@
 
 export(censobr_cache)
 export(data_dictionary)
+export(interview_manual)
+export(questionnaire)
 export(read_emigration)
 export(read_families)
 export(read_households)

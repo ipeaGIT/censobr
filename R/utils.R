@@ -46,8 +46,8 @@ download_file <- function(file_url = parent.frame()$file_url,
       )
   }
 
-  # Halt function if download failed (file must exist and be larger than 500 kb)
-  if (!file.exists(local_file) | file.info(local_file)$size < 500000) {
+  # Halt function if download failed (file must exist and be larger than 200 kb)
+  if (!file.exists(local_file) | file.info(local_file)$size < 200000) {
     message('Internet connection not working properly.')
     return(invisible(NULL))
 

@@ -14,7 +14,7 @@ data_dictionary(year = NULL, table = NULL)
 include \code{c("microdata")}.}
 }
 \value{
-Opens .html file on browser
+Opens .html file on the browser
 }
 \description{
 Open the data dictionary of Brazil's census data sets on a browser.
@@ -25,4 +25,8 @@ Open the data dictionary of Brazil's census data sets on a browser.
 data_dictionary(year = 2010, table = 'microdata')
 \dontshow{\}) # examplesIf}
 }
-\concept{Data Dictionary}
+\seealso{
+Other Census documentation: 
+\code{\link{interview_manual}()}
+}
+\concept{Census documentation}

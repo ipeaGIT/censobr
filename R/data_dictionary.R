@@ -7,9 +7,9 @@
 #' @param table Character. The table of data dictionary to be opened. Options
 #'        include `c("microdata")`.
 #'
-#' @return Opens .html file on browser
+#' @return Opens .html file on the browser
 #' @export
-#' @family Data Dictionary
+#' @family Census documentation
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Open data dictionary on browser
 #' data_dictionary(year = 2010, table = 'microdata')

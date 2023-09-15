@@ -15,6 +15,6 @@ censobr_env <- new.env(parent = emptyenv()) # nocov start
   dir_above <- dirname(censobr_env$cache_dir)
   all_cache <- list.files(dir_above, pattern = 'data_release',full.names = TRUE)
   old_cache <- all_cache[!grepl(censobr_env$data_release, all_cache)]
-  unlink(old_cache, recursive = TRUE)
+  if(length(old_cache)>0){ unlink(old_cache, recursive = TRUE) }
 
 } # nocov end

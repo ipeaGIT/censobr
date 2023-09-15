@@ -23,6 +23,10 @@ reference:
   - title: "Data Dictionary"
   - contents:
     - data_dictionary
+  - title: "Census documentation"
+  - contents:
+    - questionnaire
+    - interview_manual
   - title: "Cache data"
   - contents:
     - censobr_cache

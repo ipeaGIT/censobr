@@ -5,7 +5,7 @@
 #'
 #' @template year
 #' @param dataset Character. The dataset to be opened. Options currently include
-#'        `c("Basico", "Domicilio", "PessoaRenda")`.
+#'        `c("Basico", "Domicilio", "DomicilioRenda", "Entorno", "ResponsavelRenda", "Responsavel", "PessoaRenda")`.
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
@@ -43,11 +43,11 @@ read_tracts <- function(year = 2010,
                                               paste(years), collapse = " "))}
 
   # data available for data sets:
-  data_sets <- c("Basico", "Domicilio", "PessoaRenda")
+  data_sets <- c("Basico", "Domicilio", "DomicilioRenda", "Entorno",
+                 "ResponsavelRenda", "Responsavel", "PessoaRenda")
   if (isFALSE(dataset %in% data_sets)) { stop( paste0("Error: Data currently only available for the datasets: ",
                                                     paste(data_sets, collapse = ", "))
-                                               )}
-
+  )}
 
   ### Get url
   dataset <- paste0(dataset, '_')
@@ -84,4 +84,3 @@ read_tracts <- function(year = 2010,
     }
 
 }
-
