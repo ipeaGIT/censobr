@@ -2,7 +2,7 @@
 % Please edit documentation in R/docs_questionnaire.R
 \name{questionnaire}
 \alias{questionnaire}
-\title{Questionnaires used in the data collection of Brazil's census data}
+\title{Questionnaires used in the data collection of Brazil's censuses}
 \usage{
 questionnaire(year = NULL, type = NULL, showProgress = TRUE, cache = TRUE)
 }
@@ -11,7 +11,7 @@ questionnaire(year = NULL, type = NULL, showProgress = TRUE, cache = TRUE)
 \code{2010}.}
 
 \item{type}{Character. The type of questionnaire, whether the one used in the
-sample component of the census, or the univese component. Options
+sample component of the census, or on the univese component. Options
 currenlty include \code{c("sample")}.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
@@ -29,7 +29,7 @@ Opens a \code{.pdf} file on the browser
 }
 \description{
 Open on a browser the questionnaire used in the data collection of Brazil's
-census data
+censuses
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

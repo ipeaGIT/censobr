@@ -2,7 +2,7 @@
 % Please edit documentation in R/docs_interview_manual.R
 \name{interview_manual}
 \alias{interview_manual}
-\title{Interview manual of the data collection of Brazil's census data}
+\title{Interview manual of the data collection of Brazil's censuses}
 \usage{
 interview_manual(year = NULL, showProgress = TRUE, cache = TRUE)
 }
@@ -25,7 +25,7 @@ Opens a \code{.pdf} file on the browser
 }
 \description{
 Open on a browser the interview manual of the data collection of Brazil's
-census data
+censuses
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

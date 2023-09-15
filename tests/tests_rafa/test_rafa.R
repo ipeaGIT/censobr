@@ -132,6 +132,18 @@ old_cache <- all_cache[!grepl(pkgv, all_cache)]
 unlink(old_cache, recursive = TRUE)
 
 
+library(censobr)
+
+censobr_cache(delete_file = 'all')
+
+interview_manual(year = 2010)
+interview_manual(year = 2000)
+interview_manual(year = 1991) #
+interview_manual(year = 1980) #
+interview_manual(year = 1970)
+
+
+
 
 ##### tracts data ------------------------
 
