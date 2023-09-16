@@ -19,7 +19,6 @@
 #' df <- read_population(year = 2010,
 #'                       showProgress = FALSE)
 #'
-#' head(df) |> dplyr::collect()
 #'
 read_population <- function(year = 2010,
                             columns = NULL,
