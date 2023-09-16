@@ -13,7 +13,7 @@
 #' @family Census documentation
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Open interview manual on browser
-#' interview_manual(year = 2000)
+#' interview_manual(year = 2010)
 #'
 interview_manual <- function(year = NULL,
                              showProgress = TRUE,
@@ -24,7 +24,7 @@ interview_manual <- function(year = NULL,
   checkmate::assert_numeric(year)
 
   # data available for the years:
-  years <- c(1970, 1980, 1991, 2000)
+  years <- c(1970, 1980, 1991, 2000, 2010)
   if (isFALSE(year %in% years)) { stop(  paste0("Error: Interview manual currently only available for the years: ",
                                               paste(years), collapse = " ")
                                         )}
