@@ -34,7 +34,7 @@ read_population <- function(year = 2010,
   checkmate::assert_string(add_labels, pattern = 'pt', null.ok = TRUE)
 
   # data available for the years:
-  years <- c(2000, 2010)
+  years <- c(1970, 2000, 2010)
   if (isFALSE(year %in% years)) { stop(paste0("Error: Data currently only available for the years ",
                                              paste(years), collapse = " "))}
 
