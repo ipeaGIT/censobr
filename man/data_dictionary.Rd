@@ -17,7 +17,7 @@ include \code{c("microdata")}.}
 Opens .html file on the browser
 }
 \description{
-Open the data dictionary of Brazil's census data sets on a browser.
+Open on a browser the data dictionary of Brazil's census data.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

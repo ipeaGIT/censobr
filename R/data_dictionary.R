@@ -1,7 +1,7 @@
 #' Data dictionary of Brazil's census data
 #'
 #' @description
-#' Open the data dictionary of Brazil's census data sets on a browser.
+#' Open on a browser the data dictionary of Brazil's census data.
 #'
 #' @template year
 #' @param table Character. The table of data dictionary to be opened. Options

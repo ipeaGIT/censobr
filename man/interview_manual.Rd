@@ -30,7 +30,7 @@ censuses
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Open interview manual on browser
-interview_manual(year = 2000)
+interview_manual(year = 2010)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
