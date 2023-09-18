@@ -22,6 +22,26 @@ test_that("read_households", {
   testthat::expect_true(is(test2, "FileSystemDataset"))
   testthat::expect_true(nrow(test2) >0 )
 
+  # year 1991
+  # (default) arrow table
+  test2 <- read_households(year = 1991)
+  testthat::expect_true(is(test2, "ArrowObject"))
+  testthat::expect_true(is(test2, "FileSystemDataset"))
+  testthat::expect_true(nrow(test2) >0 )
+
+  # year 1980
+  # (default) arrow table
+  test2 <- read_households(year = 1980)
+  testthat::expect_true(is(test2, "ArrowObject"))
+  testthat::expect_true(is(test2, "FileSystemDataset"))
+  testthat::expect_true(nrow(test2) >0 )
+
+  # year 1970
+  # (default) arrow table
+  test2 <- read_households(year = 1970)
+  testthat::expect_true(is(test2, "ArrowObject"))
+  testthat::expect_true(is(test2, "FileSystemDataset"))
+  testthat::expect_true(nrow(test2) >0 )
   # # data.frame
   # test2 <- read_households(as_data_frame = TRUE)
   # testthat::expect_true(is(test2, "data.frame"))

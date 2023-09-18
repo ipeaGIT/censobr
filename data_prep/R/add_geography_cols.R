@@ -5,7 +5,7 @@ add_geography_cols <- function(arrw, year){
 
   # get code_muni from weighting area
   col <- case_when(year == 1970 ~ 'code_muni',
-                   #   year == 1980 ~ 'V5', 1 digito (mesmo V2 V3 V4 V5 ficam com 5 digitos)
+                   year == 1980 ~ 'code_muni',
                    year == 1991 ~ 'code_muni',
                    year == 2010 ~ 'V0011',
                    year == 2000 ~ 'AREAP')
@@ -23,6 +23,7 @@ add_geography_cols <- function(arrw, year){
 
   # state name
   col <- case_when(year == 1970 ~ 'code_state',
+                   year == 1980 ~ 'V2',
                    year == 1991 ~ 'V1101',
                    year == 2010 ~ 'V0001',
                    year == 2000 ~ 'V0102')
@@ -108,6 +109,12 @@ add_geography_cols <- function(arrw, year){
   }
 
 
+  # other regions
+  if(year %in% c(1980)){
+    arrw <- mutate(arrw,
+                   code_meso = V3,
+                   code_micro = V3)
+    }
 
 
   ## reoder columns
@@ -118,6 +125,10 @@ add_geography_cols <- function(arrw, year){
 
   if (year %in% c(1991)) {
     arrw <- relocate(arrw, c(code_muni, code_state, abbrev_state, name_state, code_region, name_region, code_meso, code_micro, code_metro))
+  }
+
+  if (year %in% c(1980)) {
+    arrw <- relocate(arrw, c(code_muni, code_muni_1980, code_state, abbrev_state, name_state, code_region, name_region, code_meso, code_micro))
   }
 
   if (year %in% c(1970)) {

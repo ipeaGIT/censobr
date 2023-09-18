@@ -4,17 +4,16 @@
   * New function `data_dictionary()` opens on a browser the data dictionary of Brazil's census data.
   * New function `questionnaire()` opens on a browser the questionnaire used in the data collection of Brazil's censuses.
   * New function `interview_manual()` opens on a browser the interview manual of the data collection of Brazil's censuses.
-  * New data sets: 1991 census, microdata of population, households. Closes [#8](https://github.com/ipeaGIT/censobr/issues/8).
-    * New data sets: 1970 census, microdata of population, households. Closes [#6](https://github.com/ipeaGIT/censobr/issues/6).
+  * New data sets of 1970, 1980 and 1991 censuses: microdata of population and households. Closes [#6](https://github.com/ipeaGIT/censobr/issues/6), [#7](https://github.com/ipeaGIT/censobr/issues/7) and [#8](https://github.com/ipeaGIT/censobr/issues/8).
   * New function vignettes with the data dictionary of censos 2010 and 2000.
 
 * Minor changes
   * Running `censobr_cache(delete_file = 'all')` now removes all data and directories related from censobr.
-  
-  
 
 * Data included in this version:
   * 1970 census [*New*]
+    * Microdata of population, households 
+  * 1980 census [*New*]
     * Microdata of population, households 
   * 1991 census [*New*]
     * Microdata of population, households 

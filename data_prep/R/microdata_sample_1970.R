@@ -19,8 +19,8 @@ source('./R/add_geography_cols.R')
   head(df) |> collect()
 
 
-  # # make all columns as character
-  # df <- mutate(df, across(everything(), as.character))
+  # make all columns as character
+  df <- mutate(df, across(everything(), as.character))
 
   # rename columns
   df <- rename(df,
