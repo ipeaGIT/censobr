@@ -4,17 +4,27 @@
 \alias{data_dictionary}
 \title{Data dictionary of Brazil's census data}
 \usage{
-data_dictionary(year = NULL, table = NULL)
+data_dictionary(year = NULL, table = NULL, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
 \item{year}{Numeric. Year of reference in the format \code{yyyymm}. Defaults to
 \code{2010}.}
 
 \item{table}{Character. The table of data dictionary to be opened. Options
-include \code{c("microdata")}.}
+include \code{c("microdata", 'tracts')}.}
+
+\item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
+bar. The progress bar only reflects only the downloading
+time, not the time to load the data to memory.}
+
+\item{cache}{Logical. Whether the function should read the data cached
+locally, which is much faster. Defaults to \code{TRUE}. The first time the
+user runs the function, \code{censobr} will download the file and store it
+locally so that the file only needs to be download once. If \code{FALSE},
+the function will download the data again and overwrite the local file.}
 }
 \value{
-Opens .html file on the browser
+Returns \code{NULL} and opens .html or .pdf file on the browser
 }
 \description{
 Open on a browser the data dictionary of Brazil's census data.
@@ -23,6 +33,8 @@ Open on a browser the data dictionary of Brazil's census data.
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Open data dictionary on browser
 data_dictionary(year = 2010, table = 'microdata')
+
+data_dictionary(year = 2010, table = 'tracts')
 \dontshow{\}) # examplesIf}
 }
 \seealso{
