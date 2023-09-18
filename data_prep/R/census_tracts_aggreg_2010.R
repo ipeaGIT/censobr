@@ -9,7 +9,9 @@ library(stringr)
 library(readxl)
 
 data.table::setDTthreads(percent = 100)
+source('./R/add_geography_cols.R')
 
+options(scipen = 999)
 
 # 1) download raw data from IBGE ftp -------------------------------------------
 #
@@ -262,7 +264,9 @@ table_names <- paste0(table_names, '_')
 table_names <- table_names[!grepl("2010_",table_names)]  |> unique()
 table_names
 
-bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'
+table_names <- table_names[!grepl("clean_",table_names)]
+
+bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'  tbl = 'Basico_'
 
   message(tbl)
 
@@ -271,7 +275,7 @@ bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'
 
   ## Define the dataset
   DS <- arrow::open_dataset(sources = temp_f)
-#  DS <- arrow::open_dataset(sources = temp_f[2])
+  #  DS <- arrow::open_dataset(sources = temp_f[2])
 
   ## Create a scanner
   SO <- Scanner$create(DS)
@@ -283,17 +287,13 @@ bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'
       # AT <- as.data.frame(AT)
       # head(AT)
 
-  # fix missing values ("X") and then convert to numeric
-  vars <- names(AT)
-  vars <- vars[grep('V', vars)]
+  # make all columns as character
+  AT <- mutate(AT, across(everything(), as.character))
 
-  AT <- mutate(AT, across(all_of(vars),
-                          ~ as.character(.x)))
-  AT <- mutate(AT, across(all_of(vars),
-                          ~ if_else(.x=='X', NA_character_, .x)))
-  AT <- mutate(AT, across(all_of(vars),
-                          ~ as.numeric(.x)))
 
+  # add code_weighting
+  cross <- fread('./data_raw/tracts/2010/composicao_areas_ponderacao_2010.txt', colClasses = 'character')
+  AT <- left_join(AT, cross, by = 'code_tract')
 
   # add geography variables
   if(tbl != 'Basico_'){
@@ -303,11 +303,18 @@ bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'
 
   # rename columns
   if(tbl == 'Basico_'){
-    AT <- dplyr::mutate(AT, code_state = substr(code_muni, 1, 2))
+
+    options(scipen = 999)
+
+    AT <- dplyr::mutate(AT, code_state = as.character(substr(code_muni, 1, 2)),
+                            Cod_subdistrito = as.numeric(Cod_subdistrito))
+    AT <- dplyr::mutate(AT, Cod_subdistrito = (format(as.character(Cod_subdistrito), scientific = FALSE)))
+    # head(AT) |> collect()
+
     AT <- dplyr::rename(AT,
                         code_tract = code_tract,
+                       # code_muni = Cod_municipio,
                         name_muni = Nome_do_municipio,
-                        code_muni = code_muni,
                         abbrev_state = Cod_UF ,
                         name_state = Nome_da_UF ,
                         code_state = code_state,
@@ -325,24 +332,45 @@ bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'
                         name_district = Nome_do_distrito,
                         code_subdistrict = Cod_subdistrito,
                         name_subdistrict = Nome_do_subdistrito,
-                        V1005 = Situacao_setor,
+                        Basico_V1005 = Situacao_setor,
                         tipo_setor = Tipo_setor
                         )
+
+    ## reoder columns
+    AT <- relocate(AT, c(code_tract, code_weighting, code_muni, name_muni, code_state,
+                               abbrev_state, name_state, code_region, name_region,
+                               code_meso, name_meso, code_micro, name_micro,
+                               code_metro, name_metro, name_neighborhood,
+                               code_neighborhood, name_neighborhood,
+                               code_neighborhood, Basico_V1005, tipo_setor))
+
     }
+
 
   # rename column Situacao_setor
   all_cols <- names(AT)
   old_names <- all_cols[str_detect(all_cols, 'Situacao_setor')]
-  new_names <- str_replace(old_names, 'Situacao_setor', 'V1005')
 
-  dplyr::rename(AT, domicilio01_V1005 = domicilio01_Situacao_setor)
+  AT <- rename_with(AT,
+                     ~gsub('Situacao_setor', 'V1005', .x),
+                     .cols = all_of(old_names)
+                    )
+  # AT <-  dplyr::rename_with(AT, ~gsub("Situacao_setor", "V1005", .x))
 
-  dplyr::rename(AT, domicilio01_V1005 = domicilio01_Situacao_setor)
+  message('to numeric')
 
+  # fix missing values ("X") and then convert to numeric
+  vars <- names(AT)
+  vars <- vars[grep('V', vars)]
 
-  # names(AT) <- new_names
-  # dplyr::rename(AT, new_names)
+  AT <- mutate(AT, across(all_of(vars),
+                          ~ as.character(.x)))
+  AT <- mutate(AT, across(all_of(vars),
+                          ~ if_else(.x=='X', NA_character_, .x)))
+  AT <- mutate(AT, across(all_of(vars),
+                          ~ as.numeric(.x)))
 
+  message('saving')
   # save
   dest_file <- paste0('2010_tracts_', tbl, '.parquet')
   arrow::write_parquet(AT, paste0('./data/tracts/2010/clean/', dest_file))
@@ -351,5 +379,14 @@ bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'
 
 
 bind_all(tbl = 'Basico_')
+bind_all(tbl = 'Pessoa_')
 
 lapply(X=table_names, FUN = bind_all)
+
+
+
+a <- arrow::open_dataset('./data/tracts/2010/clean/2010_tracts_Basico_.parquet')
+head(a) |> collect()
+
+
+

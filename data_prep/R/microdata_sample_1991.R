@@ -58,6 +58,11 @@ num_vars <- c('V0102', 'V0098', 'V0109', 'V0111', 'V0112', 'V2012',
 
 df <- mutate(df, across(all_of(num_vars),
                         ~ as.numeric(.x)))
+
+
+# fix weight variable
+df <- mutate(df, V7300 = V7300 /10^8)
+
 head(df) |> collect()
 
 gc(T)
@@ -72,6 +77,14 @@ gc(T)
 
 # 2) Population data -----------------------------------------------------------
 
+# temp <- fread('./data_raw/microdata/1991/Censo.1991.brasil.pessoas.amostra.10porcento.csv', select = 'V7301')
+# class(temp$V7301)
+# sum(temp$V7301)
+#
+# temp[ , V7301_w := V7301 /10^8]
+# sum(temp$V7301_w )
+146815212
+
 # # get colnames
 # temp <- fread('./data_raw/microdata/1991/Censo.1991.brasil.pessoas.amostra.10porcento.csv', nrows = 10)
 # colnames <- names(temp)
@@ -83,8 +96,9 @@ gc(T)
 #
 # # convert csv to parquet
 # df <- arrow::read_csv_arrow('./data_raw/microdata/1991/Censo.1991.brasil.pessoas.amostra.10porcento.csv',
-#                           schema = chosen_schema
-#                           ,as_data_frame = FALSE
+#                           schema = chosen_schema,
+#                           skip = 1,
+#                           as_data_frame = FALSE
 #                           )
 #
 # gc(T)
@@ -95,6 +109,13 @@ gc(T)
 # read guide to parse the data
 f_parquet <- './data_raw/microdata/1991/Censo.1991.brasil.pessoas.amostra.10porcento.parquet'
 df <- arrow::open_dataset(f_parquet)
+
+
+# df |>
+#   mutate(V7301 = as.numeric(V7301)/10^8) |>
+#   summarise(total = sum(V7301)) |>
+#   collect()
+
 
 head(df) |> collect()
 
@@ -128,13 +149,6 @@ df <- select(df, -code_muni6)
 
 df <- add_geography_cols(arrw = df, year = 1991)
 
-#
-# a <- select(df, V0317) |> collect()
-# a <- a[1:100000,]
-# table(a$V0317, useNA = 'always')
-# df2 <- filter(df, V0317 == 'V0317') |> collect()
-
-df <- filter(df, V0317 != 'V0317')
 
 
 # make variables as numeric
@@ -146,7 +160,18 @@ num_vars <- c('V3041', 'V3042', 'V3043', 'V3045', 'V3072', 'V3073',
 
 df <- mutate(df, across(all_of(num_vars),
                         ~ as.numeric(.x)))
+
+
+# fix weight variable
+df <- mutate(df, V7301 = V7301 /10^8)
+
+df |>
+  summarise(total = sum(V7301)) |>
+  collect()
+
 head(df) |> collect()
+
+
 
 
 
