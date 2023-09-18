@@ -7,7 +7,7 @@
 interview_manual(year = NULL, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyymm}. Defaults to
+\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to
 \code{2010}.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
@@ -30,7 +30,7 @@ censuses
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Open interview manual on browser
-interview_manual(year = 2010)
+interview_manual(year = 2010, showProgress = FALSE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

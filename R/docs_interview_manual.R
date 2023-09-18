@@ -13,7 +13,7 @@
 #' @family Census documentation
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Open interview manual on browser
-#' interview_manual(year = 2010)
+#' interview_manual(year = 2010, showProgress = FALSE)
 #'
 interview_manual <- function(year = NULL,
                              showProgress = TRUE,
