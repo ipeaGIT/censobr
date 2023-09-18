@@ -36,6 +36,9 @@ censuses"><meta property="og:image" content="/logo.png"><meta name="robots" cont
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/census_documentation.html">Census documentation</a>
+    </li>
+    <li>
       <a href="../articles/data_dictionary_2000.html">Dictionary 2000</a>
     </li>
     <li>
@@ -77,7 +80,7 @@ censuses</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>year</dt>
-<dd><p>Numeric. Year of reference in the format <code>yyyymm</code>. Defaults to
+<dd><p>Numeric. Year of reference in the format <code>yyyy</code>. Defaults to
 <code>2010</code>.</p></dd>
 
 
@@ -113,9 +116,8 @@ the function will download the data again and overwrite the local file.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/censobr" class="external-link">censobr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Open questionnaire on browser</span></span></span>
-<span class="r-in"><span><span class="fu">questionnaire</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, type <span class="op">=</span> <span class="st">'sample'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">questionnaire</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, type <span class="op">=</span> <span class="st">'sample'</span>, showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading data. File will be stored locally at: /home/runner/.cache/R/censobr/data_release_v0.2.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |======                                                                |   9%  |                                                                              |============                                                          |  18%  |                                                                              |===================                                                   |  27%  |                                                                              |=====================                                                 |  30%  |                                                                              |=======================                                               |  33%  |                                                                              |===========================                                           |  39%  |                                                                              |===============================                                       |  45%  |                                                                              |====================================                                  |  51%  |                                                                              |================================================                      |  69%  |                                                                              |===========================================================           |  84%  |                                                                              |======================================================================| 100%</span>
 </code></pre></div>
     </div>
   </div>
