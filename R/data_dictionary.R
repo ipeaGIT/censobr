@@ -14,9 +14,9 @@
 #' @family Census documentation
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Open data dictionary on browser
-#' data_dictionary(year = 2010, table = 'microdata')
+#' data_dictionary(year = 2010, table = 'microdata', showProgress = FALSE)
 #'
-#' data_dictionary(year = 2010, table = 'tracts')
+#' data_dictionary(year = 2010, table = 'tracts', showProgress = FALSE)
 
 data_dictionary <- function(year = NULL,
                             table = NULL,

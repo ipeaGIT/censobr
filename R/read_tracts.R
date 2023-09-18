@@ -1,7 +1,7 @@
 #' Download census tract-level data from Brazil's censuses
 #'
 #' @description
-#' Download census tract-level aggregate data data from Brazil's censuses.
+#' Download census tract-level aggregate data from Brazil's censuses.
 #'
 #' @template year
 #' @param dataset Character. The dataset to be opened. Options currently include

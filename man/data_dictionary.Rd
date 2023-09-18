@@ -7,7 +7,7 @@
 data_dictionary(year = NULL, table = NULL, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyymm}. Defaults to
+\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to
 \code{2010}.}
 
 \item{table}{Character. The table of data dictionary to be opened. Options
@@ -32,9 +32,9 @@ Open on a browser the data dictionary of Brazil's census data.
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Open data dictionary on browser
-data_dictionary(year = 2010, table = 'microdata')
+data_dictionary(year = 2010, table = 'microdata', showProgress = FALSE)
 
-data_dictionary(year = 2010, table = 'tracts')
+data_dictionary(year = 2010, table = 'tracts', showProgress = FALSE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

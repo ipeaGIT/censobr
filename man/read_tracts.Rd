@@ -13,7 +13,7 @@ read_tracts(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyymm}. Defaults to
+\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to
 \code{2010}.}
 
 \item{dataset}{Character. The dataset to be opened. Options currently include
@@ -37,7 +37,7 @@ the function will download the data again and overwrite the local file.}
 An arrow \code{Dataset} or a \code{"data.frame"} object.
 }
 \description{
-Download census tract-level aggregate data data from Brazil's censuses.
+Download census tract-level aggregate data from Brazil's censuses.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

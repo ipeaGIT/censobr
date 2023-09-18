@@ -14,7 +14,7 @@ read_emigration(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyymm}. Defaults to
+\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to
 \code{2010}.}
 
 \item{columns}{String. A vector of column names to keep. The rest of the
