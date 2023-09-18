@@ -7,7 +7,7 @@
 questionnaire(year = NULL, type = NULL, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyymm}. Defaults to
+\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to
 \code{2010}.}
 
 \item{type}{Character. The type of questionnaire, whether the one used in the
@@ -36,7 +36,7 @@ censuses
 library(censobr)
 
 # Open questionnaire on browser
-questionnaire(year = 2010, type = 'sample')
+questionnaire(year = 2010, type = 'sample', showProgress = FALSE)
 \dontshow{\}) # examplesIf}
 }
 \concept{Questionnaire}

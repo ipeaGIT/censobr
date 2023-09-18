@@ -18,7 +18,7 @@
 #' library(censobr)
 #'
 #' # Open questionnaire on browser
-#' questionnaire(year = 2010, type = 'sample')
+#' questionnaire(year = 2010, type = 'sample', showProgress = FALSE)
 #'
 questionnaire <- function(year = NULL,
                                type = NULL,
