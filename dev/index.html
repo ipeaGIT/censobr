@@ -102,7 +102,6 @@
 </h1></div>
 <p><a href="https://CRAN.R-project.org/package=censobr" class="external-link"><img src="https://www.r-pkg.org/badges/version/censobr" alt="CRAN status"></a> <a href="https://github.com/ipeaGIT/censobr/actions" class="external-link"><img src="https://github.com/ipeaGIT/censobr/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a> <a href="https://CRAN.R-project.org/package=censobr" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/grand-total/censobr?color=yellow" alt="CRAN/METACRAN Total downloads"></a> <a href="https://app.codecov.io/gh/ipeaGIT/censobr?branch=main" class="external-link"><img src="https://codecov.io/gh/ipeaGIT/censobr/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></p>
 <p><strong>censobr</strong> is an R package to download data from Brazil’s Population Census. The package is built on top of the <a href="https://arrow.apache.org/docs/r/" class="external-link">Arrow platform</a>, which allows users to work with larger-than-memory census data using <a href="https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr" class="external-link">{dplyr} familiar functions</a>.</p>
-<p><em>obs.:</em> The package is still under development. At the moment, censobr only includes microdata from the 2000 and 2010 censuses, but it is being expanded to cover more years and data sets.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -118,15 +117,26 @@
 <div class="section level2">
 <h2 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
 </h2>
-<p>The package currently includes 5 main functions to download Census microdata:</p>
+<p>The package currently includes 6 main functions to download census data:</p>
 <ol style="list-style-type: decimal">
 <li><code><a href="reference/read_population.html">read_population()</a></code></li>
 <li><code><a href="reference/read_households.html">read_households()</a></code></li>
 <li><code><a href="reference/read_mortality.html">read_mortality()</a></code></li>
 <li><code><a href="reference/read_families.html">read_families()</a></code></li>
 <li><code><a href="reference/read_emigration.html">read_emigration()</a></code></li>
+<li><code><a href="reference/read_tracts.html">read_tracts()</a></code></li>
 </ol>
-<p>The syntax of all <strong>censobr</strong> functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:</p>
+<p><strong>censobr</strong> also includes a few support functions to help users navigate the documentation Brazilian censuses, providing convenient information on data variables and methodology.:</p>
+<ol start="7" style="list-style-type: decimal">
+<li><code><a href="reference/data_dictionary.html">data_dictionary()</a></code></li>
+<li><code><a href="reference/questionnaire.html">questionnaire()</a></code></li>
+<li><code><a href="reference/interview_manual.html">interview_manual()</a></code></li>
+</ol>
+<p>Finally, the package includs a function to help users to manage the data chached locally.</p>
+<ol start="10" style="list-style-type: decimal">
+<li><code><a href="reference/censobr_cache.html">censobr_cache()</a></code></li>
+</ol>
+<p>The syntax of all <strong>censobr</strong> functions to read data operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:</p>
 <pre><code><span><span class="fu"><a href="reference/read_households.html">read_households</a></span><span class="op">(</span></span>
 <span>  <span class="va">year</span>,          <span class="co"># year of reference</span></span>
 <span>  <span class="va">columns</span>,       <span class="co"># select columns to read</span></span>
@@ -181,8 +191,17 @@
 </h2>
 <p>Original Census data is collected by the Brazilian Institute of Geography and Statistics (IBGE). The <strong>censobr</strong> package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:</p>
 <ul>
-<li>Pereira, R.H.M. (2023) censobr: Download Data from Brazil’s Population Census. GitHub repository - <a href="https://github.com/ipeaGIT/censobr" class="external-link uri">https://github.com/ipeaGIT/censobr</a>.</li>
+<li>Pereira, Rafael H. M.; Barbosa, Rogerio J. (2023) censobr: Download Data from Brazil’s Population Census. R package version v0.2.0, <a href="https://CRAN.R-project.org/package=censobr" class="external-link uri">https://CRAN.R-project.org/package=censobr</a>.</li>
 </ul>
+<pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/bibentry.html" class="external-link">bibentry</a></span><span class="op">(</span></span>
+<span>  bibtype  <span class="op">=</span> <span class="st">"Manual"</span>,</span>
+<span>  title       <span class="op">=</span> <span class="st">"censobr: Download Data from Brazil's Population Census"</span>,</span>
+<span>  author      <span class="op">=</span> <span class="st">"Rafael H. M. Pereira [aut, cre] and Rogério J. Barbosa [aut]"</span>,</span>
+<span>  year        <span class="op">=</span> <span class="fl">2023</span>,</span>
+<span>  version     <span class="op">=</span> <span class="st">"v0.2.0"</span>,</span>
+<span>  url         <span class="op">=</span> <span class="st">"https://CRAN.R-project.org/package=censobr"</span>,</span>
+<span>  textVersion <span class="op">=</span> <span class="st">"Pereira, R. H. M.; Barbosa, R. J. (2023) censobr: Download Data from Brazil's Population Census. R package version v0.2.0, &lt;https://CRAN.R-project.org/package=censobr&gt;."</span></span>
+<span><span class="op">)</span></span></code></pre>
 <div class="pkgdown-devel">
 <p>tests only on dev branch <code>2+2</code></p>
 </div>

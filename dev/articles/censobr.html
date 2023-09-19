@@ -97,7 +97,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to censobr</h1>
             
-            <h4 data-toc-skip class="date">2023-09-18</h4>
+            <h4 data-toc-skip class="date">2023-09-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/tree/main/vignettes/censobr.Rmd" class="external-link"><code>vignettes/censobr.Rmd</code></a></small>
       <div class="hidden name"><code>censobr.Rmd</code></div>
@@ -128,23 +128,28 @@ is being expanded to cover more years and data sets.</p>
 <div class="section level2">
 <h2 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
 </h2>
-<p>The package currently includes 5 main functions to download Census
-microdata:</p>
+<p>The package currently includes 6 main functions to download census
+data:</p>
 <ol style="list-style-type: decimal">
 <li><code><a href="../reference/read_population.html">read_population()</a></code></li>
 <li><code><a href="../reference/read_households.html">read_households()</a></code></li>
 <li><code><a href="../reference/read_mortality.html">read_mortality()</a></code></li>
 <li><code><a href="../reference/read_families.html">read_families()</a></code></li>
 <li><code><a href="../reference/read_emigration.html">read_emigration()</a></code></li>
+<li><code><a href="../reference/read_tracts.html">read_tracts()</a></code></li>
 </ol>
-<p>It also includes a couple support functions:</p>
-<ol start="6" style="list-style-type: decimal">
-<li>
-<code><a href="../reference/data_dictionary.html">data_dictionary()</a></code> to open the data dictionary of
-variables</li>
-<li>
-<code><a href="../reference/censobr_cache.html">censobr_cache()</a></code> to manage the data chached
-locally.</li>
+<p><strong>censobr</strong> also includes a few support functions to
+help users navigate the documentation Brazilian censuses, providing
+convenient information on data variables and methodology.:</p>
+<ol start="7" style="list-style-type: decimal">
+<li><code><a href="../reference/data_dictionary.html">data_dictionary()</a></code></li>
+<li><code><a href="../reference/questionnaire.html">questionnaire()</a></code></li>
+<li><code><a href="../reference/interview_manual.html">interview_manual()</a></code></li>
+</ol>
+<p>Finally, the package includs a function to help users to manage the
+data chached locally.</p>
+<ol start="10" style="list-style-type: decimal">
+<li><code><a href="../reference/censobr_cache.html">censobr_cache()</a></code></li>
 </ol>
 <p>The syntax of all <strong>censobr</strong> functions to read data
 operate on the same logic so it becomes intuitive to download any data
@@ -173,9 +178,9 @@ cache section</a> below.</p>
 <div class="section level2">
 <h2 id="larger-than-memory-data">Larger-than-memory Data<a class="anchor" aria-label="anchor" href="#larger-than-memory-data"></a>
 </h2>
-<p>Microdata of Brazilian census are often be too big to load in users’
-RAM memory. To avoid this problem, <strong>censobr</strong> will by
-default return an <a href="https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow" class="external-link">Arrow
+<p>Data of Brazilian censuses are often too big to load in users’ RAM
+memory. To avoid this problem, <strong>censobr</strong> will by default
+return an <a href="https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow" class="external-link">Arrow
 table</a>, which can be analyzed like a regular <code>data.frame</code>
 using the <code>dplyr</code> package without loading the full data to
 memory.</p>
@@ -216,17 +221,15 @@ values for categorical variables.</p>
 <p>By default, the ouput of the function is an
 <code>"arrow_dplyr_query"</code>. This is makes it possible for you to
 work with the census data in a super fast and efficient way, even though
-the data set might be to big for your computer memory.</p>
-<blockquote>
-<p>By setting the parameter <code>as_data_frame = TRUE</code>, the read
-functions load the entire output to memory as a <code>data.frame</code>.
-<em>Warning:</em> This can cause the R session to crash in
-computationally constrained enviroments.</p>
-</blockquote>
+the data set might be to big for your computer memory. By setting the
+parameter <code>as_data_frame = TRUE</code>, the read functions load the
+entire output to memory as a <code>data.frame</code>. <em>Warning:</em>
+This can cause the R session to crash in computationally constrained
+enviroments.</p>
 <p>The output of the read functions in <strong>censobr</strong> can be
 analyzed like a regular <code>data.frame</code> using the
-<a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a> package. For example, it’s to have a quick peak
-into the data with <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse()</a></code></p>
+<a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a> package. For example, one can have a quick peak
+into the data set with <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse()</a></code></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span></span>
 <span><span class="co">#&gt; FileSystemDataset with 1 Parquet file (query)</span></span>
