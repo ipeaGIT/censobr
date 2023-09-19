@@ -23,11 +23,11 @@ BugReports: https://github.com/ipeaGIT/censobr/issues
 Depends: 
     R (>= 4.0)
 Imports:
-      arrow,
-      checkmate,
-      dplyr,
-      httr (>= 1.4.1),
-      tools
+    arrow,
+    checkmate,
+    dplyr,
+    httr (>= 1.4.1),
+    tools
 Suggests: 
     covr,
     geobr,
@@ -39,6 +39,5 @@ Suggests:
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
