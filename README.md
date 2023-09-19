@@ -11,7 +11,6 @@ coverage](https://codecov.io/gh/ipeaGIT/censobr/branch/main/graph/badge.svg)](ht
 
 **censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow platform](https://arrow.apache.org/docs/r/), which allows users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
 
-*obs.:* The package is still under development. At the moment, censobr only includes microdata from the 2000 and 2010 censuses, but it is being expanded to cover more years and data sets.
 
 ## Installation
 
@@ -28,16 +27,27 @@ library(censobr)
 
 ## Basic usage
 
-The package currently includes 5 main functions to download Census microdata:
+The package currently includes 6 main functions to download census data:
 
 1. `read_population()`
 2. `read_households()`
 3. `read_mortality()`
 4. `read_families()`
 5. `read_emigration()`
+6. `read_tracts()`
 
+**censobr** also includes a few support functions to help users navigate the documentation Brazilian censuses, providing convenient information on data variables and methodology.:
 
-The syntax of all **censobr** functions operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
+7. `data_dictionary()`
+8. `questionnaire()`
+9. `interview_manual()`
+
+Finally, the package includs a function to help users to manage the data chached locally.
+
+10. `censobr_cache()` 
+
+The syntax of all **censobr** functions to read data operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
+
 
 ```
 read_households(
@@ -60,6 +70,7 @@ The first time the user runs a function, **censobr** will download the file and 
 ## Larger-than-memory Data
 
 Microdata of Brazilian census are often be too big to load in users' RAM memory. To avoid this problem, **censobr** will by default return an [Arrow table](https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow), which can be analyzed like a regular `data.frame` using the `dplyr` package without loading the full data to memory.
+
 
 More info in the package [vignette](https://ipeagit.github.io/censobr/).
 
@@ -84,7 +95,7 @@ Afaik, **censobr** is the only R package that provides fast and convenient acces
 
 Original Census data is collected by the Brazilian Institute of Geography and Statistics (IBGE). The **censobr** package is developed by a team at the Institute for Applied Economic Research (Ipea), Brazil. If you want to cite this package, you can cite it as:
 
-- Pereira, R.H.M. (2023) censobr: Download Data from Brazil's Population Census. GitHub repository - https://github.com/ipeaGIT/censobr.
+- Pereira, Rafael H. M.; Barbosa, Rogerio J. (2023) censobr: Download Data from Brazil's Population Census. GitHub repository - https://github.com/ipeaGIT/censobr.
 
 
 ::: {.pkgdown-devel}
