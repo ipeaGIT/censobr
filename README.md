@@ -24,7 +24,7 @@ install.packages("censobr")
 
 # or use the development version with latest features
 utils::remove.packages('censobr')
-devtools::install_github("ipeaGIT/censobr")
+remotes::install_github("ipeaGIT/censobr", ref="dev")
 library(censobr)
 ```
 
