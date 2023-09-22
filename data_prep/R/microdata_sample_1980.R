@@ -11,6 +11,7 @@ cross_muni_code <- readxl::read_xlsx('./data_raw/microdata/1980/crosswalk_tocant
 
 cross_muni_code$municCod1980 <- as.character(cross_muni_code$municCod1980)
 cross_muni_code$municCod2010_6dig <- as.character(cross_muni_code$municCod2010_6dig)
+head(cross_muni_code)
 
 # 1) Households data -----------------------------------------------------------
 
@@ -57,6 +58,8 @@ df <- mutate(df, code_muni_1980 = as.character(as.numeric(V2) * 10000 + as.numer
 
 # add cross walk of code_muni
 df <- left_join(df, cross_muni_code, by=c('code_muni_1980'='municCod1980'))
+df <- mutate(df, municCod2010_6dig = ifelse(is.na(municCod2010_6dig),  code_muni_1980, municCod2010_6dig))
+
 
 # add code_muni 7 digits
 muni_geobr <- geobr::read_municipality(year = 1980)
@@ -143,6 +146,7 @@ df <- rename_with(df, toupper, starts_with("v"))
 
   # add cross walk of code_muni
   df <- left_join(df, cross_muni_code, by=c('code_muni_1980'='municCod1980'))
+  df <- mutate(df, municCod2010_6dig = ifelse(is.na(municCod2010_6dig),  code_muni_1980, municCod2010_6dig))
 
   # add code_muni 7 digits
   muni_geobr <- geobr::read_municipality(year = 1980)
