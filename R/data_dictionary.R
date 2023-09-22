@@ -4,7 +4,7 @@
 #' Open on a browser the data dictionary of Brazil's census data.
 #'
 #' @template year
-#' @param table Character. The table of data dictionary to be opened. Options
+#' @param dataset Character. The dataset of data dictionary to be opened. Options
 #'        include `c("microdata", 'tracts')`.
 #' @template showProgress
 #' @template cache
@@ -14,30 +14,30 @@
 #' @family Census documentation
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Open data dictionary on browser
-#' data_dictionary(year = 2010, table = 'microdata', showProgress = FALSE)
+#' data_dictionary(year = 2010, dataset = 'microdata', showProgress = FALSE)
 #'
-#' data_dictionary(year = 2010, table = 'tracts', showProgress = FALSE)
+#' data_dictionary(year = 2010, dataset = 'tracts', showProgress = FALSE)
 
 data_dictionary <- function(year = NULL,
-                            table = NULL,
+                            dataset = NULL,
                             showProgress = TRUE,
                             cache = TRUE){
   # year = 2010
-  # table = 'microdata'
+  # dataset = 'microdata'
 
   ### check inputs
   checkmate::assert_numeric(year)
-  checkmate::assert_string(table)
+  checkmate::assert_string(dataset)
 
   # data available for data sets:
   data_sets <- c('microdata', 'tracts')
-  if (isFALSE(table %in% data_sets)) { stop( paste0("Error: Dictionary currently only available for the tables: ",
+  if (isFALSE(dataset %in% data_sets)) { stop( paste0("Error: Dictionary currently only available for the datasets: ",
                                                     paste(data_sets, collapse = ", "))
   )}
 
 
   ### IF Microdata
-  if (table == 'microdata') {
+  if (dataset == 'microdata') {
     # data available for the years:
     years <- c(2000, 2010)
     if (isFALSE(year %in% years)) {
@@ -52,7 +52,7 @@ data_dictionary <- function(year = NULL,
   }
 
   ### IF Census Tracts
-  if (table == 'tracts') {
+  if (dataset == 'tracts') {
     # data available for the years:
     years <- c(1970,1980, 1991, 2000, 2010)
     if (isFALSE(year %in% years)) {
@@ -67,18 +67,18 @@ data_dictionary <- function(year = NULL,
   }
 
   # LOCAL FILES
-  if (table == 'microdata') {
+  if (dataset == 'microdata') {
   # load all dictionary files currenlty available
   data_path <- system.file("extdata", package = "censobr")
   all_dic <- list.files(data_path, full.names = TRUE, pattern = '.html')
 
   # filter data dic by year and type of data
   temp_dic <- all_dic[grepl(year, all_dic)]
-  temp_dic <- temp_dic[grepl(table, temp_dic)]
+  temp_dic <- temp_dic[grepl(dataset, temp_dic)]
   }
 
   # DOWNLOAD
-  if (table == 'tracts') {
+  if (dataset == 'tracts') {
 
     ### Get url
     fname <- paste0(year, '_dictionary_tracts.pdf')

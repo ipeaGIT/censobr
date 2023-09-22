@@ -4,13 +4,13 @@
 \alias{data_dictionary}
 \title{Data dictionary of Brazil's census data}
 \usage{
-data_dictionary(year = NULL, table = NULL, showProgress = TRUE, cache = TRUE)
+data_dictionary(year = NULL, dataset = NULL, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
 \item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to
 \code{2010}.}
 
-\item{table}{Character. The table of data dictionary to be opened. Options
+\item{dataset}{Character. The dataset of data dictionary to be opened. Options
 include \code{c("microdata", 'tracts')}.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
@@ -32,9 +32,9 @@ Open on a browser the data dictionary of Brazil's census data.
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Open data dictionary on browser
-data_dictionary(year = 2010, table = 'microdata', showProgress = FALSE)
+data_dictionary(year = 2010, dataset = 'microdata', showProgress = FALSE)
 
-data_dictionary(year = 2010, table = 'tracts', showProgress = FALSE)
+data_dictionary(year = 2010, dataset = 'tracts', showProgress = FALSE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
