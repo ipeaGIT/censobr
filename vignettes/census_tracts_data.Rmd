@@ -1,0 +1,141 @@
+---
+title: "Census tract-level data"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+urlcolor: blue
+vignette: >
+  %\VignetteIndexEntry{Census tract-level data}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = identical(tolower(Sys.getenv("NOT_CRAN")), "true"),
+  out.width = "100%"
+)
+
+use_suggested_pkgs <- c((requireNamespace("scales")), 
+                        (requireNamespace("ggplot2")), 
+                        (requireNamespace("geobr")))
+
+use_suggested_pkgs <- all(use_suggested_pkgs)
+```
+
+Perhaps the most commonly used datasets from Brazilian censuses are the microdata of individuals and households. Nonetheless, IBGE also makes available some extremely data on population and environmental characteristics aggregated at the census tract level. In this vignette, we show how to use the **censobr** package to  easily access census tract-level data using the `read_tracts()` function.
+
+At the moment, this function only includes data from the 2010 census.
+
+
+# Data structure
+
+Aggregated data at the census tract level are split into different datasets, and some of them are scattered across several files. For the sake of convenience, we have gathered all of the files into 8 different datasets:
+
+- `"Basico"`
+- `"Entorno"`
+- `"Domicilio"`
+- `"Pessoa"`
+- `"Responsavel"`
+- `"PessoaRenda"`
+- `"DomicilioRenda"`
+- `"ResponsavelRenda"`
+
+All of the data aggregated at census tracts are organized followig the same logic.
+
+In the cases when there are multiple files in the same dataset, we add a reference to the number of the file as a prefix to the variable name. To illustrate this, let's have a look at the `"Domicilio"` dataset, for example. This dataset is based on two separate tables: *Domicilio01* and *Domicilio02*. So the names of the columns in this dataset are organized as follows.
+
+```{r, eval = TRUE, warning = FALSE}
+library(censobr)
+
+dom <- read_tracts(year = 2010, 
+                   dataset = 'Domicilio', 
+                   showProgress = FALSE)
+
+names(dom)
+```
+## Dictionary of variables
+
+To check the meaning of each variable, users can run the `data_dictionary()`, which will open on the browser a `.pdf` file with the dictionary of variables in each dataset
+
+
+```{r, eval=FALSE, warning=FALSE, message=FALSE}
+data_dictionary(year = 2010, dataset = 'tracts')
+
+```
+
+
+# Reproducible examples
+
+Now let's use a couple reproducible examples to illustrate how to work with census tract-level data. First, we need to load the libraries we'll be using in this vignette.
+
+```{r, eval = use_suggested_pkgs, warning=FALSE, message=FALSE}
+library(arrow)
+library(dplyr)
+library(geobr)
+library(ggplot2)
+```
+
+In these examples below, example we'll use the city of Belo Horizonte for demonstration purpouses. So we can start by downloading the the geometries of the census tracts in the area. First, we need to download the geometries of all census tracts in the state of Minas Gerais (MG), and then keep only the ones in the municipality of Belo Horizonte.
+
+```{r, eval = use_suggested_pkgs, warning = FALSE}
+tracts_sf <- geobr::read_census_tract(code_tract = "MG",
+                                      simplified = FALSE,
+                                      year = 2010,
+                                      showProgress = FALSE)
+
+tracts_sf <- filter(tracts_sf, name_muni == "Belo Horizonte")
+
+ggplot() + 
+  geom_sf(data=tracts_sf, fill = 'gray90', color='gray60') + 
+  theme_void()
+```
+
+
+
+## Example 1: Spatial distribution of income
+
+In this first example we'll be creating a map of the spatial distribution of average income per capita. We can find the information on the the total number of residents in each census tract in the `"Basico"` dataset, variable `"V002"`. Meanwhile, the information on income can be found in the `"DomicilioRenda"` dataset, variable `"V003"`.
+
+Using the code below, we download the data and calculate the income per capita of all census tracts in Brazil.
+
+
+```{r, eval = use_suggested_pkgs, warning = FALSE}
+# download data
+tract_basico <- read_tracts(year = 2010,
+                            dataset = "Basico", 
+                            showProgress = FALSE)
+
+tract_income <- read_tracts(year = 2010,
+                            dataset = "DomicilioRenda", 
+                            showProgress = FALSE)
+
+# select columns
+tract_basico <- tract_basico |> select('code_tract','V002')
+tract_income <- tract_income |> select('code_tract','V003')
+
+# merge
+tracts_df <- left_join(tract_basico, tract_income) |> collect()
+
+# calculate income per capita
+tracts_df <- tracts_df |> mutate(income_pc = V003 / V002)
+head(tracts_df)
+```
+
+Finally, we can merge the spatial data with our per capita income estimates and map the results.
+
+```{r, eval = use_suggested_pkgs, warning = FALSE}
+bh_tracts <- left_join(tracts_sf, tracts_df, by = 'code_tract')
+
+ggplot() +
+  geom_sf(data = bh_tracts, aes(fill = income_pc), color=NA) +
+  scale_fill_viridis_c(name = "Avg. income\nper capita",
+                       labels = scales::number_format(),
+                       option = 'cividis',
+                       breaks = c(0, 100, 1e3, 1e4, 2e4),
+                       trans = "pseudo_log", na.value = "#F8F7F7") +
+  theme_void()
+
+```
+## Example 2: 
