@@ -35,6 +35,7 @@ read_tracts <- function(year = 2010,
   ### check inputs
   checkmate::assert_numeric(year)
   checkmate::assert_logical(as_data_frame)
+  checkmate::assert_string(dataset, null.ok = FALSE)
 
 
   # data available for the years:
@@ -44,7 +45,7 @@ read_tracts <- function(year = 2010,
 
   # data available for data sets:
   data_sets <- c("Basico", "Domicilio", "DomicilioRenda", "Entorno",
-                 "ResponsavelRenda", "Responsavel", "PessoaRenda")
+                 "ResponsavelRenda", "Responsavel", "PessoaRenda", "Pessoa")
   if (isFALSE(dataset %in% data_sets)) { stop( paste0("Error: Data currently only available for the datasets: ",
                                                     paste(data_sets, collapse = ", "))
   )}

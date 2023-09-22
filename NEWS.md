@@ -10,6 +10,7 @@
 
 * Minor changes
   * Running `censobr_cache(delete_file = 'all')` now removes all data and directories related from censobr.
+  * censobr now uses suggested package {geobr} conditionally
 
 * Data included in this version:
   * 1970 census [*New*]
@@ -22,6 +23,7 @@
     * Microdata of population, households and families.
   * 2010 Census
     * Microdata of population, households, deaths and emigration.
+
 
 
 # censobr v0.1.1
