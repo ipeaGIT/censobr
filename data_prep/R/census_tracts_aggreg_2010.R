@@ -95,10 +95,20 @@ options(scipen = 999)
 
 # 3) Create 1 parquet file for each table / state -----------------------------------------------------------
 
+
 # list all excel files
 all_csv_files <- list.files(path = './data_raw/tracts/2010',
                         full.names = T, recursive = T,
-                        pattern = '.xls')
+                        pattern = '.xls|.XLS')
+
+# update extension from XLS to xls
+file_to_rename <- all_csv_files[all_csv_files %like% '.XLS']
+file.rename(file_to_rename, str_replace_all(file_to_rename, '.XLS', '.xls'))
+
+
+all_csv_files <- list.files(path = './data_raw/tracts/2010',
+                            full.names = T, recursive = T,
+                            pattern = '.xls')
 
 # rename file of Alagoas pessoa05
 file_to_rename <- all_csv_files[all_csv_files %like% 'pessoa']
@@ -132,7 +142,7 @@ all_states
 all_states <- paste0(all_states, '_')
 
 
-for (t in table_names){ # t = 'Basico'         t = 'Pessoa'
+for (t in table_names){ # t = 'Entorno'         t = 'Pessoa'
 
   message(t)
 
@@ -140,7 +150,7 @@ for (t in table_names){ # t = 'Basico'         t = 'Pessoa'
 
   root_names <- basename(csv_tables)
 
-  if( t == 'Pessoa' | t == 'Domicilio' | t == 'Responsavel'){
+  if( t == 'Pessoa' | t == 'Domicilio' | t == 'Responsavel' | t == 'Entorno'){
     csv_tables <- csv_tables[ str_detect(root_names, "([:digit:][:digit:])") ]
   }
 
@@ -169,7 +179,7 @@ for (t in table_names){ # t = 'Basico'         t = 'Pessoa'
 
 ### merge tables in the same state
 
-prep_state <- function(abbrev, tabl){ # abbrev = "SP_Capital"     abbrev = "CE_"
+prep_state <- function(abbrev, tabl){ # abbrev = "SP_Exceto_"   abbrev = "CE_"   tabl = t
 
   message(abbrev)
 
@@ -227,6 +237,15 @@ read_and_rename <- function(f, tabl){ # f = uf_files[1]
   all_NA_cols <- names(all_NA_cols[all_NA_cols > 0])
   if(length(all_NA_cols)>0){ temp_df[, {{all_NA_cols}} := NULL] }
 
+  # all columns to character
+  for(col in names(temp_df))
+    set(temp_df, j = col, value = as.character(temp_df[[col]]))
+
+  # detect error with character 'ÿ' and drop observations
+  # Pessoa07_CE.xls¨
+  # Entorno05_RO.xls
+  row_pos <- temp_df |> map(~str_detect(.x,'ÿ')) |> reduce(`|`)
+  temp_df <- temp_df[!row_pos,]
 
   # get root of file name
   root_name <- basename(f)
@@ -240,12 +259,10 @@ read_and_rename <- function(f, tabl){ # f = uf_files[1]
   temp_df[, code_muni := substr(code_tract, 1, 7)]
   setcolorder(temp_df, c('code_muni', 'code_tract'))
 
-  if( tabl == 'Pessoa' | tabl == 'Domicilio' | tabl == 'Responsavel'){
+  if( tabl == 'Pessoa' | tabl == 'Domicilio' | tabl == 'Responsavel' | tabl == 'Entorno'){
     cols_to_rename <- names(temp_df)[3:ncol(temp_df)]
     names(temp_df)[3:ncol(temp_df)] <- paste0(root_name,'_', cols_to_rename)
   }
-
-
   return(temp_df)
 }
 
@@ -265,13 +282,18 @@ table_names <- table_names[!grepl("2010_",table_names)]  |> unique()
 table_names
 
 table_names <- table_names[!grepl("clean_",table_names)]
+table_names
 
-bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'  tbl = 'Basico_'
+
+
+bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'  tbl = 'Pessoa_'
 
   message(tbl)
 
   # select type
   temp_f <- files[files %like% tbl]
+  #  temp_f <- temp_f[c(1,5:8)]
+
 
   ## Define the dataset
   DS <- arrow::open_dataset(sources = temp_f)
@@ -351,6 +373,8 @@ bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'  tbl = 'Basico_'
   all_cols <- names(AT)
   old_names <- all_cols[str_detect(all_cols, 'Situacao_setor')]
 
+  if(tbl == 'Entorno_'){ AT <- select(AT, -c(entorno05_V1005)) }
+
   AT <- rename_with(AT,
                      ~gsub('Situacao_setor', 'V1005', .x),
                      .cols = all_of(old_names)
@@ -370,23 +394,59 @@ bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'  tbl = 'Basico_'
   AT <- mutate(AT, across(all_of(vars),
                           ~ as.numeric(.x)))
 
+              #  # AQUI
+              #   df <- as.data.frame(AT)
+              #   aaaaa <- df |> map(~str_detect(.x,'ÿ')) |> reduce(`|`)
+              #   any( aaaaa, an.rm=T)
+              #   which(aaaaa==TRUE)
+              #   b <- aaaaa[!is.na(aaaaa)]
+              #   any( b)
+              # #  24680 24715 24862
+              #   x <- df[24680,]
+              #   match(TRUE, aaaaa)
+              # head(x)
+              #
+              # f <- function(t){ grep('ÿ', t)}
+              # apply(x, 1, f)
+              #
+              # x$pessoa07_V032
+              # x[,931]
+              # names(x)[931]
+              #
+              #   # 6666
+              #   df <- as.data.frame(AT)
+              #   table(df$pessoa01_V1005, useNA = 'always')
+              #
+              #   # 666  pessoa01_V1005 == "ÿ"
+              #
+
+
+
   message('saving')
   # save
   dest_file <- paste0('2010_tracts_', tbl, '.parquet')
-  arrow::write_parquet(AT, paste0('./data/tracts/2010/clean/', dest_file))
+  system.time(
+    arrow::write_parquet(AT, paste0('./data/tracts/2010/clean/', dest_file))
+              )
+
   return(NULL)
 }
 
 
 bind_all(tbl = 'Basico_')
+bind_all(tbl = 'Entorno_')
 bind_all(tbl = 'Pessoa_')
 
 lapply(X=table_names, FUN = bind_all)
 
 
 
-a <- arrow::open_dataset('./data/tracts/2010/clean/2010_tracts_Basico_.parquet')
-head(a) |> collect()
+a <- arrow::read_parquet("./data/tracts/2010/clean/2010_tracts_Pessoa_.parquet")
+head(a)
+names(a)
 
-
-
+domicilio 2
+entorno 5
+domiciliorenda 1
+pessoa 13
+Responsavel 2
