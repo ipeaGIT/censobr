@@ -7,10 +7,7 @@
     <loc>/articles/censobr.html</loc>
   </url>
   <url>
-    <loc>/articles/data_dictionary_2000.html</loc>
-  </url>
-  <url>
-    <loc>/articles/data_dictionary_2010.html</loc>
+    <loc>/articles/census_documentation.html</loc>
   </url>
   <url>
     <loc>/articles/index.html</loc>
@@ -46,6 +43,12 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
+    <loc>/reference/interview_manual.html</loc>
+  </url>
+  <url>
+    <loc>/reference/questionnaire.html</loc>
+  </url>
+  <url>
     <loc>/reference/read_emigration.html</loc>
   </url>
   <url>
@@ -59,5 +62,8 @@
   </url>
   <url>
     <loc>/reference/read_population.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_tracts.html</loc>
   </url>
 </urlset>

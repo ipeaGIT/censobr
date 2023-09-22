@@ -61,10 +61,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/data_dictionary_2000.html">Dictionary 2000</a>
-    </li>
-    <li>
-      <a href="../articles/data_dictionary_2010.html">Dictionary 2010</a>
+      <a href="../articles/census_documentation.html">Census documentation</a>
     </li>
   </ul>
 </li>
@@ -94,7 +91,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to censobr</h1>
             
-            <h4 data-toc-skip class="date">2023-09-21</h4>
+            <h4 data-toc-skip class="date">2023-09-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/tree/main/vignettes/censobr.Rmd" class="external-link"><code>vignettes/censobr.Rmd</code></a></small>
       <div class="hidden name"><code>censobr.Rmd</code></div>
@@ -119,24 +116,38 @@ is being expanded to cover more years and data sets.</p>
 <span></span>
 <span><span class="co"># or use the development version with latest features</span></span>
 <span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html" class="external-link">remove.packages</a></span><span class="op">(</span><span class="st">'censobr'</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ipeaGIT/censobr"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ipeaGIT/censobr"</span>, ref<span class="op">=</span><span class="st">"dev"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/censobr" class="external-link">censobr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
 </h2>
-<p>The package currently includes 5 main functions to download Census
-microdata:</p>
+<p>The package currently includes 6 main functions to download census
+data:</p>
 <ol style="list-style-type: decimal">
 <li><code><a href="../reference/read_population.html">read_population()</a></code></li>
 <li><code><a href="../reference/read_households.html">read_households()</a></code></li>
 <li><code><a href="../reference/read_mortality.html">read_mortality()</a></code></li>
 <li><code><a href="../reference/read_families.html">read_families()</a></code></li>
 <li><code><a href="../reference/read_emigration.html">read_emigration()</a></code></li>
+<li><code><a href="../reference/read_tracts.html">read_tracts()</a></code></li>
 </ol>
-<p>The syntax of all <strong>censobr</strong> functions operate on the
-same logic so it becomes intuitive to download any data set using a
-single line of code. Like this:</p>
+<p><strong>censobr</strong> also includes a few support functions to
+help users navigate the documentation Brazilian censuses, providing
+convenient information on data variables and methodology.:</p>
+<ol start="7" style="list-style-type: decimal">
+<li><code><a href="../reference/data_dictionary.html">data_dictionary()</a></code></li>
+<li><code><a href="../reference/questionnaire.html">questionnaire()</a></code></li>
+<li><code><a href="../reference/interview_manual.html">interview_manual()</a></code></li>
+</ol>
+<p>Finally, the package includs a function to help users to manage the
+data chached locally.</p>
+<ol start="10" style="list-style-type: decimal">
+<li><code><a href="../reference/censobr_cache.html">censobr_cache()</a></code></li>
+</ol>
+<p>The syntax of all <strong>censobr</strong> functions to read data
+operate on the same logic so it becomes intuitive to download any data
+set using a single line of code. Like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/read_households.html">read_households</a></span><span class="op">(</span></span>
 <span>  <span class="va">year</span>,          <span class="co"># year of reference</span></span>
@@ -161,13 +172,14 @@ cache section</a> below.</p>
 <div class="section level2">
 <h2 id="larger-than-memory-data">Larger-than-memory Data<a class="anchor" aria-label="anchor" href="#larger-than-memory-data"></a>
 </h2>
-<p>Microdata of Brazilian census are often be too big to load in users’
-RAM memory. To avoid this problem, <strong>censobr</strong> will by
-default return an <a href="https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow" class="external-link">Arrow
+<p>Data of Brazilian censuses are often too big to load in users’ RAM
+memory. To avoid this problem, <strong>censobr</strong> will by default
+return an <a href="https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow" class="external-link">Arrow
 table</a>, which can be analyzed like a regular <code>data.frame</code>
 using the <code>dplyr</code> package without loading the full data to
 memory.</p>
-<p>Let’s see how it works in a couple examples:</p>
+<p>Let’s see how <strong>censobr</strong> works in a couple
+examples:</p>
 </div>
 <div class="section level2">
 <h2 id="reproducible-examples">Reproducible examples<a class="anchor" aria-label="anchor" href="#reproducible-examples"></a>
@@ -177,7 +189,6 @@ memory.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/censobr" class="external-link">censobr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/apache/arrow/" class="external-link">arrow</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/geobr" class="external-link">geobr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="using-population-data">Using Population data:<a class="anchor" aria-label="anchor" href="#using-population-data"></a>
@@ -196,15 +207,40 @@ values for categorical variables.</p>
 <span>                       columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'abbrev_state'</span>, <span class="st">'V0606'</span>, <span class="st">'V0010'</span>, <span class="st">'V6400'</span><span class="op">)</span>,</span>
 <span>                       add_labels <span class="op">=</span> <span class="st">'pt'</span>,</span>
 <span>                       showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Reading data cached locally.</span></span></code></pre></div>
-<p>Next, we use the <code>dplyr</code> syntax to (a) filter observations
-for the state of Rio de Janeiro, (b) group observations by racial group,
-(c) summarize the data calculating the proportion of individuals with
-higher education.</p>
+<span><span class="co">#&gt; Reading data cached locally.</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "arrow_dplyr_query"</span></span></code></pre></div>
+<p>By default, the ouput of the function is an
+<code>"arrow_dplyr_query"</code>. This is makes it possible for you to
+work with the census data in a super fast and efficient way, even though
+the data set might be to big for your computer memory. By setting the
+parameter <code>as_data_frame = TRUE</code>, the read functions load the
+entire output to memory as a <code>data.frame</code>. <em>Warning:</em>
+This can cause the R session to crash in computationally constrained
+enviroments.</p>
+<p>The output of the read functions in <strong>censobr</strong> can be
+analyzed like a regular <code>data.frame</code> using the
+<a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a> package. For example, one can have a quick peak
+into the data set with <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse()</a></code></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span></span>
+<span><span class="co">#&gt; FileSystemDataset with 1 Parquet file (query)</span></span>
+<span><span class="co">#&gt; 20,635,472 rows x 4 columns</span></span>
+<span><span class="co">#&gt; $ abbrev_state <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", "RO", "R…</span></span>
+<span><span class="co">#&gt; $ V0606        <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "Parda", "Parda", "Branca", "Branca", "Parda", "Parda", …</span></span>
+<span><span class="co">#&gt; $ V0010        <span style="color: #949494; font-style: italic;">&lt;double&gt;</span> 8.705865, 8.705865, 9.818689, 9.495608, 9.495608, 9.4956…</span></span>
+<span><span class="co">#&gt; $ V6400        <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "Sem instrução e fundamental incompleto", "Sem instrução…</span></span>
+<span><span class="co">#&gt; Call `print()` for query details</span></span></code></pre></div>
+<p>In the example below, we use the <code>dplyr</code> syntax to (a)
+filter observations for the state of Rio de Janeiro, (b) group
+observations by racial group, (c) summarize the data calculating the
+proportion of individuals with higher education. Note that we need do
+add a <code><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect()</a></code> call at the end of our query.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">pop</span> <span class="op">|&gt;</span></span>
 <span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">abbrev_state</span> <span class="op">==</span> <span class="st">"RJ"</span><span class="op">)</span> <span class="op">|&gt;</span>                                                    <span class="co"># (a)</span></span>
-<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">V0606</span><span class="op">)</span> <span class="op">|&gt;</span>                                                                 <span class="co"># (b)</span></span>
 <span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>higher_edu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">V0010</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">V6400</span><span class="op">==</span><span class="st">"Superior completo"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">V0010</span><span class="op">)</span>, <span class="co"># (c)</span></span>
 <span>                pop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">V0010</span><span class="op">)</span> <span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -221,7 +257,7 @@ higher education.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Parda        0.044<span style="text-decoration: underline;">3</span> 6<span style="text-decoration: underline;">332</span>408.</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Preta        0.040<span style="text-decoration: underline;">5</span> 1<span style="text-decoration: underline;">937</span>291.</span></span></code></pre></div>
 <p>Now we only need to plot the results.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">V0606</span> <span class="op">!=</span> <span class="st">'Ignorado'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -230,7 +266,7 @@ higher education.</p>
 <span>                     labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/percent_format.html" class="external-link">percent</a></span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">'Cor/raça'</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="censobr_files/figure-html/unnamed-chunk-6-1.png" width="100%"></p>
+<p><img src="censobr_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
 </div>
 <div class="section level4">
 <h4 id="using-household-data">Using household data:<a class="anchor" aria-label="anchor" href="#using-household-data"></a>
@@ -242,16 +278,16 @@ higher education.</p>
 connected to a sewage network in Brazilian municipalities First, we can
 easily download the households data set with the
 <code><a href="../reference/read_households.html">read_households()</a></code> function.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_households.html">read_households</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
 <span>                      showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reading data cached locally.</span></span></code></pre></div>
 <p>Now we’re going to (a) group observations by municipality, (b) get
 the number of households connected to a sewage network, (c) calculate
 the proportion of households connected, and (d) collect the results.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">esg</span> <span class="op">&lt;-</span> <span class="va">hs</span> <span class="op">|&gt;</span> </span>
-<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">code_muni</span><span class="op">)</span> <span class="op">|&gt;</span>                                             <span class="co"># (a)</span></span>
 <span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>rede <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">V0010</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">V0207</span><span class="op">==</span><span class="st">'1'</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>,                    <span class="co"># (b)</span></span>
 <span>                  total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">V0010</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>                                   <span class="co"># (b)</span></span>
@@ -271,8 +307,10 @@ the proportion of households connected, and (d) collect the results.</p>
 <p>In order to create a map with these values, we are going to use the
 <a href="https://ipeagit.github.io/geobr/" class="external-link">{geobr} package</a> to
 download the geometries of Brazilian municipalities.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">muni_sf</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/geobr/man/read_municipality.html" class="external-link">read_municipality</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/geobr" class="external-link">geobr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">muni_sf</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/geobr/man/read_municipality.html" class="external-link">read_municipality</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
 <span>                                    showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using year 2010</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">muni_sf</span><span class="op">)</span></span>
@@ -297,7 +335,7 @@ download the geometries of Brazilian municipalities.</p>
 <span><span class="co">#&gt; 6 MULTIPOLYGON (((-60.66352 -...</span></span></code></pre></div>
 <p>Now we only need to merge the spatial data with our estimates and map
 the results.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">muni_sf</span><span class="op">$</span><span class="va">code_muni</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">muni_sf</span><span class="op">$</span><span class="va">code_muni</span><span class="op">)</span></span>
 <span><span class="va">esg_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">muni_sf</span>, <span class="va">esg</span>, by <span class="op">=</span> <span class="st">'code_muni'</span><span class="op">)</span></span>
 <span></span>
@@ -308,7 +346,7 @@ the results.</p>
 <span>                       name<span class="op">=</span><span class="st">'Share of\nhouseholds'</span>, </span>
 <span>                       labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/percent_format.html" class="external-link">percent</a></span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="censobr_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
+<p><img src="censobr_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
 </div>
 <div class="section level5">
 <h5 id="spatial-distribution-of-rents">Spatial distribution of rents:<a class="anchor" aria-label="anchor" href="#spatial-distribution-of-rents"></a>
@@ -318,18 +356,16 @@ money people spend on rent varies spatially across the metropolitan area
 of São Paulo.</p>
 <p>First, let’s download the municipalities of the metro area of São
 Paulo.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">metro_muni</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/geobr/man/read_metro_area.html" class="external-link">read_metro_area</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
-<span>                                     showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>                     <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">name_metro</span> <span class="op">==</span> <span class="st">"RM São Paulo"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">metro_muni</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/geobr/man/read_metro_area.html" class="external-link">read_metro_area</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>              <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">name_metro</span> <span class="op">==</span> <span class="st">"RM São Paulo"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using year 2010</span></span></code></pre></div>
 <p>We also need the polygons of the weighting areas (áreas de
 ponderação). With the code below, we download all weighting areas in the
-state of São Paulo, and then keep only the areas in the metropolitan
-regions of São Paulo.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">wt_areas</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/geobr/man/read_weighting_area.html" class="external-link">read_weighting_area</a></span><span class="op">(</span>code_weighting <span class="op">=</span> <span class="st">"SP"</span>,</span>
-<span>                                       showProgress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+state of São Paulo, and then keep only the ones in the metropolitan
+region of São Paulo.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">wt_areas</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/geobr/man/read_weighting_area.html" class="external-link">read_weighting_area</a></span><span class="op">(</span>code_weighting <span class="op">=</span> <span class="st">"SP"</span>, showProgress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                       year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using year 2010</span></span>
 <span></span>
@@ -359,10 +395,10 @@ area. Using the national household data set, we’re going to (a) filter
 only observations in our municipalities of interest, (b) group
 observations by weighting area, (c) calculate the average rent, and (d)
 collect the results.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rent</span> <span class="op">&lt;-</span> <span class="va">hs</span> <span class="op">|&gt;</span></span>
 <span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code_muni</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">metro_muni</span><span class="op">$</span><span class="va">code_muni</span><span class="op">)</span> <span class="op">|&gt;</span>                     <span class="co"># (a)</span></span>
-<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">compute</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">code_weighting</span><span class="op">)</span> <span class="op">|&gt;</span>                                        <span class="co"># (b)</span></span>
 <span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>avgrent<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html" class="external-link">weighted.mean</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">V2011</span>, w<span class="op">=</span><span class="va">V0010</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># (c)</span></span>
 <span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span>                                                          <span class="co"># (d)</span></span>
@@ -379,7 +415,7 @@ collect the results.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 3505708005003     327.</span></span></code></pre></div>
 <p>Finally, we can merge the spatial data with our rent estimates and
 map the results.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rent_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">wt_areas</span>, <span class="va">rent</span>, by <span class="op">=</span> <span class="st">'code_weighting'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -388,7 +424,7 @@ map the results.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Greens"</span>, direction <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>                       name<span class="op">=</span><span class="st">'Avgerage\nRent in R$'</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="censobr_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
+<p><img src="censobr_files/figure-html/unnamed-chunk-15-1.png" width="100%"></p>
 </div>
 </div>
 <div class="section level3">
@@ -402,25 +438,35 @@ data, which is much faster.</p>
 <p>Users can manage the cached data sets using the
 <code><a href="../reference/censobr_cache.html">censobr_cache()</a></code> function. For example, users can:</p>
 <p>List cached files:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/censobr_cache.html">censobr_cache</a></span><span class="op">(</span>list_files <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Files currently chached:</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.1.0/2000_families.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.1.0/2010_deaths.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.1.0/2010_emigration.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.1.0/2010_households.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.1.0/2010_population.parquet</span></span></code></pre></div>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2000_families.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_deaths.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_dictionary_tracts.pdf</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_emigration.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_households.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_interview_manual.pdf</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_population.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_questionnaire_sample.pdf</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_Basico_.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_PessoaRenda_.parquet</span></span></code></pre></div>
 <p>Delete a particular file:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/censobr_cache.html">censobr_cache</a></span><span class="op">(</span>delete_file <span class="op">=</span> <span class="st">"2010_emigration"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; The file '2010_emigration' has been removed.</span></span>
 <span><span class="co">#&gt; Files currently chached:</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.1.0/2000_families.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.1.0/2010_deaths.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.1.0/2010_households.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.1.0/2010_population.parquet</span></span></code></pre></div>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2000_families.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_deaths.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_dictionary_tracts.pdf</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_households.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_interview_manual.pdf</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_population.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_questionnaire_sample.pdf</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_Basico_.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_PessoaRenda_.parquet</span></span></code></pre></div>
 <p>Delete all files:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/censobr_cache.html">censobr_cache</a></span><span class="op">(</span>delete_file <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; All files have been removed.</span></span>
 <span><span class="co">#&gt; Files currently chached:</span></span>
@@ -441,7 +487,7 @@ data, which is much faster.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Rafael H. M. Pereira, Ipea - Institute for Applied Economic Research.</p>
+<p>Developed by Rafael H. M. Pereira, Rogério J. Barbosa, Ipea - Institute for Applied Economic Research.</p>
 </div>
 
 <div class="pkgdown">
