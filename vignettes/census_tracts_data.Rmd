@@ -77,9 +77,12 @@ library(geobr)
 library(ggplot2)
 ```
 
-In these examples below, example we'll use the city of Belo Horizonte for demonstration purpouses. So we can start by downloading the the geometries of the census tracts in the area. First, we need to download the geometries of all census tracts in the state of Minas Gerais (MG), and then keep only the ones in the municipality of Belo Horizonte.
+In these examples below, example we'll use the city of Belo Horizonte for demonstration purpouses. So we can start by downloading the the geometries of the census tracts in the area. First, we need to download the geometries of all census tracts in the state of Minas Gerais (MG), and then keep only the ones in the municipality of Belo Horizonte. We'll also download the muncipality borders of BH.
 
 ```{r, eval = use_suggested_pkgs, warning = FALSE}
+muni_bh <- geobr::read_municipality(code_muni = 'MG', year = 2010) |>
+           filter(name_muni == "Belo Horizonte")
+
 tracts_sf <- geobr::read_census_tract(code_tract = "MG",
                                       simplified = FALSE,
                                       year = 2010,
@@ -130,12 +133,52 @@ bh_tracts <- left_join(tracts_sf, tracts_df, by = 'code_tract')
 
 ggplot() +
   geom_sf(data = bh_tracts, aes(fill = income_pc), color=NA) +
-  scale_fill_viridis_c(name = "Avg. income\nper capita",
+  geom_sf(data = muni_bh, color='gray10', fill=NA) +
+  labs(subtitle = 'Avgerage income per capita.\nBelo Horizonte, 2010') +
+  scale_fill_viridis_c(name = "Income per\ncapita (R$)",
                        labels = scales::number_format(),
                        option = 'cividis',
-                       breaks = c(0, 100, 1e3, 1e4, 2e4),
-                       trans = "pseudo_log", na.value = "#F8F7F7") +
+                       breaks = c(0, 500, 1e3, 5e3, 1e4, 2e4),
+                       trans = "pseudo_log", na.value = "gray90") +
   theme_void()
 
 ```
+
 ## Example 2: 
+
+In this second example, we are going to map the proportion of households with the presence of trees in their surroundings. To do this, we need to download the `"Entorno"` dataset and sum the variables `entorno01_V044 + entorno01_V046 + entorno01_V048`. 
+
+```{r, eval = use_suggested_pkgs, warning = FALSE}
+# download data
+tract_entorno <- read_tracts(year = 2010,
+                             dataset = "Entorno", 
+                             showProgress = FALSE)
+
+# filter observations and calculate indicator
+df_trees <- tract_entorno |>
+                  filter(code_tract %in% tracts_sf$code_tract) |>
+                  mutate(total_households = entorno01_V001,
+                         trees = entorno01_V044 + entorno01_V046 + entorno01_V048,
+                         trees_prop = trees / total_households) |>
+                  select(code_tract, total_households, trees, trees_prop) |>
+                  collect()
+
+head(df_trees)
+```
+
+Now we can merge the spatial data with our indicator and see how the presence of trees in the surroundings of households varies spatially.
+
+```{r, eval = use_suggested_pkgs, warning = FALSE}
+bh_tracts <- left_join(tracts_sf, df_trees, by = 'code_tract')
+
+ggplot() +
+  geom_sf(data = bh_tracts, aes(fill = trees_prop), color=NA) +
+  geom_sf(data = muni_bh, color='gray10', fill=NA) +
+  labs(subtitle = 'Share of households with trees in their surroundings.\nBelo Horizonte, 2010') +
+  scale_fill_distiller(palette = "Greens", direction = 1, 
+                       name='Share of\nhouseholds', 
+                       na.value = "gray90",
+                       labels = scales::percent) +
+  theme_void()
+
+```
