@@ -16,6 +16,12 @@ knitr::opts_chunk$set(
   eval = identical(tolower(Sys.getenv("NOT_CRAN")), "true"),
   out.width = "100%"
 )
+
+use_suggested_pkgs <- c((requireNamespace("scales")), 
+                        (requireNamespace("ggplot2")), 
+                        (requireNamespace("geobr")))
+
+use_suggested_pkgs <- all(use_suggested_pkgs)
 ```
 
 **censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow platform](https://arrow.apache.org/docs/r/), which allows users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
@@ -31,7 +37,7 @@ install.packages("censobr")
 
 # or use the development version with latest features
 utils::remove.packages('censobr')
-devtools::install_github("ipeaGIT/censobr")
+remotes::install_github("ipeaGIT/censobr", ref="dev")
 library(censobr)
 ```
 
@@ -91,7 +97,6 @@ First, let's load the libraries we'll be using in this vignette.
 library(censobr)
 library(arrow)
 library(dplyr)
-library(geobr)
 library(ggplot2)
 ```
 
@@ -123,7 +128,7 @@ In the example below, we use the `dplyr` syntax to (a) filter observations for t
 ```{r, eval = TRUE, warning = FALSE}
 df <- pop |>
       filter(abbrev_state == "RJ") |>                                                    # (a)
-      collect() |>
+      compute() |>
       group_by(V0606) |>                                                                 # (b)
       summarize(higher_edu = sum(V0010[which(V6400=="Superior completo")]) / sum(V0010), # (c)
                 pop = sum(V0010) ) |>
@@ -133,7 +138,7 @@ head(df)
 ```
 Now we only need to plot the results.
 
-```{r, eval = TRUE}
+```{r, eval = use_suggested_pkgs}
 df <- subset(df, V0606 != 'Ignorado')
 
 ggplot() +
@@ -161,7 +166,7 @@ Now we're going to (a) group observations by municipality, (b) get the number of
 
 ```{r, eval = TRUE, warning = FALSE}
 esg <- hs |> 
-        collect() |>
+        compute() |>
         group_by(code_muni) |>                                             # (a)
         summarize(rede = sum(V0010[which(V0207=='1')]),                    # (b)
                   total = sum(V0010)) |>                                   # (b)
@@ -172,7 +177,9 @@ head(esg)
 ```
 In order to create a map with these values, we are going to use the [{geobr} package](https://ipeagit.github.io/geobr/) to download the geometries of Brazilian municipalities.
 
-```{r, eval = TRUE, warning = FALSE}
+```{r, eval = use_suggested_pkgs, warning = FALSE}
+library(geobr)
+
 muni_sf <- geobr::read_municipality(year = 2010,
                                     showProgress = FALSE)
 head(muni_sf)
@@ -180,7 +187,7 @@ head(muni_sf)
 
 Now we only need to merge the spatial data with our estimates and map the results.
 
-```{r, eval = TRUE, warning = FALSE}
+```{r, eval = use_suggested_pkgs, warning = FALSE}
 muni_sf$code_muni <- as.character(muni_sf$code_muni)
 esg_sf <- left_join(muni_sf, esg, by = 'code_muni')
 
@@ -199,16 +206,14 @@ ggplot() +
 In this final example, we're going to visualize how the amount of money people spend on rent varies spatially across the metropolitan area of São Paulo.
 
 First, let's download the municipalities of the metro area of São Paulo.
-```{r, eval = TRUE, warning = FALSE}
-metro_muni <- geobr::read_metro_area(year = 2010,
-                                     showProgress = FALSE) |> 
-                     subset(name_metro == "RM São Paulo")
+```{r, eval = use_suggested_pkgs, warning = FALSE}
+metro_muni <- geobr::read_metro_area(year = 2010, showProgress = FALSE) |> 
+              subset(name_metro == "RM São Paulo")
 ```
-We also need the polygons of the weighting areas (áreas de ponderação). With the code below, we download all weighting areas in the state of São Paulo, and then keep only the areas in the metropolitan regions of São Paulo.
+We also need the polygons of the weighting areas (áreas de ponderação). With the code below, we download all weighting areas in the state of São Paulo, and then keep only the ones in the metropolitan region of São Paulo.
 
-```{r, eval = TRUE, warning = FALSE}
-wt_areas <- geobr::read_weighting_area(code_weighting = "SP",
-                                       showProgress = FALSE,
+```{r, eval = use_suggested_pkgs, warning = FALSE}
+wt_areas <- geobr::read_weighting_area(code_weighting = "SP", showProgress = FALSE,
                                        year = 2010)
 
 wt_areas <- subset(wt_areas, code_muni %in% metro_muni$code_muni)
@@ -221,7 +226,7 @@ Now we need to calculate the average rent spent in each weighting area. Using th
 ```{r, eval = TRUE, warning = FALSE}
 rent <- hs |>
         filter(code_muni %in% metro_muni$code_muni) |>                     # (a)
-        collect() |>
+        compute() |>
         group_by(code_weighting) |>                                        # (b)
         summarize(avgrent=weighted.mean(x=V2011, w=V0010, na.rm=TRUE)) |>  # (c)
         collect()                                                          # (d)
@@ -230,7 +235,7 @@ head(rent)
 ```
 Finally, we can merge the spatial data with our rent estimates and map the results.
 
-```{r, eval = TRUE, warning = FALSE}
+```{r, eval = use_suggested_pkgs, warning = FALSE}
 rent_sf <- left_join(wt_areas, rent, by = 'code_weighting')
 
 ggplot() +
