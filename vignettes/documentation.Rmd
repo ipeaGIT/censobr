@@ -59,9 +59,6 @@ Finally, the `interview_manual()` function downloads and opens on a browser the 
 
 Manuals for all censuses since 1970 are available.
 
-
-
-interview_manual()
 ```{r, eval = FALSE}
 # 2010
 interview_manual(year = 2010)

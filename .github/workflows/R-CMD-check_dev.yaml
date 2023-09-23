@@ -21,7 +21,7 @@ jobs:
         - {os: windows-latest, r: 'release'}
         - {os: windows-latest, r: 'oldrel'}
         - {os: macOS-latest, r: 'release'}
-        - {os: macOS-latest, r: 'oldrel'}
+        # - {os: macOS-latest, r: 'oldrel'}
         - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
         - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
         - {os: ubuntu-20.04, r: 'oldrel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
@@ -41,10 +41,11 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck
-          needs: check
+      - name: Install pak and query dependencies
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          saveRDS(pak::pkg_deps("local::.", dependencies = TRUE), ".github/r-depends.rds")
+        shell: Rscript {0}
 
       - name: Restore R package cache
         uses: actions/cache@v2
