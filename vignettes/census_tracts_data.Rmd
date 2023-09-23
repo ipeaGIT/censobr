@@ -44,7 +44,7 @@ Aggregated data at the census tract level are split into different datasets, and
 
 All of the data aggregated at census tracts are organized following the same logic.
 
-In the cases when there are multiple files in the same dataset, we add a reference to the number of the file as a prefix to the variable name. To illustrate this, let's have a look at the `"Domicilio"` dataset, for example. This dataset is based on two separate tables: *Domicilio01* and *Domicilio02*. So the names of the columns in this dataset are organized as follows.
+In the cases when there are multiple files in the same dataset, we add a reference to the number of the file as a prefix to the variable name. To illustrate this, let's have a look at the `"Domicilio"` dataset. This dataset is based on two separate tables: *Domicilio01* and *Domicilio02*. So the names of the columns in this dataset are organized as follows:
 
 ```{r, eval = TRUE, warning = FALSE}
 library(censobr)
@@ -53,11 +53,12 @@ dom <- read_tracts(year = 2010,
                    dataset = 'Domicilio', 
                    showProgress = FALSE)
 
-names(dom)
+names(dom)[c(1:20,301:320)]
 ```
+
 ## Dictionary of variables
 
-To check the meaning of each variable, users can run the `data_dictionary()`, which will open on the browser a `.pdf` file with the dictionary of variables in each dataset
+To check the meaning of each variable, users can run the `data_dictionary()`, which will open on the browser an `.html` or `.pdf` file with the dictionary of variables in each dataset
 
 
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
