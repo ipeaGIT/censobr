@@ -6,8 +6,8 @@
 #'
 #' @template year
 #' @param type Character. The type of questionnaire, whether the one used in the
-#'        sample component of the census, or on the univese component. Options
-#'        currenlty include `c("sample")`.
+#'        sample component of the census, or on the universe component. Options
+#'        currently include `c("sample")`.
 #' @template showProgress
 #' @template cache
 #'

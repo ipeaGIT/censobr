@@ -11,8 +11,8 @@ questionnaire(year = NULL, type = NULL, showProgress = TRUE, cache = TRUE)
 \code{2010}.}
 
 \item{type}{Character. The type of questionnaire, whether the one used in the
-sample component of the census, or on the univese component. Options
-currenlty include \code{c("sample")}.}
+sample component of the census, or on the universe component. Options
+currently include \code{c("sample")}.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
 bar. The progress bar only reflects only the downloading

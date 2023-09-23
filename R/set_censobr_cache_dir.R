@@ -4,7 +4,7 @@
 #' want to set a custom cache directory, the function needs to be run again in
 #' each new R session.
 #'
-#' @param path String. The path to an existing directory. It deafults to `path = NULL`,
+#' @param path String. The path to an existing directory. It defaults to `path = NULL`,
 #'        to use the default directory
 #'
 #' @return A message indicating the directory where censobr files are cached.

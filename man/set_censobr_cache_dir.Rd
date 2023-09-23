@@ -7,7 +7,7 @@
 set_censobr_cache_dir(path = NULL)
 }
 \arguments{
-\item{path}{String. The path to an existing directory. It deafults to \code{path = NULL},
+\item{path}{String. The path to an existing directory. It defaults to \code{path = NULL},
 to use the default directory}
 }
 \value{
@@ -23,6 +23,9 @@ each new R session.
 # Set custom cache directory
 tempd <- tempdir()
 set_censobr_cache_dir(path = tempd)
+
+# back to default path
+set_censobr_cache_dir(path = NULL)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

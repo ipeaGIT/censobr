@@ -42,7 +42,7 @@ Aggregated data at the census tract level are split into different datasets, and
 - `"DomicilioRenda"`
 - `"ResponsavelRenda"`
 
-All of the data aggregated at census tracts are organized followig the same logic.
+All of the data aggregated at census tracts are organized following the same logic.
 
 In the cases when there are multiple files in the same dataset, we add a reference to the number of the file as a prefix to the variable name. To illustrate this, let's have a look at the `"Domicilio"` dataset, for example. This dataset is based on two separate tables: *Domicilio01* and *Domicilio02*. So the names of the columns in this dataset are organized as follows.
 
@@ -77,10 +77,12 @@ library(geobr)
 library(ggplot2)
 ```
 
-In these examples below, example we'll use the city of Belo Horizonte for demonstration purpouses. So we can start by downloading the the geometries of the census tracts in the area. First, we need to download the geometries of all census tracts in the state of Minas Gerais (MG), and then keep only the ones in the municipality of Belo Horizonte. We'll also download the muncipality borders of BH.
+In these examples below, example we'll use the city of Belo Horizonte for demonstration purposes. So we can start by downloading the the geometries of the census tracts in the area. First, we need to download the geometries of all census tracts in the state of Minas Gerais (MG), and then keep only the ones in the municipality of Belo Horizonte. We'll also download the muncipality borders of BH.
 
 ```{r, eval = use_suggested_pkgs, warning = FALSE}
-muni_bh <- geobr::read_municipality(code_muni = 'MG', year = 2010) |>
+muni_bh <- geobr::read_municipality(code_muni = 'MG', 
+                                    year = 2010, 
+                                    showProgress = FALSE) |>
            filter(name_muni == "Belo Horizonte")
 
 tracts_sf <- geobr::read_census_tract(code_tract = "MG",
