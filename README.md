@@ -27,7 +27,7 @@ library(censobr)
 
 ## Basic usage
 
-The package currently includes 6 main functions to download census data:
+The package currently includes 6 main functions to download & read census data:
 
 1. `read_population()`
 2. `read_households()`
@@ -36,18 +36,19 @@ The package currently includes 6 main functions to download census data:
 5. `read_emigration()`
 6. `read_tracts()`
 
-**censobr** also includes a few support functions to help users navigate the documentation Brazilian censuses, providing convenient information on data variables and methodology.:
+**censobr** also includes a few support functions to help users navigate the documentation Brazilian censuses, providing convenient information on data variables and methodology:
 
 7. `data_dictionary()`
 8. `questionnaire()`
 9. `interview_manual()`
 
-Finally, the package includs a function to help users to manage the data chached locally.
+Finally, the package includes two functions to help users manage the data chached locally.
 
 10. `censobr_cache()` 
+11. `set_censobr_cache_dir()`
+
 
 The syntax of all **censobr** functions to read data operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
-
 
 ```
 read_households(
@@ -64,7 +65,11 @@ read_households(
 
 ### Data cache
 
-The first time the user runs a function, **censobr** will download the file and store it locally. This way, the data only needs to be downloaded once. When the `cache` parameter is set to `TRUE` (Default), the function will read the cached data, which is much faster. Users can list and/or delete data files cached locally using the `censobr_cache()` function.
+The first time the user runs a function, **censobr** will download the file and store it locally. This way, the data only needs to be downloaded once. When the `cache` parameter is set to `TRUE` (Default), the function will read the cached data, which is much faster. 
+
+- `censobr_cache()`: can be used to list and/or delete data files cached locally
+- `set_censobr_cache_dir()`: can be used to set custom cache directory for censobr files
+
 
 
 ## Larger-than-memory Data
