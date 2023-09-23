@@ -20,10 +20,13 @@ test_that("set_censobr_cache_dir", {
   t <- read_emigration(year = 2010)
 
   # check if file exists in custom dir
+  files <- list.files(tempd, full.names = TRUE)
   fname <- paste0('2010_emigration_',data_release, '.parquet')
+  fname_full <- files[grepl(fname, files)]
   testthat::expect_true( file.exists(fname_full) )
-  testthat::expect_true( file.exists(paste0(tempd,'/',fname)) )
 
+  # back to default path
+  set_censobr_cache_dir(path = NULL)
  })
 
 

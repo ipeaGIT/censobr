@@ -274,7 +274,7 @@ censobr_cache(delete_file = "all")
 
 By default, **censobr** files are saved in the 'User' directory. However, users can run the function `set_censobr_cache_dir()` to set custom cache directory.
 
-```{r, eval=TRUE, warning=FALSE}
+```{r, eval=FALSE, warning=FALSE}
 tempf <- tempdir()
 
 set_censobr_cache_dir(path = tempf)

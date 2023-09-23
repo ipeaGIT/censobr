@@ -16,6 +16,9 @@
 #' tempd <- tempdir()
 #' set_censobr_cache_dir(path = tempd)
 #'
+#' # back to default path
+#' set_censobr_cache_dir(path = NULL)
+
 set_censobr_cache_dir <- function(path = NULL) {
 
   if (!is.null(path)) {
