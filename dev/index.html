@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">censobr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.19000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.29000</span>
       </span>
     </div>
 
@@ -64,10 +64,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/census_documentation.html">Census documentation</a>
+      <a href="articles/census_tracts_data.html">Census tract-level data</a>
     </li>
     <li>
-      <a href="articles/census_tracts_data.html">Census tract-level data</a>
+      <a href="articles/documentation.html">Census documentation</a>
     </li>
   </ul>
 </li>
@@ -114,7 +114,7 @@
 <div class="section level2">
 <h2 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
 </h2>
-<p>The package currently includes 6 main functions to download census data:</p>
+<p>The package currently includes 6 main functions to download &amp; read census data:</p>
 <ol style="list-style-type: decimal">
 <li><code><a href="reference/read_population.html">read_population()</a></code></li>
 <li><code><a href="reference/read_households.html">read_households()</a></code></li>
@@ -123,15 +123,16 @@
 <li><code><a href="reference/read_emigration.html">read_emigration()</a></code></li>
 <li><code><a href="reference/read_tracts.html">read_tracts()</a></code></li>
 </ol>
-<p><strong>censobr</strong> also includes a few support functions to help users navigate the documentation Brazilian censuses, providing convenient information on data variables and methodology.:</p>
+<p><strong>censobr</strong> also includes a few support functions to help users navigate the documentation Brazilian censuses, providing convenient information on data variables and methodology:</p>
 <ol start="7" style="list-style-type: decimal">
 <li><code><a href="reference/data_dictionary.html">data_dictionary()</a></code></li>
 <li><code><a href="reference/questionnaire.html">questionnaire()</a></code></li>
 <li><code><a href="reference/interview_manual.html">interview_manual()</a></code></li>
 </ol>
-<p>Finally, the package includs a function to help users to manage the data chached locally.</p>
+<p>Finally, the package includes two functions to help users manage the data chached locally.</p>
 <ol start="10" style="list-style-type: decimal">
 <li><code><a href="reference/censobr_cache.html">censobr_cache()</a></code></li>
+<li><code><a href="reference/set_censobr_cache_dir.html">set_censobr_cache_dir()</a></code></li>
 </ol>
 <p>The syntax of all <strong>censobr</strong> functions to read data operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:</p>
 <pre><code><span><span class="fu"><a href="reference/read_households.html">read_households</a></span><span class="op">(</span></span>
@@ -146,7 +147,13 @@
 <div class="section level3">
 <h3 id="data-cache">Data cache<a class="anchor" aria-label="anchor" href="#data-cache"></a>
 </h3>
-<p>The first time the user runs a function, <strong>censobr</strong> will download the file and store it locally. This way, the data only needs to be downloaded once. When the <code>cache</code> parameter is set to <code>TRUE</code> (Default), the function will read the cached data, which is much faster. Users can list and/or delete data files cached locally using the <code><a href="reference/censobr_cache.html">censobr_cache()</a></code> function.</p>
+<p>The first time the user runs a function, <strong>censobr</strong> will download the file and store it locally. This way, the data only needs to be downloaded once. When the <code>cache</code> parameter is set to <code>TRUE</code> (Default), the function will read the cached data, which is much faster.</p>
+<ul>
+<li>
+<code><a href="reference/censobr_cache.html">censobr_cache()</a></code>: can be used to list and/or delete data files cached locally</li>
+<li>
+<code><a href="reference/set_censobr_cache_dir.html">set_censobr_cache_dir()</a></code>: can be used to set custom cache directory for censobr files</li>
+</ul>
 </div>
 </div>
 <div class="section level2">

@@ -7,10 +7,10 @@
     <loc>/articles/censobr.html</loc>
   </url>
   <url>
-    <loc>/articles/census_documentation.html</loc>
+    <loc>/articles/census_tracts_data.html</loc>
   </url>
   <url>
-    <loc>/articles/census_tracts_data.html</loc>
+    <loc>/articles/documentation.html</loc>
   </url>
   <url>
     <loc>/articles/index.html</loc>
@@ -68,5 +68,8 @@
   </url>
   <url>
     <loc>/reference/read_tracts.html</loc>
+  </url>
+  <url>
+    <loc>/reference/set_censobr_cache_dir.html</loc>
   </url>
 </urlset>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">censobr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.19000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.29000</span>
       </span>
     </div>
 
@@ -35,10 +35,10 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/census_documentation.html">Census documentation</a>
+      <a href="../articles/census_tracts_data.html">Census tract-level data</a>
     </li>
     <li>
-      <a href="../articles/census_tracts_data.html">Census tract-level data</a>
+      <a href="../articles/documentation.html">Census documentation</a>
     </li>
   </ul></li>
 <li>
@@ -66,11 +66,15 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.1999" id="censobr-v011999-dev">censobr v0.1.1999 dev<a class="anchor" aria-label="anchor" href="#censobr-v011999-dev"></a></h2>
 <ul><li>Major changes
-<ul><li>New function <code><a href="../reference/data_dictionary.html">data_dictionary()</a></code> opens on a browser the data dictionary of Brazil’s census data.</li>
+<ul><li>New function <code><a href="../reference/read_tracts.html">read_tracts()</a></code> to read Census tract-level aggregate data.</li>
+<li>New function <code><a href="../reference/data_dictionary.html">data_dictionary()</a></code> opens on a browser the data dictionary of Brazil’s census data.</li>
 <li>New function <code><a href="../reference/questionnaire.html">questionnaire()</a></code> opens on a browser the questionnaire used in the data collection of Brazil’s censuses.</li>
-<li>New function <code><a href="../reference/interview_manual.html">interview_manual()</a></code> opens on a browser the interview manual of the data collection of Brazil’s censuses.</li>
-<li>New data sets of 1970, 1980 and 1991 censuses: microdata of population and households. Closes <a href="https://github.com/ipeaGIT/censobr/issues/6" class="external-link">#6</a>, <a href="https://github.com/ipeaGIT/censobr/issues/7" class="external-link">#7</a> and <a href="https://github.com/ipeaGIT/censobr/issues/8" class="external-link">#8</a>.</li>
-<li>New vignettes with the data dictionary of censos 2010 and 2000.</li>
+<li>New function <code><a href="../reference/interview_manual.html">interview_manual()</a></code> opens on a browser the interview manual of the data collection of Brazil’s censuses.
+<ul><li>New function <code><a href="../reference/set_censobr_cache_dir.html">set_censobr_cache_dir()</a></code> that allows users to set custom directory for caching files from the censobr package.</li>
+</ul></li>
+<li>New data sets of 1970, 1980 and 1991 censuses: microdata of population and households PLUS Census tract-level aggregate data for 2010. Closes <a href="https://github.com/ipeaGIT/censobr/issues/6" class="external-link">#6</a>, <a href="https://github.com/ipeaGIT/censobr/issues/7" class="external-link">#7</a>, <a href="https://github.com/ipeaGIT/censobr/issues/8" class="external-link">#8</a> and <a href="https://github.com/ipeaGIT/censobr/issues/18" class="external-link">1#8</a>
+</li>
+<li>New vignette on Census tract-level aggregate data for 2010.</li>
 <li>New vignette covering functions about census documentation and dictionary of variables. Closes <a href="https://github.com/ipeaGIT/censobr/issues/2" class="external-link">#2</a>.</li>
 </ul></li>
 <li>Minor changes
@@ -92,6 +96,7 @@
 </ul></li>
 <li>2010 Census
 <ul><li>Microdata of population, households, deaths and emigration.</li>
+<li>Census tract-level aggregate data [<em>New</em>]</li>
 </ul></li>
 </ul></li>
 </ul></div>

@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">censobr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.19000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.29000</span>
       </span>
     </div>
 
@@ -61,10 +61,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/census_documentation.html">Census documentation</a>
+      <a href="../articles/census_tracts_data.html">Census tract-level data</a>
     </li>
     <li>
-      <a href="../articles/census_tracts_data.html">Census tract-level data</a>
+      <a href="../articles/documentation.html">Census documentation</a>
     </li>
   </ul>
 </li>
@@ -94,7 +94,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to censobr</h1>
             
-            <h4 data-toc-skip class="date">2023-09-22</h4>
+            <h4 data-toc-skip class="date">2023-09-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/tree/main/vignettes/censobr.Rmd" class="external-link"><code>vignettes/censobr.Rmd</code></a></small>
       <div class="hidden name"><code>censobr.Rmd</code></div>
@@ -444,36 +444,43 @@ data, which is much faster.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/censobr_cache.html">censobr_cache</a></span><span class="op">(</span>list_files <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Files currently chached:</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2000_families.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_deaths.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2000_families_v0.2.0.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_deaths_v0.2.0.parquet</span></span>
 <span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_dictionary_tracts.pdf</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_emigration.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_households.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_emigration_v0.2.0.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_households_v0.2.0.parquet</span></span>
 <span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_interview_manual.pdf</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_population.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_population_v0.2.0.parquet</span></span>
 <span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_questionnaire_sample.pdf</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_Basico_.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_PessoaRenda_.parquet</span></span></code></pre></div>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_Basico_v0.2.0.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_PessoaRenda_v0.2.0.parquet</span></span></code></pre></div>
 <p>Delete a particular file:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/censobr_cache.html">censobr_cache</a></span><span class="op">(</span>delete_file <span class="op">=</span> <span class="st">"2010_emigration"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; The file '2010_emigration' has been removed.</span></span>
 <span><span class="co">#&gt; Files currently chached:</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2000_families.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_deaths.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2000_families_v0.2.0.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_deaths_v0.2.0.parquet</span></span>
 <span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_dictionary_tracts.pdf</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_households.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_households_v0.2.0.parquet</span></span>
 <span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_interview_manual.pdf</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_population.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_population_v0.2.0.parquet</span></span>
 <span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_questionnaire_sample.pdf</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_Basico_.parquet</span></span>
-<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_PessoaRenda_.parquet</span></span></code></pre></div>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_Basico_v0.2.0.parquet</span></span>
+<span><span class="co">#&gt; /home/runner/.cache/R/censobr/data_release_v0.2.0/2010_tracts_PessoaRenda_v0.2.0.parquet</span></span></code></pre></div>
 <p>Delete all files:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/censobr_cache.html">censobr_cache</a></span><span class="op">(</span>delete_file <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; All files have been removed.</span></span>
 <span><span class="co">#&gt; Files currently chached:</span></span>
 <span><span class="co">#&gt; </span></span></code></pre></div>
+<p>By default, <strong>censobr</strong> files are saved in the ‘User’
+directory. However, users can run the function
+<code><a href="../reference/set_censobr_cache_dir.html">set_censobr_cache_dir()</a></code> to set custom cache directory.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tempf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/set_censobr_cache_dir.html">set_censobr_cache_dir</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">tempf</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </div>
