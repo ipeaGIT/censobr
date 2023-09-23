@@ -67,9 +67,12 @@ data_dictionary <- function(year = NULL,
     }
 
   ### Download
-  temp_dic <- download_file(file_url = file_url,
+  local_file <- download_file(file_url = file_url,
                             showProgress = showProgress,
                             cache = cache)
+
+  # check if download worked
+  if(is.null(local_file)) { return(NULL) }
 
   # open data dic on browser
   utils::browseURL(url = temp_dic)
