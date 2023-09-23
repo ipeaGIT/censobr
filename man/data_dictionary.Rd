@@ -32,7 +32,9 @@ Open on a browser the data dictionary of Brazil's census data.
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Open data dictionary on browser
-data_dictionary(year = 2010, dataset = 'microdata', showProgress = FALSE)
+data_dictionary(year = 2010, dataset = 'population', showProgress = FALSE)
+
+data_dictionary(year = 1980, dataset = 'households', showProgress = FALSE)
 
 data_dictionary(year = 2010, dataset = 'tracts', showProgress = FALSE)
 \dontshow{\}) # examplesIf}

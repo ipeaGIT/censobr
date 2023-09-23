@@ -50,9 +50,9 @@ test_that("data_dictionary", {
 # ERRORS and messages  -----------------------
 test_that("data_dictionary", {
 
-  # Wrong date 4 digits
   testthat::expect_error( data_dictionary(year = 1991, dataset = 'banana') )
   testthat::expect_error( data_dictionary(year = banana, dataset = 'population') )
+
 })
 
 
