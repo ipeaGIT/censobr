@@ -30,4 +30,5 @@ reference:
   - title: "Cache data"
   - contents:
     - censobr_cache
+    - set_censobr_cache_dir
 

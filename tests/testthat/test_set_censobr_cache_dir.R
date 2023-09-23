@@ -17,7 +17,7 @@ test_that("set_censobr_cache_dir", {
   testthat::expect_message( set_censobr_cache_dir(path = tempd) )
 
   # download
-  t <- read_emigration(year = 2010)
+  t <- read_emigration(year = 2010, showProgress = FALSE)
 
   # check if file exists in custom dir
   files <- list.files(tempd, full.names = TRUE)
