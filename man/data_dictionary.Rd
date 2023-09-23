@@ -11,7 +11,7 @@ data_dictionary(year = NULL, dataset = NULL, showProgress = TRUE, cache = TRUE)
 \code{2010}.}
 
 \item{dataset}{Character. The dataset of data dictionary to be opened. Options
-include \code{c("microdata", 'tracts')}.}
+include \code{c("population", "households", "families", "mortality", "emigration", "tracts")}.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
 bar. The progress bar only reflects only the downloading
