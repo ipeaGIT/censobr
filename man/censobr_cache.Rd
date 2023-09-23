@@ -31,4 +31,8 @@ censobr_cache(list_files = TRUE)
 censobr_cache(delete_file = '2010_deaths')
 \dontshow{\}) # examplesIf}
 }
+\seealso{
+Other Cache data: 
+\code{\link{set_censobr_cache_dir}()}
+}
 \concept{Cache data}

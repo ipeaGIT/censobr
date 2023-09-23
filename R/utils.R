@@ -103,7 +103,7 @@ cache_message <- function(local_file = parent.frame()$local_file,
   ## if file does not exist yet
   # YES cache
   if (!file.exists(local_file) & isTRUE(cache)) {
-     message(paste("Downloading data and storing it locally. Files are downloaded only once."))
+     message(paste("Downloading data and storing it locally for future use."))
      }
 
   # NO cache

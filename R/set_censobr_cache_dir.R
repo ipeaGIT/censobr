@@ -18,12 +18,13 @@
 #'
 set_censobr_cache_dir <- function(path = NULL) {
 
-  if (dir.exists(path)) {
+  if (!is.null(path)) {
+    if (!dir.exists(path)) {stop('Directory does not exist.')}
     censobr_env$cache_dir <- path
   }
 
 
-  if (is.null(path = NULL)) {
+  if (is.null(path)) {
     cache_d <- paste0('censobr/data_release_', censobr_env$data_release)
     censobr_env$cache_dir <- tools::R_user_dir(cache_d, which = 'cache')
   }
