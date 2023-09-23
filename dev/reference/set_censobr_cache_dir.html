@@ -79,7 +79,7 @@ each new R session.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>path</dt>
-<dd><p>String. The path to an existing directory. It deafults to <code>path = NULL</code>,
+<dd><p>String. The path to an existing directory. It defaults to <code>path = NULL</code>,
 to use the default directory</p></dd>
 
 </dl></div>
@@ -100,7 +100,11 @@ to use the default directory</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Set custom cache directory</span></span></span>
 <span class="r-in"><span><span class="va">tempd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">set_censobr_cache_dir</span><span class="op">(</span>path <span class="op">=</span> <span class="va">tempd</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> censobr files will be cached at  /tmp/RtmpTK5rqU</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> censobr files will be cached at  /tmp/RtmpdYTJGk</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># back to default path</span></span></span>
+<span class="r-in"><span><span class="fu">set_censobr_cache_dir</span><span class="op">(</span>path <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> censobr files will be cached at  /home/runner/.cache/R/censobr/data_release_v0.2.0</span>
 </code></pre></div>
     </div>
   </div>
