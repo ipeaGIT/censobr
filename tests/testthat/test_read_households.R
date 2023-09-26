@@ -22,6 +22,26 @@ test_that("read_households", {
   testthat::expect_true(is(test2, "FileSystemDataset"))
   testthat::expect_true(nrow(test2) >0 )
 
+  # year 1991
+  # (default) arrow table
+  test2 <- read_households(year = 1991)
+  testthat::expect_true(is(test2, "ArrowObject"))
+  testthat::expect_true(is(test2, "FileSystemDataset"))
+  testthat::expect_true(nrow(test2) >0 )
+
+  # year 1980
+  # (default) arrow table
+  test2 <- read_households(year = 1980)
+  testthat::expect_true(is(test2, "ArrowObject"))
+  testthat::expect_true(is(test2, "FileSystemDataset"))
+  testthat::expect_true(nrow(test2) >0 )
+
+  # year 1970
+  # (default) arrow table
+  test2 <- read_households(year = 1970)
+  testthat::expect_true(is(test2, "ArrowObject"))
+  testthat::expect_true(is(test2, "FileSystemDataset"))
+  testthat::expect_true(nrow(test2) >0 )
   # # data.frame
   # test2 <- read_households(as_data_frame = TRUE)
   # testthat::expect_true(is(test2, "data.frame"))
@@ -43,6 +63,48 @@ test_that("read_households", {
 })
 
 
+
+
+
+# check totals -----------------------
+
+test_that("read_households", {
+
+
+  # 2010
+  dfh <- read_households(year = 2010)
+  total_2010_p <- summarise(dfh, total = sum(V0010)) |> collect()
+  expect_equal(total_2010_p$total, 58051449)
+
+
+  # 2000
+  dfh <- read_households(year = 2000)
+  total_2000_p <- summarise(dfh, total = sum(PESO_DOMIC, na.rm=T)) |> collect()
+  expect_equal(total_2000_p$total, 45507516)
+
+
+  # 1991
+  dfh <- read_households(year = 1991)
+  total_1991_p <- summarise(dfh, total = sum(V7300, na.rm=T)) |> collect()
+  expect_equal(total_1991_p$total, 35435725)
+
+
+  # 1980
+  dfh <- read_households(year = 1980)
+  total_1980_p <- summarise(dfh, total = sum(V603, na.rm=T)) |> collect()
+  expect_equal(total_1980_p$total, 25210639)
+
+
+  # 1970
+  dfh <- read_households(year = 1970)
+  total_1970_p <- summarise(dfh, total = sum(V054, na.rm=T)) |> collect()
+  expect_equal(total_1970_p$total, 17887536)
+
+})
+
+
+
+
 # ERRORS and messages  -----------------------
 test_that("read_households", {
 
@@ -60,5 +122,5 @@ test_that("read_households", {
 
 })
 
-# clean cache
-censobr_cache(delete_file = 'all')
+# # clean cache
+# censobr_cache(delete_file = 'all')

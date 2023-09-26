@@ -16,7 +16,9 @@
 #' @family Microdata
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # return data as arrow Dataset
-#' df <- read_households(year = 2010, showProgress = FALSE)
+#' df <- read_households(year = 2010,
+#'                       showProgress = FALSE)
+#'
 #'
 read_households <- function(year = 2010,
                             columns = NULL,
@@ -32,12 +34,14 @@ read_households <- function(year = 2010,
   checkmate::assert_string(add_labels, pattern = 'pt', null.ok = TRUE)
 
   # data available for the years:
-  years <- c(2000, 2010)
+  years <- c(1970, 1980, 1991, 2000, 2010)
   if (isFALSE(year %in% years)) { stop(paste0("Error: Data currently only available for the years ",
                                               paste(years), collapse = " "))}
 
   ### Get url
-  file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/", censobr_env$data_release, "/", year, "_households.parquet")
+  file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/",
+                     censobr_env$data_release, "/", year, "_households_",
+                     censobr_env$data_release, ".parquet")
 
 
   ### Download

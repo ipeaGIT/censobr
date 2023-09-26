@@ -62,5 +62,5 @@ test_that("read_mortality", {
 
 })
 
-# clean cache
-censobr_cache(delete_file = 'all')
+# # clean cache
+# censobr_cache(delete_file = 'all')

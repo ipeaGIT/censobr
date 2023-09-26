@@ -15,15 +15,20 @@
 #' @export
 #' @family Microdata
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+#' library(censobr)
+#'
 #' # return data as arrow Dataset
 #' df <- read_mortality(year = 2010,
 #'                      showProgress = FALSE)
 #'
+#' # dplyr::glimpse(df)
 #'
 #' # return data as data.frame
 #' df <- read_mortality(year = 2010,
 #'                      as_data_frame = TRUE,
 #'                      showProgress = FALSE)
+#'
+#' # dplyr::glimpse(df)
 #'
 read_mortality <- function(year = 2010,
                         columns = NULL,
@@ -38,15 +43,16 @@ read_mortality <- function(year = 2010,
   checkmate::assert_logical(as_data_frame)
   checkmate::assert_string(add_labels, pattern = 'pt', null.ok = TRUE)
 
-  # data available for the years:
+  # available for the years:
   years <- c(2010)
   if (isFALSE(year %in% years)) { stop(paste0("Error: Data currently only available for the years ",
-                                              paste(years), collapse = " "))}
-
-
+                                              paste(years), collapse = " "))
+      }
 
   ### Get url
-  file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/", censobr_env$data_release, "/", year, "_deaths.parquet")
+  file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/",
+                     censobr_env$data_release, "/", year, "_deaths_",
+                     censobr_env$data_release, ".parquet")
 
 
   ### Download
@@ -78,6 +84,4 @@ read_mortality <- function(year = 2010,
   } else {
       return(df)
     }
-
 }
-

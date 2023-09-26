@@ -1,49 +1,80 @@
 #' Data dictionary of Brazil's census data
 #'
 #' @description
-#' Open the data dictionary of Brazil's census data sets on a browser.
+#' Open on a browser the data dictionary of Brazil's census data.
 #'
 #' @template year
-#' @param table Character. The table of data dictionary to be opened. Options
-#'        include `c("microdata")`.
+#' @param dataset Character. The dataset of data dictionary to be opened. Options
+#'        include `c("population", "households", "families", "mortality", "emigration", "tracts")`.
+#' @template showProgress
+#' @template cache
 #'
-#' @return Opens .html file on browser
+#' @return Returns `NULL` and opens .html or .pdf file on the browser
 #' @export
-#' @family Data Dictionary
+#' @family Census documentation
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Open data dictionary on browser
-#' data_dictionary(year = 2010, table = 'microdata')
+#' data_dictionary(year = 2010, dataset = 'population', showProgress = FALSE)
 #'
+#' data_dictionary(year = 1980, dataset = 'households', showProgress = FALSE)
+#'
+#' data_dictionary(year = 2010, dataset = 'tracts', showProgress = FALSE)
+
 data_dictionary <- function(year = NULL,
-                            table = NULL){
+                            dataset = NULL,
+                            showProgress = TRUE,
+                            cache = TRUE){
   # year = 2010
-  # table = 'microdata'
+  # dataset = 'population'
 
   ### check inputs
   checkmate::assert_numeric(year)
-  checkmate::assert_string(table)
-
-  # data available for the years:
-  years <- c(2000, 2010)
-  if (isFALSE(year %in% years)) { stop(  paste0("Error: Dictionary currently only available for the years: ",
-                                              paste(years), collapse = " ")
-                                        )}
+  checkmate::assert_string(dataset)
 
   # data available for data sets:
-  data_sets <- c('microdata')
-  if (isFALSE(table %in% data_sets)) { stop( paste0("Error: Dictionary currently only available for the tables: ",
-                                              paste(data_sets), collapse = " ")
-                                            )}
+  data_sets <- c("population", "households", "families", "mortality", "emigration", "tracts")
+  if (isFALSE(dataset %in% data_sets)) { stop( paste0("Error: Dictionary currently only available for the datasets: ",
+                                                    paste(data_sets, collapse = ", "))
+  )}
 
 
-  # load all dictionary files currenlty available
-  data_path <- system.file("extdata", package = "censobr")
-  all_dic <- list.files(data_path, full.names = TRUE, pattern = '.html')
+  # check year / data availability
+  if(dataset == 'tracts'){ years <- c(1970, 1980, 1991, 2000, 2010) }
+  if(dataset == 'population'){ years <- c(1970, 1980, 2000, 2010) }
+  if(dataset == 'households'){ years <- c(1980, 2000, 2010) }
+  if(dataset == 'families'){ years <- c(2000) }
+  if(dataset == 'mortality'){ years <- c(2010) }
+  if(dataset == 'emigration'){ years <- c(2010) }
 
-  # filter data dic by year and type of data
-  temp_dic <- all_dic[grepl(year, all_dic)]
-  temp_dic <- temp_dic[grepl(table, temp_dic)]
+  if (isFALSE(year %in% years)) {
+    stop( paste0("Error: Dictionary for ",dataset," data currently only available for the years: ",
+                 paste(years,collapse = " ")))
+    }
+
+
+  ### Get url
+
+  # MICRODATA
+  if (dataset != 'tracts') {
+    fname <- paste0(year, '_dictionary_microdata_', dataset, '.html')
+    file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/censo_docs/", fname)
+    }
+
+  # TRACT DATA
+  if (dataset == 'tracts') {
+    fname <- paste0(year, '_dictionary_tracts.pdf')
+    file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/censo_docs/", fname)
+    }
+
+  ### Download
+  local_file <- download_file(file_url = file_url,
+                            showProgress = showProgress,
+                            cache = cache)
+
+  # check if download worked
+  if(is.null(local_file)) { return(NULL) }
 
   # open data dic on browser
   utils::browseURL(url = temp_dic)
+  return(NULL)
 }

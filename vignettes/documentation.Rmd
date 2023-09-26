@@ -1,0 +1,69 @@
+---
+title: "Census documentation"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+urlcolor: blue
+vignette: >
+  %\VignetteIndexEntry{Census documentation and Dictionary of variables}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = identical(tolower(Sys.getenv("NOT_CRAN")), "true"),
+  out.width = "100%"
+)
+```
+
+The **censobr** package includes a few functions to help users navigate Brazilian census data, its variables and its methodology. All of these functions download supporting documents in either `.html` or `.pdf` format, and opens the documents on a web browser.
+
+Like all other datasets in **censobr**, these support documents are downloaded and cached locally the first time when users run the function. This way, when users need to take a peak at the documentation again, the functions simply load local files, making it super quick and convenient.
+
+
+# Data Dictionary
+
+The `data_dictionary()` indicate the definition of each variable, and the meaning of their categories in the case of categorical variables. The function currently covers the data dictionaries for all Brazilian censuses since 1970 (`1970`, `1980`, `1991`, `2000` and `2010`), and it includes dictionaries for the variables of both microdata (sample portion of the census) and for the variables available in census tract-level aggregate data.
+
+
+```{r, eval = FALSE}
+# Microdata variables
+data_dictionary(year = 2010, table = 'microdata')
+
+# Census tract-level variables
+data_dictionary(year = 2010, table = 'tracts')
+```
+
+Obs. For the years 2010 and 2000, the the dictionaries of variables are also available online from the **censobr** [website](https://ipeagit.github.io/censobr/index.html). Other years will also be eventually included on the website.
+
+# Questionnaires
+
+Oftentimes, it is really important to understand the structure of the questionnaire used in surveys. The `questionnaire()` function includes the questionnaires used in the data collection of all Brazilian censuses since 1970.
+
+Here, users only need to passe the `year` parameter indicating the edition of the census of interest.
+
+```{r, eval = FALSE}
+# 2010
+questionnaire(year = 2010)
+
+# 1970
+questionnaire(year = 1970)
+```
+
+
+# Interview manual
+
+Finally, the `interview_manual()` function downloads and opens on a browser the "Manual do Recenseador", i.e. the manual of instructions for IBGE's census takers (recenseadores) on how to collect the census data.
+
+Manuals for all censuses since 1970 are available.
+
+```{r, eval = FALSE}
+# 2010
+interview_manual(year = 2010)
+
+# 1970
+interview_manual(year = 1970)
+```
+

@@ -39,7 +39,9 @@ read_families <- function(year = 2000,
                                               paste(years), collapse = " "))}
 
   ### Get url
-  file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/", censobr_env$data_release, "/", year, "_families.parquet")
+  file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/",
+                     censobr_env$data_release, "/", year, "_families_",
+                     censobr_env$data_release, ".parquet")
 
 
   ### Download

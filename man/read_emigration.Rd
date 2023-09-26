@@ -14,7 +14,7 @@ read_emigration(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyymm}. Defaults to
+\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to
 \code{2010}.}
 
 \item{columns}{String. A vector of column names to keep. The rest of the
@@ -56,6 +56,7 @@ df <- read_emigration(year = 2010,
 df <- read_emigration(year = 2010,
                       as_data_frame = TRUE,
                       showProgress = FALSE)
+
 \dontshow{\}) # examplesIf}
 }
 \seealso{

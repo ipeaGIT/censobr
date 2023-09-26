@@ -1,12 +1,16 @@
 Type: Package
 Package: censobr
 Title: Download Data from Brazil's Population Census
-Version: 0.1.19000
+Version: 0.1.29000
 Authors@R: 
     c(person(given="Rafael H. M.", family="Pereira", 
              email="rafa.pereira.br@gmail.com", 
              role=c("aut", "cre"), 
              comment = c(ORCID = "0000-0003-2125-7465")),
+      person(given="Rogério J.", family="Barbosa", 
+             email="antrologos@gmail.com", 
+             role=c("aut"), 
+             comment = c(ORCID = "0000-0002-6796-4547")),  
       person(given = "Ipea - Institute for Applied Economic Research",
              role = c("cph", "fnd")))
 Description: Download data from Brazil's population census. The package is built 
@@ -19,22 +23,21 @@ BugReports: https://github.com/ipeaGIT/censobr/issues
 Depends: 
     R (>= 4.0)
 Imports:
-      arrow,
-      checkmate,
-      dplyr,
-      httr (>= 1.4.1),
-      tools
+    arrow,
+    checkmate,
+    dplyr,
+    httr (>= 1.4.1),
+    tools
 Suggests: 
     covr,
     geobr,
     ggplot2 (>= 3.3.1),
-    rmarkdown (>= 2.6),
+    rmarkdown,
     knitr,
     scales,
     testthat
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-NeedsCompilation: yes
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3

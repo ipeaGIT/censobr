@@ -23,17 +23,17 @@ test_that("censobr_cache", {
 
   # list cached files
   files <- list.files(cache_dir, full.names = TRUE)
-  fname <- '2010_emigration.parquet'
+  fname <- paste0('2010_emigration_',data_release, '.parquet')
   fname_full <- files[grepl(fname, files)]
 
   testthat::expect_true( file.exists(fname_full) )
-  testthat::expect_message( censobr_cache(delete_file = '2010_emigration.parquet') )
+  testthat::expect_message( censobr_cache(delete_file = fname) )
   testthat::expect_false( file.exists(fname_full) )
 
   ## delete ALL
   censobr::read_emigration(year = 2010, showProgress = FALSE, cache = TRUE)
   files <- list.files(cache_dir, full.names = TRUE)
-  fname <- '2010_emigration.parquet'
+  fname <- paste0('2010_emigration_',data_release, '.parquet')
   fname_full <- files[grepl(fname, files)]
   testthat::expect_true( file.exists(fname_full) )
   testthat::expect_message( censobr_cache(delete_file = 'all') )

@@ -46,8 +46,8 @@ download_file <- function(file_url = parent.frame()$file_url,
       )
   }
 
-  # Halt function if download failed (file must exist and be larger than 500 kb)
-  if (!file.exists(local_file) | file.info(local_file)$size < 500000) {
+  # Halt function if download failed (file must exist and be larger than 200 kb)
+  if (!file.exists(local_file) | file.info(local_file)$size < 5000) {
     message('Internet connection not working properly.')
     return(invisible(NULL))
 
@@ -103,7 +103,7 @@ cache_message <- function(local_file = parent.frame()$local_file,
   ## if file does not exist yet
   # YES cache
   if (!file.exists(local_file) & isTRUE(cache)) {
-     message(paste("Downloading data. File will be stored locally at:", dir_name))
+     message(paste("Downloading data and storing it locally for future use."))
      }
 
   # NO cache

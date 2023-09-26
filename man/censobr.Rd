@@ -27,6 +27,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Rafael H. M. Pereira \email{rafa.pereira.br@gmail.com} (\href{https://orcid.org/0000-0003-2125-7465}{ORCID})
 
+Authors:
+\itemize{
+  \item Rogério J. Barbosa \email{antrologos@gmail.com} (\href{https://orcid.org/0000-0002-6796-4547}{ORCID})
+}
+
 Other contributors:
 \itemize{
   \item Ipea - Institute for Applied Economic Research [copyright holder, funder]
