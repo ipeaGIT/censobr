@@ -115,15 +115,15 @@ the function will download the data again and overwrite the local file.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Open data dictionary on browser</span></span></span>
 <span class="r-in"><span><span class="fu">data_dictionary</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, dataset <span class="op">=</span> <span class="st">'population'</span>, showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading data and storing it locally for future use.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data_dictionary(year = 2010, dataset = "population", showProgress = FALSE):</span> object 'temp_dic' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">data_dictionary</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1980</span>, dataset <span class="op">=</span> <span class="st">'households'</span>, showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading data and storing it locally for future use.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data_dictionary(year = 1980, dataset = "households", showProgress = FALSE):</span> object 'temp_dic' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">data_dictionary</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, dataset <span class="op">=</span> <span class="st">'tracts'</span>, showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading data and storing it locally for future use.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data_dictionary(year = 2010, dataset = "tracts", showProgress = FALSE):</span> object 'temp_dic' not found</span>
 </code></pre></div>
     </div>
   </div>
