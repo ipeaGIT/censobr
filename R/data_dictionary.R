@@ -75,6 +75,6 @@ data_dictionary <- function(year = NULL,
   if(is.null(local_file)) { return(NULL) }
 
   # open data dic on browser
-  utils::browseURL(url = temp_dic)
+  utils::browseURL(url = local_file)
   return(NULL)
 }
