@@ -28,7 +28,7 @@ test_that("data_dictionary", {
   testthat::expect_message( data_dictionary(year = 2000, dataset = 'households') )
   testthat::expect_error( data_dictionary(year = 1991, dataset = 'population') )
   testthat::expect_message( data_dictionary(year = 1980, dataset = 'households') )
-  testthat::expect_error( data_dictionary(year = 1970, dataset = 'households') )
+  testthat::expect_message( data_dictionary(year = 1970, dataset = 'households') )
 
   # families
   testthat::expect_message( data_dictionary(year = 2000, dataset = 'families') )

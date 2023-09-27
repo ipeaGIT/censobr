@@ -60,7 +60,7 @@ source('./R/add_geography_cols.R')
 
 
   ## save single parquet tile ----------------------------------------------
-  arrow::write_parquet(df, './data/microdata_sample/1970/1970_households.parquet')
+  arrow::write_parquet(df, './data/microdata_sample/1970/1970_households_v0.2.0.parquet')
 
 
 rm(list=ls())
@@ -127,5 +127,5 @@ gc(T)
 
 
   ##  save single parquet tile ----------------------------------------------
-  arrow::write_parquet(df, './data/microdata_sample/1970/1970_population.parquet')
+  arrow::write_parquet(df, './data/microdata_sample/1970/1970_population_v0.2.0.parquet')
 
