@@ -97,8 +97,8 @@ test_that("read_households", {
 
   # 1970
   dfh <- read_households(year = 1970)
-  total_1970_p <- summarise(dfh, total = sum(V054, na.rm=T)) |> collect()
-  expect_equal(total_1970_p$total, 17887536)
+  total_1970_p <- summarise(dfh, total = sum(weight_household, na.rm=T)) |> collect()
+  expect_equal(total_1970_p$total, 17682112)
 
 })
 
