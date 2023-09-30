@@ -25,20 +25,20 @@ utils::browseURL(temp.f)
 utils::browseURL(url = "./data_prep/data_raw/test.html")
 
 
-data_dictionary <- function(year, table){
-  year = '2010'
-  table = 'microdata'
-  # load all dictionary files currenlty available
-  data_path <- system.file("extdata", package = "censobr")
-  all_dic <- list.files(data_path, full.names = TRUE, pattern = '.html')
-
-  temp_dic <- all_dic[grepl(year, all_dic)]
-  temp_dic <- temp_dic[grepl(table, temp_dic)]
-
-  utils::browseURL(url = temp_dic)
-
-
-}
+# data_dictionary <- function(year, table){
+#   year = '2010'
+#   table = 'microdata'
+#   # load all dictionary files currenlty available
+#   data_path <- system.file("extdata", package = "censobr")
+#   all_dic <- list.files(data_path, full.names = TRUE, pattern = '.html')
+#
+#   temp_dic <- all_dic[grepl(year, all_dic)]
+#   temp_dic <- temp_dic[grepl(table, temp_dic)]
+#
+#   utils::browseURL(url = temp_dic)
+#
+#
+# }
 
 data_dictionary(year = 2010, table = 'households')
 

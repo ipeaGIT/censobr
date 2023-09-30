@@ -22,13 +22,22 @@ source('./R/add_geography_cols.R')
   # make all columns as character
   df <- mutate(df, across(everything(), as.character))
 
+  # add household id
+  df <- left_join(df, df_ids, by='idpessoa')
+
   # rename columns
   df <- rename(df,
-               code_muni = MunicCode2010,
-               code_muni_1970 = MunicCode1970,
-               V005 = CEM001, # TOTAL TOTAL DE PESSOAS NO DOMICÍLIO
-               V041 = CEM003 # RENDA DOMICILIAR (mensal medio)
+               code_muni = municcode2010,
+               code_muni_1970 = municcode1970,
+               weight_household = wgthh,
+               numb_dwellers = numberDwellers,
+               numb_dwellers_hhincome = numberDwellers_hhIncome,
+               hh_income = hhIncome,
+               hh_income_per_cap = hhIncomePerCap
                )
+  # rename cols
+  df <- rename_with(df, toupper, starts_with("v"))
+
 
   ## add geography variables ----------------------------------------------
   df <- mutate(df, code_state = substr(code_muni , 1, 2))
@@ -38,12 +47,12 @@ source('./R/add_geography_cols.R')
   head(df) |> collect()
 
   # make variables as numeric
-  num_vars <- c('V005', 'V020','V021', 'V041', 'V054')
+  num_vars <- c('V020','V021', 'weight_household', 'numb_dwellers',
+                'numb_dwellers_hhincome', 'hh_income', 'hh_income_per_cap')
   df <- mutate(df, across(all_of(num_vars),
                               ~ as.numeric(.x)))
 
- ## FALTANDO
- # V053	QUANTIDADE DE FILHOS QUE NASCERAM VIVOS E CONTINUAM VIVOS
+
 
   # drop CEM columns
   df <- select(df, -starts_with("CEM"))
@@ -51,7 +60,7 @@ source('./R/add_geography_cols.R')
 
 
   ## save single parquet tile ----------------------------------------------
-  arrow::write_parquet(df, './data/microdata_sample/1970/1970_households.parquet')
+  arrow::write_parquet(df, './data/microdata_sample/1970/1970_households_v0.2.0.parquet')
 
 
 rm(list=ls())
@@ -71,18 +80,33 @@ gc(T)
   f_parquet <- './data_raw/microdata/1970/Censo.1970.brasil.pessoas.amostra.25porcento.parquet'
   df <- arrow::open_dataset(f_parquet)
 
-  head(df) |> collect()
+  # read household ids
+  df_ids <- arrow::read_csv_arrow('./data_raw/microdata/1970/crosswalk_personid_hhid.csv',
+                              as_data_frame = FALSE,
+                              col_types = schema(name = arrow::string()))
+
+  # drop CEM columns
+  df <- select(df, -starts_with("CEM"))
+  df <- select(df, -starts_with("cem"))
+  df <- select(df, -starts_with("iddomicilio"))
+  names(df)
+
 
   # make all columns as character
   df <- mutate(df, across(everything(), as.character))
+  df_ids <- mutate(df_ids, across(everything(), as.character))
+
+  # add household id
+  df <- left_join(df, df_ids, by='idpessoa')
+
 
   # rename columns
   df <- rename(df,
                code_muni = MunicCode2010,
                code_muni_1970 = MunicCode1970
-              #  ,V005 = cem001, # TOTAL TOTAL DE PESSOAS NO DOMICÍLIO
-              # V041 = cem003 # RENDA DOMICILIAR (mensal medio)
               )
+
+
 
   ##  add geography variables ----------------------------------------------
   df <- mutate(df, code_state = substr(code_muni , 1, 2))
@@ -97,13 +121,11 @@ gc(T)
                           ~ as.numeric(.x)))
 
 
-  # drop CEM columns
-  df <- select(df, -starts_with("CEM"))
-  df <- select(df, -starts_with("cem"))
-  head(df) |> collect()
-
+  names(df)
   gc(T)
 
+
+
   ##  save single parquet tile ----------------------------------------------
-  arrow::write_parquet(df, './data/microdata_sample/1970/1970_population.parquet')
+  arrow::write_parquet(df, './data/microdata_sample/1970/1970_population_v0.2.0.parquet')
 

@@ -114,7 +114,7 @@ pop <- read_population(year = 2010,
 
 class(pop)
 ```
-By default, the output of the function is an `"arrow_dplyr_query"`. This is makes it possible for you to work with the census data in a super fast and efficient way, even though the data set might be to big for your computer memory. By setting the parameter `as_data_frame = TRUE`, the read functions load the entire output to memory as a `data.frame`. *Warning:* This can cause the R session to crash in computationally constrained enviroments.
+By default, the output of the function is an `"arrow_dplyr_query"`. This is makes it possible for you to work with the census data in a super fast and efficient way, even though the data set might be to big for your computer memory. By setting the parameter `as_data_frame = TRUE`, the read functions load the entire output to memory as a `data.frame`. *Warning:* This can cause the R session to crash in computationally constrained environments.
 
 The output of the read functions in **censobr** can be analyzed like a regular `data.frame` using the `{dplyr}` package. For example, one can have a quick peak into the data set with `glimpse()`
 

@@ -41,7 +41,7 @@ data_dictionary <- function(year = NULL,
   # check year / data availability
   if(dataset == 'tracts'){ years <- c(1970, 1980, 1991, 2000, 2010) }
   if(dataset == 'population'){ years <- c(1970, 1980, 2000, 2010) }
-  if(dataset == 'households'){ years <- c(1980, 2000, 2010) }
+  if(dataset == 'households'){ years <- c(1970, 1980, 2000, 2010) }
   if(dataset == 'families'){ years <- c(2000) }
   if(dataset == 'mortality'){ years <- c(2010) }
   if(dataset == 'emigration'){ years <- c(2010) }
@@ -52,10 +52,11 @@ data_dictionary <- function(year = NULL,
     }
 
 
+
   ### Get url
 
   # MICRODATA
-  if (dataset != 'tracts') {
+  if (dataset %in% c("population", "households", "families", "mortality", "emigration")) {
     fname <- paste0(year, '_dictionary_microdata_', dataset, '.html')
     file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/censo_docs/", fname)
     }
@@ -75,6 +76,6 @@ data_dictionary <- function(year = NULL,
   if(is.null(local_file)) { return(NULL) }
 
   # open data dic on browser
-  utils::browseURL(url = temp_dic)
+  utils::browseURL(url = local_file)
   return(NULL)
 }

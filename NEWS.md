@@ -1,4 +1,4 @@
-# censobr v0.1.1999 dev
+# censobr v0.2.0
 
 * Major changes
   * New function `read_tracts()` to read  Census tract-level aggregate data.
