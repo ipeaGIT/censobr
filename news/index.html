@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">censobr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -35,10 +35,10 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/data_dictionary_2000.html">Dictionary 2000</a>
+      <a href="../articles/census_tracts_data.html">Census tract-level data</a>
     </li>
     <li>
-      <a href="../articles/data_dictionary_2010.html">Dictionary 2010</a>
+      <a href="../articles/documentation.html">Census documentation</a>
     </li>
   </ul></li>
 <li>
@@ -64,9 +64,40 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.1.1999" id="censobr-v011999-dev">censobr v0.1.1999 dev<a class="anchor" aria-label="anchor" href="#censobr-v011999-dev"></a></h2>
-<ul><li>Minor changes
+<h2 class="page-header" data-toc-text="0.2.0" id="censobr-v020">censobr v0.2.0<small>2023-09-30</small><a class="anchor" aria-label="anchor" href="#censobr-v020"></a></h2>
+<ul><li>Major changes
+<ul><li>New function <code><a href="../reference/read_tracts.html">read_tracts()</a></code> to read Census tract-level aggregate data.</li>
+<li>New function <code><a href="../reference/data_dictionary.html">data_dictionary()</a></code> opens on a browser the data dictionary of Brazil’s census data.</li>
+<li>New function <code><a href="../reference/questionnaire.html">questionnaire()</a></code> opens on a browser the questionnaire used in the data collection of Brazil’s censuses.</li>
+<li>New function <code><a href="../reference/interview_manual.html">interview_manual()</a></code> opens on a browser the interview manual of the data collection of Brazil’s censuses.
+<ul><li>New function <code><a href="../reference/set_censobr_cache_dir.html">set_censobr_cache_dir()</a></code> that allows users to set custom directory for caching files from the censobr package.</li>
+</ul></li>
+<li>New data sets of 1970, 1980 and 1991 censuses: microdata of population and households PLUS Census tract-level aggregate data for 2010. Closes <a href="https://github.com/ipeaGIT/censobr/issues/6" class="external-link">#6</a>, <a href="https://github.com/ipeaGIT/censobr/issues/7" class="external-link">#7</a>, <a href="https://github.com/ipeaGIT/censobr/issues/8" class="external-link">#8</a> and <a href="https://github.com/ipeaGIT/censobr/issues/18" class="external-link">1#8</a>
+</li>
+<li>New vignette on Census tract-level aggregate data for 2010.</li>
+<li>New vignette covering functions about census documentation and dictionary of variables. Closes <a href="https://github.com/ipeaGIT/censobr/issues/2" class="external-link">#2</a>.</li>
+</ul></li>
+<li>Minor changes
 <ul><li>Running <code>censobr_cache(delete_file = 'all')</code> now removes all data and directories related from censobr.</li>
+<li>censobr now uses suggested package {geobr} conditionally</li>
+</ul></li>
+<li>Data included in this version:
+<ul><li>1970 census [<em>New</em>]
+<ul><li>Microdata of population, households</li>
+</ul></li>
+<li>1980 census [<em>New</em>]
+<ul><li>Microdata of population, households</li>
+</ul></li>
+<li>1991 census [<em>New</em>]
+<ul><li>Microdata of population, households</li>
+</ul></li>
+<li>2000 Census
+<ul><li>Microdata of population, households and families.</li>
+</ul></li>
+<li>2010 Census
+<ul><li>Microdata of population, households, deaths and emigration.</li>
+<li>Census tract-level aggregate data [<em>New</em>]</li>
+</ul></li>
 </ul></li>
 </ul></div>
     <div class="section level2">
@@ -107,7 +138,7 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Rafael H. M. Pereira, Ipea - Institute for Applied Economic Research.</p>
+  <p></p><p>Developed by Rafael H. M. Pereira, Rogério J. Barbosa, Ipea - Institute for Applied Economic Research.</p>
 </div>
 
 <div class="pkgdown">

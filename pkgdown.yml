@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   censobr: censobr.html
-  data_dictionary_2000: data_dictionary_2000.html
-  data_dictionary_2010: data_dictionary_2010.html
-last_built: 2023-09-13T15:12Z
+  census_tracts_data: census_tracts_data.html
+  documentation: documentation.html
+last_built: 2023-09-30T22:01Z
 
