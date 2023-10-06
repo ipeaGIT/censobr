@@ -1,3 +1,9 @@
+# censobr v0.2.0999 (dev)
+
+* Minor changes
+  * Replaced `.onAttach` by `.onLoad` so that the package works with `censobr::function()`
+
+
 # censobr v0.2.0
 
 * Major changes
