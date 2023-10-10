@@ -7,8 +7,7 @@
 coverage](https://codecov.io/gh/ipeaGIT/censobr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ipeaGIT/censobr?branch=main)
 [![Lifecycle:
      maturing](https://img.shields.io/badge/lifecycle-maturing-yellow.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![R-CMD-check](https://github.com/ipeaGIT/censobr/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/ipeaGIT/censobr/actions?query=branch%3Amain)
-
+[![R-CMD-check](https://github.com/ipeaGIT/censobr/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/ipeaGIT/censobr/actions?query=branch%3Amain)
 
 **censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow platform](https://arrow.apache.org/docs/r/), which allows users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
 
