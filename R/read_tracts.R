@@ -5,7 +5,7 @@
 #'
 #' @template year
 #' @param dataset Character. The dataset to be opened. Options currently include
-#'        `c("Basico", "Domicilio", "DomicilioRenda", "Entorno", "ResponsavelRenda", "Responsavel", "PessoaRenda")`.
+#'        `c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda",  "Entorno")`.
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache

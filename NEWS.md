@@ -1,7 +1,8 @@
-# censobr v0.2.0999 (dev)
+# censobr v0.2.1
 
 * Minor changes
   * Replaced `.onAttach` by `.onLoad` so that the package works with `censobr::function()`
+  * Fixed documentation of `read_tracts()`.
 
 
 # censobr v0.2.0

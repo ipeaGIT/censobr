@@ -17,7 +17,7 @@ read_tracts(
 \code{2010}.}
 
 \item{dataset}{Character. The dataset to be opened. Options currently include
-\code{c("Basico", "Domicilio", "DomicilioRenda", "Entorno", "ResponsavelRenda", "Responsavel", "PessoaRenda")}.}
+\code{c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda",  "Entorno")}.}
 
 \item{as_data_frame}{Logical. When \code{FALSE} (Default), the function returns an
 Arrow Dataset, which allows users to work with larger-than-memory data.
