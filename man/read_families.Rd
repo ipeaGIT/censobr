@@ -14,7 +14,7 @@ read_families(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyymm}. Defaults to \code{2000}.}
+\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2000}.}
 
 \item{columns}{String. A vector of column names to keep. The rest of the
 columns are not read. Defaults to \code{NULL} and read all columns.}

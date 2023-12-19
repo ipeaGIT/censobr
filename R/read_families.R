@@ -4,7 +4,7 @@
 #' Download microdata of family records from Brazil's census. Data collected in
 #' the sample component of the questionnaire.
 #'
-#' @param year Numeric. Year of reference in the format `yyyymm`. Defaults to `2000`.
+#' @param year Numeric. Year of reference in the format `yyyy`. Defaults to `2000`.
 #' @template columns
 #' @template add_labels
 #' @template as_data_frame

@@ -4,7 +4,7 @@
 \alias{data_dictionary}
 \title{Data dictionary of Brazil's census data}
 \usage{
-data_dictionary(year = NULL, dataset = NULL, showProgress = TRUE, cache = TRUE)
+data_dictionary(year = 2010, dataset = NULL, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
 \item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to

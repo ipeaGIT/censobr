@@ -31,11 +31,11 @@
 #' # dplyr::glimpse(df)
 #'
 read_mortality <- function(year = 2010,
-                        columns = NULL,
-                        add_labels = NULL,
-                        as_data_frame = FALSE,
-                        showProgress = TRUE,
-                        cache = TRUE){
+                           columns = NULL,
+                           add_labels = NULL,
+                           as_data_frame = FALSE,
+                           showProgress = TRUE,
+                           cache = TRUE){
 
   ### check inputs
   checkmate::assert_numeric(year)

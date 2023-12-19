@@ -20,7 +20,7 @@
 #'
 #' data_dictionary(year = 2010, dataset = 'tracts', showProgress = FALSE)
 
-data_dictionary <- function(year = NULL,
+data_dictionary <- function(year = 2010,
                             dataset = NULL,
                             showProgress = TRUE,
                             cache = TRUE){
