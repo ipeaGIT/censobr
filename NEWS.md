@@ -1,8 +1,12 @@
-# censobr v0.2.1
+# censobr v0.2.0999
 
 * Minor changes
   * Replaced `.onAttach` by `.onLoad` so that the package works with `censobr::function()`
-  * Fixed documentation of `read_tracts()`.
+  * Fixed documentation of various functions.
+
+* Data included in this version:
+  * 2022 census [*New*]
+    * Questionnaires and interview manuals 
 
 
 # censobr v0.2.0

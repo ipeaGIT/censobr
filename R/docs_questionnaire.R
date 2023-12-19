@@ -20,10 +20,10 @@
 #' # Open questionnaire on browser
 #' questionnaire(year = 2010, type = 'sample', showProgress = FALSE)
 #'
-questionnaire <- function(year = NULL,
-                               type = NULL,
-                               showProgress = TRUE,
-                               cache = TRUE){
+questionnaire <- function(year = 2010,
+                          type = NULL,
+                          showProgress = TRUE,
+                          cache = TRUE){
   # year = 2010
   # type = 'sample'
 
@@ -32,7 +32,7 @@ questionnaire <- function(year = NULL,
   checkmate::assert_string(type)
 
   # data available for the years:
-  years <- c(1970, 1980, 1991, 2000, 2010)
+  years <- c(1970, 1980, 1991, 2000, 2010, 2022)
   if (isFALSE(year %in% years)) { stop(  paste0("Error: Questionnaire currently only available for the years: ",
                                               paste(years), collapse = " ")
                                         )}
