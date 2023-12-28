@@ -241,12 +241,12 @@ per capita of all census tracts in Brazil.</p>
 <span><span class="va">tracts_df</span> <span class="op">&lt;-</span> <span class="va">tracts_df</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>income_pc <span class="op">=</span> <span class="va">V003</span> <span class="op">/</span> <span class="va">V002</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tracts_df</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         code_tract V002   V003 income_pc</span></span>
-<span><span class="co">#&gt; 1: 350410705000230  558 782594 1402.4982</span></span>
-<span><span class="co">#&gt; 2: 350410705000231  481 457502  951.1476</span></span>
-<span><span class="co">#&gt; 3: 350410705000232  226 904284 4001.2566</span></span>
-<span><span class="co">#&gt; 4: 350410705000233  205  96016  468.3707</span></span>
-<span><span class="co">#&gt; 5: 350410705000234   30  40261 1342.0333</span></span>
-<span><span class="co">#&gt; 6: 350410705000235  533 464855  872.1482</span></span></code></pre></div>
+<span><span class="co">#&gt; 1: 521520705000006  164  92958  566.8171</span></span>
+<span><span class="co">#&gt; 2: 521520705000007  221 112781  510.3213</span></span>
+<span><span class="co">#&gt; 3: 521520705000008  290 126647  436.7138</span></span>
+<span><span class="co">#&gt; 4: 521520705000009  150  90031  600.2067</span></span>
+<span><span class="co">#&gt; 5: 521520705000010  192 134946  702.8438</span></span>
+<span><span class="co">#&gt; 6: 521520705000011  187  82946  443.5615</span></span></code></pre></div>
 <p>Finally, we can merge the spatial data with our per capita income
 estimates and map the results.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
