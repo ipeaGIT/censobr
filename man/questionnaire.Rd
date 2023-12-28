@@ -10,9 +10,10 @@ questionnaire(year = 2010, type = NULL, showProgress = TRUE, cache = TRUE)
 \item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to
 \code{2010}.}
 
-\item{type}{Character. The type of questionnaire, whether the one used in the
-sample component of the census, or on the universe component. Options
-currently include \code{c("sample")}.}
+\item{type}{Character. The type of questionnaire used in the survey, whether
+the \code{"long"} one used in the sample component of the census, or the
+\code{"short"} one, which is answered by more households. Options currently
+include \code{c("long")}.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
 bar. The progress bar only reflects only the downloading
@@ -36,7 +37,7 @@ censuses
 library(censobr)
 
 # Open questionnaire on browser
-questionnaire(year = 2010, type = 'sample', showProgress = FALSE)
+questionnaire(year = 2010, type = 'long', showProgress = FALSE)
 \dontshow{\}) # examplesIf}
 }
 \concept{Questionnaire}

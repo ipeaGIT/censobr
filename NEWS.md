@@ -1,4 +1,7 @@
-# censobr v0.2.0999
+# censobr v0.2.9999
+
+* Major changes
+  * The `questionnaire()` function now accepts questionnaires of `type`: `"long"` or `"short"`.
 
 * Minor changes
   * Replaced `.onAttach` by `.onLoad` so that the package works with `censobr::function()`

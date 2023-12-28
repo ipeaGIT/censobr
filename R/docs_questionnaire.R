@@ -5,9 +5,10 @@
 #' censuses
 #'
 #' @template year
-#' @param type Character. The type of questionnaire, whether the one used in the
-#'        sample component of the census, or on the universe component. Options
-#'        currently include `c("sample")`.
+#' @param type Character. The type of questionnaire used in the survey, whether
+#'        the `"long"` one used in the sample component of the census, or the
+#'        `"short"` one, which is answered by more households. Options currently
+#'        include `c("long")`.
 #' @template showProgress
 #' @template cache
 #'
@@ -18,14 +19,14 @@
 #' library(censobr)
 #'
 #' # Open questionnaire on browser
-#' questionnaire(year = 2010, type = 'sample', showProgress = FALSE)
+#' questionnaire(year = 2010, type = 'long', showProgress = FALSE)
 #'
 questionnaire <- function(year = 2010,
                           type = NULL,
                           showProgress = TRUE,
                           cache = TRUE){
   # year = 2010
-  # type = 'sample'
+  # type = 'long'
 
   ### check inputs
   checkmate::assert_numeric(year)
@@ -38,7 +39,7 @@ questionnaire <- function(year = 2010,
                                         )}
 
   # data available for data sets:
-  data_sets <- c('sample')
+  data_sets <- c('long')
   if (isFALSE(type %in% data_sets)) { stop( paste0("Error: Questionnaire currently only available for the types: ",
                                               paste(data_sets, collapse = ", "))
                                             )}

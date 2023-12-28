@@ -5,17 +5,17 @@ skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
 
 
-# Reading the data -----------------------
+# Reading long questionnaire -----------------------
 
 test_that("questionnaire", {
 
   # download files
-  testthat::expect_message( questionnaire(year = 2022, type = 'sample') )
-  testthat::expect_message( questionnaire(year = 2010, type = 'sample') )
-  testthat::expect_message( questionnaire(year = 2000, type = 'sample') )
-  testthat::expect_message( questionnaire(year = 1991, type = 'sample') )
-  testthat::expect_message( questionnaire(year = 1980, type = 'sample') )
-  testthat::expect_message( questionnaire(year = 1970, type = 'sample') )
+  testthat::expect_message( questionnaire(year = 2022, type = 'long') )
+  testthat::expect_message( questionnaire(year = 2010, type = 'long') )
+  testthat::expect_message( questionnaire(year = 2000, type = 'long') )
+  testthat::expect_message( questionnaire(year = 1991, type = 'long') )
+  testthat::expect_message( questionnaire(year = 1980, type = 'long') )
+  testthat::expect_message( questionnaire(year = 1970, type = 'long') )
 
   # cache dir
   pkgv <- paste0('censobr/data_release_', data_release)
@@ -25,11 +25,41 @@ test_that("questionnaire", {
   years <- c(1970, 1980, 1991, 2000, 2010, 2022)
 
   lapply(X=years, FUN = function(y){
-    f_address <- paste0(cache_dir,'/',y, '_questionnaire_sample.pdf')
+    f_address <- paste0(cache_dir,'/',y, '_questionnaire_long.pdf')
     testthat::expect_true(file.exists(f_address))
     } )
 
  })
+
+
+
+
+
+# # Reading short questionnaire -----------------------
+#
+# test_that("questionnaire", {
+#
+#   # download files
+#   testthat::expect_message( questionnaire(year = 2022, type = 'short') )
+#   testthat::expect_message( questionnaire(year = 2010, type = 'short') )
+#   testthat::expect_message( questionnaire(year = 2000, type = 'short') )
+#   testthat::expect_message( questionnaire(year = 1991, type = 'short') )
+#   testthat::expect_message( questionnaire(year = 1980, type = 'short') )
+#   testthat::expect_message( questionnaire(year = 1970, type = 'short') )
+#
+#   # cache dir
+#   pkgv <- paste0('censobr/data_release_', data_release)
+#   cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
+#
+#   ## check if file have been downloaded
+#   years <- c(1970, 1980, 1991, 2000, 2010, 2022)
+#
+#   lapply(X=years, FUN = function(y){
+#     f_address <- paste0(cache_dir,'/',y, '_questionnaire_short.pdf')
+#     testthat::expect_true(file.exists(f_address))
+#   } )
+#
+# })
 
 
 # ERRORS and messages  -----------------------
