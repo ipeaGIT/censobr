@@ -104,12 +104,12 @@ source('./R/add_geography_cols.R')
 
 
 
-# 5) Deaths data ----------------------------------------------
+# 5) Mortality data ----------------------------------------------
 
   ## 5.1) Parse every file and covert them to parquet ----------------------------------------------
 
   # read guide to parse the data
-  dic <- fread('./read_guides/readguide_2010_deaths.csv')
+  dic <- fread('./read_guides/readguide_2010_mortality.csv')
   head(dic)
 
   # list all files
@@ -143,18 +143,18 @@ source('./R/add_geography_cols.R')
   head(AT) |> collect()
 
   ## 5.4) save single parquet tile ----------------------------------------------
-  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_deaths.parquet')
+  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_mortality.parquet')
 
 
 
 
 
-# 6) Emmigration data ----------------------------------------------
+# 6) Emigration data ----------------------------------------------
 
   ## 5.1) read all files and pile them up ----------------------------------------------
 
   # read guide to parse the data
-  dic <- fread('./read_guides/readguide_2010_emmigration.csv')
+  dic <- fread('./read_guides/readguide_2010_emigration.csv')
   head(dic)
 
   # list all files
@@ -186,7 +186,7 @@ source('./R/add_geography_cols.R')
   head(AT) |> collect()
 
   ## 6.4) save single parquet tile ----------------------------------------------
-  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_emmigration.parquet')
+  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_emigration.parquet')
 
 
 
