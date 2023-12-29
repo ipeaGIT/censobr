@@ -9,8 +9,6 @@ library(stringr)
 library(readxl)
 
 data.table::setDTthreads(percent = 100)
-source('./R/add_geography_cols.R')
-
 options(scipen = 999)
 
 # ### 1) download raw data from IBGE ftp -------------------------------------------
@@ -266,6 +264,8 @@ for (t in table_names){ # t = 'Basico'         t = 'Pessoa'
 
 # 4) create national data - 1 parquet file for each table -----------------------------------------------------------
 
+source('./R/add_geography_cols.R')
+
 ### rowbind across states
 
 files <- list.files(path = './data/tracts/2010', full.names = T)
@@ -277,18 +277,27 @@ table_names <- paste0(table_names, '_')
 table_names <- table_names[!grepl("2010_",table_names)]  |> unique()
 table_names
 
-table_names <- table_names[!grepl("clean_",table_names)]
+table_names <- table_names[!grepl("clean",table_names)]
 table_names
 
 
 
-bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'  tbl = 'Pessoa_'
-
+bind_all <- function(tbl){
+  # tbl = 'DomicilioRenda_'
+  # tbl = 'Pessoa_'
+  # tbl = 'Basico_'
   message(tbl)
 
   # select type
   temp_f <- files[files %like% tbl]
-  #  temp_f <- temp_f[c(1,5:8)]
+  # temp_f <- temp_f[c(1,4:8)]
+
+            #   testf <- function(x){
+            #   a <- arrow::read_parquet(x, as_data_frame = T)
+            #   return(a)
+            #   }
+            #
+            # AT <-   lapply(X= temp_f, FUN = testf) |> data.table::rbindlist()
 
 
   ## Define the dataset
@@ -298,11 +307,12 @@ bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'  tbl = 'Pessoa_'
   ## Create a scanner
   SO <- Scanner$create(DS)
 
-  ## Load it as Arrow Table in memory
+  ## Load it as Arrow Table
   AT <- SO$ToTable()
 
-      # # Convert it to an R data frame
-      # AT <- as.data.frame(AT)
+  ## Convert it to an R data frame in memory
+  # not sure this is currently faster
+       AT <- collect(AT)
       # head(AT)
 
   # make all columns as character
@@ -378,32 +388,30 @@ bind_all <- function(tbl){ # tbl = 'DomicilioRenda_'  tbl = 'Pessoa_'
                     )
   # AT <-  dplyr::rename_with(AT, ~gsub("Situacao_setor", "V1005", .x))
 
-  message('to numeric')
 
-  # fix missing values ("X") and then convert to numeric
+
+  # whenever there is "X" the value gets convert to NA
+  message('to numeric')
   vars <- names(AT)
   vars <- vars[grep('V', vars)]
-
-  AT <- mutate(AT, across(all_of(vars),
-                          ~ as.character(.x)))
-  AT <- mutate(AT, across(all_of(vars),
-                          ~ if_else(.x=='X', NA_character_, .x)))
-  AT <- mutate(AT, across(all_of(vars),
-                          ~ as.numeric(.x)))
+  AT <- mutate(AT, across(all_of(vars), ~ as.numeric(.x)))
 
 
+
+  #  AT <- collect(AT)
 
   message('saving')
   # save
   dest_file <- paste0('2010_tracts_', tbl, '.parquet')
-  system.time(
-    arrow::write_parquet(AT, paste0('./data/tracts/2010/clean/', dest_file))
-              )
+  arrow::write_parquet(AT, paste0('./data/tracts/2010/clean/', dest_file))
+
+  rm(AT); gc()
 
   return(NULL)
 }
 
 
+bind_all(tbl = 'DomicilioRenda_')
 bind_all(tbl = 'Basico_')
 bind_all(tbl = 'Entorno_')
 bind_all(tbl = 'Pessoa_')
@@ -411,13 +419,15 @@ bind_all(tbl = 'Pessoa_')
 lapply(X=table_names, FUN = bind_all)
 
 
+#
+# a <- arrow::read_parquet("./data/tracts/2010/clean/2010_tracts_Pessoa_.parquet")
+# head(a)
+# names(a)
+#
+# domicilio 2
+# entorno 5
+# domiciliorenda 1
+# pessoa 13
+# Responsavel 2
 
-a <- arrow::read_parquet("./data/tracts/2010/clean/2010_tracts_Pessoa_.parquet")
-head(a)
-names(a)
 
-domicilio 2
-entorno 5
-domiciliorenda 1
-pessoa 13
-Responsavel 2
