@@ -3,6 +3,6 @@ library(censobr)
 library(dplyr)
 library(arrow)
 
-data_release <- 'v0.2.0'
+data_release <- 'v0.3.0'
 
-test_check("censobr")
+testthat::test_check("censobr")

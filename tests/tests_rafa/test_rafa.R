@@ -214,6 +214,7 @@ library(covr)
 Sys.setenv(NOT_CRAN = "true")
 
 
+
 # each function separately
 t1 <- covr::function_coverage(fun=read_mortality, test_file("tests/testthat/test_read_mortality.R"))
 t1 <- covr::function_coverage(fun=censobr_cache, test_file("tests/testthat/test_censobr_cache.R"))
@@ -294,6 +295,9 @@ urlchecker::url_update()
 
 # CMD Check --------------------------------
 # Check package errors
+
+# run only the tests
+testthat::test_local()
 
 # LOCAL
 Sys.setenv(NOT_CRAN = "true")

@@ -2,10 +2,7 @@
 
 * Major changes
   * The `questionnaire()` function now accepts questionnaires of `type`: `"long"` or `"short"`.
-  * Update census tract data following latest update by IBGE on Oct/2023. Closed [#38](https://github.com/ipeaGIT/censobr/issues/38)
-  
-
-
+  * Updated census tract data following latest update by IBGE on Oct/2023. Closed [#38](https://github.com/ipeaGIT/censobr/issues/38). As a result, the package moved to data release v0.3.0.
 
 * Minor changes
   * Replaced `.onAttach` by `.onLoad` so that the package works with `censobr::function()`
