@@ -7,10 +7,13 @@
 * Minor changes
   * Replaced `.onAttach` by `.onLoad` so that the package works with `censobr::function()`
   * Fixed documentation of various functions.
+  * Fixed issue to make sure censobr uses suggested packages conditionally on CRAN
 
-* Data included in this version:
+* New data set and files included in this version:
   * 2022 census [*New*]
     * Questionnaires and interview manuals 
+  * Short questionnaires for every census between 1960 and 2022.
+  * Long questionnaire for the 1960 and 2022 censuses.
 
 
 # censobr v0.2.0
