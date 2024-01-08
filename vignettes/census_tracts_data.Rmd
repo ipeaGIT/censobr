@@ -17,11 +17,6 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
-use_suggested_pkgs <- c((requireNamespace("scales")), 
-                        (requireNamespace("ggplot2")), 
-                        (requireNamespace("geobr")))
-
-use_suggested_pkgs <- all(use_suggested_pkgs)
 ```
 
 Perhaps the most commonly used datasets from Brazilian censuses are the microdata of individuals and households. Nonetheless, IBGE also makes available some extremely data on population and environmental characteristics aggregated at the census tract level. In this vignette, we show how to use the **censobr** package to  easily access census tract-level data using the `read_tracts()` function.
@@ -46,7 +41,7 @@ All of the data aggregated at census tracts are organized following the same log
 
 In the cases when there are multiple files in the same dataset, we add a reference to the number of the file as a prefix to the variable name. To illustrate this, let's have a look at the `"Domicilio"` dataset. This dataset is based on two separate tables: *Domicilio01* and *Domicilio02*. So the names of the columns in this dataset are organized as follows:
 
-```{r, eval = TRUE, warning = FALSE}
+```{r warning = FALSE}
 library(censobr)
 
 dom <- read_tracts(year = 2010, 
@@ -61,7 +56,7 @@ names(dom)[c(1:20,301:320)]
 To check the meaning of each variable, users can run the `data_dictionary()`, which will open on the browser an `.html` or `.pdf` file with the dictionary of variables in each dataset
 
 
-```{r, eval=FALSE, warning=FALSE, message=FALSE}
+```{r warning=FALSE, message=FALSE}
 data_dictionary(year = 2010, dataset = 'tracts')
 
 ```
@@ -71,7 +66,7 @@ data_dictionary(year = 2010, dataset = 'tracts')
 
 Now let's use a couple reproducible examples to illustrate how to work with census tract-level data. First, we need to load the libraries we'll be using in this vignette.
 
-```{r, eval = use_suggested_pkgs, warning=FALSE, message=FALSE}
+```{r warning=FALSE, message=FALSE}
 library(arrow)
 library(dplyr)
 library(geobr)
@@ -80,7 +75,7 @@ library(ggplot2)
 
 In these examples below, example we'll use the city of Belo Horizonte for demonstration purposes. So we can start by downloading the the geometries of the census tracts in the area. First, we need to download the geometries of all census tracts in the state of Minas Gerais (MG), and then keep only the ones in the municipality of Belo Horizonte. We'll also download the municipality borders of BH.
 
-```{r, eval = use_suggested_pkgs, warning = FALSE}
+```{r warning = FALSE}
 muni_bh <- geobr::read_municipality(code_muni = 'MG', 
                                     year = 2010, 
                                     showProgress = FALSE) |>
@@ -107,7 +102,7 @@ In this first example we'll be creating a map of the spatial distribution of ave
 Using the code below, we download the data and calculate the income per capita of all census tracts in Brazil.
 
 
-```{r, eval = use_suggested_pkgs, warning = FALSE}
+```{r warning = FALSE}
 # download data
 tract_basico <- read_tracts(year = 2010,
                             dataset = "Basico", 
@@ -131,7 +126,7 @@ head(tracts_df)
 
 Finally, we can merge the spatial data with our per capita income estimates and map the results.
 
-```{r, eval = use_suggested_pkgs, warning = FALSE}
+```{r warning = FALSE}
 bh_tracts <- left_join(tracts_sf, tracts_df, by = 'code_tract')
 
 ggplot() +
@@ -151,7 +146,7 @@ ggplot() +
 
 In this second example, we are going to map the proportion of households with the presence of trees in their surroundings. To do this, we need to download the `"Entorno"` dataset and sum the variables `entorno01_V044 + entorno01_V046 + entorno01_V048`. 
 
-```{r, eval = use_suggested_pkgs, warning = FALSE}
+```{r warning = FALSE}
 # download data
 tract_entorno <- read_tracts(year = 2010,
                              dataset = "Entorno", 
@@ -171,7 +166,7 @@ head(df_trees)
 
 Now we can merge the spatial data with our indicator and see how the presence of trees in the surroundings of households varies spatially.
 
-```{r, eval = use_suggested_pkgs, warning = FALSE}
+```{r warning = FALSE}
 bh_tracts <- left_join(tracts_sf, df_trees, by = 'code_tract')
 
 ggplot() +

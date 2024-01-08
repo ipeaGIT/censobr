@@ -17,11 +17,6 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
-use_suggested_pkgs <- c((requireNamespace("scales")), 
-                        (requireNamespace("ggplot2")), 
-                        (requireNamespace("geobr")))
-
-use_suggested_pkgs <- all(use_suggested_pkgs)
 ```
 
 **censobr** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow platform](https://arrow.apache.org/docs/r/), which allows users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
@@ -93,7 +88,7 @@ Let's see how **censobr** works in a couple examples:
 
 First, let's load the libraries we'll be using in this vignette.
 
-```{r, eval=TRUE, warning=FALSE, message=FALSE}
+```{r warning=FALSE, message=FALSE}
 library(censobr)
 library(arrow)
 library(dplyr)
@@ -106,7 +101,7 @@ In this example we'll be calculating the proportion of people with higher educat
 
 Since we don't need to load to memory all columns from the data, we can pass a vector with the names of the columns we're going to use. This might be necessary in more constrained computing environments. Note that by setting `add_labels = 'pt'`, the function returns labeled values for categorical variables.
 
-```{r, eval = TRUE, warning = FALSE}
+```{r warning = FALSE}
 pop <- read_population(year = 2010,
                        columns = c('abbrev_state', 'V0606', 'V0010', 'V6400'),
                        add_labels = 'pt',
@@ -118,14 +113,14 @@ By default, the output of the function is an `"arrow_dplyr_query"`. This is make
 
 The output of the read functions in **censobr** can be analyzed like a regular `data.frame` using the `{dplyr}` package. For example, one can have a quick peak into the data set with `glimpse()`
 
-```{r, eval = TRUE, warning = FALSE}
+```{r warning = FALSE}
 dplyr::glimpse(pop)
 ```
 
 
 In the example below, we use the `dplyr` syntax to (a) filter observations for the state of Rio de Janeiro, (b) group observations by racial group, (c) summarize the data calculating the proportion of individuals with higher education. Note that we need do add a `collect()` call at the end of our query.
 
-```{r, eval = TRUE, warning = FALSE}
+```{r warning = FALSE}
 df <- pop |>
       filter(abbrev_state == "RJ") |>                                                    # (a)
       compute() |>
@@ -138,7 +133,7 @@ head(df)
 ```
 Now we only need to plot the results.
 
-```{r, eval = use_suggested_pkgs}
+```{r}
 df <- subset(df, V0606 != 'Ignorado')
 
 ggplot() +
@@ -156,7 +151,7 @@ ggplot() +
 
 In this example, we are going to map the proportion of households connected to a sewage network in Brazilian municipalities First, we can easily download the households data set with the `read_households()` function.
 
-```{r, eval = TRUE}
+```{r}
 hs <- read_households(year = 2010, 
                       showProgress = FALSE)
 
@@ -164,7 +159,7 @@ hs <- read_households(year = 2010,
 
 Now we're going to (a) group observations by municipality, (b) get the number of households connected to a sewage network, (c) calculate the proportion of households connected, and (d) collect the results.
 
-```{r, eval = TRUE, warning = FALSE}
+```{r warning = FALSE}
 esg <- hs |> 
         compute() |>
         group_by(code_muni) |>                                             # (a)
@@ -177,7 +172,7 @@ head(esg)
 ```
 In order to create a map with these values, we are going to use the [{geobr} package](https://ipeagit.github.io/geobr/) to download the geometries of Brazilian municipalities.
 
-```{r, eval = use_suggested_pkgs, warning = FALSE}
+```{r warning = FALSE}
 library(geobr)
 
 muni_sf <- geobr::read_municipality(year = 2010,
@@ -187,7 +182,7 @@ head(muni_sf)
 
 Now we only need to merge the spatial data with our estimates and map the results.
 
-```{r, eval = use_suggested_pkgs, warning = FALSE}
+```{r warning = FALSE}
 muni_sf$code_muni <- as.character(muni_sf$code_muni)
 esg_sf <- left_join(muni_sf, esg, by = 'code_muni')
 
@@ -206,13 +201,13 @@ ggplot() +
 In this final example, we're going to visualize how the amount of money people spend on rent varies spatially across the metropolitan area of São Paulo.
 
 First, let's download the municipalities of the metro area of São Paulo.
-```{r, eval = use_suggested_pkgs, warning = FALSE}
+```{r warning = FALSE}
 metro_muni <- geobr::read_metro_area(year = 2010, showProgress = FALSE) |> 
               subset(name_metro == "RM São Paulo")
 ```
 We also need the polygons of the weighting areas (áreas de ponderação). With the code below, we download all weighting areas in the state of São Paulo, and then keep only the ones in the metropolitan region of São Paulo.
 
-```{r, eval = use_suggested_pkgs, warning = FALSE}
+```{r warning = FALSE}
 wt_areas <- geobr::read_weighting_area(code_weighting = "SP", showProgress = FALSE,
                                        year = 2010)
 
@@ -223,7 +218,7 @@ head(wt_areas)
 
 Now we need to calculate the average rent spent in each weighting area. Using the national household data set, we're going to (a) filter only observations in our municipalities of interest, (b) group observations by weighting area, (c) calculate the average rent, and (d) collect the results.
 
-```{r, eval = TRUE, warning = FALSE}
+```{r warning = FALSE}
 rent <- hs |>
         filter(code_muni %in% metro_muni$code_muni) |>                     # (a)
         compute() |>
@@ -235,7 +230,7 @@ head(rent)
 ```
 Finally, we can merge the spatial data with our rent estimates and map the results.
 
-```{r, eval = use_suggested_pkgs, warning = FALSE}
+```{r warning = FALSE}
 rent_sf <- left_join(wt_areas, rent, by = 'code_weighting')
 
 ggplot() +
@@ -256,18 +251,18 @@ The first time the user runs a function, **censobr** will download the file and 
 Users can manage the cached data sets using the `censobr_cache()` function. For example, users can:
 
 List cached files:
-```{r, eval=TRUE, warning=FALSE}
+```{r warning=FALSE}
 censobr_cache(list_files = TRUE)
 ```
 
 Delete a particular file:
-```{r, eval=TRUE, warning=FALSE}
+```{r warning=FALSE}
 censobr_cache(delete_file = "2010_emigration")
 
 ```
 
 Delete all files:
-```{r, eval=TRUE, warning=FALSE}
+```{r warning=FALSE}
 censobr_cache(delete_file = "all")
 
 ```
