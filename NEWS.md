@@ -1,4 +1,4 @@
-# censobr v0.2.9999
+# censobr v0.3.0
 
 * Major changes
   * The `questionnaire()` function now accepts questionnaires of `type`: `"long"` or `"short"`.
@@ -8,6 +8,7 @@
   * Replaced `.onAttach` by `.onLoad` so that the package works with `censobr::function()`
   * Fixed documentation of various functions.
   * Fixed issue to make sure censobr uses suggested packages conditionally on CRAN
+  * Fixed message when user requests a data set / file for a year that is not available
 
 * New data set and files included in this version:
   * 2022 census [*New*]
