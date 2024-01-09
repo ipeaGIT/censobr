@@ -12,8 +12,8 @@ questionnaire(year = 2010, type = NULL, showProgress = TRUE, cache = TRUE)
 
 \item{type}{Character. The type of questionnaire used in the survey, whether
 the \code{"long"} one used in the sample component of the census, or the
-\code{"short"} one, which is answered by more households. Options currently
-include \code{c("long")}.}
+\code{"short"} one, which is answered by more households. Options include
+\code{c("long", "short")}.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
 bar. The progress bar only reflects only the downloading
