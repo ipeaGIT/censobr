@@ -36,14 +36,16 @@ questionnaire <- function(year = 2010,
   # data available for the years:
   years <- c(1960, 1970, 1980, 1991, 2000, 2010, 2022)
   if (isFALSE(year %in% years)) { stop(  paste0("Error: Questionnaire currently only available for the years: ",
-                                              paste(years), collapse = " ")
+                                              paste(years, collapse = ", "))
                                         )}
 
   # data available for data sets:
   data_sets <- c('long', 'short')
   if (isFALSE(type %in% data_sets)) { stop( paste0("Error: Questionnaire currently only available for the types: ",
                                               paste(data_sets, collapse = ", "))
-                                            )}
+  )}
+
+
 
   ### Get url
   fname <- paste0(year, '_questionnaire_', type, '.pdf')

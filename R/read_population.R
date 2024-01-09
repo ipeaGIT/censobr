@@ -36,7 +36,7 @@ read_population <- function(year = 2010,
   # data available for the years:
   years <- c(1970, 1980, 1991, 2000, 2010)
   if (isFALSE(year %in% years)) { stop(paste0("Error: Data currently only available for the years ",
-                                             paste(years), collapse = " "))}
+                                             paste(years, collapse = " ")))}
 
   ### Get url
   file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/",
