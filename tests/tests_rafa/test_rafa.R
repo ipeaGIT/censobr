@@ -4,6 +4,37 @@ library(dplyr)
 library(arrow)
 library(data.table)
 
+
+
+df <- read_population(year = 2010, add_labels = 'pt') |>
+      filter(code_state == 11) |>
+      collect()
+
+
+library(censobr)
+library(dplyr)
+library(arrow)
+
+df <- censobr::read_population(year = 2010, add_labels = 'pt') |>
+      group_by(code_muni, V0601) |>
+      summarise(pop = sum(V0010)) |>
+      collect() |>
+      tidyr::pivot_wider(id_cols = code_muni,
+                         names_from = V0601,
+                         values_from = pop)
+head(df)
+#> code_muni  Masculino Feminino
+#>     <chr>      <dbl>    <dbl>
+#> 1 1100015      12656.   11736.
+#> 2 1100023      45543.   44810.
+#> 3 1100031       3266.    3047
+#> 4 1100049      39124.   39450.
+#> 5 1100056       8551.    8478.
+#> 6 1100064       9330.    9261.
+
+
+
+
 # read
 # https://stackoverflow.com/questions/58439966/read-partitioned-parquet-directory-all-files-in-one-r-dataframe-with-apache-ar
 
@@ -40,9 +71,62 @@ utils::browseURL(url = "./data_prep/data_raw/test.html")
 #
 # }
 
-data_dictionary(year = 2010, table = 'households')
 
-year=2010
+
+
+###### etag -----------------------
+
+#A) etag salvo no arquivo
+  a) se atualiza arquivo >>> nada (pacote automatic atualizar local file do usuario)
+  b) arquivo novo >>> nada
+  c) update minor do pacote >>> nada
+
+  * tem que ficar consultando HEAD e etag a cada chamada
+  * funciona offline, mas dai nao checa updates
+
+#B) etag numa tabela de metadado
+  # metadado no pacote
+  a) se atualiza arquivo >>> nova versao de pacote e tabela
+  b) arquivo novo >>> nova versao de pacote e tabela
+  c) update minor do pacote >>> nada
+
+  * funciona offline, mas dai nao checa updates
+
+  # metadado no temp cache
+  a) se atualiza arquivo >>> atualiza tabela
+  b) arquivo novo >>> atualiza tabela
+  c) update minor do pacote >>> nada
+
+  * NAO funciona offline
+
+
+u <- "https://github.com/ipeaGIT/censobr/releases/download/v0.3.0/2010_emigration_v0.3.0.parquet"
+
+aaa <- httr::HEAD(u)$headers$etag
+
+aaa
+"\"0x8DC087CDE6C2378\""
+
+tb <- censobr::read_emigration(as_data_frame = F)
+tb1 <- censobr::read_emigration(as_data_frame = F)
+
+tb <- tb |> mutate(year=1)
+tb1 <- tb1 |> mutate(year=2)
+
+df <- rbind(tb, tb1)
+df2 <- tb |> dplyr::collect()
+
+tb <- arrow_table(dff)
+
+schema(tb)$metadata
+
+tb$metadata$etag <- aaa
+
+arrow::write_parquet(tb, 'tb.parquet')
+
+
+test <- read_parquet('tb.parquet', as_data_frame = F)
+schema(test)$metadata
 
 
 

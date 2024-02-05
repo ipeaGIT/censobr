@@ -30,6 +30,15 @@ test_that("read_mortality", {
   testthat::expect_true(paste('\u00c1rea urbanizada') %in% test4$V1005)
 
 
+  # # merge households
+  # df_main <- read_mortality(year = 2010, merge_households = FALSE)
+  # df_hous <- read_mortality(year = 2010, merge_households = TRUE)
+  #
+  # nrow(df_main) == nrow(df_hous)
+
+
+
+
   # check whether cache argument is working
   time_first <- system.time(
     t1 <- read_mortality(year = 2010))
