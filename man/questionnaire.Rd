@@ -7,8 +7,7 @@
 questionnaire(year = 2010, type = NULL, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to
-\code{2010}.}
+\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2010}.}
 
 \item{type}{Character. The type of questionnaire used in the survey, whether
 the \code{"long"} one used in the sample component of the census, or the

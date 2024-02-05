@@ -13,8 +13,7 @@ read_tracts(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to
-\code{2010}.}
+\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2010}.}
 
 \item{dataset}{Character. The dataset to be opened. Options currently include
 \code{c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda",  "Entorno")}.}
