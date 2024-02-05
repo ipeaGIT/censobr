@@ -1,46 +1,17 @@
-library(dplyr)
-library(censobr)
-library(arrow)
-
-year = 1980
-
-
-df <- censobr::read_population(year = year,
-                                as_data_frame = F)
-
-
-
-# censobr::data_dictionary(year = year, dataset = 'population')
-# censobr::data_dictionary(year = year, dataset = 'households')
-
-
-NA FUNCAO
-### merge household vars
-if (isTRUE(merge_households)) {
-  df <- merge_household_var(df,
-                            year = year,
-                            add_labels = add_labels,
-                            showProgress = showProgress)
-}
-
-
-
-#' @template merge_households
-
-
 #' Add household variables to the data set
 #'
-#' @param df Object a data.frase
-#' @param year String. A url.
-#' @template add_labels
-#' @param showProgress Logical.
+#' @param df An arrow `Dataset` passed from function above.
+#' @param year Numeric. Passed from function above.
+#' @param add_labels Character. Passed from function above.
+#' @param showProgress Logical. Passed from function above.
 #'
-#' @return Internal silent function
+#' @return An arrow `Dataset` with additional household variables.
 #'
 #' @keywords internal
-merge_household_var <- function(df, year, add_labels=NULL, showProgress=T){
-
-
+merge_household_var <- function(df,
+                                year = parent.frame()$year,
+                                add_labels = parent.frame()$add_labels,
+                                showProgress = parent.frame()$showProgress){
 
   # download household data
   df_household <- censobr::read_households(year = year,
@@ -50,48 +21,38 @@ merge_household_var <- function(df, year, add_labels=NULL, showProgress=T){
 
   # set vars to merge
   if (year == 1970) {
-
-    # determine key vars
     key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
                   'code_region', 'name_region', 'household_id')
     }
 
   if (year == 1980) {
+    key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
+                  'code_region', 'name_region', 'V6', 'V601')
 
     # rename weight var
     df_household <- dplyr::rename(df_household, 'V603_household' = 'V603')
-
-    # determine key vars
-    key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
-                  'code_region', 'name_region', 'V6', 'V601')
     }
 
   if (year == 1991) {
+    key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
+                  'code_region', 'name_region', 'V0109')
 
     # rename weight var
     df_household <- dplyr::rename(df_household, 'V7300_household' = 'V7300')
-
-    # determine key vars
-    key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
-                  'code_region', 'name_region', 'V0109')
     }
 
   if (year == 2000) {
-
-    # determine key vars
     key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
                   'code_region', 'name_region', 'code_weighting', 'V0300')
     }
 
   if (year == 2010) {
+    key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
+                  'code_region', 'name_region', 'code_weighting', 'V0300')
 
     # rename weight var
     df_household <- dplyr::rename(df_household, 'V0010_household' = 'V0010')
-
-    # determine key vars
-    key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
-                  'code_region', 'name_region', 'code_weighting', 'V0300')
-    }
+  }
 
 
   # drop repeated vars
@@ -99,10 +60,9 @@ merge_household_var <- function(df, year, add_labels=NULL, showProgress=T){
   vars_to_drop <- setdiff(all_common_vars, key_vars)
   df_household <- dplyr::select(df_household, -all_of(vars_to_drop))
 
-  # merge
-  nrow(df)
-  temp_df <- dplyr::left_join(df, df_household)
-  nrow(df)
 
-  return(temp_df)
+  # merge
+  temp_df <- dplyr::left_join(df, df_household)
+
+return(temp_df)
   }
