@@ -3,7 +3,6 @@
 \docType{package}
 \name{censobr}
 \alias{censobr}
-\alias{_PACKAGE}
 \alias{censobr-package}
 \title{censobr: Download Data from Brazil's Population Census}
 \description{
