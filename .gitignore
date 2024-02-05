@@ -1,7 +1,9 @@
+*.Rcheck/
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+censobr_*.tar.gz
 vignettes/*.html
 *.parquet
 *.o

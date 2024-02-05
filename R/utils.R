@@ -57,22 +57,38 @@ download_file <- function(file_url = parent.frame()$file_url,
   } # nocov end
 
 
-#' Check if parquet file is corrupted
+#' Safely use arrow to open a Parquet file
+#' 
+#' This function handles some failure modes, including if `arrow` is not installed,
+#' or if the Parquet file is corrupted.
 #'
-#' @param df The output of a try() passed from a function above
-
-#' @return A string with the address of the file in a tempdir
+#' @param filename A local Parquet file
+#' @return An `arrow::Dataset`
 #'
 #' @keywords internal
-check_parquet_file <- function(df){ # nocov start
-
-  if (class(df)[1] == "try-error") {
-    stop("File cached locally seems to be corrupted. Please download it again using 'cache = FALSE'.\nAlternatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = )'")
+arrow_open_dataset <- function(filename){
+  if (!requireNamespace("arrow", quietly = TRUE)) {
+    msg <- paste(
+      "The 'arrow' package is required but is not available. Install it with:",
+      'install.packages("arrow", repos = c("https://p3m.dev/cran/2024-02-02", getOption("repos")))',
+      sep = "\n"
+    )
+    stop(msg)
   }
-} # nocov end
+  tryCatch(
+    arrow::open_dataset(filename),
+    error = function(e){
+      msg <- paste(
+        "File cached locally seems to be corrupted. Please download it again using 'cache = FALSE'.",
+        sprintf("Alternatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = \"%s\")'", filename),
+        sep = "\n"
+      )
+      stop(msg)
+    }
+  )
+}
 
-
-#' Message when chaching file
+#' Message when caching file
 #'
 #' @param local_file The address of a file passed from the download_file function.
 #' @param cache Logical.

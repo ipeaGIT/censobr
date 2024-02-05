@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{cache_message}
 \alias{cache_message}
-\title{Message when chaching file}
+\title{Message when caching file}
 \usage{
 cache_message(
   local_file = parent.frame()$local_file,
@@ -18,6 +18,6 @@ cache_message(
 A message
 }
 \description{
-Message when chaching file
+Message when caching file
 }
 \keyword{internal}
