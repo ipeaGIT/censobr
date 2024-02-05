@@ -28,6 +28,9 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/arrow_open_dataset.html</loc>
+  </url>
+  <url>
     <loc>/reference/cache_message.html</loc>
   </url>
   <url>
@@ -35,9 +38,6 @@
   </url>
   <url>
     <loc>/reference/censobr_cache.html</loc>
-  </url>
-  <url>
-    <loc>/reference/check_parquet_file.html</loc>
   </url>
   <url>
     <loc>/reference/data_dictionary.html</loc>
