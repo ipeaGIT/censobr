@@ -3,6 +3,7 @@ context("read_households")
 # skip tests because they take too much time
 skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
+testthat::skip_if_not_installed("arrow")
 
 
 # Reading the data -----------------------
@@ -53,11 +54,11 @@ test_that("read_households", {
 
   # add labels
   test4 <- read_households(year=2010, add_labels = 'pt', columns = c('abbrev_state', 'V1005'))
-  test4 <- test4 |> filter(abbrev_state == 'CE') |> as.data.frame()
+  test4 <- test4 |> dplyr::filter(abbrev_state == 'CE') |> as.data.frame()
   testthat::expect_true(paste('\u00c1rea urbanizada') %in% test4$V1005)
 
   test5 <- read_households(year=2000, add_labels = 'pt', columns = c('abbrev_state', 'V1005'))
-  test5 <- test5 |> filter(abbrev_state == 'CE') |> as.data.frame()
+  test5 <- test5 |> dplyr::filter(abbrev_state == 'CE') |> as.data.frame()
   testthat::expect_true(paste('\u00c1rea urbanizada de vila ou cidade') %in% test5$V1005)
 
 })
