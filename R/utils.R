@@ -70,7 +70,7 @@ arrow_open_dataset <- function(filename){
   if (!requireNamespace("arrow", quietly = TRUE)) {
     msg <- paste(
       "The 'arrow' package is required but is not available. Install it with:",
-      'install.packages("arrow", repos = c("https://apache.r-universe.dev", getOption("repos")))',
+      'install.packages("arrow", repos = c("https://p3m.dev/cran/2024-02-02", getOption("repos")))',
       sep = "\n"
     )
     stop(msg)
