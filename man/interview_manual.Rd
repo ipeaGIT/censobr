@@ -7,8 +7,7 @@
 interview_manual(year = NULL, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to
-\code{2010}.}
+\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2010}.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
 bar. The progress bar only reflects only the downloading
