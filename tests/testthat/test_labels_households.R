@@ -3,6 +3,7 @@ context("add_labels_households")
 # skip tests because they take too much time
 skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
+testthat::skip_if_not_installed("arrow")
 
 
 # Reading the data -----------------------
