@@ -1,3 +1,12 @@
+# censobr v0.3.1
+
+* Minor changes
+  * Moved {arrow} package from `Imports` to `Suggests` while the {arrow} team fixes their conflict with CRAN policies related to downloading binary software. [See here](https://github.com/apache/arrow/issues/39806).
+* New package contributors:
+  * Diego Rabatone Oliveira
+  * Neal Richardson
+
+
 # censobr v0.3.0
 
 * Major changes
