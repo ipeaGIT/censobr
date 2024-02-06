@@ -1,3 +1,7 @@
+dici cenus tract 1970
+arquivo dos 80
+
+
 # devtools::install_github("ipeaGIT/r5r", subdir = "r-package", force=T)
 library(censobr)
 library(dplyr)

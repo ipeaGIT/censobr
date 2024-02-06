@@ -25,8 +25,17 @@ df <- arrow::open_dataset(f_parquet)
 
 head(df) |> collect()
 
+head(select(df, V1101, V1102)) |> collect()
+
+
 # make all columns as character
 df <- mutate(df, across(everything(), as.character))
+
+
+# add trailing zeros to municipality column
+df <- collect(df)
+df <- mutate(df, V1102 = stringi::stri_pad_left(V1102, 4, 0))
+
 
 ##  add geography variables ----------------------------------------------
 
@@ -38,6 +47,7 @@ muni_geobr <- mutate(muni_geobr,
 
 muni_geobr$geom <- NULL
 muni_geobr$code_muni <- as.character(muni_geobr$code_muni)
+muni_geobr$code_muni6 <- as.character(muni_geobr$code_muni6)
 head(muni_geobr)
 
 df <- mutate(df, code_muni6 = paste0(V1101, V1102))
@@ -45,6 +55,8 @@ df <- mutate(df, code_muni6 = paste0(V1101, V1102))
 df <- left_join(df, muni_geobr, by='code_muni6')
 
 df <- select(df, -code_muni6)
+
+
 
 
 df <- add_geography_cols(arrw = df, year = 1991)
@@ -74,6 +86,9 @@ arrow::write_parquet(df, './data/microdata_sample/1991/1991_households.parquet')
 
 rm(list=ls())
 gc(T)
+
+
+
 
 # 2) Population data -----------------------------------------------------------
 
@@ -127,6 +142,14 @@ names(df)
 # # make all columns as character
 # df <- mutate(df, across(everything(), as.character))
 
+
+# add trailing zeros to municipality column
+gc(T)
+df <- collect(df)
+df <- mutate(df, V1102 = stringi::stri_pad_left(V1102, 4, 0))
+gc(T)
+gc(T)
+
 ##  add geography variables ----------------------------------------------
 
 # add code_muni 7 digits
@@ -137,12 +160,20 @@ muni_geobr <- mutate(muni_geobr,
 
 muni_geobr$geom <- NULL
 muni_geobr$code_muni <- as.character(muni_geobr$code_muni)
+muni_geobr$code_muni6 <- as.character(muni_geobr$code_muni6)
 head(muni_geobr)
 
 names(df)
 df <- mutate(df, code_muni6 = paste0(V1101, V1102))
 
-df <- left_join(df, muni_geobr, by='code_muni6')
+#df <- left_join(df, muni_geobr, by='code_muni6')
+setDT(muni_geobr)
+setDT(df)
+data.table::setkey(muni_geobr, code_muni6)
+data.table::setkey(df, code_muni6)
+gc(T)
+df[muni_geobr, on = 'code_muni6', code_muni := i.code_muni]
+gc()
 
 df <- select(df, -code_muni6)
 
