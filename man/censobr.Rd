@@ -33,6 +33,8 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Diego Rabatone Oliveira \email{diraol@diraol.eng.br} [contributor]
+  \item Neal Richardson \email{neal.p.richardson@gmail.com} [contributor]
   \item Ipea - Institute for Applied Economic Research [copyright holder, funder]
 }
 

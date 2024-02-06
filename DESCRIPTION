@@ -1,7 +1,7 @@
 Type: Package
 Package: censobr
 Title: Download Data from Brazil's Population Census
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: 
     c(person(given="Rafael H. M.", family="Pereira", 
              email="rafa.pereira.br@gmail.com", 
@@ -10,7 +10,13 @@ Authors@R:
       person(given="Rogério J.", family="Barbosa", 
              email="antrologos@gmail.com", 
              role=c("aut"), 
-             comment = c(ORCID = "0000-0002-6796-4547")),  
+             comment = c(ORCID = "0000-0002-6796-4547")),
+      person(given="Diego Rabatone", family="Oliveira", 
+             email="diraol@diraol.eng.br", 
+             role=c("ctb")),
+      person(given="Neal", family="Richardson", 
+             email="neal.p.richardson@gmail.com", 
+             role=c("ctb")),
       person(given = "Ipea - Institute for Applied Economic Research",
              role = c("cph", "fnd")))
 Description: Download data from Brazil's population census. The package is built 
