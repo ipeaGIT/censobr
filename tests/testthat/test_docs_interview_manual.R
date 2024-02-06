@@ -18,7 +18,7 @@ test_that("interview_manual", {
   testthat::expect_message( interview_manual(year = 1970) )
 
   # cache dir
-  pkgv <- paste0('censobr/data_release_', data_release)
+  pkgv <- paste0('censobr/data_release_', censobr_env$data_release)
   cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
 
   ## check if file have been downloaded
