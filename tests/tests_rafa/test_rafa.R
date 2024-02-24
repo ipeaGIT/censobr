@@ -1,3 +1,24 @@
+link <- 'https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/2023/PNADC_032023.zip'
+file <- basename(link)
+
+
+tic()
+httr::GET(url = link,
+          # httr::timeout(10),
+          httr::progress(),
+          httr::write_disk(file, overwrite = T))
+toc()
+
+
+tic()
+link |>
+  httr2::request() |>
+  httr2::req_progress() |>
+  httr2::req_perform(path = file)
+toc()
+
+
+
 dici cenus tract 1970
 arquivo dos 80
 
