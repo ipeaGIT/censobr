@@ -58,23 +58,16 @@ download_file <- function(file_url = parent.frame()$file_url,
 
 
 #' Safely use arrow to open a Parquet file
-#' 
-#' This function handles some failure modes, including if `arrow` is not installed,
-#' or if the Parquet file is corrupted.
+#'
+#' This function handles some failure modes, including if the Parquet file is
+#' corrupted.
 #'
 #' @param filename A local Parquet file
 #' @return An `arrow::Dataset`
 #'
 #' @keywords internal
 arrow_open_dataset <- function(filename){
-  if (!requireNamespace("arrow", quietly = TRUE)) {
-    msg <- paste(
-      "The 'arrow' package is required but is not available. Install it with:",
-      'install.packages("arrow", repos = c("https://p3m.dev/cran/2024-02-02", getOption("repos")))',
-      sep = "\n"
-    )
-    stop(msg)
-  }
+
   tryCatch(
     arrow::open_dataset(filename),
     error = function(e){

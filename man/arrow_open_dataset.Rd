@@ -13,7 +13,7 @@ arrow_open_dataset(filename)
 An \code{arrow::Dataset}
 }
 \description{
-This function handles some failure modes, including if \code{arrow} is not installed,
-or if the Parquet file is corrupted.
+This function handles some failure modes, including if the Parquet file is
+corrupted.
 }
 \keyword{internal}
