@@ -16,7 +16,8 @@ read_tracts(
 \item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2010}.}
 
 \item{dataset}{Character. The dataset to be opened. Options currently include
-\code{c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda",  "Entorno")}.}
+\code{c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda",  "Entorno")}.
+Preliminary results of the 2022 census are available with \code{"Preliminares"}.}
 
 \item{as_data_frame}{Logical. When \code{FALSE} (Default), the function returns an
 Arrow Dataset, which allows users to work with larger-than-memory data.

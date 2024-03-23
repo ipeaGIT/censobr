@@ -6,6 +6,7 @@
 #' @template year
 #' @param dataset Character. The dataset to be opened. Options currently include
 #'        `c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda",  "Entorno")`.
+#'        Preliminary results of the 2022 census are available with `"Preliminares"`.
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
@@ -39,15 +40,21 @@ read_tracts <- function(year = 2010,
 
 
   # data available for the years:
-  years <- c(2010)
+  years <- c(2010, 2022)
   if (isFALSE(year %in% years)) { stop(paste0("Error: Data currently only available for the years ",
                                               paste(years, collapse = " ")))}
 
-  # data available for data sets:
-  data_sets <- c("Basico", "Domicilio", "DomicilioRenda", "Entorno",
+  # data sets available for 2010:
+  data_sets_2010 <- c("Basico", "Domicilio", "DomicilioRenda", "Entorno",
                  "ResponsavelRenda", "Responsavel", "PessoaRenda", "Pessoa")
-  if (isFALSE(dataset %in% data_sets)) { stop( paste0("Error: Data currently only available for the datasets: ",
-                                                    paste(data_sets, collapse = ", "))
+  if (year==2010 & isFALSE(dataset %in% data_sets_2010)) { stop( paste0("Error: Data currently only available for the datasets: ",
+                                                    paste(data_sets_2010, collapse = ", "))
+  )}
+
+  # data sets available for 2022:
+  data_sets_2022 <- c("Preliminares")
+  if (year==2022 & isFALSE(dataset %in% data_sets_2022)) { stop( paste0("Error: Data currently only available for the datasets: ",
+                                                                        paste(data_sets_2022, collapse = ", "))
   )}
 
   ### Get url

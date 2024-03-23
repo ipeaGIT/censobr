@@ -1,3 +1,13 @@
+# censobr v0.3.2
+
+* Minor changes
+  * Moved {arrow} package back to `Imports`
+
+* New data set and files included in this version:
+  * 2022 census
+    * Preliminary aggregate results of census tracts
+
+
 # censobr v0.3.1
 
 * Minor changes

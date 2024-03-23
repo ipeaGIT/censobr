@@ -3,11 +3,12 @@
 add_geography_cols <- function(arrw, year){
 
 
-  # get code_muni from weighting area
+  # get code_muni
   col <- case_when(year == 1970 ~ 'code_muni',
                    year == 1980 ~ 'code_muni',
                    year == 1991 ~ 'code_muni',
                    year == 2010 ~ 'V0011',
+                   year == 2022 ~ 'CD_MUN'
                    year == 2000 ~ 'AREAP')
 
   if(year %in% c(2000, 2010)){
