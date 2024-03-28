@@ -29,7 +29,7 @@ BugReports: https://github.com/ipeaGIT/censobr/issues
 Depends: 
     R (>= 4.0)
 Imports:
-    arrow,
+    arrow (>= 15.0.1),
     checkmate,
     dplyr,
     httr (>= 1.4.1),
