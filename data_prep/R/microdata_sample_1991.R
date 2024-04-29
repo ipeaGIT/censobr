@@ -23,9 +23,9 @@ source('./R/add_geography_cols.R')
 f_parquet <- './data_raw/microdata/1991/Censo.1991.brasil.domicilios.amostra.10porcento.parquet'
 df <- arrow::open_dataset(f_parquet)
 
-head(df) |> collect()
 
 head(select(df, V1101, V1102)) |> collect()
+
 
 
 # make all columns as character
@@ -34,6 +34,7 @@ df <- mutate(df, across(everything(), as.character))
 
 # add trailing zeros to municipality column
 df <- collect(df)
+head(df)
 df <- mutate(df, V1102 = stringi::stri_pad_left(V1102, 4, 0))
 
 
@@ -57,12 +58,9 @@ df <- left_join(df, muni_geobr, by='code_muni6')
 df <- select(df, -code_muni6)
 
 
-
-
 df <- add_geography_cols(arrw = df, year = 1991)
 
 
-head(df) |> collect()
 
 # make variables as numeric
 num_vars <- c('V0102', 'V0098', 'V0109', 'V0111', 'V0112', 'V2012',
@@ -78,6 +76,12 @@ df <- mutate(df, V7300 = V7300 /10^8)
 head(df) |> collect()
 
 gc(T)
+
+# df |>
+#  select(code_muni) |>
+#  mutate(test = is.na(as.numeric(code_muni))) |>
+#  count(test) |>
+#  collect()
 
 ## save single parquet tile ----------------------------------------------
 arrow::write_parquet(df, './data/microdata_sample/1991/1991_households.parquet')
@@ -139,14 +143,24 @@ df <- rename_with(df, toupper, starts_with("v"))
 
 names(df)
 
-# # make all columns as character
-# df <- mutate(df, across(everything(), as.character))
-
+# make all columns as character
+df <- mutate(df, across(everything(), as.character))
 
 # add trailing zeros to municipality column
 gc(T)
+gc(T)
+gc(T)
+gc(T)
+
 df <- collect(df)
+gc(T)
+gc(T)
+gc(T)
+gc(T)
+
 df <- mutate(df, V1102 = stringi::stri_pad_left(V1102, 4, 0))
+gc(T)
+gc(T)
 gc(T)
 gc(T)
 
@@ -166,12 +180,22 @@ head(muni_geobr)
 names(df)
 df <- mutate(df, code_muni6 = paste0(V1101, V1102))
 
+# df |>
+#   select(code_muni6) |>
+#   mutate(test = is.na(as.numeric(code_muni6))) |>
+#   count(test) |>
+#   collect()
+
 #df <- left_join(df, muni_geobr, by='code_muni6')
 setDT(muni_geobr)
 setDT(df)
 data.table::setkey(muni_geobr, code_muni6)
 data.table::setkey(df, code_muni6)
 gc(T)
+gc(T)
+gc(T)
+gc(T)
+
 df[muni_geobr, on = 'code_muni6', code_muni := i.code_muni]
 gc()
 
@@ -180,7 +204,10 @@ df <- select(df, -code_muni6)
 
 df <- add_geography_cols(arrw = df, year = 1991)
 
-
+gc(T)
+gc(T)
+gc(T)
+gc(T)
 
 # make variables as numeric
 num_vars <- c('V3041', 'V3042', 'V3043', 'V3045', 'V3072', 'V3073',
@@ -191,6 +218,12 @@ num_vars <- c('V3041', 'V3042', 'V3043', 'V3045', 'V3072', 'V3073',
 
 df <- mutate(df, across(all_of(num_vars),
                         ~ as.numeric(.x)))
+
+gc(T)
+gc(T)
+gc(T)
+gc(T)
+
 
 
 # fix weight variable
@@ -204,10 +237,34 @@ head(df) |> collect()
 
 
 
+rm(list=setdiff(ls(), "df"))
 
 
-gc(T)
+gc(verbose = T,reset = T, full = T)
+gc(verbose = T,reset = T, full = T)
+gc(verbose = T,reset = T, full = T)
 
 
-## save single parquet tile ----------------------------------------------
+## save single parquet file ----------------------------------------------
+
+# due to memory limit, I had to first save it to csv, and then convert it to parquet
+data.table::fwrite(df, './data/microdata_sample/1991/1991_population.csv')
+
+rm(df)
+gc(verbose = T,reset = T, full = T)
+gc(verbose = T,reset = T, full = T)
+gc(verbose = T,reset = T, full = T)
+
+df <- arrow::open_csv_dataset('./data/microdata_sample/1991/1991_population.csv')
+
 arrow::write_parquet(df, './data/microdata_sample/1991/1991_population.parquet')
+
+
+df <- arrow::open_dataset('./data/microdata_sample/1991/1991_population.parquet')
+
+df |>
+  select(code_muni) |>
+  mutate(test = is.na(code_muni)) |>
+  count(test) |>
+  collect()
+
