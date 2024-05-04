@@ -1,3 +1,8 @@
+# integer
+# 1980
+# 1970
+# 2000
+
 # Add basic geography variables
 #' @keywords internal
 add_geography_cols <- function(arrw, year){
@@ -8,7 +13,7 @@ add_geography_cols <- function(arrw, year){
                    year == 1980 ~ 'code_muni',
                    year == 1991 ~ 'code_muni',
                    year == 2010 ~ 'V0011',
-                   year == 2022 ~ 'CD_MUN'
+                   year == 2022 ~ 'CD_MUN',
                    year == 2000 ~ 'AREAP')
 
   if(year %in% c(2000, 2010)){
@@ -135,6 +140,13 @@ add_geography_cols <- function(arrw, year){
   if (year %in% c(1970)) {
       arrw <- relocate(arrw, c(code_muni, code_muni_1970, code_state, abbrev_state, name_state, code_region, name_region))
       }
+
+  # all code columns to integer (except code_weighting)
+  num_vars2 <- names(arrw)[names(arrw) %like% 'code_']
+  num_vars2 <- num_vars2[!num_vars2 %like% 'code_weighting']
+
+  arrw <- mutate(arrw, across(all_of(num_vars2),
+                          ~ as.integer(as.numeric(.x))))
 
   return(arrw)
   }

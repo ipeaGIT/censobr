@@ -55,6 +55,10 @@ lapply(X=txt_files,
   rm(DS, SO); gc(T)
 
   ## 3.3) add geography variables ----------------------------------------------
+
+  # # drop row if all columns are NA
+  AT <- filter(AT, !is.na(PESO_DOMIC))
+
   AT <- add_geography_cols(arrw = AT, year = 2000)
 
   head(AT) |> collect()
@@ -93,17 +97,36 @@ lapply(X=txt_files,
   # Define the dataset
   DS <- arrow::open_dataset(sources = parqt_files)
   # Create a scanner
-  SO <- Scanner$create(DS)
+  SO <- arrow::Scanner$create(DS)
   # Load it as n Arrow Table in memory
   AT <- SO$ToTable()
-  rm(DS, SO); gc(T)
+  rm(DS, SO, parqt_files); gc(T)
+
+
+  gc()
+  AT <- collect(AT)
+
+  # due to memory limit, I had to first save it to csv, and then convert it to parquet
+  data.table::fwrite(AT, './data/microdata_sample/2000/2000_population.csv')
 
   ## 4.3) add geography variables ----------------------------------------------
+
+  df <- arrow::open_csv_dataset('./data/microdata_sample/1991/1991_population.csv')
+
+  # # # drop row if all columns are NA
+  # AT <- filter(AT, !is.na(PES_PESSOA))
+  # gc(T)
+
   AT <- add_geography_cols(arrw = AT, year = 2000)
 
   head(AT) |> collect()
 
   ## 4.4) save single parquet tile ----------------------------------------------
+  AT <- AT |> collect()
+  gc(T)
+  gc(T)
+  gc(T)
+  gc(T)
   arrow::write_parquet(AT, './data/microdata_sample/2000/2000_population.parquet')
 
 
@@ -142,12 +165,16 @@ lapply(X=txt_files,
   # Define the dataset
   DS <- arrow::open_dataset(sources = parqt_files)
   # Create a scanner
-  SO <- Scanner$create(DS)
+  SO <- arrow::Scanner$create(DS)
   # Load it as n Arrow Table in memory
   AT <- SO$ToTable()
   rm(DS, SO); gc(T)
 
   ## 5.3) add geography variables ----------------------------------------------
+
+  # # drop row if all columns are NA
+  AT <- filter(AT, !is.na(P001))
+
   AT <- add_geography_cols(arrw = AT, year = 2000)
 
   head(AT) |> collect()

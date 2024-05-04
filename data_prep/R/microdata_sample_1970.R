@@ -22,9 +22,6 @@ source('./R/add_geography_cols.R')
   # make all columns as character
   df <- mutate(df, across(everything(), as.character))
 
-  # add household id
-  df <- left_join(df, df_ids, by='idpessoa')
-
   # rename columns
   df <- rename(df,
                code_muni = municcode2010,
@@ -58,9 +55,13 @@ source('./R/add_geography_cols.R')
   df <- select(df, -starts_with("CEM"))
   head(df) |> collect()
 
+  # rename id columns
+  df <- dplyr::rename(df,
+                      id_household = 'household_id')
+
 
   ## save single parquet tile ----------------------------------------------
-  arrow::write_parquet(df, './data/microdata_sample/1970/1970_households_v0.2.0.parquet')
+  arrow::write_parquet(df, './data/microdata_sample/1970/1970_households.parquet')
 
 
 rm(list=ls())
@@ -121,11 +122,14 @@ gc(T)
                           ~ as.numeric(.x)))
 
 
-  names(df)
+  # rename id columns
+  df <- dplyr::rename(df,
+                id_person = 'idpessoa',
+                id_household = 'household_id')
+  head(df) |> collect()
   gc(T)
 
 
-
   ##  save single parquet tile ----------------------------------------------
-  arrow::write_parquet(df, './data/microdata_sample/1970/1970_population_v0.2.0.parquet')
+  arrow::write_parquet(df, './data/microdata_sample/1970/1970_population.parquet')
 

@@ -46,10 +46,6 @@ df <- arrow::open_dataset(f_parquet)
 
 head(df) |> collect()
 
-# # make all columns as character
-# df <- mutate(df, across(everything(), as.character))
-
-
 
 ##  add geography variables ----------------------------------------------
 
@@ -68,7 +64,6 @@ muni_geobr <- mutate(muni_geobr,
   select(code_muni,code_muni6)
 
 muni_geobr$geom <- NULL
-muni_geobr$code_muni <- as.character(muni_geobr$code_muni)
 head(muni_geobr)
 
 
@@ -93,6 +88,8 @@ df <- mutate(df, across(all_of(num_vars),
 gc(T)
 
 ## save single parquet tile ----------------------------------------------
+head(df) |> collect()
+
 arrow::write_parquet(df, './data/microdata_sample/1980/1980_households.parquet')
 
 
@@ -139,7 +136,7 @@ head(df) |> collect()
 df <- rename_with(df, toupper, starts_with("v"))
 
 
-  ##  add geography variables ----------------------------------------------
+##  add geography variables ----------------------------------------------
 
   # trailing zeros
   df <- mutate(df, code_muni_1980 = as.character(as.numeric(V2) * 10000 + as.numeric(V5)))
@@ -155,7 +152,6 @@ df <- rename_with(df, toupper, starts_with("v"))
     select(code_muni,code_muni6)
 
   muni_geobr$geom <- NULL
-  muni_geobr$code_muni <- as.character(muni_geobr$code_muni)
   head(muni_geobr)
 
 
@@ -182,6 +178,8 @@ df <- rename_with(df, toupper, starts_with("v"))
 
   gc(T)
 
-  ##  save single parquet tile ----------------------------------------------
-  arrow::write_parquet(df, './data/microdata_sample/1980/1980_population.parquet')
+##  save single parquet tile ----------------------------------------------
+head(df) |> collect()
+
+arrow::write_parquet(df, './data/microdata_sample/1980/1980_population.parquet')
 
