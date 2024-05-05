@@ -183,7 +183,6 @@ head(muni_sf)
 Now we only need to merge the spatial data with our estimates and map the results.
 
 ```{r warning = FALSE}
-muni_sf$code_muni <- as.character(muni_sf$code_muni)
 esg_sf <- left_join(muni_sf, esg, by = 'code_muni')
 
 ggplot() +
