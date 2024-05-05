@@ -14,14 +14,6 @@ df <- censobr::read_population(year = year,
 # censobr::data_dictionary(year = year, dataset = 'households')
 
 
-NA FUNCAO
-### merge household vars
-if (isTRUE(merge_households)) {
-  df <- merge_household_var(df,
-                            year = year,
-                            add_labels = add_labels,
-                            showProgress = showProgress)
-}
 
 
 
@@ -100,9 +92,7 @@ merge_household_var <- function(df, year, add_labels=NULL, showProgress=T){
   df_household <- dplyr::select(df_household, -all_of(vars_to_drop))
 
   # merge
-  nrow(df)
   temp_df <- dplyr::left_join(df, df_household)
-  nrow(df)
 
   return(temp_df)
   }

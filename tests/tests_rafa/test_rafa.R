@@ -406,6 +406,7 @@ urlchecker::url_update()
 # Check package errors
 
 # run only the tests
+Sys.setenv(NOT_CRAN = "true")
 testthat::test_local()
 
 # LOCAL

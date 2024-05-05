@@ -74,31 +74,31 @@ test_that("read_households", {
 
   # 2010
   dfh <- read_households(year = 2010)
-  total_2010_p <- summarise(dfh, total = sum(V0010)) |> collect()
+  total_2010_p <- dplyr::summarise(dfh, total = sum(V0010)) |> dplyr::collect()
   expect_equal(total_2010_p$total, 58051449)
 
 
   # 2000
   dfh <- read_households(year = 2000)
-  total_2000_p <- summarise(dfh, total = sum(PESO_DOMIC, na.rm=T)) |> collect()
+  total_2000_p <- dplyr::summarise(dfh, total = sum(PESO_DOMIC, na.rm=T)) |> dplyr::collect()
   expect_equal(total_2000_p$total, 45507516)
 
 
   # 1991
   dfh <- read_households(year = 1991)
-  total_1991_p <- summarise(dfh, total = sum(V7300, na.rm=T)) |> collect()
+  total_1991_p <- dplyr::summarise(dfh, total = sum(V7300, na.rm=T)) |> dplyr::collect()
   expect_equal(total_1991_p$total, 35435725)
 
 
   # 1980
   dfh <- read_households(year = 1980)
-  total_1980_p <- summarise(dfh, total = sum(V603, na.rm=T)) |> collect()
+  total_1980_p <- dplyr::summarise(dfh, total = sum(V603, na.rm=T)) |> dplyr::collect()
   expect_equal(total_1980_p$total, 25210639)
 
 
   # 1970
   dfh <- read_households(year = 1970)
-  total_1970_p <- summarise(dfh, total = sum(weight_household, na.rm=T)) |> collect()
+  total_1970_p <- dplyr::summarise(dfh, total = sum(weight_household, na.rm=T)) |> dplyr::collect()
   expect_equal(total_1970_p$total, 17682112)
 
 })

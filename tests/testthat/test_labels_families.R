@@ -12,20 +12,18 @@ test_that("add_labels_families", {
 
   # sem labels
   test1a <- read_families(year = 2000, add_labels = NULL, columns = c('abbrev_state', 'CODV0404_2')) |>
-            filter(abbrev_state == 'RO')
+            dplyr::filter(abbrev_state == 'RO')
 
   # com labels
   test1b <- censobr:::add_labels_families(arrw = test1a, year=2000, lang = 'pt') |>
-            filter(abbrev_state == 'RO')
+            dplyr::filter(abbrev_state == 'RO')
 
-  test1a <- as.data.frame(test1a)
-  test1b <- as.data.frame(test1b)
+  test1a <- dplyr::collect(test1a)
+  test1b <- dplyr::collect(test1b)
 
   # add labels
   testthat::expect_true('01' %in% test1a$CODV0404_2)
   testthat::expect_true('Casal sem filhos' %in% test1b$CODV0404_2)
-
-
 
  })
 

@@ -15,6 +15,8 @@
 #' @export
 #' @family Census tract data
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+#' library(censobr)
+#'
 #' # return data as arrow Dataset
 #' df <- read_tracts(year = 2010,
 #'                   dataset = 'PessoaRenda',

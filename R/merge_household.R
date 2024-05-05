@@ -44,7 +44,7 @@ merge_household_var <- function(df,
   if (year == 2000) {
     key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
                   'code_region', 'name_region', 'code_weighting', 'V0300')
-    }
+  }
 
   if (year == 2010) {
     key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
@@ -64,5 +64,5 @@ merge_household_var <- function(df,
   # merge
   temp_df <- dplyr::left_join(df, df_household)
 
-return(temp_df)
-  }
+  return(temp_df)
+}

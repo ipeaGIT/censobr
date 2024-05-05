@@ -13,14 +13,14 @@ test_that("add_labels_households", {
   ################################################################### 2010
   # sem labels
   test1a <- read_households(year = 2010, add_labels = NULL, columns = c('abbrev_state', 'V1006')) |>
-            filter(abbrev_state == 'RO')
+            dplyr::filter(abbrev_state == 'RO')
 
   # com labels
   test1b <- censobr:::add_labels_households(arrw = test1a, year=2010, lang = 'pt') |>
-            filter(abbrev_state == 'RO')
+            dplyr::filter(abbrev_state == 'RO')
 
-  test1a <- as.data.frame(test1a)
-  test1b <- as.data.frame(test1b)
+  test1a <- dplyr::collect(test1a)
+  test1b <- dplyr::collect(test1b)
 
   # add labels
   testthat::expect_true('1' %in% test1a$V1006)

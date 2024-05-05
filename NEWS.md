@@ -1,3 +1,8 @@
+# censobr v0.3.29999 dev
+
+* Minor changes
+  * Some functions `read_population`, `read_mortality`, `read_families`, `read_emigration` now include a new parameter `merge_households` (logical) to indicate whether the function should merge household variables to the output data. Closes [#31](https://github.com/ipeaGIT/censobr/issues/31)
+
 # censobr v0.3.2
 
 * Minor changes

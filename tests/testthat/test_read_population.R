@@ -75,35 +75,48 @@ test_that("read_population", {
 
   # 2010
   dfp <- read_population(year = 2010)
-  total_2010_p <- summarise(dfp, total = sum(V0010)) |> collect()
+  total_2010_p <- dplyr::summarise(dfp, total = sum(V0010)) |> dplyr::collect()
   expect_equal(total_2010_p$total, 190755799)
 
 
   # 2000
   dfp <- read_population(year = 2000)
-  total_2000_p <- summarise(dfp, total = sum(PES_PESSOA, na.rm=T)) |> collect()
+  total_2000_p <- dplyr::summarise(dfp, total = sum(PES_PESSOA, na.rm=T)) |> dplyr::collect()
   expect_equal(total_2000_p$total, 169872856)
 
 
   # 1991
   dfp <- read_population(year = 1991)
-  total_1991_p <- summarise(dfp, total = sum(V7301, na.rm=T)) |> collect()
+  total_1991_p <- dplyr::summarise(dfp, total = sum(V7301, na.rm=T)) |> dplyr::collect()
   expect_equal(total_1991_p$total, 146815212)
 
 
   # 1980
   dfp <- read_population(year = 1980)
-  total_1980_p <- summarise(dfp, total = sum(V604, na.rm=T)) |> collect()
+  total_1980_p <- dplyr::summarise(dfp, total = sum(V604, na.rm=T)) |> dplyr::collect()
   expect_equal(total_1980_p$total, 119011052)
 
 
   # 1970
   dfp <- read_population(year = 1970)
-  total_1970_p <- summarise(dfp, total = sum(V054, na.rm=T)) |> collect()
+  total_1970_p <- dplyr::summarise(dfp, total = sum(V054, na.rm=T)) |> dplyr::collect()
   expect_equal(total_1970_p$total, 94461969)
 
 })
 
+
+
+# Merge households vars -----------------------
+
+test_that("merge_households_vars", {
+
+  for(y in c(1970, 1980, 1991, 2000, 2010)){ # y = 2010
+    message(y)
+    df_hou <- read_households(year = y)
+    df_test <- read_population(year = y, merge_households = TRUE)
+    testthat::expect_true( all(names(df_hou) %in% names(df_test)) )
+  }
+})
 
 
 # ERRORS and messages  -----------------------

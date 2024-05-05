@@ -33,6 +33,19 @@ test_that("read_families", {
 })
 
 
+# Merge households vars -----------------------
+
+test_that("merge_households_vars", {
+
+  for(y in c(2000)){ # y = 2000
+    message(y)
+    df_hou <- read_households(year = y)
+    df_test <- read_families(year = y, merge_households = TRUE)
+    testthat::expect_true( all(names(df_hou) %in% names(df_test)) )
+  }
+})
+
+
 # ERRORS and messages  -----------------------
 test_that("read_families", {
 

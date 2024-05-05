@@ -55,6 +55,21 @@ test_that("read_mortality", {
  })
 
 
+# Merge households vars -----------------------
+
+test_that("merge_households_vars", {
+
+  for(y in c(2010)){ # y = 2010
+    message(y)
+    df_hou <- read_households(year = y)
+    df_test <- read_mortality(year = y, merge_households = TRUE)
+    testthat::expect_true( all(names(df_hou) %in% names(df_test)) )
+  }
+
+})
+
+
+
 # ERRORS and messages  -----------------------
 test_that("read_mortality", {
 
