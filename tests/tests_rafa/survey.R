@@ -12,14 +12,14 @@ library(tictoc)
 
 df <- read_population(year = 2010) |> filter(name_region  == "Norte")
 
-df2 <- as.data.frame(df)
+df2 <- dplyr::collect(df)
+names(df2)
 
-
-srs_design_srvyr <- df2 %>% as_survey_design(ids = 1, fpc = V0010)
-
-srs_design_survey <- svydesign(ids = ~1, fpc = ~fpc, data = apisrs)
-
-
+# srs_design_srvyr <- df2 %>% as_survey_design(ids = 1, weights  = V0010)
+#
+# srs_design_survey <- svydesign(ids = ~1, fpc = ~fpc, data = apisrs)
+#
+#
 
 tic()
 censo_designD <-
@@ -34,18 +34,18 @@ censo_designD <-
   )
 toc()
 
-tic()
-censo_designP <-
-  survey::svrepdesign(
-    weight = ~ V0010 ,
-    repweights = ~ V0010 ,
-    # type = "bootstrap",
-    combined.weights = FALSE ,
-    #  scale = censo_wgts$scale ,
-    #  rscales = v0010 ,
-    data = df
-  )
-toc()
+# tic()
+# censo_designP <-
+#   survey::svrepdesign(
+#     weight = ~ V0010 ,
+#     repweights = ~ V0010 ,
+#     # type = "bootstrap",
+#     combined.weights = FALSE ,
+#     #  scale = censo_wgts$scale ,
+#     #  rscales = v0010 ,
+#     data = df
+#   )
+# toc()
 
 
 arrow::write_parquet(df, 'pop.parquet')

@@ -11,8 +11,9 @@ geometry <- function(df,
                      year = parent.frame()$year,
                      showProgress = parent.frame()$showProgress){
 
-# df <- censobr::read_tracts(year = 2022, dataset = 'PessoaRenda')
-# df <- dplyr::collect(df)
+  # df <- censobr::read_tracts(year = 2010, dataset = 'PessoaRenda')
+  # df <- censobr::read_tracts(year = 2022, dataset = 'Preliminares')
+  # df <- dplyr::collect(df)
 
   # download tracts geometry from geobr
   tracts_sf <- geobr::read_census_tract(code_tract = 'all',
