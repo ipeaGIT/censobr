@@ -66,6 +66,9 @@
     <li>
       <a href="../articles/documentation.html">Census documentation</a>
     </li>
+    <li>
+      <a href="../articles/larger_than_memory.html">Working with larger-than-memory data</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -94,7 +97,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Census tract-level data</h1>
             
-            <h4 data-toc-skip class="date">2024-05-05</h4>
+            <h4 data-toc-skip class="date">2024-05-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/tree/main/vignettes/census_tracts_data.Rmd" class="external-link"><code>vignettes/census_tracts_data.Rmd</code></a></small>
       <div class="hidden name"><code>census_tracts_data.Rmd</code></div>
@@ -169,7 +172,7 @@ the columns in this dataset are organized as follows:</p>
 variables in each dataset</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/data_dictionary.html">data_dictionary</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, dataset <span class="op">=</span> <span class="st">'tracts'</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |==========                                                            |  14%  |                                                                              |===============                                                       |  22%  |                                                                              |====================                                                  |  29%  |                                                                              |=========================                                             |  36%  |                                                                              |===============================                                       |  44%  |                                                                              |===================================                                   |  51%  |                                                                              |=========================================                             |  58%  |                                                                              |==============================================                        |  66%  |                                                                              |===================================================                   |  73%  |                                                                              |=============================================================         |  87%  |                                                                              |======================================================================| 100%</span></span>
+<span><span class="co">#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |=                                                                     |   2%  |                                                                              |=========                                                             |  12%  |                                                                              |===========                                                           |  16%  |                                                                              |==============                                                        |  20%  |                                                                              |==================                                                    |  26%  |                                                                              |=======================                                               |  33%  |                                                                              |============================                                          |  41%  |                                                                              |==================================                                    |  48%  |                                                                              |=======================================                               |  56%  |                                                                              |============================================                          |  63%  |                                                                              |=================================================                     |  71%  |                                                                              |======================================================                |  78%  |                                                                              |============================================================          |  85%  |                                                                              |======================================================================| 100%</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
 </div>
 </div>
@@ -242,14 +245,14 @@ per capita of all census tracts in Brazil.</p>
 <span><span class="co"># calculate income per capita</span></span>
 <span><span class="va">tracts_df</span> <span class="op">&lt;-</span> <span class="va">tracts_df</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>income_pc <span class="op">=</span> <span class="va">V003</span> <span class="op">/</span> <span class="va">V002</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tracts_df</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         code_tract  V002    V003 income_pc</span></span>
-<span><span class="co">#&gt;             &lt;char&gt; &lt;num&gt;   &lt;num&gt;     &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1: 350320825000030   480  368357  767.4104</span></span>
-<span><span class="co">#&gt; 2: 350320825000031   458  293191  640.1550</span></span>
-<span><span class="co">#&gt; 3: 350320825000032   955  859297  899.7874</span></span>
-<span><span class="co">#&gt; 4: 350320825000033    NA       0        NA</span></span>
-<span><span class="co">#&gt; 5: 350320825000034   764  636266  832.8089</span></span>
-<span><span class="co">#&gt; 6: 350320825000035  1026 1151032 1121.8635</span></span></code></pre></div>
+<span><span class="co">#&gt;         code_tract  V002   V003 income_pc</span></span>
+<span><span class="co">#&gt;             &lt;char&gt; &lt;num&gt;  &lt;num&gt;     &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1: 120001305000001   957 601805  628.8454</span></span>
+<span><span class="co">#&gt; 2: 120001305000002  1203 385033  320.0607</span></span>
+<span><span class="co">#&gt; 3: 120001305000003  1700 531794  312.8200</span></span>
+<span><span class="co">#&gt; 4: 120001305000004   182  58853  323.3681</span></span>
+<span><span class="co">#&gt; 5: 120001305000005   305 112979  370.4230</span></span>
+<span><span class="co">#&gt; 6: 120001305000006   483 263538  545.6273</span></span></code></pre></div>
 <p>Finally, we can merge the spatial data with our per capita income
 estimates and map the results.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
