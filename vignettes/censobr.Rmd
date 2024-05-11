@@ -118,7 +118,7 @@ dplyr::glimpse(pop)
 ```
 
 
-In the example below, we use the `dplyr` syntax to (a) filter observations for the state of Rio de Janeiro, (b) group observations by racial group, (c) summarize the data calculating the proportion of individuals with higher education. Note that we need do add a `collect()` call at the end of our query.
+In the example below, we use the `dplyr` syntax to (a) filter observations for the state of Rio de Janeiro, (b) group observations by racial group, (c) summarize the data calculating the proportion of individuals with higher education. Note that we need to add a `collect()` call at the end of our query.
 
 ```{r warning = FALSE}
 df <- pop |>

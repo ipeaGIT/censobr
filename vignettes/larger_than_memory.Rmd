@@ -1,0 +1,107 @@
+---
+title: "Working with larger-than-memory data"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+urlcolor: blue
+vignette: >
+  %\VignetteIndexEntry{Working with larger-than-memory data}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = identical(tolower(Sys.getenv("NOT_CRAN")), "true"),
+  out.width = "100%"
+)
+
+```
+# Larger-than-memory Data
+
+Many of data sets of Brazilian censuses are too big to load in users' RAM memory. To avoid this problem, **censobr** works with files saved in `.parquet` format and, by default, returns an [Arrow table](https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow).
+
+There are three really simple alternative ways to work with Arrow tables in R without loading the full data to memory. We cover these three alternative approaches in this vignette.
+
+First, let's read the 2010 2010 mortality data, which we'll use throughout vignette.
+
+```{r warning = FALSE}
+library(censobr)
+
+# read 2010 mortality data
+df <- censobr::read_mortality(year = 2010,
+                              add_labels = 'pt')
+```
+
+## 1.  {`dplyr`} 
+
+Because of the seaminless integration between {`arrow`} and  {`dplyr`} , Arrow tables can be analyzed like a regular `data.frame` using the {`dplyr`} syntax. Note that we need to add a `collect()` call at the end of our query to retrieve data into a local tibble.
+
+```{r warning = FALSE}
+library(dplyr)
+
+# Filter deaths of men in the state of Rio de Janeiro
+rio <- df |>
+      filter(V0704 == 'Masculino' & abbrev_state == 'RJ')
+
+head(rio) |> collect()
+
+```
+
+## 2. {`duckdb`}
+
+{`duckdb`} is another powerful library to work with larger-than-memory data in R through database interface. Here, one can use {`duckdb`} in three ways using a bit of `SQL` syntax.
+
+
+### 2.1 Combining {`duckdb`} & {`dplyr`}
+
+One easy option is to combine {`duckdb`} & {`dplyr`}. Note here that first you need to convert the Arrow table into a DuckDB table with `arrow::to_duckdb()`. Also note that the you need to use a bit of `SQL` syntax inside the dplyr call. Using the same example as above:
+
+```{r warning = FALSE}
+library(duckdb)
+library(DBI)
+library(arrow)
+
+# Filter deaths of men in the state of Rio de Janeiro
+rio1 <- df |>
+        arrow::to_duckdb() |>
+        filter(sql("V0704 LIKE '%Masculino%' AND abbrev_state = 'RJ'"))
+
+head(rio1) |> collect()
+
+```
+
+### 2.2 Combining {`duckdb`} &  `SQL`
+
+The other alternative is to combine {`duckdb`} with {`DBI`} using database interface and `SQL` syntax.
+
+
+```{r warning = FALSE}
+library(DBI)
+
+# create a (virtual) database
+db_tbl <- df |>
+          to_duckdb(table_name = "mortality_2010_tbl")
+
+# create databse connection
+con <- db_tbl$src$con
+
+# Filter deaths of men in the state of Rio de Janeiro
+rio2 <- DBI::dbGetQuery(con, "SELECT * FROM 'mortality_2010_tbl' WHERE V0704 LIKE '%Masculino%' AND abbrev_state = 'RJ'")
+
+head(rio2)
+
+```
+### 2.3 {`duckplyr`} 
+
+A third alternative is the brand new {`duckplyr`} package. This is a really promising approach. However, this library is heavily under development and it still does not cover many of the {`dplyr`} verbs. See [here](https://duckdb.org/2024/04/02/duckplyr.html).
+
+```{r warning = FALSE}
+library(duckplyr)
+
+rio3 <- df |>
+        duckplyr::filter(V0704 == 'Masculino' & abbrev_state == 'RJ')
+
+head(rio3) |> collect()
+```
