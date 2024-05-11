@@ -60,6 +60,7 @@ One easy option is to combine {`duckdb`} & {`dplyr`}. Note here that first you n
 
 ```{r warning = FALSE}
 library(duckdb)
+library(dbplyr)
 library(DBI)
 library(arrow)
 

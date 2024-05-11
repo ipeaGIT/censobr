@@ -4,7 +4,7 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 urlcolor: blue
 vignette: >
-  %\VignetteIndexEntry{Census documentation and Dictionary of variables}
+  %\VignetteIndexEntry{Census documentation}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

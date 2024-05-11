@@ -37,6 +37,7 @@ Imports:
 Suggests:
     covr,
     DBI,
+    dbplyr,
     duckdb,
     duckplyr,
     geobr,
