@@ -31,12 +31,13 @@ library(censobr)
 
 # read 2010 mortality data
 df <- censobr::read_mortality(year = 2010,
-                              add_labels = 'pt')
+                              add_labels = 'pt',
+                              showProgress = FALSE)
 ```
 
-## 1.  {`dplyr`} 
+## 1. `{dplyr}`
 
-Because of the seamless integration between {`arrow`} and  {`dplyr`} , Arrow tables can be analyzed like a regular `data.frame` using the {`dplyr`} syntax. Note that we need to add a `collect()` call at the end of our query to retrieve data into a local tibble.
+Because of the seamless integration between `{arrow}` and  `{dplyr}`, Arrow tables can be analyzed like a regular `data.frame` using the `{dplyr}`syntax. Note that we need to add a `collect()` call at the end of our query to retrieve data into a local tibble.
 
 ```{r warning = FALSE}
 library(dplyr)
@@ -49,14 +50,14 @@ head(rio) |> collect()
 
 ```
 
-## 2. {`duckdb`}
+## 2. `{duckdb}`
 
-{`duckdb`} is another powerful library to work with larger-than-memory data in R through database interface. Here, one can use {`duckdb`} in three ways using a bit of `SQL` syntax.
+`{duckdb}` is another powerful library to work with larger-than-memory data in R through database interface. Here, one can use `{duckdb}` in three ways using a bit of `SQL` syntax.
 
 
-### 2.1 Combining {`duckdb`} & {`dplyr`}
+### 2.1 Combining `{duckdb}` & `{dplyr}`
 
-One easy option is to combine {`duckdb`} & {`dplyr`}. Note here that first you need to convert the Arrow table into a DuckDB table with `arrow::to_duckdb()`. Also note that the you need to use a bit of `SQL` syntax inside the dplyr call. Using the same example as above:
+One easy option is to combine `{duckdb}` & `{dplyr}`. Note here that first you need to convert the Arrow table into a DuckDB table with `arrow::to_duckdb()`. Also note that the you need to use a bit of `SQL` syntax inside the dplyr call. Using the same example as above:
 
 ```{r warning = FALSE}
 library(duckdb)
@@ -73,9 +74,9 @@ head(rio1) |> collect()
 
 ```
 
-### 2.2 Combining {`duckdb`} &  `SQL`
+### 2.2 Combining `{duckdb}` &  `SQL`
 
-The other alternative is to combine {`duckdb`} with {`DBI`} using database interface and `SQL` syntax.
+The other alternative is to combine `{duckdb}` with `{DBI}` using database interface and `SQL` syntax.
 
 
 ```{r warning = FALSE}
@@ -94,9 +95,9 @@ rio2 <- DBI::dbGetQuery(con, "SELECT * FROM 'mortality_2010_tbl' WHERE V0704 LIK
 head(rio2)
 
 ```
-### 2.3 {`duckplyr`} 
+### 2.3 `{duckplyr}`
 
-A third alternative is the brand new {`duckplyr`} package. This is a really promising approach. However, this library is heavily under development and it still does not cover many of the {`dplyr`} verbs. See [here](https://duckdb.org/2024/04/02/duckplyr.html).
+A third alternative is the brand new `{duckplyr}` package. This is a really promising approach. However, this library is heavily under development and it still does not cover many of the `{dplyr}`verbs. See [here](https://duckdb.org/2024/04/02/duckplyr.html).
 
 ```{r warning = FALSE, eval = FALSE}
 library(duckplyr)
