@@ -13,7 +13,8 @@ test_that("add_labels_mortality", {
   # sem labels
   test1a <- read_mortality(year = 2010,
                            add_labels = NULL,
-                           columns = c('abbrev_state', 'V0704')) |>
+                           columns = c('abbrev_state', 'V0704'),
+                           showProgress = FALSE) |>
             dplyr::filter(abbrev_state == 'RO')
 
   # com labels

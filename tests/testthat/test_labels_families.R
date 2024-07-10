@@ -11,7 +11,10 @@ testthat::skip_if_not_installed("arrow")
 test_that("add_labels_families", {
 
   # sem labels
-  test1a <- read_families(year = 2000, add_labels = NULL, columns = c('abbrev_state', 'CODV0404_2')) |>
+  test1a <- read_families(year = 2000,
+                          add_labels = NULL,
+                          columns = c('abbrev_state', 'CODV0404_2'),
+                          showProgress = FALSE) |>
             dplyr::filter(abbrev_state == 'RO')
 
   # com labels

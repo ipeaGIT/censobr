@@ -11,7 +11,10 @@ testthat::skip_if_not_installed("arrow")
 test_that("add_labels_emigration", {
 
   # sem labels
-  test1a <- read_emigration(year = 2010, add_labels = NULL, columns = c('abbrev_state', 'V1006')) |>
+  test1a <- read_emigration(year = 2010,
+                            add_labels = NULL,
+                            columns = c('abbrev_state', 'V1006'),
+                            showProgress = FALSE) |>
             dplyr::filter(abbrev_state == 'RO')
 
   # com labels

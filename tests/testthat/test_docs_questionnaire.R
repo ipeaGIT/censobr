@@ -5,6 +5,18 @@ skip_if(Sys.getenv("TEST_ONE") != "")
 testthat::skip_on_cran()
 
 
+tester <- function(year = 2010,
+                   type = NULL,
+                   showProgress = FALSE,
+                   cache = TRUE) {
+  questionnaire(
+    year,
+    type,
+    showProgress,
+    cache
+  )
+}
+
 # Reading long questionnaire -----------------------
 
 test_that("questionnaire", {
@@ -13,7 +25,7 @@ test_that("questionnaire", {
   for (y in c(1960, 1970, 1980, 1991, 2000, 2010, 2022)) {
 
     for (t in c('long', 'short')) {
-      testthat::expect_message(questionnaire(year = y, type = t))
+      testthat::expect_message(tester(year = y, type = t))
       }
 
     }
@@ -42,12 +54,12 @@ test_that("questionnaire", {
 # test_that("questionnaire", {
 #
 #   # download files
-#   testthat::expect_message( questionnaire(year = 2022, type = 'short') )
-#   testthat::expect_message( questionnaire(year = 2010, type = 'short') )
-#   testthat::expect_message( questionnaire(year = 2000, type = 'short') )
-#   testthat::expect_message( questionnaire(year = 1991, type = 'short') )
-#   testthat::expect_message( questionnaire(year = 1980, type = 'short') )
-#   testthat::expect_message( questionnaire(year = 1970, type = 'short') )
+#   testthat::expect_message( tester(year = 2022, type = 'short') )
+#   testthat::expect_message( tester(year = 2010, type = 'short') )
+#   testthat::expect_message( tester(year = 2000, type = 'short') )
+#   testthat::expect_message( tester(year = 1991, type = 'short') )
+#   testthat::expect_message( tester(year = 1980, type = 'short') )
+#   testthat::expect_message( tester(year = 1970, type = 'short') )
 #
 #   # cache dir
 #   pkgv <- paste0('censobr/data_release_', data_release)
