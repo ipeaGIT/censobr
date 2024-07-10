@@ -6,7 +6,7 @@ testthat::skip_on_cran()
 testthat::skip_if_not_installed("arrow")
 
 
-tester <- function(year = 2010,
+tester <- function(year = 2000,
                    columns = NULL,
                    add_labels = NULL,
                    merge_households = FALSE,
