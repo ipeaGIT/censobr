@@ -6,27 +6,45 @@ testthat::skip_on_cran()
 testthat::skip_if_not_installed("arrow")
 
 
+tester <- function(year = 2010,
+                   columns = NULL,
+                   add_labels = NULL,
+                   merge_households = FALSE,
+                   as_data_frame = FALSE,
+                   showProgress = FALSE,
+                   cache = TRUE) {
+  read_families(
+    year,
+    columns,
+    add_labels,
+    merge_households,
+    as_data_frame,
+    showProgress,
+    cache
+  )
+}
+
 # Reading the data -----------------------
 
-test_that("read_families", {
+test_that("read_families read", {
 
   # (default) arrow table
-  test1 <- read_families()
+  test1 <- tester()
   testthat::expect_true(is(test1, "ArrowObject"))
   testthat::expect_true(is(test1, "FileSystemDataset"))
   testthat::expect_true(nrow(test1) >0 )
 
   # # data.frame
-  # test2 <- read_families(as_data_frame = TRUE)
+  # test2 <- tester(as_data_frame = TRUE)
   # testthat::expect_true(is(test2, "data.frame"))
 
   # select columns
   cols <- c('V0102')
-  test3 <- read_families(columns = cols)
+  test3 <- tester(columns = cols)
   testthat::expect_true(names(test3) %in% cols)
 
   # add labels
-  test4 <- read_families(add_labels = 'pt', columns = c('abbrev_state', 'V1004'))
+  test4 <- tester(add_labels = 'pt', columns = c('abbrev_state', 'V1004'))
   test4 <- test4 |> dplyr::filter(abbrev_state == 'CE') |> as.data.frame()
   testthat::expect_true('Fortaleza' %in% test4$V1004)
 
@@ -35,31 +53,31 @@ test_that("read_families", {
 
 # Merge households vars -----------------------
 
-test_that("merge_households_vars", {
+test_that("families merge_households_vars", {
 
   for(y in c(2000)){ # y = 2000
     message(y)
     df_hou <- read_households(year = y)
-    df_test <- read_families(year = y, merge_households = TRUE)
+    df_test <- tester(year = y, merge_households = TRUE)
     testthat::expect_true( all(names(df_hou) %in% names(df_test)) )
   }
 })
 
 
 # ERRORS and messages  -----------------------
-test_that("read_families", {
+test_that("read_families errors", {
 
   # Wrong date 4 digits
-  testthat::expect_error(read_families(year=999))
-  testthat::expect_error(read_families(year='999'))
-  testthat::expect_error(read_families(columns = 'banana'))
-  testthat::expect_error(read_families(as_data_frame = 'banana'))
-  testthat::expect_error(read_families(showProgress = 'banana' ))
-  testthat::expect_error(read_families(cache = 'banana'))
-  testthat::expect_error(read_families(add_labels = 'banana'))
+  testthat::expect_error(tester(year=999))
+  testthat::expect_error(tester(year='999'))
+  testthat::expect_error(tester(columns = 'banana'))
+  testthat::expect_error(tester(as_data_frame = 'banana'))
+  testthat::expect_error(tester(showProgress = 'banana' ))
+  testthat::expect_error(tester(cache = 'banana'))
+  testthat::expect_error(tester(add_labels = 'banana'))
 
   # missing labels
-  testthat::expect_error(read_families(year=2010, add_labels = 'pt'))
+  testthat::expect_error(tester(year=2010, add_labels = 'pt'))
 
 })
 
