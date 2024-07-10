@@ -32,6 +32,7 @@ Imports:
     arrow (>= 15.0.1),
     checkmate,
     dplyr,
+    duckdb,
     httr (>= 1.4.1),
     tools
 Suggests:
