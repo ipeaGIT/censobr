@@ -14,11 +14,17 @@
 #' @family Census documentation
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # Open data dictionary on browser
-#' data_dictionary(year = 2010, dataset = 'population', showProgress = FALSE)
+#' data_dictionary(year = 2010,
+#'                 dataset = 'population',
+#'                 showProgress = FALSE)
 #'
-#' data_dictionary(year = 1980, dataset = 'households', showProgress = FALSE)
+#' data_dictionary(year = 1980,
+#'                 dataset = 'households',
+#'                 showProgress = FALSE)
 #'
-#' data_dictionary(year = 2010, dataset = 'tracts', showProgress = FALSE)
+#' data_dictionary(year = 2010,
+#'                 dataset = 'tracts',
+#'                 showProgress = FALSE)
 
 data_dictionary <- function(year = 2010,
                             dataset = NULL,
