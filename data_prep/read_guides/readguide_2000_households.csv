@@ -75,7 +75,7 @@ int_pos;var_name;x;label;length;decimal_places;fin_pos;col_type;CHAR
 143;V7409;2.;;2;0;144;i;FALSE
 145;V7616;6.;;6;0;150;i;FALSE
 151;V7617;6.2;;6;2;156;d;FALSE
-157;PESO_DOMIC;11.8;;11;8;167;d;FALSE
+157;P001;11.8;;11;8;167;d;FALSE
 168;v1111;$1.;;1;0;168;c;TRUE
 169;v1112;$1.;;1;0;169;c;TRUE
 170;v1113;$1.;;1;0;170;c;TRUE

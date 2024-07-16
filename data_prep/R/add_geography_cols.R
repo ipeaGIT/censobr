@@ -14,7 +14,7 @@ add_geography_cols <- function(arrw, year){
                    year == 1991 ~ 'code_muni',
                    year == 2010 ~ 'V0002',
                    year == 2022 ~ 'CD_MUN',
-                   year == 2000 ~ 'V1103')
+                   year == 2000 ~ 'V0103')
 
   if(year %in% c(2000, 2010)){
     arrw <- mutate(arrw,

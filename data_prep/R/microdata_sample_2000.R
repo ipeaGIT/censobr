@@ -33,7 +33,7 @@ lapply(X=txt_files,
 
   # list all files
   data_dir <- 'R:/Dropbox/bases_de_dados/censo_demografico/censo_2000/microdados_txt'
-  txt_files <- list.files(data_dir,
+  txt_files <- list.files(path = data_dir,
                           pattern = 'Dom[[:digit:]]|DOM',
                           recursive = TRUE,
                           full.names = TRUE)
@@ -49,23 +49,23 @@ lapply(X=txt_files,
 
   # Define the dataset
   DS <- arrow::open_dataset(sources = parqt_files)
-  # Create a scanner
-  SO <- Scanner$create(DS)
-  # Load it as n Arrow Table in memory
-  AT <- SO$ToTable()
-  rm(DS, SO); gc(T)
+  # # Create a scanner
+  # SO <- Scanner$create(DS)
+  # # Load it as n Arrow Table in memory
+  # AT <- SO$ToTable()
+  # rm(DS, SO); gc(T)
 
   ## 3.3) add geography variables ----------------------------------------------
 
   # # drop row if all columns are NA
-  AT <- filter(AT, !is.na(PESO_DOMIC))
+  AT <- filter(DS, !is.na(P001))
 
   AT <- add_geography_cols(arrw = AT, year = 2000)
 
   head(AT) |> collect()
 
   ## 3.4) save single parquet tile ----------------------------------------------
-  arrow::write_parquet(AT, './data/microdata_sample/2000/2000_households.parquet')
+  arrow::write_parquet(AT, './data/microdata_sample/2000/2000_households2.parquet')
 
 
 
