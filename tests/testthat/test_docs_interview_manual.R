@@ -10,12 +10,12 @@ testthat::skip_on_cran()
 test_that("interview_manual", {
 
   # download files
-  testthat::expect_message( interview_manual(year = 2022) )
-  testthat::expect_message( interview_manual(year = 2010) )
-  testthat::expect_message( interview_manual(year = 2000) )
-  testthat::expect_message( interview_manual(year = 1991) )
-  testthat::expect_message( interview_manual(year = 1980) )
-  testthat::expect_message( interview_manual(year = 1970) )
+  testthat::expect_message( interview_manual(year = 2022, showProgress = FALSE) )
+  testthat::expect_message( interview_manual(year = 2010, showProgress = FALSE) )
+  testthat::expect_message( interview_manual(year = 2000, showProgress = FALSE) )
+  testthat::expect_message( interview_manual(year = 1991, showProgress = FALSE) )
+  testthat::expect_message( interview_manual(year = 1980, showProgress = FALSE) )
+  testthat::expect_message( interview_manual(year = 1970, showProgress = FALSE) )
 
   # cache dir
   pkgv <- paste0('censobr/data_release_', censobr_env$data_release)

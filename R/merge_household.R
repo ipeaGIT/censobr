@@ -65,12 +65,11 @@ merge_household_var <- function(df,
   df <- arrow::to_duckdb(df)
   df_household <- arrow::to_duckdb(df_household)
 
-
   # merge
-  temp_df <- dplyr::left_join(df, df_household)
+  df_geo <- duckplyr::left_join(df, df_household)
 
   # back to arrow
-  temp_df <- arrow::to_arrow(temp_df)
+  df_geo <- arrow::to_arrow(df_geo)
 
-  return(temp_df)
+  return(df_geo)
 }
