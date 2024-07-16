@@ -361,7 +361,8 @@ of São Paulo.</p>
 <p>First, let’s download the municipalities of the metro area of São
 Paulo.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">metro_muni</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://ipeagit.github.io/geobr/reference/read_metro_area.html" class="external-link">read_metro_area</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="va">metro_muni</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://ipeagit.github.io/geobr/reference/read_metro_area.html" class="external-link">read_metro_area</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
+<span>                                     showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>              <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">name_metro</span> <span class="op">==</span> <span class="st">"RM São Paulo"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using year/date 2010</span></span></code></pre></div>
 <p>We also need the polygons of the weighting areas (áreas de
@@ -369,7 +370,8 @@ ponderação). With the code below, we download all weighting areas in the
 state of São Paulo, and then keep only the ones in the metropolitan
 region of São Paulo.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">wt_areas</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://ipeagit.github.io/geobr/reference/read_weighting_area.html" class="external-link">read_weighting_area</a></span><span class="op">(</span>code_weighting <span class="op">=</span> <span class="st">"SP"</span>, showProgress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<code class="sourceCode R"><span><span class="va">wt_areas</span> <span class="op">&lt;-</span> <span class="fu">geobr</span><span class="fu">::</span><span class="fu"><a href="https://ipeagit.github.io/geobr/reference/read_weighting_area.html" class="external-link">read_weighting_area</a></span><span class="op">(</span>code_weighting <span class="op">=</span> <span class="st">"SP"</span>, </span>
+<span>                                       showProgress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                       year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using year/date 2010</span></span>
 <span></span>

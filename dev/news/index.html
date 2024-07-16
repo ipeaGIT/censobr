@@ -68,10 +68,17 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.29999" id="censobr-v0329999-dev">censobr v0.3.29999 dev<a class="anchor" aria-label="anchor" href="#censobr-v0329999-dev"></a></h2>
-<ul><li>Minor changes
+<ul><li>Major changes
 <ul><li>Some functions <code>read_population</code>, <code>read_mortality</code>, <code>read_families</code>, <code>read_emigration</code> now include a new parameter <code>merge_households</code> (logical) to indicate whether the function should merge household variables to the output data. Closes <a href="https://github.com/ipeaGIT/censobr/issues/31" class="external-link">#31</a>
 </li>
+<li>{censobr} now imports the {duckplyr} package, which is used for merging hosuehold data in the issue #31.</li>
 <li>New vignette showing how to work with larger-than-memory data. Closes <a href="https://github.com/ipeaGIT/censobr/issues/42" class="external-link">#42</a>
+</li>
+</ul></li>
+<li>Changes to data sets and files included in this version:
+<ul><li>Population microdata for the year 2000 now include a few columns that were not included before. Closes <a href="https://github.com/ipeaGIT/censobr/issues/44" class="external-link">#44</a>
+</li>
+<li>Included additional columns and fixed minor error in data dictionary of 2010 microdata. Closes <a href="https://github.com/ipeaGIT/censobr/issues/45" class="external-link">#45</a>
 </li>
 </ul></li>
 </ul></div>
