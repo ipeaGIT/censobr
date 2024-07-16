@@ -1,6 +1,8 @@
 # Parse raw txt file and save it in parquet format
 #' @keywords internal
-convert_raw_to_parquet <- function(year, txt_file, dic){ # txt_file <- txt_files[1]
+convert_raw_to_parquet <- function(year, txt_file, dic){
+
+  # txt_file <- txt_files[1]
 
   temp_df <- read_fwf(txt_file,
                       fwf_positions(
@@ -25,8 +27,9 @@ convert_raw_to_parquet <- function(year, txt_file, dic){ # txt_file <- txt_files
               }
             })
   }
+
   fname <- basename(txt_file)
-  f_dest <- paste0('./data_prep/data/',year,"/", year,"_",gsub(".txt", ".parquet", fname))
+  f_dest <- paste0('./data/microdata_sample/',year,"/", year,"_",gsub(".txt", ".parquet", fname))
   f_dest <- gsub(".TXT", ".parquet", f_dest)
   arrow::write_parquet(temp_df, f_dest)
   return(NULL)

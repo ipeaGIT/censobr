@@ -101,7 +101,7 @@ test_that("read_population check totals", {
 
   # 2000
   dfp <- tester(year = 2000)
-  total_2000_p <- dplyr::summarise(dfp, total = sum(PES_PESSOA, na.rm=T)) |> dplyr::collect()
+  total_2000_p <- dplyr::summarise(dfp, total = sum(P001, na.rm=T)) |> dplyr::collect()
   expect_equal(total_2000_p$total, 169872856)
 
 

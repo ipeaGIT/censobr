@@ -12,16 +12,20 @@ add_geography_cols <- function(arrw, year){
   col <- case_when(year == 1970 ~ 'code_muni',
                    year == 1980 ~ 'code_muni',
                    year == 1991 ~ 'code_muni',
-                   year == 2010 ~ 'V0011',
+                   year == 2010 ~ 'V0002',
                    year == 2022 ~ 'CD_MUN',
-                   year == 2000 ~ 'AREAP')
+                   year == 2000 ~ 'V1103')
 
   if(year %in% c(2000, 2010)){
-  arrw <- mutate(arrw,
-                 code_muni := as.character(substring(get(col) , 1, 7)))
+    arrw <- mutate(arrw,
+                   code_muni = get(col))
   }
 
   # weighting area
+  # get code_weighting
+  col <- case_when(year == 2010 ~ 'V0011',
+                   year == 2000 ~ 'AREAP')
+
   if(year %in% c(2000, 2010)){
   arrw <- mutate(arrw,
                  code_weighting = get(col))
@@ -38,33 +42,33 @@ add_geography_cols <- function(arrw, year){
 
   arrw <- mutate(arrw,
                  name_state = case_when(
-                   code_state == '11' ~'Rondônia',
-                   code_state == '12' ~'Acre',
-                   code_state == '13' ~'Amazonas',
-                   code_state == '14' ~'Roraima',
-                   code_state == '15' ~'Pará',
-                   code_state == '16' ~'Amapá',
-                   code_state == '17' ~'Tocantins',
-                   code_state == '21' ~'Maranhão',
-                   code_state == '22' ~'Piauí',
-                   code_state == '23' ~'Ceará',
-                   code_state == '24' ~'Rio Grande do Norte',
-                   code_state == '25' ~'Paraíba',
-                   code_state == '26' ~'Pernambuco',
-                   code_state == '27' ~'Alagoas',
-                   code_state == '28' ~'Sergipe',
-                   code_state == '29' ~'Bahia',
-                   code_state == '31' ~'Minas Gerais',
-                   code_state == '32' ~'Espírito Santo',
-                   code_state == '33' ~'Rio de Janeiro',
-                   code_state == '35' ~'São Paulo',
-                   code_state == '41' ~'Paraná',
-                   code_state == '42' ~'Santa Catarina',
-                   code_state == '43' ~'Rio Grande do Sul',
-                   code_state == '50' ~'Mato Grosso do Sul',
-                   code_state == '51' ~'Mato Grosso',
-                   code_state == '52' ~'Goiás',
-                   code_state == '53' ~'Distrito Federal'))
+                   code_state == 11 ~'Rondônia',
+                   code_state == 12 ~'Acre',
+                   code_state == 13 ~'Amazonas',
+                   code_state == 14 ~'Roraima',
+                   code_state == 15 ~'Pará',
+                   code_state == 16 ~'Amapá',
+                   code_state == 17 ~'Tocantins',
+                   code_state == 21 ~'Maranhão',
+                   code_state == 22 ~'Piauí',
+                   code_state == 23 ~'Ceará',
+                   code_state == 24 ~'Rio Grande do Norte',
+                   code_state == 25 ~'Paraíba',
+                   code_state == 26 ~'Pernambuco',
+                   code_state == 27 ~'Alagoas',
+                   code_state == 28 ~'Sergipe',
+                   code_state == 29 ~'Bahia',
+                   code_state == 31 ~'Minas Gerais',
+                   code_state == 32 ~'Espírito Santo',
+                   code_state == 33 ~'Rio de Janeiro',
+                   code_state == 35 ~'São Paulo',
+                   code_state == 41 ~'Paraná',
+                   code_state == 42 ~'Santa Catarina',
+                   code_state == 43 ~'Rio Grande do Sul',
+                   code_state == 50 ~'Mato Grosso do Sul',
+                   code_state == 51 ~'Mato Grosso',
+                   code_state == 52 ~'Goiás',
+                   code_state == 53 ~'Distrito Federal'))
   # abbrev name
   arrw <- mutate(arrw,
                  abbrev_state = case_when(
@@ -104,7 +108,8 @@ add_geography_cols <- function(arrw, year){
                    code_region == 2 ~'Nordeste',
                    code_region == 3 ~'Sudeste',
                    code_region == 4 ~'Sul',
-                   code_region == 5 ~'Centro-oeste'))
+                   code_region == 5 ~'Centro-oeste')
+                 )
 
   # other regions
   if(year %in% c(1991)){
