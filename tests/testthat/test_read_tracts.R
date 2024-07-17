@@ -47,7 +47,7 @@ test_that("read_tracts", {
   } )
 
   # 2022 different data sets
-  ## check if file have been downloaded
+  ## check if file has been downloaded
   tbls <- c('Preliminares')
   lapply(X=tbls, FUN = function(y){ # y = 'Preliminares'
     tmp_d <- tester(year = 2022, dataset = y)

@@ -33,15 +33,20 @@ test_that("add_labels_households", {
 
   ################################################################### 2000
   # sem labels
-  test2a <- read_households(year = 2000, add_labels = NULL, showProgress = FALSE) |>
+  test2a <- read_households(year = 2000,
+                            add_labels = NULL,
+                            columns = c('abbrev_state', 'V1006'),
+                            showProgress = FALSE) |>
     filter(abbrev_state == 'RO')
 
   # com labels
-  test2b <- censobr:::add_labels_households(arrw = test2a, year=2000, lang = 'pt') |>
+  test2b <- censobr:::add_labels_households(arrw = test2a,
+                                            year=2000,
+                                            lang = 'pt') |>
     filter(abbrev_state == 'RO')
 
-  test2a <- as.data.frame(test2a)
-  test2b <- as.data.frame(test2b)
+  test2a <- dplyr::collect(test2a)
+  test2b <- dplyr::collect(test2b)
 
   # add labels
   testthat::expect_true('1' %in% test2a$V1006)

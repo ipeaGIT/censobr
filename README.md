@@ -3,7 +3,7 @@
 [![CRAN
    status](https://www.r-pkg.org/badges/version/censobr)](https://CRAN.R-project.org/package=censobr)
 [![CRAN/METACRAN Total
-   downloads](http://cranlogs.r-pkg.org/badges/grand-total/censobr?color=blue)](https://CRAN.R-project.org/package=censobr) [![Codecov test
+   downloads](https://cranlogs.r-pkg.org/badges/grand-total/censobr?color=blue)](https://CRAN.R-project.org/package=censobr) [![Codecov test
 coverage](https://codecov.io/gh/ipeaGIT/censobr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ipeaGIT/censobr?branch=main)
 [![Lifecycle:
      maturing](https://img.shields.io/badge/lifecycle-maturing-yellow.svg)](https://lifecycle.r-lib.org/articles/stages.html)

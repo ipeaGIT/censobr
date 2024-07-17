@@ -79,7 +79,10 @@ test_that("read_population read", {
   test4 <- tester(add_labels = 'pt',
                            columns = c('abbrev_state', 'V1005'),
                            showProgress = FALSE)
-  test4 <- test4 |> dplyr::filter(abbrev_state == 'CE') |> as.data.frame()
+  test4 <- test4 |>
+    dplyr::filter(abbrev_state == 'CE') |>
+            dplyr::collect()
+
   testthat::expect_true(paste('\u00c1rea urbanizada') %in% test4$V1005)
 
 })
