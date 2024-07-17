@@ -72,9 +72,9 @@ read_mortality <- function(year = 2010,
   ### merge household data
   if (isTRUE(merge_households)) {
     df <- merge_household_var(df,
-                            year = year,
-                            add_labels = add_labels,
-                            showProgress)
+                              year = year,
+                              add_labels = add_labels,
+                              showProgress)
     }
 
   ### Select

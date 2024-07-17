@@ -91,8 +91,16 @@ merge_household_var <- function(df, year, add_labels=NULL, showProgress=T){
   vars_to_drop <- setdiff(all_common_vars, key_vars)
   df_household <- dplyr::select(df_household, -all_of(vars_to_drop))
 
-  # merge
-  temp_df <- dplyr::left_join(df, df_household)
+  # convert to duckdb
+  df <- arrow::to_duckdb(df)
+  df_household <- arrow::to_duckdb(df_household)
 
-  return(temp_df)
+  # merge
+  gf_geo <- duckplyr::left_join(df, df_household)
+
+  # back to arrow
+  gf_geo <- arrow::to_arrow(gf_geo)
+
+
+  return(gf_geo)
   }

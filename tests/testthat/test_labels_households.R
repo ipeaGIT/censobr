@@ -33,7 +33,7 @@ test_that("add_labels_households", {
 
   ################################################################### 2000
   # sem labels
-  test2a <- read_households(year = 2000, add_labels = NULL) |>
+  test2a <- read_households(year = 2000, add_labels = NULL, showProgress = FALSE) |>
     filter(abbrev_state == 'RO')
 
   # com labels

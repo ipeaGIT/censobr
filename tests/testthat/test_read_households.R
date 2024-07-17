@@ -96,7 +96,7 @@ test_that("read_households totals", {
 
   # 2000
   dfh <- tester(year = 2000)
-  total_2000_p <- dplyr::summarise(dfh, total = sum(PESO_DOMIC, na.rm=T)) |> dplyr::collect()
+  total_2000_p <- dplyr::summarise(dfh, total = sum(P001, na.rm=T)) |> dplyr::collect()
   expect_equal(total_2000_p$total, 45507516)
 
 

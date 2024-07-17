@@ -32,7 +32,7 @@ Imports:
     arrow (>= 15.0.1),
     checkmate,
     dplyr,
-    duckdb,
+    duckplyr,
     httr (>= 1.4.1),
     tools
 Suggests:
@@ -40,7 +40,6 @@ Suggests:
     DBI,
     dbplyr,
     duckdb,
-    duckplyr,
     geobr,
     ggplot2 (>= 3.3.1),
     rmarkdown,
