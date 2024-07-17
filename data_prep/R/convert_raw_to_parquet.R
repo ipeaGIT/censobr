@@ -28,6 +28,23 @@ convert_raw_to_parquet <- function(year, txt_file, dic){
             })
   }
 
+  # column classes
+  cols_numeric <- subset(dic, decimal_places>0)$var_name
+  cols_integer64 <- subset(dic, decimal_places==0 & length > 8)$var_name
+  cols_integer <- setdiff(dic$var_name, c(cols_numeric, cols_integer64))
+
+  temp_df <- temp_df |>
+    mutate(across(all_of(cols_numeric), ~ as.numeric(as.character(.))),
+           across(all_of(cols_integer64), ~ bit64::as.integer64(as.character(.))),
+           across(all_of(cols_integer), ~ as.integer(as.character(.)))
+    )
+
+
+  # add geography cols
+  temp_df <- add_geography_cols(arrw = temp_df, year = year)
+
+
+
   fname <- basename(txt_file)
   f_dest <- paste0('./data/microdata_sample/',year,"/", year,"_",gsub(".txt", ".parquet", fname))
   f_dest <- gsub(".TXT", ".parquet", f_dest)
