@@ -31,9 +31,9 @@ Depends:
 Imports:
     arrow (>= 15.0.1),
     checkmate,
+    curl (>= 5.0.0),
     dplyr,
     duckplyr,
-    httr (>= 1.4.1),
     tools
 Suggests:
     covr,

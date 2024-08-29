@@ -1,26 +1,20 @@
-link <- 'https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/2023/PNADC_032023.zip'
-file <- basename(link)
 
+#### cache tests
 
-tic()
-httr::GET(url = link,
-          # httr::timeout(10),
-          httr::progress(),
-          httr::write_disk(file, overwrite = T))
-toc()
+system.time(
+  df <- read_families(year = 2000,
+                      showProgress = T,
+                      cache = T)
+)
 
-
-tic()
-link |>
-  httr2::request() |>
-  httr2::req_progress() |>
-  httr2::req_perform(path = file)
-toc()
+censobr_cache(delete_file = '2000_families')
 
 
 
-dici cenus tract 1970
-arquivo dos 80
+
+############3
+# dici cenus tract 1970
+# arquivo dos 80
 
 
 # devtools::install_github("ipeaGIT/r5r", subdir = "r-package", force=T)

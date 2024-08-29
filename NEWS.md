@@ -1,13 +1,18 @@
 # censobr v0.3.29999  dev
 
 * Major changes
-  * Some functions `read_population`, `read_mortality`, `read_families`, `read_emigration` now include a new parameter `merge_households` (logical) to indicate whether the function should merge household variables to the output data. Closes [#31](https://github.com/ipeaGIT/censobr/issues/31)
-  * {censobr} now imports the {duckplyr} package, which is used for merging hosuehold data in the issue #31.
-  * New vignette showing how to work with larger-than-memory data. Closes [#42](https://github.com/ipeaGIT/censobr/issues/42)
+  * Some functions (`read_population`, `read_mortality`, `read_families`, `read_emigration`) now include a new parameter `merge_households` (logical) to indicate whether the function should merge household variables to the output data. Closes [#31](https://github.com/ipeaGIT/censobr/issues/31)
+  * {censobr} now imports the {duckplyr} package, which is used for merging household data. Closes issue [#31](https://github.com/ipeaGIT/censobr/issues/31).
+  * New vignette showing how to work with larger-than-memory data. Closes [#42](https://github.com/ipeaGIT/censobr/issues/42). The vignette still needs to be expanded with more examples, though.
+
+* Minor changes
+  * Removed dependency on the {httr} package
+  * Now using `curl::multi_download()` to download files in parallel. This bringds the advantage that the pacakge now automatically detects whether the data/documentation file has been upated and should be downloaded again.
 
 * Changes to data sets and files included in this version:
   * Population microdata for the year 2000 now include a few columns that were not included before. Closes [#44](https://github.com/ipeaGIT/censobr/issues/44)
-  * Included additional columns and fixed minor error in data dictionary of 2010 microdata. Closes [#45](https://github.com/ipeaGIT/censobr/issues/45) 
+  * Included additional columns and fixed minor errors in data dictionary of 2010 microdata. Closes [#45](https://github.com/ipeaGIT/censobr/issues/45) 
+
 
 
 # censobr v0.3.2

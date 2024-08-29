@@ -21,39 +21,44 @@ download_file <- function(file_url = parent.frame()$file_url,
   # create local dir
   if (isTRUE(cache) & !dir.exists(censobr_env$cache_dir)) { dir.create(censobr_env$cache_dir, recursive=TRUE) }
 
-  # location of local file
+  # path to local file
   local_file <- paste0(censobr_env$cache_dir,"/",file_name)
 
   # cache message
   cache_message(local_file, cache)
 
-  # If not caching, remove local file to download it again
-  if (cache==FALSE & file.exists(local_file)) {
-    unlink(local_file, recursive = T)
+  # this is necessary to silence download message when reading local file
+  if(file.exists(local_file) & isTRUE(cache)){
+    showProgress <- FALSE
   }
 
-  # has the file been downloaded already? If not, download it
-  if (cache==FALSE |
-      !file.exists(local_file) |
-      file.info(local_file)$size == 0) {
-
-    # download data
-    try(silent = TRUE,
-      httr::GET(url=file_url,
-                if(showProgress==TRUE){ httr::progress()},
-                httr::write_disk(local_file, overwrite = TRUE),
-                config = httr::config(ssl_verifypeer = FALSE))
+  # download files
+  try(silent = TRUE,
+        downloaded_files <- curl::multi_download(
+          urls = file_url,
+          destfiles = local_file,
+          progress = showProgress,
+          resume = cache
+        )
       )
-  }
+
+  # if anything fails, return NULL (fail gracefully)
+  if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
+        msg <- paste(
+        "File cached locally seems to be corrupted. Please download it again using 'cache = FALSE'.",
+        sprintf("Alternatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = \"%s\")'", basename(local_file)),
+        sep = "\n")
+        message(msg)
+        return(invisible(NULL))
+        }
 
   # Halt function if download failed (file must exist and be larger than 200 kb)
   if (!file.exists(local_file) | file.info(local_file)$size < 5000) {
     message('Internet connection not working properly.')
     return(invisible(NULL))
+  }
 
-    } else {
-      return(local_file)
-    }
+  return(local_file)
   } # nocov end
 
 
@@ -73,7 +78,7 @@ arrow_open_dataset <- function(filename){
     error = function(e){
       msg <- paste(
         "File cached locally seems to be corrupted. Please download it again using 'cache = FALSE'.",
-        sprintf("Alternatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = \"%s\")'", filename),
+        sprintf("Alternatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = \"%s\")'", basename(filename)),
         sep = "\n"
       )
       stop(msg)
@@ -84,7 +89,7 @@ arrow_open_dataset <- function(filename){
 #' Message when caching file
 #'
 #' @param local_file The address of a file passed from the download_file function.
-#' @param cache Logical.
+#' @param cache Logical. Whether the cached data should be used.
 
 #' @return A message
 #'
