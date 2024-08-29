@@ -12,7 +12,7 @@ cache_message(
 \arguments{
 \item{local_file}{The address of a file passed from the download_file function.}
 
-\item{cache}{Logical.}
+\item{cache}{Logical. Whether the cached data should be used.}
 }
 \value{
 A message

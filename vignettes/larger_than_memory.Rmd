@@ -84,7 +84,7 @@ library(DBI)
 
 # create a (virtual) database
 db_tbl <- df |>
-          to_duckdb(table_name = "mortality_2010_tbl")
+          arrow::to_duckdb(table_name = "mortality_2010_tbl")
 
 # create databse connection
 con <- db_tbl$src$con
