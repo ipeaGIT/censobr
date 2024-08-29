@@ -53,7 +53,7 @@ read_population <- function(year = 2010,
                               cache = cache)
 
   # check if download worked
-  if(is.null(local_file)) { return(NULL) }
+  if(is.null(local_file)) { return(invisible(NULL)) }
 
 
   ### read data

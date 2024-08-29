@@ -53,7 +53,7 @@ read_families <- function(year = 2000,
                               cache = cache)
 
   # check if download worked
-  if(is.null(local_file)) { return(NULL) }
+  if(is.null(local_file)) { return(invisible(NULL)) }
 
   ### read data
   df <- arrow_open_dataset(local_file)
