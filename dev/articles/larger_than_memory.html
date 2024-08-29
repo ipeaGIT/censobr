@@ -95,7 +95,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Working with larger-than-memory data</h1>
             
-            <h4 data-toc-skip class="date">2024-07-18</h4>
+            <h4 data-toc-skip class="date">2024-08-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/tree/main/vignettes/larger_than_memory.Rmd" class="external-link"><code>vignettes/larger_than_memory.Rmd</code></a></small>
       <div class="hidden name"><code>larger_than_memory.Rmd</code></div>
@@ -242,7 +242,7 @@ syntax.</p>
 <span></span>
 <span><span class="co"># create a (virtual) database</span></span>
 <span><span class="va">db_tbl</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>          <span class="fu"><a href="https://arrow.apache.org/docs/r/reference/to_duckdb.html" class="external-link">to_duckdb</a></span><span class="op">(</span>table_name <span class="op">=</span> <span class="st">"mortality_2010_tbl"</span><span class="op">)</span></span>
+<span>          <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/to_duckdb.html" class="external-link">to_duckdb</a></span><span class="op">(</span>table_name <span class="op">=</span> <span class="st">"mortality_2010_tbl"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create databse connection</span></span>
 <span><span class="va">con</span> <span class="op">&lt;-</span> <span class="va">db_tbl</span><span class="op">$</span><span class="va">src</span><span class="op">$</span><span class="va">con</span></span>
