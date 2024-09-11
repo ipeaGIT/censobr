@@ -4,7 +4,7 @@
 #' @param showProgress Logical.
 #' @param cache Logical.
 
-#' @return A string to the address of the file in a tempdir
+#' @return A string to the address of the file
 #'
 #' @keywords internal
 download_file <- function(file_url = parent.frame()$file_url,

@@ -74,7 +74,7 @@ read_mortality <- function(year = 2010,
     df <- merge_household_var(df,
                               year = year,
                               add_labels = add_labels,
-                              showProgress)
+                              showProgress = showProgress)
     }
 
   ### Select
