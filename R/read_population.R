@@ -55,17 +55,16 @@ read_population <- function(year = 2010,
   # check if download worked
   if(is.null(local_file)) { return(invisible(NULL)) }
 
-
   ### read data
   df <- arrow_open_dataset(local_file)
 
   ### merge household data
   if (isTRUE(merge_households)) {
-    df <- merge_household_var(df,
-                              year = year,
-                              add_labels = add_labels,
-                              showProgress)
-  }
+     df <- merge_household_var(df,
+                               year = year,
+                               add_labels = add_labels,
+                              showProgress = showProgress)
+    }
 
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')

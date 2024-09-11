@@ -58,18 +58,34 @@ merge_household_var <- function(df,
   # drop repeated vars
   all_common_vars <- names(df)[names(df) %in% names(df_household)]
   vars_to_drop <- setdiff(all_common_vars, key_vars)
-  df_household <- dplyr::select(df_household, -all_of(vars_to_drop))
+  df_household <- dplyr::select(df_household, -all_of(vars_to_drop)) |>
+                  dplyr::compute()
 
 
   # convert to duckdb
-  df <- arrow::to_duckdb(df)
-  df_household <- arrow::to_duckdb(df_household)
+  # df <- arrow::to_duckdb(df)
+  # df_household <- arrow::to_duckdb(df_household)
+
+  # con <- DBI::dbConnect(duckdb::duckdb(), read_only = FALSE)
+  con <- duckdb::dbConnect(duckdb::duckdb(), read_only = FALSE)
+  duckdb::duckdb_register_arrow(con, 'df', df)
+  duckdb::duckdb_register_arrow(con, 'df_household', df_household)
 
   # merge
-  df_geo <- duckplyr::left_join(df, df_household)
+  df_geo <- duckplyr::left_join(dplyr::tbl(con, "df"),
+                                dplyr::tbl(con, "df_household"))
+
+  df_geo <- dplyr::compute(df_geo)
 
   # back to arrow
   df_geo <- arrow::to_arrow(df_geo)
+  df_geo <- dplyr::compute(df_geo)
+
+  # remove duckdb instance
+  duckdb::duckdb_unregister_arrow(con, 'df')
+  duckdb::duckdb_unregister_arrow(con, 'df_household')
+  duckdb::dbDisconnect(con, shutdown = TRUE)
+  rm(con)
 
   return(df_geo)
 }

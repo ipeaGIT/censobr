@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-The **censobr** package includes a few functions to help users navigate Brazilian census data, its variables and its methodology. All of these functions download supporting documents in either `.html` or `.pdf` format, and opens the documents on a web browser.
+The **censobr** package includes a few functions to help users navigate Brazilian census data, its variables and methodology. All of these functions download supporting documents in either `.html` or `.pdf` format, and open the documents on a web browser.
 
-Like all other datasets in **censobr**, these support documents are downloaded and cached locally the first time when users run the function. This way, when users need to take a peak at the documentation again, the functions simply load local files, making it super quick and convenient.
+Like all other datasets in {censobr}, these support documents are downloaded and cached locally the first time when users run the function. This way, when users need to take a peak at the documentation again, the functions simply load local files, making it super quick and convenient.
 
 
 # Data Dictionary
@@ -30,26 +30,29 @@ The `data_dictionary()` indicate the definition of each variable, and the meanin
 
 ```{r, eval = FALSE}
 # Microdata variables
-data_dictionary(year = 2010, table = 'microdata')
+data_dictionary(year = 2010,
+                dataset = 'microdata')
 
 # Census tract-level variables
-data_dictionary(year = 2010, table = 'tracts')
+data_dictionary(year = 2010,
+                dataset = 'tracts')
 ```
 
-Obs. For the years 2010 and 2000, the the dictionaries of variables are also available online from the **censobr** [website](https://ipeagit.github.io/censobr/index.html). Other years will also be eventually included on the website.
 
 # Questionnaires
 
 Oftentimes, it is really important to understand the structure of the questionnaire used in surveys. The `questionnaire()` function includes the questionnaires used in the data collection of all Brazilian censuses since 1970.
 
-Here, users only need to passe the `year` parameter indicating the edition of the census of interest.
+Here, users need to pass the `year` parameter indicating the edition of the census of interest and whether they want the `'short'` questionnaire that is used to interview all households, or the `'short'` one that is used in the sample component of the cesus.
 
 ```{r, eval = FALSE}
-# 2010
-questionnaire(year = 2010)
+# short questionnaire
+questionnaire(year = 2010, 
+              type = 'short')
 
-# 1970
-questionnaire(year = 1970)
+# long questionnaire
+questionnaire(year = 2010, 
+              type = 'long')
 ```
 
 

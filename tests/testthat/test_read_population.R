@@ -137,8 +137,8 @@ test_that("population merge_households_vars", {
     message(y)
     df_hou <- read_households(year = y)
     df_test <- tester(year = y,
-                               merge_households = TRUE,
-                               showProgress = FALSE)
+                      merge_households = TRUE,
+                      showProgress = FALSE)
     testthat::expect_true( all(names(df_hou) %in% names(df_test)) )
   }
 })

@@ -7,7 +7,7 @@
 
 * Minor changes
   * Removed dependency on the {httr} package
-  * Now using `curl::multi_download()` to download files in parallel. This bringds the advantage that the pacakge now automatically detects whether the data/documentation file has been upated and should be downloaded again.
+  * Now using `curl::multi_download()` to download files in parallel. This brings the advantage that the pacakge now automatically detects whether the data/documentation file has been upated and should be downloaded again.
 
 * Changes to data sets and files included in this version:
   * Population microdata for the year 2000 now include a few columns that were not included before. Closes [#44](https://github.com/ipeaGIT/censobr/issues/44)
