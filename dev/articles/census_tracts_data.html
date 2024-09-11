@@ -95,7 +95,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Census tract-level data</h1>
             
-            <h4 data-toc-skip class="date">2024-08-29</h4>
+            <h4 data-toc-skip class="date">2024-09-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/tree/main/vignettes/census_tracts_data.Rmd" class="external-link"><code>vignettes/census_tracts_data.Rmd</code></a></small>
       <div class="hidden name"><code>census_tracts_data.Rmd</code></div>
@@ -242,14 +242,14 @@ per capita of all census tracts in Brazil.</p>
 <span><span class="co"># calculate income per capita</span></span>
 <span><span class="va">tracts_df</span> <span class="op">&lt;-</span> <span class="va">tracts_df</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>income_pc <span class="op">=</span> <span class="va">V003</span> <span class="op">/</span> <span class="va">V002</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tracts_df</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         code_tract  V002   V003 income_pc</span></span>
-<span><span class="co">#&gt;             &lt;char&gt; &lt;num&gt;  &lt;num&gt;     &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1: 521405105000007    91  44140  485.0549</span></span>
-<span><span class="co">#&gt; 2: 521405105000008   254  89381  351.8937</span></span>
-<span><span class="co">#&gt; 3: 521405105000009   310 129406  417.4387</span></span>
-<span><span class="co">#&gt; 4: 521405105000010   177  46294  261.5480</span></span>
-<span><span class="co">#&gt; 5: 521405105000011   713 241910  339.2847</span></span>
-<span><span class="co">#&gt; 6: 521405105000012   739 147618  199.7537</span></span></code></pre></div>
+<span><span class="co">#&gt;         code_tract  V002    V003 income_pc</span></span>
+<span><span class="co">#&gt;             &lt;char&gt; &lt;num&gt;   &lt;num&gt;     &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1: 350320825000030   480  368357  767.4104</span></span>
+<span><span class="co">#&gt; 2: 350320825000031   458  293191  640.1550</span></span>
+<span><span class="co">#&gt; 3: 350320825000032   955  859297  899.7874</span></span>
+<span><span class="co">#&gt; 4: 350320825000033    NA       0        NA</span></span>
+<span><span class="co">#&gt; 5: 350320825000034   764  636266  832.8089</span></span>
+<span><span class="co">#&gt; 6: 350320825000035  1026 1151032 1121.8635</span></span></code></pre></div>
 <p>Finally, we can merge the spatial data with our per capita income
 estimates and map the results.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">

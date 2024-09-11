@@ -95,7 +95,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Census documentation</h1>
             
-            <h4 data-toc-skip class="date">2024-08-29</h4>
+            <h4 data-toc-skip class="date">2024-09-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/tree/main/vignettes/documentation.Rmd" class="external-link"><code>vignettes/documentation.Rmd</code></a></small>
       <div class="hidden name"><code>documentation.Rmd</code></div>
@@ -105,15 +105,15 @@
     
     
 <p>The <strong>censobr</strong> package includes a few functions to help
-users navigate Brazilian census data, its variables and its methodology.
-All of these functions download supporting documents in either
-<code>.html</code> or <code>.pdf</code> format, and opens the documents
+users navigate Brazilian census data, its variables and methodology. All
+of these functions download supporting documents in either
+<code>.html</code> or <code>.pdf</code> format, and open the documents
 on a web browser.</p>
-<p>Like all other datasets in <strong>censobr</strong>, these support
-documents are downloaded and cached locally the first time when users
-run the function. This way, when users need to take a peak at the
-documentation again, the functions simply load local files, making it
-super quick and convenient.</p>
+<p>Like all other datasets in {censobr}, these support documents are
+downloaded and cached locally the first time when users run the
+function. This way, when users need to take a peak at the documentation
+again, the functions simply load local files, making it super quick and
+convenient.</p>
 <div class="section level2">
 <h2 id="data-dictionary">Data Dictionary<a class="anchor" aria-label="anchor" href="#data-dictionary"></a>
 </h2>
@@ -127,13 +127,12 @@ portion of the census) and for the variables available in census
 tract-level aggregate data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Microdata variables</span></span>
-<span><span class="fu"><a href="../reference/data_dictionary.html">data_dictionary</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, table <span class="op">=</span> <span class="st">'microdata'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/data_dictionary.html">data_dictionary</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
+<span>                dataset <span class="op">=</span> <span class="st">'microdata'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Census tract-level variables</span></span>
-<span><span class="fu"><a href="../reference/data_dictionary.html">data_dictionary</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, table <span class="op">=</span> <span class="st">'tracts'</span><span class="op">)</span></span></code></pre></div>
-<p>Obs. For the years 2010 and 2000, the the dictionaries of variables
-are also available online from the <strong>censobr</strong> <a href="https://ipeagit.github.io/censobr/index.html" class="external-link">website</a>. Other
-years will also be eventually included on the website.</p>
+<span><span class="fu"><a href="../reference/data_dictionary.html">data_dictionary</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
+<span>                dataset <span class="op">=</span> <span class="st">'tracts'</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="questionnaires">Questionnaires<a class="anchor" aria-label="anchor" href="#questionnaires"></a>
@@ -142,14 +141,19 @@ years will also be eventually included on the website.</p>
 questionnaire used in surveys. The <code><a href="../reference/questionnaire.html">questionnaire()</a></code> function
 includes the questionnaires used in the data collection of all Brazilian
 censuses since 1970.</p>
-<p>Here, users only need to passe the <code>year</code> parameter
-indicating the edition of the census of interest.</p>
+<p>Here, users need to pass the <code>year</code> parameter indicating
+the edition of the census of interest and whether they want the
+<code>'short'</code> questionnaire that is used to interview all
+households, or the <code>'short'</code> one that is used in the sample
+component of the cesus.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 2010</span></span>
-<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># short questionnaire</span></span>
+<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
+<span>              type <span class="op">=</span> <span class="st">'short'</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># 1970</span></span>
-<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1970</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># long questionnaire</span></span>
+<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
+<span>              type <span class="op">=</span> <span class="st">'long'</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="interview-manual">Interview manual<a class="anchor" aria-label="anchor" href="#interview-manual"></a>

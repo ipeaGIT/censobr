@@ -95,7 +95,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to censobr</h1>
             
-            <h4 data-toc-skip class="date">2024-08-29</h4>
+            <h4 data-toc-skip class="date">2024-09-11</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/tree/main/vignettes/censobr.Rmd" class="external-link"><code>vignettes/censobr.Rmd</code></a></small>
       <div class="hidden name"><code>censobr.Rmd</code></div>
@@ -104,13 +104,10 @@
 
     
     
-<p><strong>censobr</strong> is an R package to download data from
+<p><strong>{censobr}</strong> is an R package to download data from
 Brazil’s Population Census. The package is built on top of the <a href="https://arrow.apache.org/docs/r/" class="external-link">Arrow platform</a>, which allows
 users to work with larger-than-memory census data using <a href="https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr" class="external-link">{dplyr}
 familiar functions</a>.</p>
-<p><em>obs.:</em> The package is still under development. At the moment,
-censobr only includes microdata from the 2000 and 2010 censuses, but it
-is being expanded to cover more years and data sets.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -120,8 +117,7 @@ is being expanded to cover more years and data sets.</p>
 <span></span>
 <span><span class="co"># or use the development version with latest features</span></span>
 <span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html" class="external-link">remove.packages</a></span><span class="op">(</span><span class="st">'censobr'</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ipeaGIT/censobr"</span>, ref<span class="op">=</span><span class="st">"dev"</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ipeaGIT/censobr" class="external-link">censobr</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ipeaGIT/censobr"</span>, ref<span class="op">=</span><span class="st">"dev"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
@@ -136,7 +132,7 @@ data:</p>
 <li><code><a href="../reference/read_emigration.html">read_emigration()</a></code></li>
 <li><code><a href="../reference/read_tracts.html">read_tracts()</a></code></li>
 </ol>
-<p><strong>censobr</strong> also includes a few support functions to
+<p><strong>{censobr}</strong> also includes a few support functions to
 help users navigate the documentation Brazilian censuses, providing
 convenient information on data variables and methodology.:</p>
 <ol start="7" style="list-style-type: decimal">
@@ -149,7 +145,7 @@ data chached locally.</p>
 <ol start="10" style="list-style-type: decimal">
 <li><code><a href="../reference/censobr_cache.html">censobr_cache()</a></code></li>
 </ol>
-<p>The syntax of all <strong>censobr</strong> functions to read data
+<p>The syntax of all <strong>{censobr}</strong> functions to read data
 operate on the same logic so it becomes intuitive to download any data
 set using a single line of code. Like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -162,13 +158,13 @@ set using a single line of code. Like this:</p>
 <span>  <span class="va">cache</span>          <span class="co"># cache data for faster access later</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><strong><em>Note:</em></strong> all data sets in
-<strong>censobr</strong> are enriched with geography columns following
+<strong>{censobr}</strong> are enriched with geography columns following
 the name standards of the <a href="https://github.com/ipeaGIT/geobr/" class="external-link">{geobr} package</a> to help
 data manipulation and integration with spatial data from {geobr}. The
 added columns are:
 <code>c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)</code>.</p>
 <p><strong><em>Data Cache:</em></strong></p>
-<p>The first time the user runs a function, <strong>censobr</strong>
+<p>The first time the user runs a function, <strong>{censobr}</strong>
 will download the file and store it locally. This way, the data only
 needs to be downloaded once. More info in the <a href="https://ipeagit.github.io/censobr/articles/censobr.html#data-cache" class="external-link">Data
 cache section</a> below.</p>
@@ -177,12 +173,12 @@ cache section</a> below.</p>
 <h2 id="larger-than-memory-data">Larger-than-memory Data<a class="anchor" aria-label="anchor" href="#larger-than-memory-data"></a>
 </h2>
 <p>Data of Brazilian censuses are often too big to load in users’ RAM
-memory. To avoid this problem, <strong>censobr</strong> will by default
-return an <a href="https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow" class="external-link">Arrow
+memory. To avoid this problem, <strong>{censobr}</strong> will by
+default return an <a href="https://arrow.apache.org/docs/r/articles/arrow.html#tabular-data-in-arrow" class="external-link">Arrow
 table</a>, which can be analyzed like a regular <code>data.frame</code>
 using the <code>dplyr</code> package without loading the full data to
 memory.</p>
-<p>Let’s see how <strong>censobr</strong> works in a couple
+<p>Let’s see how <strong>{censobr}</strong> works in a couple
 examples:</p>
 </div>
 <div class="section level2">
@@ -223,7 +219,7 @@ parameter <code>as_data_frame = TRUE</code>, the read functions load the
 entire output to memory as a <code>data.frame</code>. <em>Warning:</em>
 This can cause the R session to crash in computationally constrained
 environments.</p>
-<p>The output of the read functions in <strong>censobr</strong> can be
+<p>The output of the read functions in <strong>{censobr}</strong> can be
 analyzed like a regular <code>data.frame</code> using the
 <a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a> package. For example, one can have a quick peak
 into the data set with <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse()</a></code></p>
@@ -436,7 +432,7 @@ map the results.</p>
 <div class="section level3">
 <h3 id="data-cache">Data cache<a class="anchor" aria-label="anchor" href="#data-cache"></a>
 </h3>
-<p>The first time the user runs a function, <strong>censobr</strong>
+<p>The first time the user runs a function, <strong>{censobr}</strong>
 will download the file and store it locally. This way, the data only
 needs to be downloaded once. When the <code>cache</code> parameter is
 set to <code>TRUE</code> (Default), the function will read the cached
@@ -481,7 +477,7 @@ data, which is much faster.</p>
 <span><span class="co">#&gt; All files have been removed.</span></span>
 <span><span class="co">#&gt; Files currently chached:</span></span>
 <span><span class="co">#&gt; </span></span></code></pre></div>
-<p>By default, <strong>censobr</strong> files are saved in the ‘User’
+<p>By default, <strong>{censobr}</strong> files are saved in the ‘User’
 directory. However, users can run the function
 <code><a href="../reference/set_censobr_cache_dir.html">set_censobr_cache_dir()</a></code> to set custom cache directory.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
