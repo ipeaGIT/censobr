@@ -63,7 +63,7 @@ read_population <- function(year = 2010,
      df <- merge_household_var(df,
                                year = year,
                                add_labels = add_labels,
-                              showProgress = showProgress)
+                               showProgress = showProgress)
     }
 
   ### Select
@@ -79,10 +79,11 @@ read_population <- function(year = 2010,
   }
 
   ### output format
+  df <- dplyr::compute(df)
   if (isTRUE(as_data_frame)) { return( dplyr::collect(df) )
   } else {
-      return(df)
-    }
+    return(df)
+  }
 
 }
 

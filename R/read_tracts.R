@@ -89,9 +89,10 @@ read_tracts <- function(year = 2010,
   #   }
 
   ### output format
+  df <- dplyr::compute(df)
   if (isTRUE(as_data_frame)) { return( dplyr::collect(df) )
   } else {
-      return(df)
-    }
-
+    return(df)
+  }
 }
+

@@ -18,7 +18,7 @@ download_file(
 \item{cache}{Logical.}
 }
 \value{
-A string to the address of the file in a tempdir
+A string to the address of the file
 }
 \description{
 Download file from url

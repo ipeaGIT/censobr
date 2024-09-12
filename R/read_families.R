@@ -79,10 +79,11 @@ read_families <- function(year = 2000,
   }
 
   ### output format
+  df <- dplyr::compute(df)
   if (isTRUE(as_data_frame)) { return( dplyr::collect(df) )
   } else {
-      return(df)
-    }
+    return(df)
+  }
 
 }
 
