@@ -6,6 +6,7 @@
 censobr_*.tar.gz
 vignettes/*.html
 *.parquet
+*.tmp
 *.o
 *.so
 *.swp
