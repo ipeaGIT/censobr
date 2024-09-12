@@ -5,8 +5,8 @@
 .Ruserdata
 censobr_*.tar.gz
 vignettes/*.html
-*.parquet
-*.tmp
+.parquet
+.tmp
 *.o
 *.so
 *.swp
