@@ -13,6 +13,9 @@
   * Population microdata for the year 2000 now include a few columns that were not included before. Closes [#44](https://github.com/ipeaGIT/censobr/issues/44)
   * Included additional columns and fixed minor errors in data dictionary of 2010 microdata. Closes [#45](https://github.com/ipeaGIT/censobr/issues/45) 
 
+* New data set and files included in this version:
+  * Data dictionary for microdata of population and households of the 1991 census. Closes [#28](https://github.com/ipeaGIT/censobr/issues/28)  
+
 
 
 # censobr v0.3.2

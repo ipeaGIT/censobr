@@ -29,14 +29,14 @@ test_that("data_dictionary", {
   # population
   testthat::expect_message( tester(year = 2010, dataset = 'population') )
   testthat::expect_message( tester(year = 2000, dataset = 'population') )
-  testthat::expect_error( tester(year = 1991, dataset = 'population') )
+  testthat::expect_message( tester(year = 1991, dataset = 'population') )
   testthat::expect_message( tester(year = 1980, dataset = 'population') )
   testthat::expect_message( tester(year = 1970, dataset = 'population') )
 
   # households
   testthat::expect_message( tester(year = 2010, dataset = 'households') )
   testthat::expect_message( tester(year = 2000, dataset = 'households') )
-  testthat::expect_error( tester(year = 1991, dataset = 'population') )
+  testthat::expect_message( tester(year = 1991, dataset = 'population') )
   testthat::expect_message( tester(year = 1980, dataset = 'households') )
   testthat::expect_message( tester(year = 1970, dataset = 'households') )
 
