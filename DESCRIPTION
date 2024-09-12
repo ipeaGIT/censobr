@@ -27,7 +27,7 @@ License: MIT + file LICENSE
 URL: https://github.com/ipeaGIT/censobr, https://ipeagit.github.io/censobr/
 BugReports: https://github.com/ipeaGIT/censobr/issues
 Depends: 
-    R (>= 4.0)
+    R (>= 4.1.0)
 Imports:
     arrow (>= 15.0.1),
     checkmate,
