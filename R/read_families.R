@@ -7,7 +7,6 @@
 #' @param year Numeric. Year of reference in the format `yyyy`. Defaults to `2000`.
 #' @template columns
 #' @template add_labels
-#' @template merge_households
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
@@ -24,7 +23,6 @@
 read_families <- function(year = 2000,
                           columns = NULL,
                           add_labels = NULL,
-                          merge_households = FALSE,
                           as_data_frame = FALSE,
                           showProgress = TRUE,
                           cache = TRUE){
@@ -33,7 +31,7 @@ read_families <- function(year = 2000,
   checkmate::assert_numeric(year)
   checkmate::assert_vector(columns, null.ok = TRUE)
   checkmate::assert_logical(as_data_frame)
-  checkmate::assert_logical(merge_households)
+  # checkmate::assert_logical(merge_households)
   checkmate::assert_string(add_labels, pattern = 'pt', null.ok = TRUE)
 
   # data available for the years:
@@ -58,13 +56,13 @@ read_families <- function(year = 2000,
   ### read data
   df <- arrow_open_dataset(local_file)
 
-  ### merge household data
-  if (isTRUE(merge_households)) {
-    df <- merge_household_var(df,
-                              year = year,
-                              add_labels = add_labels,
-                              showProgress)
-  }
+  # ### merge household data
+  # if (isTRUE(merge_households)) {
+  #   df <- merge_household_var(df,
+  #                             year = year,
+  #                             add_labels = add_labels,
+  #                             showProgress)
+  # }
 
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')

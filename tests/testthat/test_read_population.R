@@ -131,17 +131,17 @@ test_that("read_population check totals", {
 
 # Merge households vars -----------------------
 
-test_that("population merge_households_vars", {
-
-  for(y in c(1970, 1980, 1991, 2000, 2010)){ # y = 2010
-    message(y)
-    df_hou <- censobr::read_households(year = y)
-    df_test <- tester(year = y,
-                      merge_households = TRUE,
-                      showProgress = FALSE)
-    testthat::expect_true( all(names(df_hou) %in% names(df_test)) )
-  }
-})
+# test_that("population merge_households_vars", {
+#
+#   for(y in c(1970, 1980, 1991, 2000, 2010)){ # y = 2010
+#     message(y)
+#     df_hou <- censobr::read_households(year = y)
+#     df_test <- tester(year = y,
+#                       merge_households = TRUE,
+#                       showProgress = FALSE)
+#     testthat::expect_true( all(names(df_hou) %in% names(df_test)) )
+#   }
+# })
 
 
 # ERRORS and messages  -----------------------

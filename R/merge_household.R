@@ -23,11 +23,13 @@ merge_household_var <- function(df,
   if (year == 1970) {
     key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
                   'code_region', 'name_region', 'id_household')
+    key_key <- 'id_household'
     }
 
   if (year == 1980) {
     key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
                   'code_region', 'name_region', 'V6', 'V601')
+    key_key <- 'V601'
 
     # rename weight var
     df_household <- dplyr::rename(df_household, 'V603_household' = 'V603')
@@ -37,6 +39,7 @@ merge_household_var <- function(df,
     key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
                   'code_region', 'name_region', 'V0109')
 
+    key_key <- 'V0109'
     # rename weight var
     df_household <- dplyr::rename(df_household, 'V7300_household' = 'V7300')
     }
@@ -44,12 +47,14 @@ merge_household_var <- function(df,
   if (year == 2000) {
     key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
                   'code_region', 'name_region', 'code_weighting', 'V0300')
+    key_key <- 'V0300'
   }
 
   if (year == 2010) {
     key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
                   'code_region', 'name_region', 'code_weighting', 'V0300')
 
+    key_key <- 'V0300'
     # rename weight var
     df_household <- dplyr::rename(df_household, 'V0010_household' = 'V0010') |>
                     dplyr::compute()
@@ -62,6 +67,15 @@ merge_household_var <- function(df,
   df_household <- dplyr::select(df_household, -all_of(vars_to_drop)) |>
                   dplyr::compute()
 
+  # # pre-filter right-hand table that matches key in left-hand table
+  # this improves performance a bit
+  df <- dplyr::compute(df)
+  key_values <- as.vector(unique(df$GetColumnByName(key_key)))
+  df_household <- dplyr::filter(df_household, get(key_key) %in% key_values) |>
+                  dplyr::compute()
+
+#  nrow(df_household)
+#  [1] 6192332
 
   # convert to duckdb
   # df <- arrow::to_duckdb(df)

@@ -8,7 +8,6 @@ read_families(
   year = 2000,
   columns = NULL,
   add_labels = NULL,
-  merge_households = FALSE,
   as_data_frame = FALSE,
   showProgress = TRUE,
   cache = TRUE
@@ -23,9 +22,6 @@ columns are not read. Defaults to \code{NULL} and read all columns.}
 \item{add_labels}{Character. Whether the function should add labels to the
 responses of categorical variables. When \code{add_labels = "pt"}, the
 function adds labels in Portuguese. Defaults to \code{NULL}.}
-
-\item{merge_households}{Logical. Indicate whether the function should merge
-household variables to the output data. Defaults to \code{FALSE}.}
 
 \item{as_data_frame}{Logical. When \code{FALSE} (Default), the function returns an
 Arrow Dataset, which allows users to work with larger-than-memory data.
