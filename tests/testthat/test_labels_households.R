@@ -37,13 +37,13 @@ test_that("add_labels_households", {
                             add_labels = NULL,
                             columns = c('abbrev_state', 'V1006'),
                             showProgress = FALSE) |>
-    filter(abbrev_state == 'RO')
+    dplyr::filter(abbrev_state == 'RO')
 
   # com labels
   test2b <- censobr:::add_labels_households(arrw = test2a,
                                             year=2000,
                                             lang = 'pt') |>
-    filter(abbrev_state == 'RO')
+    dplyr::filter(abbrev_state == 'RO')
 
   test2a <- dplyr::collect(test2a)
   test2b <- dplyr::collect(test2b)

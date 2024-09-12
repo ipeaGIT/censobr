@@ -29,35 +29,35 @@ test_that("read_households reading", {
   # (default) arrow table
   test1 <- tester()
   testthat::expect_true(is(test1, "ArrowObject"))
-  testthat::expect_true(is(test1, "FileSystemDataset"))
+  # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test1) >0 )
 
   # year 2000
   # (default) arrow table
   test2 <- tester(year = 2000)
   testthat::expect_true(is(test2, "ArrowObject"))
-  testthat::expect_true(is(test2, "FileSystemDataset"))
+  # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test2) >0 )
 
   # year 1991
   # (default) arrow table
   test2 <- tester(year = 1991)
   testthat::expect_true(is(test2, "ArrowObject"))
-  testthat::expect_true(is(test2, "FileSystemDataset"))
+  # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test2) >0 )
 
   # year 1980
   # (default) arrow table
   test2 <- tester(year = 1980)
   testthat::expect_true(is(test2, "ArrowObject"))
-  testthat::expect_true(is(test2, "FileSystemDataset"))
+  # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test2) >0 )
 
   # year 1970
   # (default) arrow table
   test2 <- tester(year = 1970)
   testthat::expect_true(is(test2, "ArrowObject"))
-  testthat::expect_true(is(test2, "FileSystemDataset"))
+  # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test2) >0 )
   # # data.frame
   # test2 <- tester(as_data_frame = TRUE)

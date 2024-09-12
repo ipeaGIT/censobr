@@ -9,7 +9,7 @@ testthat::skip_if_not_installed("arrow")
 tester <- function(year = 2000,
                    columns = NULL,
                    add_labels = NULL,
-                   merge_households = FALSE,
+                   # merge_households = FALSE,
                    as_data_frame = FALSE,
                    showProgress = FALSE,
                    cache = TRUE) {
@@ -17,7 +17,7 @@ tester <- function(year = 2000,
     year,
     columns,
     add_labels,
-    merge_households,
+    # merge_households,
     as_data_frame,
     showProgress,
     cache
@@ -31,7 +31,7 @@ test_that("read_families read", {
   # (default) arrow table
   test1 <- tester()
   testthat::expect_true(is(test1, "ArrowObject"))
-  testthat::expect_true(is(test1, "FileSystemDataset"))
+  testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test1) >0 )
 
   # # data.frame

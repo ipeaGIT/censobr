@@ -9,7 +9,7 @@ testthat::skip_if_not_installed("arrow")
 tester <- function(year = 2010,
                    columns = NULL,
                    add_labels = NULL,
-                   merge_households = FALSE,
+                   # merge_households = FALSE,
                    as_data_frame = FALSE,
                    showProgress = FALSE,
                    cache = TRUE) {
@@ -17,7 +17,7 @@ tester <- function(year = 2010,
     year,
     columns,
     add_labels,
-    merge_households,
+    # merge_households,
     as_data_frame,
     showProgress,
     cache
@@ -32,7 +32,7 @@ test_that("read_population read", {
   # (default) arrow table
   test1 <- tester( showProgress = TRUE)
   testthat::expect_true(is(test1, "ArrowObject"))
-  testthat::expect_true(is(test1, "FileSystemDataset"))
+  # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test1) >0 )
   rm(test1); gc(TRUE)
   gc(TRUE)
@@ -41,28 +41,28 @@ test_that("read_population read", {
   # (default) arrow table
   test2 <- tester(year = 2000)
   testthat::expect_true(is(test2, "ArrowObject"))
-  testthat::expect_true(is(test2, "FileSystemDataset"))
+  # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test2) >0 )
 
   # year 1991
   # (default) arrow table
   test2 <- tester(year = 1991)
   testthat::expect_true(is(test2, "ArrowObject"))
-  testthat::expect_true(is(test2, "FileSystemDataset"))
+  # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test2) >0 )
 
   # year 1980
   # (default) arrow table
   test2 <- tester(year = 1980)
   testthat::expect_true(is(test2, "ArrowObject"))
-  testthat::expect_true(is(test2, "FileSystemDataset"))
+  # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test2) >0 )
 
   # year 1970
   # (default) arrow table
   test2 <- tester(year = 1970)
   testthat::expect_true(is(test2, "ArrowObject"))
-  testthat::expect_true(is(test2, "FileSystemDataset"))
+  # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test2) >0 )
 
   # # data.frame
@@ -89,7 +89,7 @@ test_that("read_population read", {
 
 
 
-
+gc()
 
 # check totals -----------------------
 

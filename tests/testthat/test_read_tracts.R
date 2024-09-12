@@ -29,7 +29,7 @@ test_that("read_tracts", {
   # arrow table
   test1 <- tester(year = 2010, dataset = 'Basico')
   testthat::expect_true(is(test1, "ArrowObject"))
-  testthat::expect_true(is(test1, "FileSystemDataset"))
+  testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test1) >0 )
 
   # data.frame

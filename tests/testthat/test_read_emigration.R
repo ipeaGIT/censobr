@@ -31,7 +31,7 @@ test_that("read_emigration reading", {
   # (default) arrow table
   test1 <- tester()
   testthat::expect_true(is(test1, "ArrowObject"))
-  testthat::expect_true(is(test1, "FileSystemDataset"))
+  testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test1) >0 )
 
   # data.frame
