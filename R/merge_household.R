@@ -22,7 +22,7 @@ merge_household_var <- function(df,
   # set vars to merge
   if (year == 1970) {
     key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
-                  'code_region', 'name_region', 'household_id')
+                  'code_region', 'name_region', 'id_household')
     }
 
   if (year == 1980) {
@@ -51,7 +51,8 @@ merge_household_var <- function(df,
                   'code_region', 'name_region', 'code_weighting', 'V0300')
 
     # rename weight var
-    df_household <- dplyr::rename(df_household, 'V0010_household' = 'V0010')
+    df_household <- dplyr::rename(df_household, 'V0010_household' = 'V0010') |>
+                    dplyr::compute()
   }
 
 
@@ -71,6 +72,13 @@ merge_household_var <- function(df,
   duckdb::duckdb_register_arrow(con, 'df', df)
   duckdb::duckdb_register_arrow(con, 'df_household', df_household)
 
+  # limit RAM and threads of duckdb ???
+  # dbExecute(con, "PRAGMA threads=1; PRAGMA memory_limit='1GB';")
+  # dbExecute(conn = conn, paste0("PRAGMA memory_limit='12GB'"))
+  # appears to work.
+  # https://github.com/duckdb/duckdb-r/issues/83
+  # https://github.com/duckdb/duckdb-r/issues/72
+
   # merge
   df_geo <- duckplyr::left_join(dplyr::tbl(con, "df"),
                                 dplyr::tbl(con, "df_household"))
@@ -86,6 +94,7 @@ merge_household_var <- function(df,
   duckdb::duckdb_unregister_arrow(con, 'df_household')
   duckdb::dbDisconnect(con, shutdown = TRUE)
   rm(con)
+  gc()
 
   return(df_geo)
 }
