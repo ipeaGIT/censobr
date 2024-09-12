@@ -61,9 +61,11 @@ jobs:
       - name: Install system dependencies (Linux)
         if: runner.os == 'Linux'
         run: |
-          pak::local_system_requirements(execute = TRUE)
-          pak::pkg_system_requirements("rcmdcheck", execute = TRUE)
-        shell: Rscript {0}
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+        working-directory: r-package
 
       - name: Install system dependencies (MacOS)
         if: runner.os == 'macOS'
