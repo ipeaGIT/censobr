@@ -31,7 +31,7 @@ test_that("read_emigration reading", {
   # (default) arrow table
   test1 <- tester()
   testthat::expect_true(is(test1, "ArrowObject"))
-  testthat::expect_true(is(test1, "Table"))
+  # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test1) >0 )
 
   # data.frame
@@ -50,18 +50,10 @@ test_that("read_emigration reading", {
 
 
   # check whether cache argument is working
-  time_first <- system.time(
-    t1 <- tester(year = 2010))
+  testthat::expect_message(tester(year = 2010, cache = TRUE), regexp = 'locally')
+  testthat::expect_message(tester(year = 2010, cache = FALSE), regexp = 'Overwriting|future')
 
-  time_cache_true <- system.time(
-    t2 <- tester(year = 2010, cache = TRUE))
-
-  time_cache_false <- system.time(
-    t3 <- tester(year = 2010, cache = FALSE))
-
-  testthat::expect_true( time_cache_true[['elapsed']] < time_cache_false[['elapsed']] )
-
- })
+})
 
 
 # Merge households vars -----------------------

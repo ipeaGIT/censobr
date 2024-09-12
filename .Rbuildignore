@@ -7,7 +7,7 @@
 ^cran-comments\.md$
 ^codecov\.yml$
 ^docs$
-.parquet
+*.parquet
 .Rhistory
 .RData
 ^_pkgdown\.yml$
