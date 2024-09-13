@@ -9,12 +9,14 @@ add_geography_cols <- function(arrw, year){
 
 
   # get code_muni
-  col <- case_when(year == 1970 ~ 'code_muni',
+  col <- case_when(year == 1960 ~ 'code_muni',
+                   year == 1970 ~ 'code_muni',
                    year == 1980 ~ 'code_muni',
                    year == 1991 ~ 'code_muni',
+                   year == 2000 ~ 'V0103',
                    year == 2010 ~ 'V0002',
-                   year == 2022 ~ 'CD_MUN',
-                   year == 2000 ~ 'V0103')
+                   year == 2022 ~ 'CD_MUN'
+                   )
 
   if(year %in% c(2000, 2010)){
     arrw <- mutate(arrw,
