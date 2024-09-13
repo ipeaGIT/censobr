@@ -24,7 +24,6 @@ names(pop)
 names(hh)
 
 
-arrow::write_parquet()
 
-arrow::write_parquet(pop, '../../censobr_data_prep/data/microdata_sample/1960/1960_population2.parquet')
-arrow::write_parquet(hh, '../../censobr_data_prep/data/microdata_sample/1960/1960_households2.parquet')
+arrow::write_parquet(pop, '../../censobr_data_prep/data/microdata_sample/1960/1960_population_v0.3.0.parquet')
+arrow::write_parquet(hh, '../../censobr_data_prep/data/microdata_sample/1960/1960_households_v0.3.0.parquet')

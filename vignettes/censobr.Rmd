@@ -52,6 +52,78 @@ The package currently includes 6 main functions to download census data:
 8. `questionnaire()`
 9. `interview_manual()`
 
+
+<table>
+    <thead>
+        <tr>
+            <th rowspan="2">Function</th>
+            <th rowspan="2">Documentation</th>
+            <th rowspan="2">Type</th>
+            <th colspan="7">Years available</th>
+        </tr>
+        <tr>
+            <th>1960</th>
+            <th>70</th>
+            <th>80</th>
+            <th>91</th>
+            <th>2000</th>
+            <th>10</th>
+            <th>22</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2">data_dictionary()</td>
+            <td rowspan="2">Data dictionary (codebook)</td>
+            <td>Microdata</td>
+            <td><i>X</i></td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+            <td><i>soon</i></td>
+        </tr>
+        <tr>
+            <td>Census tract aggregates</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>X</td>
+            <td>X</td>
+            <td><i>soon</i></td>
+        </tr>
+        <tr>
+            <td>questionnaire()</td>
+            <td>Questionnaires</td>
+            <td>Long and short</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+        </tr>
+        <tr>
+            <td>interview_manual()</td>
+            <td>Interviewer’s manual (Enumerator Instructions)</td>
+            <td>-</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
 Finally, the package includes a function to help users to manage the data chached locally.
 
 10. `censobr_cache()` 
@@ -99,7 +171,7 @@ In this example we'll be calculating the proportion of people with higher educat
 
 Since we don't need to load to memory all columns from the data, we can pass a vector with the names of the columns we're going to use. This might be necessary in more constrained computing environments. Note that by setting `add_labels = 'pt'`, the function returns labeled values for categorical variables.
 
-```{r warning = FALSE}
+```{r warning = FALSE, message=FALSE}
 pop <- read_population(year = 2010,
                        columns = c('abbrev_state', 'V0606', 'V0010', 'V6400'),
                        add_labels = 'pt',
@@ -111,14 +183,14 @@ By default, the output of the function is an `"arrow_dplyr_query"`. This is make
 
 The output of the read functions in **{censobr}** can be analyzed like a regular `data.frame` using the `{dplyr}` package. For example, one can have a quick peak into the data set with `glimpse()`
 
-```{r warning = FALSE}
+```{r warning = FALSE, message=FALSE}
 dplyr::glimpse(pop)
 ```
 
 
 In the example below, we use the `dplyr` syntax to (a) filter observations for the state of Rio de Janeiro, (b) group observations by racial group, (c) summarize the data calculating the proportion of individuals with higher education. Note that we need to add a `collect()` call at the end of our query.
 
-```{r warning = FALSE}
+```{r warning = FALSE, message=FALSE}
 df <- pop |>
       filter(abbrev_state == "RJ") |>                                                    # (a)
       compute() |>
@@ -131,7 +203,7 @@ head(df)
 ```
 Now we only need to plot the results.
 
-```{r}
+```{r, message=FALSE}
 df <- subset(df, V0606 != 'Ignorado')
 
 ggplot() +
@@ -149,7 +221,7 @@ ggplot() +
 
 In this example, we are going to map the proportion of households connected to a sewage network in Brazilian municipalities First, we can easily download the households data set with the `read_households()` function.
 
-```{r}
+```{r, message=FALSE}
 hs <- read_households(year = 2010, 
                       showProgress = FALSE)
 
@@ -157,7 +229,7 @@ hs <- read_households(year = 2010,
 
 Now we're going to (a) group observations by municipality, (b) get the number of households connected to a sewage network, (c) calculate the proportion of households connected, and (d) collect the results.
 
-```{r warning = FALSE}
+```{r warning = FALSE, message=FALSE}
 esg <- hs |> 
         compute() |>
         group_by(code_muni) |>                                             # (a)
@@ -170,7 +242,7 @@ head(esg)
 ```
 In order to create a map with these values, we are going to use the [{geobr} package](https://ipeagit.github.io/geobr/) to download the geometries of Brazilian municipalities.
 
-```{r warning = FALSE}
+```{r warning = FALSE, message=FALSE}
 library(geobr)
 
 muni_sf <- geobr::read_municipality(year = 2010,
@@ -180,7 +252,7 @@ head(muni_sf)
 
 Now we only need to merge the spatial data with our estimates and map the results.
 
-```{r warning = FALSE}
+```{r warning = FALSE, message=FALSE}
 esg_sf <- left_join(muni_sf, esg, by = 'code_muni')
 
 ggplot() +
@@ -198,14 +270,14 @@ ggplot() +
 In this final example, we're going to visualize how the amount of money people spend on rent varies spatially across the metropolitan area of São Paulo.
 
 First, let's download the municipalities of the metro area of São Paulo.
-```{r warning = FALSE}
+```{r warning = FALSE, message=FALSE}
 metro_muni <- geobr::read_metro_area(year = 2010, 
                                      showProgress = FALSE) |> 
               subset(name_metro == "RM São Paulo")
 ```
 We also need the polygons of the weighting areas (áreas de ponderação). With the code below, we download all weighting areas in the state of São Paulo, and then keep only the ones in the metropolitan region of São Paulo.
 
-```{r warning = FALSE}
+```{r warning = FALSE, message=FALSE}
 wt_areas <- geobr::read_weighting_area(code_weighting = "SP", 
                                        showProgress = FALSE,
                                        year = 2010)
@@ -217,7 +289,7 @@ head(wt_areas)
 
 Now we need to calculate the average rent spent in each weighting area. Using the national household data set, we're going to (a) filter only observations in our municipalities of interest, (b) group observations by weighting area, (c) calculate the average rent, and (d) collect the results.
 
-```{r warning = FALSE}
+```{r warning = FALSE, message=FALSE}
 rent <- hs |>
         filter(code_muni %in% metro_muni$code_muni) |>                     # (a)
         compute() |>
@@ -229,7 +301,7 @@ head(rent)
 ```
 Finally, we can merge the spatial data with our rent estimates and map the results.
 
-```{r warning = FALSE}
+```{r warning = FALSE, message=FALSE}
 rent_sf <- left_join(wt_areas, rent, by = 'code_weighting')
 
 ggplot() +
@@ -250,18 +322,18 @@ The first time the user runs a function, **{censobr}** will download the file an
 Users can manage the cached data sets using the `censobr_cache()` function. For example, users can:
 
 List cached files:
-```{r warning=FALSE}
+```{r warning=FALSE, eval=FALSE}
 censobr_cache(list_files = TRUE)
 ```
 
 Delete a particular file:
-```{r warning=FALSE}
+```{r warning=FALSE, eval=FALSE}
 censobr_cache(delete_file = "2010_emigration")
 
 ```
 
 Delete all files:
-```{r warning=FALSE}
+```{r warning=FALSE, eval=FALSE}
 censobr_cache(delete_file = "all")
 
 ```
