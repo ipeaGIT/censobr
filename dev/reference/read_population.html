@@ -127,6 +127,33 @@ the function will download the data again and overwrite the local file.</p></dd>
     <h2>Value</h2>
     <p>An arrow <code>Dataset</code> or a <code>"data.frame"</code> object.</p>
     </div>
+    <div id="-census">
+    <h2>1960 Census</h2>
+
+
+
+<p>The 1960 microdata version available in <strong>censobr</strong> is a combination of two
+versions of the Demographic Census sample. The 25% sample data from the 1960
+Census was never fully processed by IBGE - several states did not have their
+questionnaires digitized. Currently, this dataset only has data from 16 states
+of the Federation (and from a contested border region between Minas Gerais and
+Espirito Santo called Serra dos Aimores). Information is missing for the states
+of the former Northern Region, Maranhão, Piaui, Guanabara, Santa Catarina, and
+Espírito Santo. In 1965, IBGE decided to draw a probabilistic sub-sample of
+approximately 1.27% of the population, including all units of the federation.
+With this data, IBGE produced several official reports at the time. The data
+from <strong>censobr</strong> is the combination of these two datasets.</p>
+<p>We processed and ensured the consistency of the 1.27% sample data, which was
+partially corrupted. We also created a sample weight variable to correct for
+disproportionalities and to expand te sample to the total population. For the
+data from the 25% sample, the weights expand to the municipal totals.
+Meanwhile, for the data from the 1.27% sample, the weights expand to the state
+totals. Additionally, we constructed a few variables that allow for the
+approximate incorporation of the complex sample design, enabling the proper
+calculation of standard errors and confidence intervals.</p>
+<p>You can read more about the 1960 Census and find a thogorugh documentation of
+how this dataset was processed on this link <a href="https://github.com/antrologos/ConsistenciaCenso1960Br" class="external-link">https://github.com/antrologos/ConsistenciaCenso1960Br</a>.</p>
+    </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Microdata:
@@ -157,7 +184,7 @@ the function will download the data again and overwrite the local file.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
