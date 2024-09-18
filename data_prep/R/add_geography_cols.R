@@ -18,7 +18,6 @@ add_geography_cols <- function(arrw, year){
                    year == 2022 ~ 'CD_MUN'
                    )
 
-
   if(year %in% c(2000, 2010)){
     arrw <- mutate(arrw,
                    code_muni = get(col))
@@ -186,7 +185,71 @@ add_geography_cols <- function(arrw, year){
     }
 
 
+  # 1970: MS pertence a MT , e TO pertence a GO
+  if(year == 1970){
+    arrw <- mutate(arrw,
+                   name_state_1970 = case_when(
+                     code_state == 11 ~'Rondônia',
+                     code_state == 12 ~'Acre',
+                     code_state == 13 ~'Amazonas',
+                     code_state == 14 ~'Roraima',
+                     code_state == 15 ~'Pará',
+                     code_state == 16 ~'Amapá',
+                     code_state == 17 ~'Goiás',
+                     code_state == 21 ~'Maranhão',
+                     code_state == 22 ~'Piauí',
+                     code_state == 23 ~'Ceará',
+                     code_state == 24 ~'Rio Grande do Norte',
+                     code_state == 25 ~'Paraíba',
+                     code_state == 26 ~'Pernambuco',
+                     code_state == 27 ~'Alagoas',
+                     code_state == 28 ~'Sergipe',
+                     code_state == 29 ~'Bahia',
+                     code_state == 31 ~'Minas Gerais',
+                     code_state == 32 ~'Espírito Santo',
+                     code_state == 33 ~'Rio de Janeiro',
+                     code_state == 35 ~'São Paulo',
+                     code_state == 41 ~'Paraná',
+                     code_state == 42 ~'Santa Catarina',
+                     code_state == 43 ~'Rio Grande do Sul',
+                     code_state == 50 ~'Mato Grosso',
+                     code_state == 51 ~'Mato Grosso',
+                     code_state == 52 ~'Goiás',
+                     code_state == 53 ~'Distrito Federal',
+                     .default = NA))
 
+    # abbrev name
+    arrw <- mutate(arrw,
+                   abbrev_state_1970 = case_when(
+                     code_state == 11 ~'RO',
+                     code_state == 12 ~'AC',
+                     code_state == 13 ~'AM',
+                     code_state == 14 ~'RR',
+                     code_state == 15 ~'PA',
+                     code_state == 16 ~'AP',
+                     code_state == 17 ~'GO',
+                     code_state == 21 ~'MA',
+                     code_state == 22 ~'PI',
+                     code_state == 23 ~'CE',
+                     code_state == 24 ~'RN',
+                     code_state == 25 ~'PB',
+                     code_state == 26 ~'PE',
+                     code_state == 27 ~'AL',
+                     code_state == 28 ~'SE',
+                     code_state == 29 ~'BA',
+                     code_state == 31 ~'MG',
+                     code_state == 32 ~'ES',
+                     code_state == 33 ~'RJ',
+                     code_state == 35 ~'SP',
+                     code_state == 41 ~'PR',
+                     code_state == 42 ~'SC',
+                     code_state == 43 ~'RS',
+                     code_state == 50 ~'MT',
+                     code_state == 51 ~'MT',
+                     code_state == 52 ~'GO',
+                     code_state == 53 ~'DF',
+                     .default = NA))
+  }
 
   # region name
   arrw <- mutate(arrw,
@@ -231,7 +294,7 @@ add_geography_cols <- function(arrw, year){
   }
 
   if (year %in% c(1970)) {
-      arrw <- relocate(arrw, c(code_muni, code_muni_1970, code_state, abbrev_state, name_state, code_region, name_region))
+      arrw <- relocate(arrw, c(code_muni, code_muni_1970, code_state, abbrev_state, abbrev_state_1970, name_state, name_state_1970, code_region, name_region))
       }
 
   # all code columns to integer (except code_weighting)

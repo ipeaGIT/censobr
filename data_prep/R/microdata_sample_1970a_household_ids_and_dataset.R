@@ -11,8 +11,8 @@ library(here)
 # usefull functions ------------------------------------------------------------
 
 tab = function(x, y){
-        CensusData[, .N, by = c(x, y)] %>%
-                arrange_at(.vars = vars(all_of(c(x, y)))) %>%
+        CensusData[, .N, by = c(x, y)] |>
+                arrange_at(.vars = vars(all_of(c(x, y)))) |>
                 pivot_wider(names_from = y, values_from = N)
 }
 
@@ -21,7 +21,7 @@ tab = function(x, y){
 
 options(scipen = 999)
 setDTthreads(threads = 4)
-census_dir = "D:/Dropbox/Bancos_Dados/Censos/Censo 1970/"
+census_dir = "R:/Dropbox/censoBR/1970/microdados/"
 
 # Opening data -----------------------------------------------------------------
 
@@ -30,24 +30,24 @@ househould_vars = c("v001", "v002", "v003", "v004", "v005",
                     "v008", "v009", "v010", "v011", "v012",
                     "v013", "v014", "v015", "v016", "v017",
                     "v018", "v019", "v020", "v021",
-                    "v024", "v025", "v041", 
-                    
-                    "MunicCode1970", "MunicCode2010", 
+                    "v024", "v025", "v041",
+
+                    "MunicCode1970" , "MunicCode2010",
                     "v054",
-                    
+
                     # Temporarias
-                    "idpessoa", 
+                    "idpessoa",
                     "v026",     # tipo da variável idade idade
                     "v027"     # idade
                     )
 
-CensusData <- fread(paste0(census_dir,"Censo.1970.brasil.pessoas.amostra.25porcento.csv"), 
-                    select = unique(c(toupper(househould_vars), 
+CensusData <- fread(paste0(census_dir,"Censo.1970.brasil.pessoas.amostra.25porcento_rogerioSetembro2024.csv"),
+                    select = unique(c(toupper(househould_vars),
                                       tolower(househould_vars),
                                       househould_vars)))
 
 
-CensusData <- CensusData %>% setNames(tolower(names(.)))
+CensusData <- setNames(CensusData, tolower(names(CensusData)))
 
 
 # Creating a household ID ------------------------------------------------------
@@ -58,7 +58,7 @@ CensusData[ , flag := NA_real_]
 CensusData[ , ind_collective := v007]
 CensusData[is.na(ind_collective), ind_collective := 0]
 
-# (1) In private households, a person who is head of a family starts a new household 
+# (1) In private households, a person who is head of a family starts a new household
 # (except if her family is a secondary family)
 CensusData[ind_collective == 0 & v025 == 1 & (v006 %in% c(1,2)), flag := 1]
 
@@ -86,12 +86,12 @@ CensusData[,  idhh_locality := (idhh_preliminary * 100 + v003)*10 + v004]
 CensusData[, household_id := zoo::na.locf(idhh_locality)]
 
 
-# (5.1) Assigning NA to collective households 
+# (5.1) Assigning NA to collective households
 CensusData[,  mean_v007 := mean(v007, na.rm = T), by = household_id]
 CensusData[mean_v007 %in% 1,  household_id := NA_real_]
 CensusData[is.nan(mean_v007),  household_id := NA_real_]
 
-# (5.2) Assigning NA to improvised households 
+# (5.2) Assigning NA to improvised households
 CensusData[,  mean_v008 := mean(v008, na.rm = T), by = household_id]
 CensusData[mean_v008 %in% 2,  household_id := NA_real_]
 CensusData[is.nan(mean_v008),  household_id := NA_real_]
@@ -102,13 +102,13 @@ CensusData[v006 %in% 0,  household_id := NA_real_]
 CensusData[, n_pessoas_dom := .N, by = household_id]
 CensusData[is.na(household_id), n_pessoas_dom := NA_real_]
 
-CensusData[v006 == 1, .N, by = c("v005", "n_pessoas_dom")] %>%
-        arrange(n_pessoas_dom) %>%
-        pivot_wider(names_from = "n_pessoas_dom", values_from = N) %>%
-        arrange(v005) %>% View()
+CensusData[v006 == 1, .N, by = c("v005", "n_pessoas_dom")] |>
+        arrange(n_pessoas_dom) |>
+        pivot_wider(names_from = "n_pessoas_dom", values_from = N) |>
+        arrange(v005) |> View()
 
-selected = CensusData[v006 == 1 & n_pessoas_dom > v005]$household_id  %>% unique()
-CensusData[household_id %in% selected] %>% View()
+selected = CensusData[v006 == 1 & n_pessoas_dom > v005]$household_id  |> unique()
+CensusData[household_id %in% selected] |> View()
 
 # Building the households dataset------------------------------------------------------------------------------
 
@@ -123,7 +123,7 @@ CensusData[v026 %in% c(3,4), age := as.numeric(v027)]
 
 # Recoding the total individual income
 CensusData[,             totalIncome := 0]
-CensusData[v041 == 9999, totalIncome := 0] 
+CensusData[v041 == 9999, totalIncome := 0]
 CensusData[v041 <= 9998, totalIncome := v041]
 
 # Some people will have zero income
@@ -146,14 +146,14 @@ CensusData[, wgthh := max(wgthh), by = household_id]
 CensusData[is.na(household_id), wgthh := NA_real_]
 
 
-# Aggregating persons into household registries 
-householdData <- CensusData[!is.na(household_id), 
-                            
+# Aggregating persons into household registries
+householdData <- CensusData[!is.na(household_id),
+
                             list(v001 = mean(v001, na.rm = T),
                                  v002 = mean(v002, na.rm = T),
                                  v003 = mean(v003, na.rm = T),
                                  v004 = mean(v004, na.rm = T),
-                                 
+
                                  v006 = mean(v006, na.rm = T),
                                  v007 = mean(v007, na.rm = T),
                                  v008 = mean(v008, na.rm = T),
@@ -169,31 +169,30 @@ householdData <- CensusData[!is.na(household_id),
                                  v018 = mean(v018, na.rm = T),
                                  v019 = mean(v019, na.rm = T),
                                  v020 = mean(v020, na.rm = T),
-                                 
+
                                  v021 = first(v021),
-                                 
+
                                  wgthh                    = mean(wgthh, na.rm = T),
                                  numberDwellers           = .N,
                                  numberDwellers_hhIncome  = mean(numberRelatives, na.rm = T),
-                                 
+
                                  hhIncome       = mean(hhIncome, na.rm = T),
                                  hhIncomePerCap = mean(hhIncomePerCap, na.rm = T),
-                                 
+
                                  municcode1970  = first(municcode1970),
-                                 municcode2010  = first(municcode1970)),
-                            
+                                 municcode2010  = first(municcode2010)),
+
                             by = household_id]
 
 # ------------------------------------------------------------------------------
 
+wd_1970 = "R:/Dropbox/censoBR/1970/microdados/"
 
-wd_1970 = "D:/Dropbox/Bancos_Dados/Censos/censoBR/1970/"
-
-fwrite(x = householdData, 
+fwrite(x = householdData,
        file = paste0(wd_1970, "Censo.1970.brasil.domicilios.amostra.25porcento.csv"))
 
 crosswalk_personid_hhid <- CensusData[, .(idpessoa, household_id)]
-fwrite(x = crosswalk_personid_hhid, 
+fwrite(x = crosswalk_personid_hhid,
        file = paste0(wd_1970, "crosswalk_personid_hhid.csv"))
 
 
