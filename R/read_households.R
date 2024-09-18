@@ -12,6 +12,9 @@
 #' @template cache
 #'
 #' @return An arrow `Dataset` or a `"data.frame"` object.
+#'
+#' @template 1960_census_section
+#'
 #' @export
 #' @family Microdata
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
@@ -34,7 +37,7 @@ read_households <- function(year = 2010,
   checkmate::assert_string(add_labels, pattern = 'pt', null.ok = TRUE)
 
   # data available for the years:
-  years <- c(1970, 1980, 1991, 2000, 2010)
+  years <- c(1960, 1970, 1980, 1991, 2000, 2010)
   if (isFALSE(year %in% years)) { stop(paste0("Error: Data currently only available for the years ",
                                               paste(years, collapse = " ")))}
 
@@ -66,6 +69,11 @@ read_households <- function(year = 2010,
                                 year = year,
                                 lang = add_labels)
   }
+
+  # 1960 warning
+  if(year==1960){
+    warning("This version of the 1960 microdata was compiled by {censobr} from two different releases elaborated by IBGE. The data was processed to ensure consistency and new variables added. See the documentation")
+    }
 
   ### output format
   if (isTRUE(as_data_frame)) { return( dplyr::collect(df) )
