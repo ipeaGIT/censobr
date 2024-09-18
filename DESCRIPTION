@@ -32,15 +32,15 @@ Imports:
     arrow (>= 15.0.1),
     checkmate,
     curl (>= 5.0.0),
+    DBI,
     dplyr,
+    duckdb,
     duckplyr,
     fs,
     tools
 Suggests:
     covr,
-    DBI,
     dbplyr,
-    duckdb,
     geobr,
     ggplot2 (>= 3.3.1),
     rmarkdown,

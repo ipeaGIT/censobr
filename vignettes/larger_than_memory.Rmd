@@ -45,7 +45,7 @@ Because of the seamless integration between `{arrow}` and  `{dplyr}`, Arrow tabl
 Without calling one of these, the query is just prepared but not executed, which is useful for delaying heavy computations until needed.
 
 
-In the example below, we create a new Arrow table that only includes the deaths records of men in the state of Rio de Janeiro without loading the data to memory. Note that we only piece of data we `collect()` (i.e. load to memory) here are the first 10 observation of the data.
+In the example below, we create a new Arrow table that only includes the deaths records of men in the state of Rio de Janeiro without loading the data to memory. Note that we only piece of data we `collect()` (i.e. load to memory) here are the first observations of the data.
 
 ```{r warning = FALSE, message=FALSE}
 library(dplyr)
@@ -54,7 +54,7 @@ library(dplyr)
 rio <- df |>
       filter(V0704 == 'Masculino' & abbrev_state == 'RJ')
 
-head(rio, n = 10) |> 
+head(rio) |> 
   collect()
 
 ```
@@ -108,11 +108,12 @@ head(rio2)
 
 A third alternative is the new `{duckplyr}` package. This this library is under development so it still does not cover many of the `{dplyr}`verbs. (See [here](https://duckdb.org/2024/04/02/duckplyr.html)). Nonetheless, it looks like a really promising and seamless approach that allow users to leverage the powerful capabilities of {duckdb}.
 
-```{r warning = FALSE, eval = FALSE}
+```{r warning = FALSE, message = FALSE}
 library(duckplyr)
 
 rio3 <- df |>
         duckplyr::filter(V0704 == 'Masculino' & abbrev_state == 'RJ')
 
-head(rio3) |> collect()
+head(rio3) |> 
+  collect()
 ```

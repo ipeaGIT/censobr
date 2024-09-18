@@ -28,8 +28,8 @@ download_file <- function(file_url = parent.frame()$file_url,
   cache_message(local_file, cache)
 
   # this is necessary to silence download message when reading local file
-  if(file.exists(local_file) & isTRUE(cache)){
-    showProgress <- FALSE
+  if (file.exists(local_file) & isTRUE(cache)) {
+    return(local_file)
   }
 
   # download files

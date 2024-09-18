@@ -53,7 +53,7 @@ The package currently includes 6 main functions to download census data:
       <th rowspan="2">Origem</th>
       <th rowspan="2">Unidade</th>
       <th rowspan="2">Definição</th>
-      <th colspan="6">Disponibilidade</th>
+      <th colspan="7">Disponibilidade</th>
     </tr>
     <tr>
       <th>1960</th>
