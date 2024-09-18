@@ -95,7 +95,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Census documentation</h1>
             
-            <h4 data-toc-skip class="date">2024-09-13</h4>
+            <h4 data-toc-skip class="date">2024-09-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/tree/main/vignettes/documentation.Rmd" class="external-link"><code>vignettes/documentation.Rmd</code></a></small>
       <div class="hidden name"><code>documentation.Rmd</code></div>
@@ -105,15 +105,175 @@
     
     
 <p>The <strong>censobr</strong> package includes a few functions to help
-users navigate Brazilian census data, its variables and methodology. All
-of these functions download supporting documents in either
+users navigate Brazilian census data, its variables and methodology.</p>
+<table class="table">
+<thead>
+<tr>
+<th rowspan="2">
+Function
+</th>
+<th rowspan="2">
+Documentation
+</th>
+<th rowspan="2">
+Type
+</th>
+<th colspan="7">
+Years available
+</th>
+</tr>
+<tr>
+<th>
+1960
+</th>
+<th>
+70
+</th>
+<th>
+80
+</th>
+<th>
+91
+</th>
+<th>
+2000
+</th>
+<th>
+10
+</th>
+<th>
+22
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td rowspan="2">
+data_dictionary()
+</td>
+<td rowspan="2">
+Data dictionary (codebook)
+</td>
+<td>
+Microdata
+</td>
+<td>
+<i>X</i>
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+<i>soon</i>
+</td>
+</tr>
+<tr>
+<td>
+Census tract aggregates
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+<i>soon</i>
+</td>
+</tr>
+<tr>
+<td>
+questionnaire()
+</td>
+<td>
+Questionnaires
+</td>
+<td>
+Long and short
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+</tr>
+<tr>
+<td>
+interview_manual()
+</td>
+<td>
+Interviewer’s manual (Enumerator Instructions)
+</td>
+<td>
+-
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+<td>
+X
+</td>
+</tr>
+</tbody>
+</table>
+<p>All of these functions download supporting documents in either
 <code>.html</code> or <code>.pdf</code> format, and open the documents
-on a web browser.</p>
-<p>Like all other datasets in {censobr}, these support documents are
-downloaded and cached locally the first time when users run the
-function. This way, when users need to take a peak at the documentation
-again, the functions simply load local files, making it super quick and
-convenient.</p>
+on a web browser. Like all other datasets in <strong>{censobr}</strong>,
+these support documents are downloaded and cached locally the first time
+when users run the function. This way, when users need to take a peak at
+the documentation again, the functions simply load local files, making
+it super quick and convenient.</p>
 <div class="section level2">
 <h2 id="data-dictionary">Data Dictionary<a class="anchor" aria-label="anchor" href="#data-dictionary"></a>
 </h2>
