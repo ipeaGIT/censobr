@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">censobr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.3.29999</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.3.99999</span>
       </span>
     </div>
 
@@ -75,7 +75,9 @@
 <li>New vignette showing how to work with larger-than-memory data. Closes <a href="https://github.com/ipeaGIT/censobr/issues/42" class="external-link">#42</a>. The vignette still needs to be expanded with more examples, though.</li>
 </ul></li>
 <li>Minor changes
-<ul><li>Removed dependency on the {httr} package</li>
+<ul><li>Updated Vignettes Closes issue <a href="https://github.com/ipeaGIT/censobr/issues/51" class="external-link">#51</a>
+</li>
+<li>Removed dependency on the {httr} package</li>
 <li>Now using <code><a href="https://rdrr.io/pkg/curl/man/multi_download.html" class="external-link">curl::multi_download()</a></code> to download files in parallel. This brings the advantage that the pacakge now automatically detects whether the data/documentation file has been upated and should be downloaded again.</li>
 </ul></li>
 <li>Changes to data sets and files included in this version:
