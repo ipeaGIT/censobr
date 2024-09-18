@@ -21,13 +21,13 @@ knitr::opts_chunk$set(
 The **{censobr}** package includes a few functions to help users navigate Brazilian census data, its variables and methodology. 
 
 
-<table>
+<table cellpadding="0" cellspacing="0" style="border-collapse:collapse" border="1">
     <thead>
         <tr>
-            <th rowspan="2">Function</th>
-            <th rowspan="2">Documentation</th>
-            <th rowspan="2">Type</th>
-            <th colspan="7">Years available</th>
+            <th rowspan="2"><center>Function</center></th>
+            <th rowspan="2"><center>Documentation</center></th>
+            <th rowspan="2"><center>Type</center></th>
+            <th colspan="7"><center>Years available</center></th>
         </tr>
         <tr>
             <th>1960</th>

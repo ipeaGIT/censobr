@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 ```
 
-**{censobr}** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow platform](https://arrow.apache.org/docs/r/), which allows users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
+**{censobr}** is an R package to download data from Brazil's Population Census. It provides a very simple and efficient way to download and read the data sets and documentation of all the population censuses taken in and after 1960 in the country. The **{censobr}** package is built on top of the [Arrow platform](https://arrow.apache.org/docs/r/), which allows users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
 
 # Installation
 
@@ -46,14 +46,14 @@ The package currently includes 6 main functions to download census data:
 5. `read_emigration()`
 6. `read_tracts()`
 
-<table border="1" cellpadding="5" cellspacing="0">
+<table cellpadding="0" cellspacing="0" style="border-collapse:collapse" border="1">
   <thead>
     <tr>
-      <th rowspan="2">Função</th>
-      <th rowspan="2">Origem</th>
-      <th rowspan="2">Unidade</th>
-      <th rowspan="2">Definição</th>
-      <th colspan="7">Disponibilidade</th>
+      <th rowspan="2"><center>Função</center></th>
+      <th rowspan="2"><center>Origem</center></th>
+      <th rowspan="2"><center>Unidade</center></th>
+      <th rowspan="2"><center>Definição</center></th>
+      <th colspan="7"><center>Disponibilidade</center></th>
     </tr>
     <tr>
       <th>1960</th>
@@ -155,7 +155,7 @@ The package currently includes 6 main functions to download census data:
 9. `interview_manual()`
 
 
-Finally, the package includes a function to help users to manage the data chached locally.
+Finally, the package includes a function to help users to manage the data cached locally.
 
 10. `censobr_cache()` 
 
