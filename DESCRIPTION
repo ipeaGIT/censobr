@@ -34,6 +34,7 @@ Imports:
     curl (>= 5.0.0),
     dplyr,
     duckplyr,
+    fs,
     tools
 Suggests:
     covr,

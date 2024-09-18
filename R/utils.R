@@ -22,7 +22,7 @@ download_file <- function(file_url = parent.frame()$file_url,
   if (isTRUE(cache) & !dir.exists(censobr_env$cache_dir)) { dir.create(censobr_env$cache_dir, recursive=TRUE) }
 
   # path to local file
-  local_file <- paste0(censobr_env$cache_dir,"/",file_name)
+  local_file <- fs::path(censobr_env$cache_dir, file_name)
 
   # cache message
   cache_message(local_file, cache)

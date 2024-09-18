@@ -29,7 +29,7 @@ set_censobr_cache_dir <- function(path = NULL) {
 
   if (is.null(path)) {
     cache_d <- paste0('censobr/data_release_', censobr_env$data_release)
-    censobr_env$cache_dir <- tools::R_user_dir(cache_d, which = 'cache')
+    censobr_env$cache_dir <- fs::path(tools::R_user_dir(cache_d, which = 'cache'))
   }
 
   message(paste("censobr files will be cached at ", censobr_env$cache_dir))

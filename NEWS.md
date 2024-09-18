@@ -14,8 +14,10 @@
   * Included additional columns and fixed minor errors in data dictionary of 2010 microdata. Closes [#45](https://github.com/ipeaGIT/censobr/issues/45) 
 
 * New data set and files included in this version:
-  * 1991 census: Data dictionary for microdata of population and households. Closes [#28](https://github.com/ipeaGIT/censobr/issues/28)
   * 1960 census: Interview manual and data dictionary for microdata of population and households
+  * 1970: fixed geography columns. Closes [#52](https://github.com/ipeaGIT/censobr/issues/52)
+  * 1991 census: Data dictionary for microdata of population and households. Closes [#28](https://github.com/ipeaGIT/censobr/issues/28)
+  
 
 
 

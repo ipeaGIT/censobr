@@ -64,7 +64,8 @@ censobr_cache <- function(list_files = TRUE,
   # print file names
   if(isTRUE(list_files)){
     message('Files currently chached:')
-    message(paste0(files, collapse = '\n'))
+    message(paste0(fs::path(files), collapse = '\n'))
+
   }
 }
 
