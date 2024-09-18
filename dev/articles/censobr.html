@@ -105,7 +105,10 @@
     
     
 <p><strong>{censobr}</strong> is an R package to download data from
-Brazil’s Population Census. The package is built on top of the <a href="https://arrow.apache.org/docs/r/" class="external-link">Arrow platform</a>, which allows
+Brazil’s Population Census. It provides a very simple and efficient way
+to download and read the data sets and documentation of all the
+population censuses taken in and after 1960 in the country. The
+<strong>{censobr}</strong> package is built on top of the <a href="https://arrow.apache.org/docs/r/" class="external-link">Arrow platform</a>, which allows
 users to work with larger-than-memory census data using <a href="https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr" class="external-link">{dplyr}
 familiar functions</a>.</p>
 <div class="section level2">
@@ -132,23 +135,33 @@ data:</p>
 <li><code><a href="../reference/read_emigration.html">read_emigration()</a></code></li>
 <li><code><a href="../reference/read_tracts.html">read_tracts()</a></code></li>
 </ol>
-<table border="1" cellpadding="5" cellspacing="0" class="table">
+<table cellpadding="0" cellspacing="0" style="border-collapse:collapse" border="1" class="table">
 <thead>
 <tr>
 <th rowspan="2">
+<center>
 Função
+</center>
 </th>
 <th rowspan="2">
+<center>
 Origem
+</center>
 </th>
 <th rowspan="2">
+<center>
 Unidade
+</center>
 </th>
 <th rowspan="2">
+<center>
 Definição
+</center>
 </th>
 <th colspan="7">
+<center>
 Disponibilidade
+</center>
 </th>
 </tr>
 <tr>
@@ -376,7 +389,7 @@ convenient information on data variables and methodology.:</p>
 <li><code><a href="../reference/interview_manual.html">interview_manual()</a></code></li>
 </ol>
 <p>Finally, the package includes a function to help users to manage the
-data chached locally.</p>
+data cached locally.</p>
 <ol start="10" style="list-style-type: decimal">
 <li><code><a href="../reference/censobr_cache.html">censobr_cache()</a></code></li>
 </ol>
