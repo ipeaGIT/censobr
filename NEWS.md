@@ -6,6 +6,7 @@
   * New vignette showing how to work with larger-than-memory data. Closes [#42](https://github.com/ipeaGIT/censobr/issues/42). The vignette still needs to be expanded with more examples, though.
 
 * Minor changes
+  * Updated Vignettes Closes issue [#51](https://github.com/ipeaGIT/censobr/issues/51)
   * Removed dependency on the {httr} package
   * Now using `curl::multi_download()` to download files in parallel. This brings the advantage that the pacakge now automatically detects whether the data/documentation file has been upated and should be downloaded again.
 

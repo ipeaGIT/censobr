@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 ```
 
-Perhaps the most commonly used datasets from Brazilian censuses are the microdata of individuals and households. Nonetheless, IBGE also makes available some extremely data on population and environmental characteristics aggregated at the census tract level. In this vignette, we show how to use the **censobr** package to  easily access census tract-level data using the `read_tracts()` function.
+Perhaps the most commonly used datasets from Brazilian censuses are the microdata of individuals and households. Nonetheless, IBGE also makes available some extremely data on population and environmental characteristics aggregated at the census tract level. In this vignette, we show how to use the **{censobr}** package to  easily access census tract-level data using the `read_tracts()` function.
 
 At the moment, this function only includes data from the 2010 census.
 

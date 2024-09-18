@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The **censobr** package includes a few functions to help users navigate Brazilian census data, its variables and methodology. 
+The **{censobr}** package includes a few functions to help users navigate Brazilian census data, its variables and methodology. 
 
 
 <table>
