@@ -81,7 +81,7 @@ read_population <- function(year = 2010,
 
   # 1960 warning
   if(year==1960){
-    warning("This version of the 1960 microdata was compiled by {censobr} from two different releases elaborated by IBGE. The data was processed to ensure consistency and new variables added. See the documentation")
+    warning("This version of the 1960 microdata was compiled by {censobr} from two different releases elaborated by IBGE. The data was processed to ensure consistency and new variables added. See the documentation.")
   }
 
   ### output format

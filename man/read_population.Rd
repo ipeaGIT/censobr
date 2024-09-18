@@ -59,16 +59,16 @@ approximately 1.27\% of the population, including all units of the federation.
 With this data, IBGE produced several official reports at the time. The data
 from \strong{{censobr}} is the combination of these two datasets.
 
-We processed and ensured the consistency of the 1.27\% sample data, which was
-partially corrupted. We also created a sample weight variable to correct for
-disproportionalities and to expand te sample to the total population. For the
-data from the 25\% sample, the weights expand to the municipal totals.
-Meanwhile, for the data from the 1.27\% sample, the weights expand to the state
-totals. Additionally, we constructed a few variables that allow for the
-approximate incorporation of the complex sample design, enabling the proper
-calculation of standard errors and confidence intervals.
+We pre-processed the 1.27\% sample data to ensured data consistency, given the
+original data was partially corrupted. We also created a sample weight variable
+to correct for unbalanced data and to expand te sample to the total
+population. For the data from the 25\% sample, the weights expand to the
+municipal totals. Meanwhile, for the data from the 1.27\% sample, the weights
+expand to the state totals. Additionally, we constructed a few variables that
+allow for the approximate incorporation of the complex sample design, enabling
+the proper calculation of standard errors and confidence intervals.
 
-You can read more about the 1960 Census and find a thogorugh documentation of
+You can read more about the 1960 Census and find a thorough documentation of
 how this dataset was processed on this link \url{https://github.com/antrologos/ConsistenciaCenso1960Br}.
 }
 

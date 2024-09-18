@@ -9,7 +9,7 @@ coverage](https://codecov.io/gh/ipeaGIT/censobr/branch/main/graph/badge.svg)](ht
      maturing](https://img.shields.io/badge/lifecycle-maturing-yellow.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![R-CMD-check](https://github.com/ipeaGIT/censobr/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/ipeaGIT/censobr/actions?query=branch%3Amain)
 
-**{censobr}** is an R package to download data from Brazil's Population Census. The package is built on top of the [Arrow platform](https://arrow.apache.org/docs/r/), which allows users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
+**{censobr}** is an R package to download data from Brazil's Population Census. It provides a very simple and efficient way to download and read the data sets and documentation of all the population censuses taken in and after 1960 in the country. The package is built on top of the [Arrow platform](https://arrow.apache.org/docs/r/), which allows users to work with larger-than-memory census data using [{dplyr} familiar functions](https://arrow.apache.org/docs/r/articles/arrow.html#analyzing-arrow-data-with-dplyr).
 
 
 ## Installation
@@ -87,7 +87,7 @@ If you would like to contribute to **{censobr}**, you're welcome to open an issu
 
 #### **Related projects**
 
-Afawk, **{censobr}** is the only R package that provides fast and convenient access to data of Brazilian censuses. The [microdadosBrasil](https://github.com/lucasmation/microdadosBrasil) package used to provide access to microdata of several public data sets, but unfortunately, it has been discontinued.
+As far as we know, **{censobr}** is the only R package that provides fast and convenient access to the complete data sets and documentation of Brazilian censuses. The [microdadosBrasil](https://github.com/lucasmation/microdadosBrasil) package used to provide access to microdata of several public data sets, but unfortunately, it has been discontinued.
 
 #### **Similar packages for other countries**
 - Canada: [cancensus](https://mountainmath.github.io/cancensus/)

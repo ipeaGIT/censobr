@@ -210,64 +210,12 @@ table(df2$V1006)
 
 
 
-# NEXT CHANGES  ---------------------------
-#
-# #> using cache_dir and data_release as global variables
-# https://stackoverflow.com/questions/12598242/global-variables-in-packages-in-r
-#
-# censobr_env <- new.env()
-# censobr_env$data_release <- 'v0.1.0'
-#
-
-
-#> cache function delete data from previous package versions
-
-# current cache
-pkgv <- paste0('censobr_', 'v0.1.0' )
-cache_dir <- tools::R_user_dir(pkgv, which = 'cache')
-
-# determine old cache
-dir_above <- dirname(cache_dir)
-all_cache <- list.files(dir_above, pattern = 'censobr',full.names = TRUE)
-old_cache <- all_cache[!grepl(pkgv, all_cache)]
-
-# delete
-unlink(old_cache, recursive = TRUE)
-
-
-library(censobr)
-
-censobr_cache(delete_file = 'all')
-
-interview_manual(year = 2010)
-interview_manual(year = 2000)
-interview_manual(year = 1991) #
-interview_manual(year = 1980) #
-interview_manual(year = 1970)
 
 
 
 
-##### tracts data ------------------------
 
-df_ba <- read_tracts(year = 2010,
-                  dataset = 'Basico',
-                  showProgress = TRUE
-                  )
 
-df_do <- read_tracts(year = 2010,
-                     dataset = 'Domicilio',
-                     showProgress = TRUE
-                     )
-
-df_pr <- read_tracts(year = 2010,
-                  dataset = 'PessoaRenda',
-                  showProgress = TRUE
-                  )
-
-dplyr::glimpse(df)
-
-df$domicilio03
 
 
 ##### downloads ------------------------
