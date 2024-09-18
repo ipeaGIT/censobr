@@ -13,11 +13,14 @@ names(hh)
 
 
 pop <- pop |>
-  rename_with(~ ifelse(startsWith(., "v"), sub("^v", "V", .), .))
+  rename_with(~ ifelse(startsWith(., "v"), sub("^v", "V", .), .)) |>
+  rename(code_muni_1960 = code_muni)
+
 
 
 hh <- hh |>
-  rename_with(~ ifelse(startsWith(., "v"), sub("^v", "V", .), .))
+  rename_with(~ ifelse(startsWith(., "v"), sub("^v", "V", .), .)) |>
+  rename(code_muni_1960 = code_muni)
 
 
 names(pop)
