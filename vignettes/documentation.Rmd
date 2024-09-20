@@ -41,8 +41,8 @@ The **{censobr}** package includes a few functions to help users navigate Brazil
     </thead>
     <tbody>
         <tr>
-            <td rowspan="2">data_dictionary()</td>
-            <td rowspan="2">Data dictionary (codebook)</td>
+            <td rowspan="2" valign="middle">data_dictionary()</td>
+            <td rowspan="2" valign="middle">Data dictionary (codebook)</td>
             <td>Microdata</td>
             <td><i>X</i></td>
             <td>X</td>
@@ -96,7 +96,7 @@ All of these functions download supporting documents in either `.html` or `.pdf`
 
 # Data Dictionary
 
-The `data_dictionary()` indicate the definition of each variable, and the meaning of their categories in the case of categorical variables. The function currently covers the data dictionaries for all Brazilian censuses since 1970 (`1970`, `1980`, `1991`, `2000` and `2010`), and it includes dictionaries for the variables of both microdata (sample portion of the census) and for the variables available in census tract-level aggregate data.
+The `data_dictionary()` indicate the definition of each variable, and the meaning of their categories in the case of categorical variables. The function currently covers the data dictionaries for all Brazilian censuses since 1960 (`19960`, `1970`, `1980`, `1991`, `2000` and `2010`), and it includes dictionaries for the variables of both microdata (sample portion of the census) and for the variables available in census tract-level aggregate data.
 
 
 ```{r, eval = FALSE}
@@ -118,11 +118,11 @@ Here, users need to pass the `year` parameter indicating the edition of the cens
 
 ```{r, eval = FALSE}
 # short questionnaire
-questionnaire(year = 2010, 
+questionnaire(year = 2022, 
               type = 'short')
 
 # long questionnaire
-questionnaire(year = 2010, 
+questionnaire(year = 2022, 
               type = 'long')
 ```
 
@@ -135,9 +135,10 @@ Manuals for all censuses since 1970 are available.
 
 ```{r, eval = FALSE}
 # 2010
-interview_manual(year = 2010)
+interview_manual(year = 2022)
 
 # 1970
-interview_manual(year = 1970)
+interview_manual(year = 1960)
+
 ```
 

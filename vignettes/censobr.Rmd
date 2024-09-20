@@ -140,9 +140,9 @@ The package currently includes 6 main functions to download census data:
       <td></td>
       <td></td>
       <td></td>
-      <td>em breve</td>
+      <td><i>em breve</i></td>
       <td>X</td>
-      <td>em breve</td>
+      <td><i>em breve</i></td>
     </tr>
   </tbody>
 </table>
