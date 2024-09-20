@@ -156,10 +156,10 @@ Years available
 </thead>
 <tbody>
 <tr>
-<td rowspan="2">
+<td rowspan="2" valign="middle">
 data_dictionary()
 </td>
-<td rowspan="2">
+<td rowspan="2" valign="middle">
 Data dictionary (codebook)
 </td>
 <td>
@@ -288,11 +288,11 @@ it super quick and convenient.</p>
 <p>The <code><a href="../reference/data_dictionary.html">data_dictionary()</a></code> indicate the definition of each
 variable, and the meaning of their categories in the case of categorical
 variables. The function currently covers the data dictionaries for all
-Brazilian censuses since 1970 (<code>1970</code>, <code>1980</code>,
-<code>1991</code>, <code>2000</code> and <code>2010</code>), and it
-includes dictionaries for the variables of both microdata (sample
-portion of the census) and for the variables available in census
-tract-level aggregate data.</p>
+Brazilian censuses since 1960 (<code>19960</code>, <code>1970</code>,
+<code>1980</code>, <code>1991</code>, <code>2000</code> and
+<code>2010</code>), and it includes dictionaries for the variables of
+both microdata (sample portion of the census) and for the variables
+available in census tract-level aggregate data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Microdata variables</span></span>
 <span><span class="fu"><a href="../reference/data_dictionary.html">data_dictionary</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
@@ -316,11 +316,11 @@ households, or the <code>'short'</code> one that is used in the sample
 component of the cesus.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># short questionnaire</span></span>
-<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
+<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2022</span>, </span>
 <span>              type <span class="op">=</span> <span class="st">'short'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># long questionnaire</span></span>
-<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
+<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2022</span>, </span>
 <span>              type <span class="op">=</span> <span class="st">'long'</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -333,10 +333,10 @@ the census data.</p>
 <p>Manuals for all censuses since 1970 are available.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 2010</span></span>
-<span><span class="fu"><a href="../reference/interview_manual.html">interview_manual</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/interview_manual.html">interview_manual</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># 1970</span></span>
-<span><span class="fu"><a href="../reference/interview_manual.html">interview_manual</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1970</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/interview_manual.html">interview_manual</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1960</span><span class="op">)</span></span></code></pre></div>
 </div>
   </div>
 
