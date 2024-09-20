@@ -1,78 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/articles/censobr.html</loc>
-  </url>
-  <url>
-    <loc>/articles/census_tracts_data.html</loc>
-  </url>
-  <url>
-    <loc>/articles/documentation.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/arrow_open_dataset.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cache_message.html</loc>
-  </url>
-  <url>
-    <loc>/reference/censobr.html</loc>
-  </url>
-  <url>
-    <loc>/reference/censobr_cache.html</loc>
-  </url>
-  <url>
-    <loc>/reference/data_dictionary.html</loc>
-  </url>
-  <url>
-    <loc>/reference/download_file.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/interview_manual.html</loc>
-  </url>
-  <url>
-    <loc>/reference/questionnaire.html</loc>
-  </url>
-  <url>
-    <loc>/reference/read_emigration.html</loc>
-  </url>
-  <url>
-    <loc>/reference/read_families.html</loc>
-  </url>
-  <url>
-    <loc>/reference/read_households.html</loc>
-  </url>
-  <url>
-    <loc>/reference/read_mortality.html</loc>
-  </url>
-  <url>
-    <loc>/reference/read_population.html</loc>
-  </url>
-  <url>
-    <loc>/reference/read_tracts.html</loc>
-  </url>
-  <url>
-    <loc>/reference/set_censobr_cache_dir.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/articles/censobr.html</loc></url>
+<url><loc>/articles/census_tracts_data.html</loc></url>
+<url><loc>/articles/documentation.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/larger_than_memory.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/arrow_open_dataset.html</loc></url>
+<url><loc>/reference/cache_message.html</loc></url>
+<url><loc>/reference/censobr.html</loc></url>
+<url><loc>/reference/censobr_cache.html</loc></url>
+<url><loc>/reference/data_dictionary.html</loc></url>
+<url><loc>/reference/download_file.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/interview_manual.html</loc></url>
+<url><loc>/reference/merge_household_var.html</loc></url>
+<url><loc>/reference/questionnaire.html</loc></url>
+<url><loc>/reference/read_emigration.html</loc></url>
+<url><loc>/reference/read_families.html</loc></url>
+<url><loc>/reference/read_households.html</loc></url>
+<url><loc>/reference/read_mortality.html</loc></url>
+<url><loc>/reference/read_population.html</loc></url>
+<url><loc>/reference/read_tracts.html</loc></url>
+<url><loc>/reference/set_censobr_cache_dir.html</loc></url>
 </urlset>
+
