@@ -43,6 +43,7 @@ Imports:
 Suggests:
     covr,
     dbplyr,
+    duckplyr,
     geobr,
     ggplot2 (>= 3.3.1),
     rmarkdown,
