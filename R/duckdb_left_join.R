@@ -36,5 +36,7 @@ duckdb_left_join <- function(con, x, y, output_tb, key_cols){
   )
 
   # parse(query_match_case)
-  DBI::dbExecute(con, query_match_case)
+  #  DBI::dbExecute(con, query_match_case)
+  DBI::dbSendQuery(con, query_match_case)
+
 }
