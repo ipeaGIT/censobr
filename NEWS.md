@@ -1,3 +1,8 @@
+# censobr v0.4.0999 dev
+
+* bug fixes
+  * Passing parameter `merge_households = TRUE` now returns the expected result.
+
 # censobr v0.4.0
 
 * Major changes

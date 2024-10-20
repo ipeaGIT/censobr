@@ -74,15 +74,10 @@ merge_household_var <- function(df,
   df_household <- dplyr::filter(df_household, get(key_key) %in% key_values) |>
                   dplyr::compute()
 
-#### https://github.com/duckdb/duckdb-r/issues/72
-
-  # convert to duckdb
-  df <- arrow::to_duckdb(df)
-  df_household <- arrow::to_duckdb(df_household)
-
   # register db connection
-  con <- DBI::dbConnect(
-    duckdb::duckdb(), ":memory:", read_only = FALSE,
+  con <- duckdb::dbConnect(
+    duckdb::duckdb(), ":memory:",
+    read_only = FALSE,
     config=list("temp_directory" = fs::path_temp())
     )
 
@@ -95,29 +90,46 @@ merge_household_var <- function(df,
   # DBI::dbExecute(con, "PRAGMA threads=1; PRAGMA memory_limit='1GB';")
   # dbExecute(conn = conn, paste0("PRAGMA memory_limit='12GB'"))
   # appears to work.
+
   # https://github.com/duckdb/duckdb-r/issues/83
   # https://github.com/duckdb/duckdb-r/issues/72
 
+  ## duckdb strategy
+
   # register data to db
-  duckdb::duckdb_register(con, 'df', df)
-  duckdb::duckdb_register(con, 'df_household', df_household)
+  duckdb::duckdb_register_arrow(con, 'df', df)
+  duckdb::duckdb_register_arrow(con, 'df_household', df_household)
 
-  # merge
-  df_geo <- duckplyr::left_join(dplyr::tbl(con, "df"),
-                                dplyr::tbl(con, "df_household"),
-                                by = key_vars)
+  duckdb_left_join(con = con,
+                   x = 'df',
+                   y = 'df_household',
+                   output_tb = 'geo_db',
+                   key_cols = key_vars)
 
+  df_geo <- dplyr::tbl(con, "geo_db")
+  df_geo <- arrow::to_arrow(df_geo)
   df_geo <- dplyr::compute(df_geo)
 
-  # back to arrow
-  df_geo <- arrow::to_arrow(df_geo)
+
+
+  # # DBPLYR strategy
+  # df <- arrow::to_duckdb(df)
+  # df_household <- arrow::to_duckdb(df_household)
+  # dplyr::copy_to(con, df)
+  # dplyr::copy_to(con, df_household)
+  #
+  # # merge
+  # df_geo <- dplyr::left_join(dplyr::tbl(con, "df"),
+  #                            dplyr::tbl(con, "df_household"),
+  #                            by = key_vars)
+  #
+  # df_geo <- arrow::to_arrow(df_geo)
+  # df_geo <- dplyr::compute(df_geo)
 
   # remove duckdb instance
   duckdb::duckdb_unregister_arrow(con, 'df')
   duckdb::duckdb_unregister_arrow(con, 'df_household')
   DBI::dbDisconnect(con, shutdown = TRUE)
-  rm(con)
-  gc()
 
   return(df_geo)
 }
