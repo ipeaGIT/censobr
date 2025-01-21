@@ -6,3 +6,26 @@ development:
 template:
   bootstrap: 5
   light-switch: true
+
+reference:
+  - title: "Microdata"
+  - contents:
+    - read_population
+    - read_households
+    - read_mortality
+    - read_emigration
+    - read_families
+  - title: "Census tract data"
+  - contents:
+    - read_tracts
+  - title: "Data Dictionary"
+  - contents:
+    - data_dictionary
+  - title: "Census documentation"
+  - contents:
+    - questionnaire
+    - interview_manual
+  - title: "Cache data"
+  - contents:
+    - censobr_cache
+    - set_censobr_cache_dir
