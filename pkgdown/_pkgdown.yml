@@ -1,4 +1,4 @@
-destination: ./docs
+url: https://ipeagit.github.io/censobr/
 
 development:
   mode: auto
@@ -6,32 +6,3 @@ development:
 template:
   bootstrap: 5
   light-switch: true
-
-repo:
-  url:
-    home: https://github.com/ipeaGIT/censobr/
-    source: https://github.com/ipeaGIT/censobr/tree/main/
-
-reference:
-  - title: "Microdata"
-  - contents:
-    - read_population
-    - read_households
-    - read_mortality
-    - read_emigration
-    - read_families
-  - title: "Census tract data"
-  - contents:
-    - read_tracts
-  - title: "Data Dictionary"
-  - contents:
-    - data_dictionary
-  - title: "Census documentation"
-  - contents:
-    - questionnaire
-    - interview_manual
-  - title: "Cache data"
-  - contents:
-    - censobr_cache
-    - set_censobr_cache_dir
-
