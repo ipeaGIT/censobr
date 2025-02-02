@@ -39,7 +39,7 @@ merge_fun <- function(arrow1, arrow2){
 
 
   # merge
-  df_merge <- duckplyr::left_join(dplyr::tbl(con, "arrow1"),
+  df_merge <- dplyr::left_join(dplyr::tbl(con, "arrow1"),
                                   dplyr::tbl(con, "arrow2"),)
 
   df_merge <- dplyr::compute(df_merge)

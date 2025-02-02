@@ -98,7 +98,7 @@ df <- arrow::to_duckdb(df)
 df_household <- arrow::to_duckdb(df_household)
 
 # merge
-df_geo <- duckplyr::left_join(df, df_household)
+df_geo <- dplyr::left_join(df, df_household)
 
 # back to arrow
 df_geo <- arrow::to_arrow(df_geo)
@@ -259,7 +259,7 @@ merge_fun <- function(arrow1, arrow2){
   arrow2 <- arrow::to_duckdb(arrow2)
 
   # merge
-  df_merge <- duckplyr::left_join(arrow1, arrow2) |>
+  df_merge <- dplyr::left_join(arrow1, arrow2) |>
             dplyr::compute()
 
   # ?????? duckdb::duckdb_unregister()
