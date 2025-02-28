@@ -1,4 +1,4 @@
-destination: ./docs
+url: https://ipeagit.github.io/censobr/
 
 development:
   mode: auto
@@ -6,11 +6,6 @@ development:
 template:
   bootstrap: 5
   light-switch: true
-
-repo:
-  url:
-    home: https://github.com/ipeaGIT/censobr/
-    source: https://github.com/ipeaGIT/censobr/tree/main/
 
 reference:
   - title: "Microdata"
@@ -34,4 +29,3 @@ reference:
   - contents:
     - censobr_cache
     - set_censobr_cache_dir
-
