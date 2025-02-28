@@ -1,5 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://ipeagit.github.io/censobr/404.html</loc></url>
+<url><loc>https://ipeagit.github.io/censobr/LICENSE-text.html</loc></url>
 <url><loc>https://ipeagit.github.io/censobr/articles/censobr.html</loc></url>
 <url><loc>https://ipeagit.github.io/censobr/articles/census_tracts_data.html</loc></url>
 <url><loc>https://ipeagit.github.io/censobr/articles/documentation.html</loc></url>
@@ -7,7 +8,6 @@
 <url><loc>https://ipeagit.github.io/censobr/articles/larger_than_memory.html</loc></url>
 <url><loc>https://ipeagit.github.io/censobr/authors.html</loc></url>
 <url><loc>https://ipeagit.github.io/censobr/index.html</loc></url>
-<url><loc>https://ipeagit.github.io/censobr/LICENSE-text.html</loc></url>
 <url><loc>https://ipeagit.github.io/censobr/news/index.html</loc></url>
 <url><loc>https://ipeagit.github.io/censobr/reference/arrow_open_dataset.html</loc></url>
 <url><loc>https://ipeagit.github.io/censobr/reference/cache_message.html</loc></url>
