@@ -61,11 +61,13 @@ read_population <- function(year = 2010,
 
   # ### merge household data
   # if (isTRUE(merge_households)) {
-  #    df <- merge_household_var(df,
-  #                              year = year,
-  #                              add_labels = add_labels,
-  #                              showProgress = showProgress)
-  #   }
+  #   message('Merging household data.')
+  #
+  #   df <- merge_household_var(df,
+  #                             year = year,
+  #                             add_labels = add_labels,
+  #                             showProgress = showProgress)
+  # }
 
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')

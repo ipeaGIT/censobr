@@ -104,16 +104,4 @@ rio2 <- DBI::dbGetQuery(con, "SELECT * FROM 'mortality_2010_tbl' WHERE V0704 LIK
 head(rio2)
 
 ```
-### 2.3 `{duckplyr}`
 
-A third alternative is the new `{duckplyr}` package. This this library is under development so it still does not cover many of the `{dplyr}`verbs. (See [here](https://duckdb.org/2024/04/02/duckplyr.html)). Nonetheless, it looks like a really promising and seamless approach that allow users to leverage the powerful capabilities of {duckdb}.
-
-```{r warning = FALSE, message = FALSE}
-library(duckplyr)
-
-rio3 <- df |>
-        duckplyr::filter(V0704 == 'Masculino' & abbrev_state == 'RJ')
-
-head(rio3) |> 
-  collect()
-```

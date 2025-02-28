@@ -30,7 +30,7 @@ test_that("read_population read", {
 
 
   # (default) arrow table
-  test1 <- tester( showProgress = TRUE)
+  test1 <- tester( )
   testthat::expect_true(is(test1, "ArrowObject"))
   # testthat::expect_true(is(test1, "Table"))
   testthat::expect_true(nrow(test1) >0 )

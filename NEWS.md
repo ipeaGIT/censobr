@@ -1,7 +1,11 @@
-# censobr v0.4.0999 dev
+# censobr v0.4.1
+
+* Minor changes
+  * Removed {duckplyr} from package dependency
 
 * bug fixes
   * Passing parameter `merge_households = TRUE` now returns the expected result.
+
 
 # censobr v0.4.0
 

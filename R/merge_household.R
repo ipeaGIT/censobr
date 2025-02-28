@@ -67,69 +67,49 @@ merge_household_var <- function(df,
   df_household <- dplyr::select(df_household, -all_of(vars_to_drop)) |>
                   dplyr::compute()
 
-  # # pre-filter right-hand table that matches key in left-hand table
-  # this improves performance a bit
-  df <- dplyr::compute(df)
-  key_values <- as.vector(unique(df$GetColumnByName(key_key)))
-  df_household <- dplyr::filter(df_household, get(key_key) %in% key_values) |>
-                  dplyr::compute()
+  # # # pre-filter right-hand table that matches key in left-hand table
+  # # this improves performance a bit but only for migration and death data
+  # # df <- dplyr::compute(df)
+  # key_values <- df |> dplyr::select(key_key) |> unique() |> dplyr::collect()
+  # key_values <- key_values[[1]]
+  # df_household <- dplyr::filter(df_household, get(key_key) %in% key_values) |>
+  #                 dplyr::compute()
+  #
 
-  # register db connection
+  # create db connection
+  db_path <- tempfile(pattern = 'censobr', fileext = '.duckdb')
+
   con <- duckdb::dbConnect(
-    duckdb::duckdb(), ":memory:",
-    read_only = FALSE,
-    config=list("temp_directory" = fs::path_temp())
+    duckdb::duckdb(),
+    dbdir = db_path
     )
-
-  # # config db connection
-  # pragmas <- paste0(
-  # "PRAGMA memory_limit='32GB'; PRAGMA temp_directory='", tempdir(), "';")
-  # dbExecute(conn = con, pragmas)
-
-  # limit RAM and threads of duckdb ???
-  # DBI::dbExecute(con, "PRAGMA threads=1; PRAGMA memory_limit='1GB';")
-  # dbExecute(conn = conn, paste0("PRAGMA memory_limit='12GB'"))
-  # appears to work.
-
-  # https://github.com/duckdb/duckdb-r/issues/83
-  # https://github.com/duckdb/duckdb-r/issues/72
-
-  ## duckdb strategy
 
   # register data to db
   duckdb::duckdb_register_arrow(con, 'df', df)
   duckdb::duckdb_register_arrow(con, 'df_household', df_household)
 
-  duckdb_left_join(con = con,
-                   x = 'df',
-                   y = 'df_household',
-                   output_tb = 'geo_db',
-                   key_cols = key_vars)
+  # Create the JOIN condition by concatenating the key columns
+  join_condition <- paste(
+    glue::glue("df.{key_vars} = df_household.{key_vars}"),
+    collapse = ' AND '
+  )
 
-  df_geo <- dplyr::tbl(con, "geo_db")
-  df_geo <- arrow::to_arrow(df_geo)
-  df_geo <- dplyr::compute(df_geo)
+  query_match <- glue::glue(
+    "SELECT *
+      FROM df
+      LEFT JOIN df_household
+      ON {join_condition};"
+  )
 
+  merge_query <- duckdb::dbSendQuery(con, query_match, arrow = TRUE)
 
-
-  # # DBPLYR strategy
-  # df <- arrow::to_duckdb(df)
-  # df_household <- arrow::to_duckdb(df_household)
-  # dplyr::copy_to(con, df)
-  # dplyr::copy_to(con, df_household)
-  #
-  # # merge
-  # df_geo <- dplyr::left_join(dplyr::tbl(con, "df"),
-  #                            dplyr::tbl(con, "df_household"),
-  #                            by = key_vars)
-  #
-  # df_geo <- arrow::to_arrow(df_geo)
-  # df_geo <- dplyr::compute(df_geo)
+  # get result of the left join as an arrow table
+  df_geo <- duckdb::duckdb_fetch_arrow(merge_query)
 
   # remove duckdb instance
   duckdb::duckdb_unregister_arrow(con, 'df')
   duckdb::duckdb_unregister_arrow(con, 'df_household')
-  DBI::dbDisconnect(con, shutdown = TRUE)
+  duckdb::dbDisconnect(con)
 
   return(df_geo)
 }
