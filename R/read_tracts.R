@@ -30,7 +30,7 @@
 #'
 #'
 read_tracts <- function(year = 2010,
-                        dataset = NULL,               # dataset = 'Basico'
+                        dataset = NULL,
                         as_data_frame = FALSE,
                         showProgress = TRUE,
                         cache = TRUE){
@@ -38,6 +38,8 @@ read_tracts <- function(year = 2010,
   ### check inputs
   checkmate::assert_numeric(year)
   checkmate::assert_logical(as_data_frame)
+  checkmate::assert_logical(showProgress)
+  checkmate::assert_logical(cache)
   checkmate::assert_string(dataset, null.ok = FALSE)
 
 

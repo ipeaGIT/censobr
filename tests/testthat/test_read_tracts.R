@@ -74,6 +74,9 @@ test_that("read_tracts", {
   testthat::expect_error(tester(year=2010, dataset='banana'))
   testthat::expect_error(tester(year=2022, dataset='banana'))
 
+  testthat::expect_error(tester(cache='banana'))
+  testthat::expect_error(tester(showProgress='banana'))
+
   testthat::expect_error(tester(year=2010, dataset='Basico', showProgress = 'banana' ))
   testthat::expect_error(tester(year=2010, dataset='Basico', cache = 'banana' ))
 })
