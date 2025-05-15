@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Census tract-level data • censobr</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -74,7 +73,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Census tract-level data</h1>
             
-            <h4 data-toc-skip class="date">2025-02-28</h4>
+            <h4 data-toc-skip class="date">2025-05-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/blob/main/vignettes/census_tracts_data.Rmd" class="external-link"><code>vignettes/census_tracts_data.Rmd</code></a></small>
       <div class="d-none name"><code>census_tracts_data.Rmd</code></div>
@@ -222,12 +221,12 @@ per capita of all census tracts in Brazil.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tracts_df</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         code_tract  V002   V003 income_pc</span></span>
 <span><span class="co">#&gt;             &lt;char&gt; &lt;num&gt;  &lt;num&gt;     &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1: 521405105000007    91  44140  485.0549</span></span>
-<span><span class="co">#&gt; 2: 521405105000008   254  89381  351.8937</span></span>
-<span><span class="co">#&gt; 3: 521405105000009   310 129406  417.4387</span></span>
-<span><span class="co">#&gt; 4: 521405105000010   177  46294  261.5480</span></span>
-<span><span class="co">#&gt; 5: 521405105000011   713 241910  339.2847</span></span>
-<span><span class="co">#&gt; 6: 521405105000012   739 147618  199.7537</span></span></code></pre></div>
+<span><span class="co">#&gt; 1: 293076605000017   715 149721 209.40000</span></span>
+<span><span class="co">#&gt; 2: 293076605000018   697 110160 158.04878</span></span>
+<span><span class="co">#&gt; 3: 293076605000019   115  18905 164.39130</span></span>
+<span><span class="co">#&gt; 4: 293076605000020   301  32147 106.80066</span></span>
+<span><span class="co">#&gt; 5: 293076605000021    55   3904  70.98182</span></span>
+<span><span class="co">#&gt; 6: 293076605000022   503  32177  63.97018</span></span></code></pre></div>
 <p>Finally, we can merge the spatial data with our per capita income
 estimates and map the results.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -307,7 +306,7 @@ spatially.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>
