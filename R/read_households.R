@@ -56,7 +56,7 @@ read_households <- function(year = 2010,
   if(is.null(local_file)) { return(invisible(NULL)) }
 
   ### read data
-  df <- arrow_open_dataset(local_file)
+  df <- duckplyr::read_parquet_duckdb(local_file)
 
   ### Select
   if (!is.null(columns)) { # columns <- c('V0002','V0011')
