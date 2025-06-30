@@ -14,14 +14,14 @@ censobr data sets cached locally. Defaults to \code{TRUE}.}
 tree-like format. This parameter only works if \code{list_files = TRUE}.
 Defaults to \code{FALSE}.}
 
-\item{delete_file}{String. The file name (basename) of a censobr data set
-cached locally that should be deleted. Defaults to \code{NULL}, so that no
-file is deleted. If \code{delete_file = "all"}, then the cache directory
-all of the cached files are deleted.}
+\item{delete_file}{String. The file name or a string pattern that matches the
+file path of a file cached locally and which should be deleted.
+Defaults to \code{NULL}, so that no file is deleted. If \code{delete_file = "all"},
+then all of the cached files are deleted.}
 }
 \value{
 A message indicating which file exist and/or which ones have been
-deleted from local cache directory.
+deleted from the local cache directory.
 }
 \description{
 Manage cached files from the censobr package

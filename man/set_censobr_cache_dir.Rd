@@ -15,8 +15,8 @@ A message pointing to the directory where censobr files are cached.
 }
 \description{
 Set custom directory for caching files from the censobr package. The user
-only needs to run this function once, as the cache directory is kept the same
-across R sessions.
+only needs to run this function once. This set directory is persistent across
+R sessions.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

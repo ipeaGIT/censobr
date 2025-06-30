@@ -1,7 +1,6 @@
 get_default_cache_dir <- function() {
   fs::path(
-    tools::R_user_dir("censobr", which = "cache"),
-    glue::glue("data_release_{censobr_env$data_release}")
+    tools::R_user_dir("censobr", which = "cache")
   )
 }
 
@@ -15,8 +14,8 @@ get_config_cache_file <- function() {
 #' Set custom cache directory for censobr files
 #'
 #' Set custom directory for caching files from the censobr package. The user
-#' only needs to run this function once, as the cache directory is kept the same
-#' across R sessions.
+#' only needs to run this function once. This set directory is persistent across
+#' R sessions.
 #'
 #' @param path String. The path to an existing directory. It defaults to
 #'        `path = NULL`, to use the default directory
@@ -87,6 +86,24 @@ get_censobr_cache_dir <- function() {
   return(cache_dir)
 }
 
+#' Check if user is using the default cache dir of censobr
+#'
+#' @return TRUE or FALSE
+using_default_censobr_cache_dir <- function() {
+
+  # default dir
+  deafault_dir <- get_default_cache_dir()
+
+  # current cache cir
+  config_file <- get_config_cache_file()
+  if (fs::file_exists(config_file)) {
+    cache_dir <- readLines(config_file)
+    cache_dir <- fs::path_norm(cache_dir)
+  }
+
+  check <- dirname(deafault_dir) == cache_dir
+  return(check)
+}
 
 #' Manage cached files from the censobr package
 #'
@@ -95,13 +112,13 @@ get_censobr_cache_dir <- function() {
 #' @param print_tree Logical. Whether the cache files should be printed in a
 #'        tree-like format. This parameter only works if `list_files = TRUE`.
 #'        Defaults to `FALSE`.
-#' @param delete_file String. The file name (basename) of a censobr data set
-#'        cached locally that should be deleted. Defaults to `NULL`, so that no
-#'        file is deleted. If `delete_file = "all"`, then the cache directory
-#'        all of the cached files are deleted.
+#' @param delete_file String. The file name or a string pattern that matches the
+#'        file path of a file cached locally and which should be deleted.
+#'        Defaults to `NULL`, so that no file is deleted. If `delete_file = "all"`,
+#'        then all of the cached files are deleted.
 #'
 #' @return A message indicating which file exist and/or which ones have been
-#'         deleted from local cache directory.
+#'         deleted from the local cache directory.
 #' @export
 #' @family Cache data
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
@@ -125,6 +142,7 @@ censobr_cache <- function(list_files = TRUE,
   }
 
   cache_dir <- get_censobr_cache_dir()
+  # cache_dir <- glue::glue("{cache_dir}/data_release_{censobr_env$data_release}")
 
   # list cached files
   files <- list.files(cache_dir, recursive = TRUE, full.names = TRUE)
@@ -163,8 +181,8 @@ censobr_cache <- function(list_files = TRUE,
     }
   }
 
-  # list cached files
-  files <- list.files(cache_dir, full.names = TRUE)
+  # update list of cached files
+  files <- list.files(cache_dir, recursive = TRUE, full.names = TRUE)
 
   # print file names
   if (isTRUE(list_files)) {

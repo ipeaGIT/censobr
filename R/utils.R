@@ -11,19 +11,17 @@ download_file <- function(file_url = parent.frame()$file_url,
                           showProgress = parent.frame()$showProgress,
                           cache = parent.frame()$cache){ # nocov start
 
-  cache_dir <- get_censobr_cache_dir()
-
   # check input
   checkmate::assert_logical(showProgress)
   checkmate::assert_logical(cache)
 
-  # name of local file
-  file_name <- basename(file_url)
-
-  # create local dir
+  # create local dir / cache dir is versioned
+  cache_dir <- get_censobr_cache_dir()
+  cache_dir <- glue::glue("{cache_dir}/data_release_{censobr_env$data_release}")
   if (isTRUE(cache) & !dir.exists(cache_dir)) { dir.create(cache_dir, recursive=TRUE) }
 
   # path to local file
+  file_name <- basename(file_url)
   local_file <- fs::path(cache_dir, file_name)
 
   # cache message

@@ -24,7 +24,7 @@ test_that("censobr_cache", {
   censobr::read_emigration(year = 2010, showProgress = FALSE, cache = TRUE)
 
   # list cached files
-  files <- list.files(cache_dir, full.names = TRUE)
+  files <- list.files(cache_dir, full.names = TRUE, recursive = TRUE)
   fname <- paste0('2010_emigration_',censobr_env$data_release, '.parquet')
   fname_full <- files[grepl(fname, files)]
 
@@ -34,7 +34,7 @@ test_that("censobr_cache", {
 
   ## delete ALL
   censobr::read_emigration(year = 2010, showProgress = FALSE, cache = TRUE)
-  files <- list.files(cache_dir, full.names = TRUE)
+  files <- list.files(cache_dir, full.names = TRUE, recursive = TRUE)
   fname <- paste0('2010_emigration_',censobr_env$data_release, '.parquet')
   fname_full <- files[grepl(fname, files)]
   testthat::expect_true( file.exists(fname_full) )
