@@ -64,13 +64,13 @@ head(rio) |>
 `{duckdb}` is another powerful library to work with larger-than-memory data in R through database interface. There are different ways to use `{duckdb}`, but here cover three alternatives
 
 
-### 2.1 Combining `{duckdb}` & `{dplyr}`
+### 2.1 Combining `{duckdb}` & `{dbplyr}`
 
-One easy option is to combine `{duckdb}` & `{dplyr}`. Note here that first you need to convert the Arrow table into a DuckDB table with `arrow::to_duckdb()`. Also note that the you need to use a bit of `SQL` syntax inside the dplyr call. Using the same example as above:
+One easy option is to combine `{duckdb}` & `{dbplyr}`. Note here that first you need to convert the Arrow table into a DuckDB table with `arrow::to_duckdb()`. Also note that the you need to use a bit of `SQL` syntax inside the dplyr call. Using the same example as above:
 
 ```{r warning = FALSE, message=FALSE}
 library(duckdb)
-library(dplyr)
+library(dbplyr)
 library(arrow)
 
 # Filter deaths of men in the state of Rio de Janeiro
@@ -83,7 +83,7 @@ head(rio1) |>
 
 ```
 
-### 2.2 Combining `{duckdb}` &  `SQL`
+### 2.2 Using `{duckdb}` with `SQL`
 
 Another alternative is to combine `{duckdb}` with `{DBI}` using database interface and `SQL` syntax.
 
@@ -99,7 +99,10 @@ con <- duckdb::dbConnect(duckdb::duckdb())
 duckdb::duckdb_register_arrow(con, 'mortality_2010_tbl', df)
 
 # Filter deaths of men in the state of Rio de Janeiro
-rio2 <- DBI::dbGetQuery(con, "SELECT * FROM 'mortality_2010_tbl' WHERE V0704 LIKE '%Masculino%' AND abbrev_state = 'RJ'")
+query <- glue::glue("SELECT * FROM 'mortality_2010_tbl' 
+         WHERE V0704 LIKE '%Masculino%' AND abbrev_state = 'RJ';")
+
+rio2 <- DBI::dbGetQuery(con, query)
 
 head(rio2)
 

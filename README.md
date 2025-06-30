@@ -42,10 +42,11 @@ The package currently includes 6 main functions to download & read census data:
 8. `questionnaire()`
 9. `interview_manual()`
 
-Finally, the package includes two functions to help users manage the data chached locally.
+Finally, the package includes three functions to help users manage the data chached locally.
 
 10. `censobr_cache()` 
 11. `set_censobr_cache_dir()`
+12. `get_censobr_cache_dir()`
 
 
 The syntax of all **{censobr}** functions to read data operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:
@@ -69,6 +70,7 @@ The first time the user runs a function, **{censobr}** will download the file an
 
 - `censobr_cache()`: can be used to list and/or delete data files cached locally
 - `set_censobr_cache_dir()`: can be used to set custom cache directory for **{censobr}** files
+- `get_censobr_cache_dir()`: returns the path of the cache directory in use
 
 
 
