@@ -1,3 +1,45 @@
+library(tictoc)
+library(dplyr)
+
+# clean slate
+censobr::censobr_cache( print_tree = T)
+censobr::censobr_cache(delete_file = 'all')
+
+# download
+tic()
+df <- read_population(year=2010, showProgress = T)
+toc()
+# v5 9.89 sec
+# v3 26.12 sec elapsed
+# v3 15.97 sec elapsed servidor
+# v5 17.65 sec elapsed elapsed servidor
+
+
+# cache
+tic()
+df <- read_population(year=2010)
+toc()
+# v5 0.03 sec elapsed
+# v3 0.04 sec elapsed
+
+
+# head
+test <- function(y){
+  df <- read_population(year=y)
+  temp <- collect(head(df))
+  return(temp)
+}
+bench::mark(test(y = 2010), iterations = 10)
+
+# v5 33.81 sec elapsed | memoria a 95%
+# v3 29.96 sec elapsed | memoria a 95%
+# v3 98.46 sec elapsed | memoria a 95%
+# expression   min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time result memory
+#         v3 41.5s  41.5s    0.0241      11MB   0.0482     1     2      41.5s <dt>   <Rprofmem>
+#         v5 46.4s  52.6s    0.0190    10.9MB   0.0760     2     8      1.75m <tibble>
+#    serv v3 28.7s  28.9s    0.0346    5.24MB    0.138     2     8      57.8s <dt>
+#    serv v5 28.8s  28.8s    0.0347    5.18MB    0.312     1     9      28.8s <tibble>
+
 
 #### cache tests
 
@@ -354,6 +396,9 @@ urlchecker::url_update()
 # run only the tests
 Sys.setenv(NOT_CRAN = "true")
 testthat::test_local()
+
+── R CMD check results ───────────────────────────────────────────────── censobr 0.4.19999 ────
+Duration: 9m 3.4s
 
 # LOCAL
 Sys.setenv(NOT_CRAN = "true")

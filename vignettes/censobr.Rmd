@@ -203,10 +203,12 @@ In this example we'll be calculating the proportion of people with higher educat
 Since we don't need to load to memory all columns from the data, we can pass a vector with the names of the columns we're going to use. This might be necessary in more constrained computing environments. Note that by setting `add_labels = 'pt'`, the function returns labeled values for categorical variables.
 
 ```{r warning = FALSE, message=FALSE}
-pop <- read_population(year = 2010,
-                       columns = c('abbrev_state', 'V0606', 'V0010', 'V6400'),
-                       add_labels = 'pt',
-                       showProgress = FALSE)
+pop <- read_population(
+  year = 2010,
+  columns = c('abbrev_state', 'V0606', 'V0010', 'V6400'),
+  add_labels = 'pt',
+  showProgress = FALSE
+  )
 
 class(pop)
 ```
@@ -352,9 +354,12 @@ The first time the user runs a function, **{censobr}** will download the file an
 
 Users can manage the cached data sets using the `censobr_cache()` function. For example, users can:
 
-List cached files:
+List cached files in tree format:
 ```{r warning=FALSE, eval=FALSE}
-censobr_cache(list_files = TRUE)
+censobr_cache(
+  list_files = TRUE, 
+  print_tree = TRUE
+  )
 ```
 
 Delete a particular file:
@@ -369,14 +374,25 @@ censobr_cache(delete_file = "all")
 
 ```
 
-By default, **{censobr}** files are saved in the 'User' directory. However, users can run the function `set_censobr_cache_dir()` to set custom cache directory. This directory lives across R sessions.
+By default, **{censobr}** files are saved in the 'User' directory. However, users can run the function `set_censobr_cache_dir()` to set custom cache directory. This directory is persistent across R sessions.
 
-
-```{r, eval=FALSE, warning=FALSE}
-tempf <- tempdir()
+```{r, eval=TRUE, warning=FALSE}
+tempf <- fs::path_temp(pattern = "my_temp_dir")
 
 set_censobr_cache_dir(path = tempf)
 
+```
+
+Mind you that the data is saved in a directory inside the cache directory set by the user and which is versioned according to the version of the latest data release.
+```{r, eval=TRUE, warning=FALSE, message=FALSE}
+# download file to our new cache dir
+df_emi <- censobr::read_emigration(year = 2010)
+
+# check files in current cache dir
+censobr_cache(
+  list_files = TRUE, 
+  print_tree = TRUE
+  )
 ```
 
 If you do not remember the location of the cache, you can always run `get_censobr_cache_dir()` to return the path of the cache directory in use.

@@ -76,15 +76,19 @@ library(ggplot2)
 In these examples below, example we'll use the city of Belo Horizonte for demonstration purposes. So we can start by downloading the the geometries of the census tracts in the area. First, we need to download the geometries of all census tracts in the state of Minas Gerais (MG), and then keep only the ones in the municipality of Belo Horizonte. We'll also download the municipality borders of BH.
 
 ```{r warning = FALSE}
-muni_bh <- geobr::read_municipality(code_muni = 'MG', 
-                                    year = 2010, 
-                                    showProgress = FALSE) |>
-           filter(name_muni == "Belo Horizonte")
+muni_bh <- geobr::read_municipality(
+  code_muni = 'MG', 
+  year = 2010, 
+  showProgress = FALSE
+  ) |>
+  filter(name_muni == "Belo Horizonte")
 
-tracts_sf <- geobr::read_census_tract(code_tract = "MG",
-                                      simplified = FALSE,
-                                      year = 2010,
-                                      showProgress = FALSE)
+tracts_sf <- geobr::read_census_tract(
+  code_tract = "MG",
+  simplified = FALSE,
+  year = 2010,
+  showProgress = FALSE
+  )
 
 tracts_sf <- filter(tracts_sf, name_muni == "Belo Horizonte")
 

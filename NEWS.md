@@ -2,11 +2,15 @@
 
 * Major changes
   * New function `get_censobr_cache_dir()`
-  * The function `set_censobr_cache_dir()` now sets cache directories that live across R sessions. Closes [#55](https://github.com/ipeaGIT/censobr/issues/55)
+  * The function `set_censobr_cache_dir()` now sets cache directories that persist across R sessions. Closes [#55](https://github.com/ipeaGIT/censobr/issues/55). The data is saved in versioned directory inside the cache directory.
+
 
 * Minor changes
   * Improved package info and error messages with {cli}
   * {censobr} now imports {cli} and {rlang}
+
+* Data
+  * Data sets are save in `.parquet` files which now compressed using `compression='zstd'` and `compression_level = 22`. This has almost halved the size of data files, making downloads much more efficient at minimal cost of reading time.
 
 
 # censobr v0.4.1
