@@ -6,7 +6,9 @@ add_labels_emigration <- function(arrw,
 
   # check input
   checkmate::assert_string(lang, pattern = 'pt', na.ok = TRUE)
-  if (year != 2010){stop('Labels for this data are only available for the year 2010')}
+  if (year != 2010){
+    cli::cli_abort("Labels for this data are only available for the year 2010")
+    }
 
   # names of columns present in the data
   cols <- names(arrw)

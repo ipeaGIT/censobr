@@ -48,9 +48,9 @@ read_mortality <- function(year = 2010,
 
   # available for the years:
   years <- c(2010)
-  if (isFALSE(year %in% years)) { stop(paste0("Error: Data currently only available for the years ",
-                                              paste(years, collapse = " ")))
-      }
+  if (isFALSE(year %in% years)) {
+    error_missing_years(years)
+    }
 
   ### Get url
   file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/",

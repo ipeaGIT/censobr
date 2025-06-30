@@ -45,21 +45,22 @@ read_tracts <- function(year = 2010,
 
   # data available for the years:
   years <- c(2010, 2022)
-  if (isFALSE(year %in% years)) { stop(paste0("Error: Data currently only available for the years ",
-                                              paste(years, collapse = " ")))}
+  if (isFALSE(year %in% years)) {
+    error_missing_years(years)
+    }
 
   # data sets available for 2010:
   data_sets_2010 <- c("Basico", "Domicilio", "DomicilioRenda", "Entorno",
                  "ResponsavelRenda", "Responsavel", "PessoaRenda", "Pessoa")
-  if (year==2010 & isFALSE(dataset %in% data_sets_2010)) { stop( paste0("Error: Data currently only available for the datasets: ",
-                                                    paste(data_sets_2010, collapse = ", "))
-  )}
+  if (year==2010 & isFALSE(dataset %in% data_sets_2010)) {
+    error_missing_datasets(data_sets_2010)
+    }
 
   # data sets available for 2022:
   data_sets_2022 <- c("Preliminares")
-  if (year==2022 & isFALSE(dataset %in% data_sets_2022)) { stop( paste0("Error: Data currently only available for the datasets: ",
-                                                                        paste(data_sets_2022, collapse = ", "))
-  )}
+  if (year==2022 & isFALSE(dataset %in% data_sets_2022)) {
+    error_missing_datasets(data_sets_2022)
+  }
 
   ### Get url
   dataset <- paste0(dataset, '_')
