@@ -2,8 +2,7 @@
 % Please edit documentation in R/cache.R
 \name{get_censobr_cache_dir}
 \alias{get_censobr_cache_dir}
-\title{Set custom cache directory for censobr files
-Get path to cache directory for censobr files}
+\title{Get path to cache directory for censobr files}
 \usage{
 get_censobr_cache_dir()
 }

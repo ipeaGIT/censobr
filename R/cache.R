@@ -60,9 +60,6 @@ set_censobr_cache_dir <- function(path) {
   return(invisible(cache_dir))
 }
 
-#' Set custom cache directory for censobr files
-
-
 #' Get path to cache directory for censobr files
 #'
 #' Get the path to the cache directory currently being used for for the censobr
