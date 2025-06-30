@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Working with larger-than-memory data • censobr</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -27,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">censobr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.19999</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +74,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Working with larger-than-memory data</h1>
             
-            <h4 data-toc-skip class="date">2025-01-21</h4>
+            <h4 data-toc-skip class="date">2025-06-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/blob/main/vignettes/larger_than_memory.Rmd" class="external-link"><code>vignettes/larger_than_memory.Rmd</code></a></small>
       <div class="d-none name"><code>larger_than_memory.Rmd</code></div>
@@ -261,51 +260,6 @@ syntax.</p>
 <span><span class="co">#&gt; 5 Área rural exclusive aglomerado rural</span></span>
 <span><span class="co">#&gt; 6                       Área urbanizada</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="duckplyr">2.3 <code>{duckplyr}</code><a class="anchor" aria-label="anchor" href="#duckplyr"></a>
-</h4>
-<p>A third alternative is the new <a href="https://duckdblabs.github.io/duckplyr/" class="external-link">duckplyr</a> package. This
-this library is under development so it still does not cover many of the
-<a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a>verbs. (See <a href="https://duckdb.org/2024/04/02/duckplyr.html" class="external-link">here</a>).
-Nonetheless, it looks like a really promising and seamless approach that
-allow users to leverage the powerful capabilities of {duckdb}.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://duckdblabs.github.io/duckplyr/" class="external-link">duckplyr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">rio3</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>        <span class="fu">duckplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">V0704</span> <span class="op">==</span> <span class="st">'Masculino'</span> <span class="op">&amp;</span> <span class="va">abbrev_state</span> <span class="op">==</span> <span class="st">'RJ'</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rio3</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   code_muni code_state abbrev_state     name_state code_region name_region</span></span>
-<span><span class="co">#&gt; 1   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt; 2   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt; 3   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt; 4   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt; 5   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt; 6   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt;   code_weighting V0001 V0002         V0011   V0300    V0010 V1001 V1002 V1003</span></span>
-<span><span class="co">#&gt; 1  3300100003001    33 00100 3300100003001 1285657 13.51819     3    05   013</span></span>
-<span><span class="co">#&gt; 2  3300100003001    33 00100 3300100003001 6084726 12.76395     3    05   013</span></span>
-<span><span class="co">#&gt; 3  3300100003002    33 00100 3300100003002  898500 10.68108     3    05   013</span></span>
-<span><span class="co">#&gt; 4  3300100003002    33 00100 3300100003002 2581116 11.61204     3    05   013</span></span>
-<span><span class="co">#&gt; 5  3300100003002    33 00100 3300100003002 3768175 12.93833     3    05   013</span></span>
-<span><span class="co">#&gt; 6  3300100003002    33 00100 3300100003002 4125020 10.66262     3    05   013</span></span>
-<span><span class="co">#&gt;   V1004  V1006             V0703     V0704 V7051 V7052 M0703 M0704 M7051 M7052</span></span>
-<span><span class="co">#&gt; 1    00 Urbana     Março de 2010 Masculino    69    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt; 2    00 Urbana Fevereiro de 2010 Masculino    84    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt; 3    00 Urbana     Abril de 2010 Masculino    38    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt; 4    00 Urbana      Maio de 2010 Masculino    54    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt; 5    00  Rural    Agosto de 2009 Masculino    31    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt; 6    00 Urbana  Setembro de 2009 Masculino    28    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt;                                   V1005</span></span>
-<span><span class="co">#&gt; 1                       Área urbanizada</span></span>
-<span><span class="co">#&gt; 2                   Área não urbanizada</span></span>
-<span><span class="co">#&gt; 3                       Área urbanizada</span></span>
-<span><span class="co">#&gt; 4                       Área urbanizada</span></span>
-<span><span class="co">#&gt; 5 Área rural exclusive aglomerado rural</span></span>
-<span><span class="co">#&gt; 6                       Área urbanizada</span></span></code></pre></div>
-</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -319,7 +273,7 @@ allow users to leverage the powerful capabilities of {duckdb}.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Census tract-level data • censobr</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -27,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">censobr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.19999</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +74,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Census tract-level data</h1>
             
-            <h4 data-toc-skip class="date">2025-01-21</h4>
+            <h4 data-toc-skip class="date">2025-06-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/blob/main/vignettes/census_tracts_data.Rmd" class="external-link"><code>vignettes/census_tracts_data.Rmd</code></a></small>
       <div class="d-none name"><code>census_tracts_data.Rmd</code></div>
@@ -123,7 +122,7 @@ the columns in this dataset are organized as follows:</p>
 <span><span class="va">dom</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_tracts.html">read_tracts</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>, </span>
 <span>                   dataset <span class="op">=</span> <span class="st">'Domicilio'</span>, </span>
 <span>                   showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Downloading data and storing it locally for future use.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading data and storing it locally for future use.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dom</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>,<span class="fl">301</span><span class="op">:</span><span class="fl">320</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;  [1] "code_tract"        "code_weighting"    "code_muni"        </span></span>
@@ -204,12 +203,12 @@ per capita of all census tracts in Brazil.</p>
 <span><span class="va">tract_basico</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_tracts.html">read_tracts</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
 <span>                            dataset <span class="op">=</span> <span class="st">"Basico"</span>, </span>
 <span>                            showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Reading data cached locally.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Reading data cached locally.</span></span>
 <span></span>
 <span><span class="va">tract_income</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_tracts.html">read_tracts</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
 <span>                            dataset <span class="op">=</span> <span class="st">"DomicilioRenda"</span>, </span>
 <span>                            showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Downloading data and storing it locally for future use.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading data and storing it locally for future use.</span></span>
 <span></span>
 <span><span class="co"># select columns</span></span>
 <span><span class="va">tract_basico</span> <span class="op">&lt;-</span> <span class="va">tract_basico</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="st">'code_tract'</span>,<span class="st">'V002'</span><span class="op">)</span></span>
@@ -223,12 +222,12 @@ per capita of all census tracts in Brazil.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tracts_df</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         code_tract  V002   V003 income_pc</span></span>
 <span><span class="co">#&gt;             &lt;char&gt; &lt;num&gt;  &lt;num&gt;     &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1: 293076605000017   715 149721 209.40000</span></span>
-<span><span class="co">#&gt; 2: 293076605000018   697 110160 158.04878</span></span>
-<span><span class="co">#&gt; 3: 293076605000019   115  18905 164.39130</span></span>
-<span><span class="co">#&gt; 4: 293076605000020   301  32147 106.80066</span></span>
-<span><span class="co">#&gt; 5: 293076605000021    55   3904  70.98182</span></span>
-<span><span class="co">#&gt; 6: 293076605000022   503  32177  63.97018</span></span></code></pre></div>
+<span><span class="co">#&gt; 1: 120001305000001   957 601805  628.8454</span></span>
+<span><span class="co">#&gt; 2: 120001305000002  1203 385033  320.0607</span></span>
+<span><span class="co">#&gt; 3: 120001305000003  1700 531794  312.8200</span></span>
+<span><span class="co">#&gt; 4: 120001305000004   182  58853  323.3681</span></span>
+<span><span class="co">#&gt; 5: 120001305000005   305 112979  370.4230</span></span>
+<span><span class="co">#&gt; 6: 120001305000006   483 263538  545.6273</span></span></code></pre></div>
 <p>Finally, we can merge the spatial data with our per capita income
 estimates and map the results.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -259,7 +258,7 @@ variables
 <span><span class="va">tract_entorno</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_tracts.html">read_tracts</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
 <span>                             dataset <span class="op">=</span> <span class="st">"Entorno"</span>, </span>
 <span>                             showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Downloading data and storing it locally for future use.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Downloading data and storing it locally for future use.</span></span>
 <span></span>
 <span><span class="co"># filter observations and calculate indicator</span></span>
 <span><span class="va">df_trees</span> <span class="op">&lt;-</span> <span class="va">tract_entorno</span> <span class="op">|&gt;</span></span>
@@ -308,7 +307,7 @@ spatially.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
