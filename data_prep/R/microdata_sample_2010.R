@@ -57,32 +57,24 @@ source('./R/add_geography_cols.R')
   schema_string <- gsub(",)$", ")", schema_string)
 
   # Define the dataset
-  ds <- arrow::open_dataset(sources = parqt_files)
+  ds <- arrow::open_dataset(
+    sources = parqt_files,
+    schema = eval(str2lang(schema_string))
+    )
 
-  ## 3.3) add geography variables ----------------------------------------------
-  AT <- add_geography_cols(arrw = ds, year = 2010)
-
-  # apply schema
-  AT <- arrow::as_arrow_table(AT,
-                              schema = eval(str2lang(schema_string))
-                              )
-
-
-  schema(AT)
 
   ## 3.4) save single parquet tile ----------------------------------------------
   # AT |> collect() |>
-  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_households_uINT3.parquet')
+  arrow::write_parquet(ds, './data/microdata_sample/2010/2010_households_uINT3.parquet')
+
+  arrow::write_parquet(
+    x = ds,
+    sink = './data/microdata_sample/2010/2010_households.parquet',
+    compression='zstd',
+    compression_level = 22)
 
 
 
-
-# a <- arrow::open_dataset('./data/microdata_sample/2010/2010_households_INT.parquet')
-# schema(a)
-#
-# b <- arrow::open_dataset('./data/microdata_sample/2010/2010_households_v0.3.0.parquet')
-# schema(b)
-#
 
 
 
@@ -145,7 +137,12 @@ source('./R/add_geography_cols.R')
   schema(AT)
 
   ## 4.4) save single parquet tile ----------------------------------------------
-  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_population_INT.parquet')
+  arrow::write_parquet(
+    x = DS,
+    sink = './data/microdata_sample/2010/2010_population.parquet',
+    compression='zstd',
+    compression_level = 22)
+
 
 
 a <-   arrow::open_dataset('./data/microdata_sample/2010/2010_population_v0.3.0.parquet'
@@ -187,23 +184,26 @@ schema(b)
 
   # Define the dataset
   DS <- arrow::open_dataset(sources = parqt_files)
-  # Create a scanner
-  SO <- Scanner$create(DS)
-  # Load it as n Arrow Table in memory
-  AT <- SO$ToTable()
-  rm(DS, SO); gc(T)
-
-
-  ## 5.3) add geography variables ----------------------------------------------
-  AT <- add_geography_cols(arrw = AT, year = 2010)
-
-  head(AT) |> collect()
+  # # Create a scanner
+  # SO <- Scanner$create(DS)
+  # # Load it as n Arrow Table in memory
+  # AT <- SO$ToTable()
+  # rm(DS, SO); gc(T)
+  #
+  #
+  # ## 5.3) add geography variables ----------------------------------------------
+  # AT <- add_geography_cols(arrw = AT, year = 2010)
+  #
+  # head(AT) |> collect()
 
   ## 5.4) save single parquet tile ----------------------------------------------
-  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_mortality.parquet')
+  arrow::write_parquet(
+    x = DS,
+    sink = './data/microdata_sample/2010/2010_mortality.parquet',
+    compression='zstd',
+    compression_level = 22)
 
-
-
+a <- read_parquet('./data/microdata_sample/2010/2010_mortality.parquet')
 
 
 # 6) Emigration data ----------------------------------------------
@@ -231,19 +231,14 @@ schema(b)
 
   # Define the dataset
   DS <- arrow::open_dataset(sources = parqt_files)
-  # Create a scanner
-  SO <- Scanner$create(DS)
-  # Load it as n Arrow Table in memory
-  AT <- SO$ToTable()
-  rm(DS, SO); gc(T)
-
-  ## 6.3) add geography variables ----------------------------------------------
-  AT <- add_geography_cols(arrw = AT, year = 2010)
-
-  head(AT) |> collect()
 
   ## 6.4) save single parquet tile ----------------------------------------------
-  arrow::write_parquet(AT, './data/microdata_sample/2010/2010_emigration.parquet')
+  arrow::write_parquet(
+    x = DS,
+    sink = './data/microdata_sample/2010/2010_emigration.parquet',
+    compression='zstd',
+    compression_level = 22)
 
 
-
+a <- read_parquet('./data/microdata_sample/2010/2010_emigration.parquet')
+head(a)

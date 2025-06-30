@@ -9,7 +9,7 @@ convert_raw_to_parquet <- function(year, txt_file, dic){
                         start = dic$int_pos,
                         end = dic$fin_pos,
                         col_names = dic$var_name),
-                      col_types = paste(dic$col_type,collapse ='')
+                        col_types = paste(dic$col_type,collapse ='')
                       , # progress = interactive()
   )
   setDT(temp_df)
@@ -41,13 +41,23 @@ convert_raw_to_parquet <- function(year, txt_file, dic){
 
 
   # add geography cols
+  source('./R/add_geography_cols.R')
   temp_df <- add_geography_cols(arrw = temp_df, year = year)
 
+  # sort rows by the first 15 cols (a bit of an overkill)
+  first_15_cols <- names(temp_df)[1:15]
+  data.table::setorderv(temp_df, first_15_cols)
+
+  # remove data.table
+  data.table::setindex(temp_df, NULL)
+  data.table::setDF(temp_df)
 
 
   fname <- basename(txt_file)
   f_dest <- paste0('./data/microdata_sample/',year,"/", year,"_",gsub(".txt", ".parquet", fname))
   f_dest <- gsub(".TXT", ".parquet", f_dest)
+
   arrow::write_parquet(temp_df, f_dest)
+
   return(NULL)
 }
