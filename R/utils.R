@@ -11,6 +11,8 @@ download_file <- function(file_url = parent.frame()$file_url,
                           showProgress = parent.frame()$showProgress,
                           cache = parent.frame()$cache){ # nocov start
 
+  cache_dir <- get_censobr_cache_dir()
+
   # check input
   checkmate::assert_logical(showProgress)
   checkmate::assert_logical(cache)
@@ -19,10 +21,10 @@ download_file <- function(file_url = parent.frame()$file_url,
   file_name <- basename(file_url)
 
   # create local dir
-  if (isTRUE(cache) & !dir.exists(censobr_env$cache_dir)) { dir.create(censobr_env$cache_dir, recursive=TRUE) }
+  if (isTRUE(cache) & !dir.exists(cache_dir)) { dir.create(cache_dir, recursive=TRUE) }
 
   # path to local file
-  local_file <- fs::path(censobr_env$cache_dir, file_name)
+  local_file <- fs::path(cache_dir, file_name)
 
   # cache message
   cache_message(local_file, cache)
@@ -45,16 +47,18 @@ download_file <- function(file_url = parent.frame()$file_url,
   # if anything fails, return NULL (fail gracefully)
   if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
         msg <- paste(
-        "File cached locally seems to be corrupted. Please download it again using 'cache = FALSE'.",
+        "Locak file seems to be corrupted. Please download it again using 'cache = FALSE'.",
         sprintf("Alternatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = \"%s\")'", basename(local_file)),
         sep = "\n")
-        message(msg)
+        cli::cli_alert_danger(msg)
+
         return(invisible(NULL))
         }
 
   # Halt function if download failed (file must exist and be larger than 200 kb)
   if (!file.exists(local_file) | file.info(local_file)$size < 5000) {
-    message('Internet connection not working properly.')
+    cli::cli_alert_danger("Internet connection not working properly.")
+
     return(invisible(NULL))
   }
 
@@ -81,7 +85,8 @@ arrow_open_dataset <- function(filename){
         sprintf("Alternatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = \"%s\")'", basename(filename)),
         sep = "\n"
       )
-      stop(msg)
+      cli::cli_abort(msg)
+
     }
   )
 }
@@ -106,22 +111,58 @@ cache_message <- function(local_file = parent.frame()$local_file,
   ## if file already exists
     # YES cache
     if (file.exists(local_file) & isTRUE(cache)) {
-       message('Reading data cached locally.')
+       cli::cli_alert_info('Reading data cached locally.')
        }
 
     # NO cache
     if (file.exists(local_file) & isFALSE(cache)) {
-       message('Overwriting data cached locally.')
+        cli::cli_alert_info('Overwriting data cached locally.')
        }
 
   ## if file does not exist yet
   # YES cache
   if (!file.exists(local_file) & isTRUE(cache)) {
-     message(paste("Downloading data and storing it locally for future use."))
-     }
+    cli::cli_alert_info('Downloading data and storing it locally for future use.')
+  }
 
   # NO cache
   if (!file.exists(local_file) & isFALSE(cache)) {
-     message(paste("Downloading data. Setting 'cache = TRUE' is strongly recommended to speed up future use. File will be stored locally at:", dir_name))
-     }
+    cli::cli_alert_info("Downloading data. Setting 'cache = TRUE' is strongly recommended to speed up future use. File will be stored locally at: {dir_name}")
+    }
   } # nocov end
+
+
+
+
+#' Error missing years
+#'
+#' @param y Vector with the years available
+#' @return An informative error
+#'
+#' @keywords internal
+error_missing_years <- function(y) {
+
+  years_available <- paste(y, collapse = " ")
+  cli::cli_abort(
+    "Data currently available only for the years {years_available}.",
+    call = rlang::caller_env()
+  )
+}
+
+#' Error missing data sets
+#'
+#' @param d Vector with the data sets available
+#' @return An informative error
+#'
+#' @keywords internal
+error_missing_datasets <- function(d) {
+
+  datasets_available <- paste(d, collapse = ", ")
+  cli::cli_abort(
+    "Only the following data sets are currently available: {datasets_available}.",
+    call = rlang::caller_env()
+  )
+}
+
+
+

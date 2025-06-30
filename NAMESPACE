@@ -2,6 +2,7 @@
 
 export(censobr_cache)
 export(data_dictionary)
+export(get_censobr_cache_dir)
 export(interview_manual)
 export(questionnaire)
 export(read_emigration)

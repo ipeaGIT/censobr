@@ -1,3 +1,14 @@
+# censobr v0.4.19999 dev
+
+* Major changes
+  * New function `get_censobr_cache_dir()`
+  * The function `set_censobr_cache_dir()` now sets cache directories that live across R sessions. Closes [#55](https://github.com/ipeaGIT/censobr/issues/55)
+
+* Minor changes
+  * Improved package info and error messages with {cli}
+  * {censobr} now imports {cli} and {rlang}
+
+
 # censobr v0.4.1
 
 * Minor changes
