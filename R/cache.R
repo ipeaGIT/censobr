@@ -23,14 +23,18 @@ get_config_cache_file <- function() {
 #' @return A message pointing to the directory where censobr files are cached.
 #'
 #' @export
+#'
 #' @family Cache data
+#'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+#'
 #' # Set custom cache directory
 #' tempd <- tempdir()
 #' set_censobr_cache_dir(path = tempd)
 #'
 #' # back to default path
 #' set_censobr_cache_dir(path = NULL)
+#'
 set_censobr_cache_dir <- function(path) {
   checkmate::assert_string(path, null.ok = TRUE)
 
@@ -67,10 +71,13 @@ set_censobr_cache_dir <- function(path) {
 #' @return Path to cache dir
 #'
 #' @export
+#'
 #' @family Cache data
+#'
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # get path to cache directory
 #' get_censobr_cache_dir()
+#'
 get_censobr_cache_dir <- function() {
   config_file <- get_config_cache_file()
 

@@ -9,10 +9,14 @@ censobr::censobr_cache(delete_file = 'all')
 tic()
 df <- read_population(year=2010, showProgress = T)
 toc()
-# v5 9.89 sec
-# v3 26.12 sec elapsed
+# v5  9.89 sec elapsed ipea
+# v3 26.12 sec elapsed ipea
+
 # v3 15.97 sec elapsed servidor
 # v5 17.65 sec elapsed elapsed servidor
+
+# v3 33.03 sec elapsed casa
+# v5 27.03 sec elapsed casa
 
 
 # cache
@@ -31,15 +35,15 @@ test <- function(y){
 }
 bench::mark(test(y = 2010), iterations = 10)
 
-# v5 33.81 sec elapsed | memoria a 95%
-# v3 29.96 sec elapsed | memoria a 95%
-# v3 98.46 sec elapsed | memoria a 95%
 # expression   min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time result memory
 #         v3 41.5s  41.5s    0.0241      11MB   0.0482     1     2      41.5s <dt>   <Rprofmem>
 #         v5 46.4s  52.6s    0.0190    10.9MB   0.0760     2     8      1.75m <tibble>
 #    serv v3 28.7s  28.9s    0.0346    5.24MB    0.138     2     8      57.8s <dt>
 #    serv v5 28.8s  28.8s    0.0347    5.18MB    0.312     1     9      28.8s <tibble>
 
+
+#    casa v3 42.5s  43.8s    0.0229    4.77MB   0.0229    10    10      7.28m
+#    casa v5 50.7s  54.3s    0.0183    4.94MB   0.0183    10    10      9.09m
 
 #### cache tests
 

@@ -20,6 +20,7 @@ R sessions.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
 # Set custom cache directory
 tempd <- tempdir()
 set_censobr_cache_dir(path = tempd)
