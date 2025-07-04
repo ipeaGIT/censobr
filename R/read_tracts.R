@@ -4,9 +4,12 @@
 #' Download census tract-level aggregate data from Brazil's censuses.
 #'
 #' @template year
-#' @param dataset Character. The dataset to be opened. Options currently include
+#' @param dataset Character. The dataset to be opened. For the 2010 Census, the options are:
 #'        `c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda",  "Entorno")`.
-#'        Preliminary results of the 2022 census are available with `"Preliminares"`.
+#'        For the 2022 Census, the options are:
+#'        `c("Preliminares", "Alfabetizacao", "Basico", "Domicilio", "Cor_ou_raca", "Demografia", "Domicilios_indigenas", "Domicilios_quilombolas", "Entorno", "Obitos", "Parentesco", "Pessoas_indigenas", "Pessoas_quilombolas", "ResponsavelRenda")`
+#'
+#'
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
@@ -28,7 +31,13 @@
 #'                   as_data_frame = TRUE,
 #'                   showProgress = FALSE)
 #'
-#'
+
+year = 2022
+dataset = "Entorno"
+as_data_frame = FALSE
+showProgress = TRUE
+cache = TRUE
+
 read_tracts <- function(year = 2010,
                         dataset = NULL,
                         as_data_frame = FALSE,
@@ -47,17 +56,17 @@ read_tracts <- function(year = 2010,
   years <- c(2010, 2022)
   if (isFALSE(year %in% years)) {
     error_missing_years(years)
-    }
+  }
 
   # data sets available for 2010:
   data_sets_2010 <- c("Basico", "Domicilio", "DomicilioRenda", "Entorno",
-                 "ResponsavelRenda", "Responsavel", "PessoaRenda", "Pessoa")
+                      "ResponsavelRenda", "Responsavel", "PessoaRenda", "Pessoa")
   if (year==2010 & isFALSE(dataset %in% data_sets_2010)) {
     error_missing_datasets(data_sets_2010)
-    }
+  }
 
   # data sets available for 2022:
-  data_sets_2022 <- c("Preliminares")
+  data_sets_2022 <- c("Preliminares", "Alfabetizacao", "Basico", "Domicilio", "Cor_ou_raca", "Demografia", "Domicilios_indigenas", "Domicilios_quilombolas", "Entorno", "Obitos", "Parentesco", "Pessoas_indigenas", "Pessoas_quilombolas", "ResponsavelRenda")
   if (year==2022 & isFALSE(dataset %in% data_sets_2022)) {
     error_missing_datasets(data_sets_2022)
   }
@@ -97,4 +106,3 @@ read_tracts <- function(year = 2010,
     return(df)
   }
 }
-
