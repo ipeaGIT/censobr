@@ -82,6 +82,29 @@ data_dictionary <- function(year = 2010,
   if(is.null(local_file)) { return(NULL) }
 
   # open data dic on browser
-  utils::browseURL(url = local_file)
+  file_extension <- fs::path_ext(local_file)
+
+  if (file_extension %in% c('pdf', 'htlm')) {
+    utils::browseURL(url = local_file)
+  } else {
+    open_file(path = local_file)
+    }
+
+
   return(NULL)
+}
+
+
+
+open_file <- function(path) {
+  # path <- normalizePath(path, mustWork = FALSE)   # tidy up the path
+  if (.Platform$OS.type == "windows") {
+    shell.exec(path)                              # built-in Windows helper
+  } else if (Sys.info()[["sysname"]] == "Darwin") {
+    system2("open", shQuote(path), wait = FALSE)  # macOS
+  } else {                                        # Linux, *BSD, etc.
+    system2("xdg-open", shQuote(path), wait = FALSE)
+  }
+
+  invisible(TRUE)
 }
