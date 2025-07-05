@@ -14,67 +14,61 @@ merge_household_var <- function(df,
                                 showProgress = parent.frame()$showProgress){
 
   # download household data
-  df_household <- censobr::read_households(year = year,
-                                           add_labels = add_labels,
-                                           as_data_frame = FALSE,
-                                           showProgress = showProgress)
+  df_household <- censobr::read_households(
+    year = year,
+    add_labels = add_labels,
+    as_data_frame = FALSE,
+    showProgress = showProgress
+    )
 
   # set vars to merge
+  # if (year == 1960) {
+  #   key_vars <- c('code_state', 'code_muni', 'id_household')
+  #   key_key <- 'id_household'
+  # }
+
   if (year == 1970) {
-    key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
-                  'code_region', 'name_region', 'id_household')
+    key_vars <- c('code_state', 'code_muni', 'id_household')
     key_key <- 'id_household'
     }
 
   if (year == 1980) {
-    key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
-                  'code_region', 'name_region', 'V6', 'V601')
+    key_vars <- c('code_state', 'code_muni', 'V6', 'V601')
     key_key <- 'V601'
-
-    # rename weight var
-    df_household <- dplyr::rename(df_household, 'V603_household' = 'V603')
     }
 
   if (year == 1991) {
-    key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
-                  'code_region', 'name_region', 'V0109')
-
+    key_vars <- c('code_state', 'code_muni', 'V0109')
     key_key <- 'V0109'
-    # rename weight var
-    df_household <- dplyr::rename(df_household, 'V7300_household' = 'V7300')
     }
 
   if (year == 2000) {
-    key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
-                  'code_region', 'name_region', 'code_weighting', 'V0300')
+    key_vars <- c('code_state', 'code_muni', 'V0300')
     key_key <- 'V0300'
   }
 
   if (year == 2010) {
-    key_vars <- c('code_muni', 'code_state', 'abbrev_state','name_state',
-                  'code_region', 'name_region', 'code_weighting', 'V0300')
-
+    key_vars <- c('code_state', 'code_muni', 'V0300')
     key_key <- 'V0300'
-    # rename weight var
-    df_household <- dplyr::rename(df_household, 'V0010_household' = 'V0010') |>
-                    dplyr::compute()
   }
 
 
   # drop repeated vars
   all_common_vars <- names(df)[names(df) %in% names(df_household)]
   vars_to_drop <- setdiff(all_common_vars, key_vars)
-  df_household <- dplyr::select(df_household, -all_of(vars_to_drop)) |>
-                  dplyr::compute()
+  df_household <- dplyr::select(df_household, -all_of(vars_to_drop))
 
-  # # # pre-filter right-hand table that matches key in left-hand table
-  # # this improves performance a bit but only for migration and death data
-  # # df <- dplyr::compute(df)
-  # key_values <- df |> dplyr::select(key_key) |> unique() |> dplyr::collect()
-  # key_values <- key_values[[1]]
-  # df_household <- dplyr::filter(df_household, get(key_key) %in% key_values) |>
-  #                 dplyr::compute()
-  #
+  # # pre-filter right-hand table that matches key values in left-hand table
+  # this improves performance a bit but only for migration and death data sets
+  if (nrow(df) < nrow(df_household)) {
+
+    key_values <- df |> dplyr::select(key_key) |> unique() |> dplyr::collect()
+    key_values <- key_values[[1]]
+    df_household <- dplyr::filter(df_household, get(key_key) %in% key_values)
+  }
+
+  df_household <- df_household |> dplyr::compute()
+
 
   # create db connection
   db_path <- tempfile(pattern = 'censobr', fileext = '.duckdb')
@@ -89,16 +83,17 @@ merge_household_var <- function(df,
   duckdb::duckdb_register_arrow(con, 'df_household', df_household)
 
   # Create the JOIN condition by concatenating the key columns
-  join_condition <- paste(
-    glue::glue("df.{key_vars} = df_household.{key_vars}"),
-    collapse = ' AND '
-  )
+  join_condition <- paste0(
+    'USING (',
+    paste0(key_vars, collapse = ', '),
+    ");"
+    )
 
   query_match <- glue::glue(
     "SELECT *
       FROM df
       LEFT JOIN df_household
-      ON {join_condition};"
+      {join_condition}"
   )
 
   merge_query <- duckdb::dbSendQuery(con, query_match, arrow = TRUE)
