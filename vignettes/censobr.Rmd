@@ -389,7 +389,7 @@ Mind you that the data is saved in a directory inside the cache directory set by
 df_emi <- censobr::read_emigration(year = 2010)
 
 # check files in current cache dir
-censobr_cache(
+censobr::censobr_cache(
   list_files = TRUE, 
   print_tree = TRUE
   )
