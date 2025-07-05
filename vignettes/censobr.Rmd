@@ -356,7 +356,7 @@ Users can manage the cached data sets using the `censobr_cache()` function. For 
 
 List cached files in tree format:
 ```{r warning=FALSE, eval=FALSE}
-censobr_cache(
+censobr::censobr_cache(
   list_files = TRUE, 
   print_tree = TRUE
   )
@@ -364,13 +364,13 @@ censobr_cache(
 
 Delete a particular file:
 ```{r warning=FALSE, eval=FALSE}
-censobr_cache(delete_file = "2010_emigration")
+censobr::censobr_cache(delete_file = "2010_emigration")
 
 ```
 
 Delete all files:
 ```{r warning=FALSE, eval=FALSE}
-censobr_cache(delete_file = "all")
+censobr::censobr_cache(delete_file = "all")
 
 ```
 
