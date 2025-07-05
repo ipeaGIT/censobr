@@ -11,6 +11,8 @@
 
 * Data
   * Data sets are save in `.parquet` files which now compressed using `compression='zstd'` and `compression_level = 22`. This has almost halved the size of data files, making downloads much more efficient at minimal cost of reading time.
+  * Fixed annoying message about arrow metadata. closed #56.
+  * All data sets are now sorted by key columns to speed up join operations. Closes #60.
 
 
 # censobr v0.4.1

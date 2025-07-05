@@ -151,10 +151,12 @@ test_that("read_population ERRORs", {
   testthat::expect_error(tester(year=999))
   testthat::expect_error(tester(year='999'))
   testthat::expect_error(tester(columns = 'banana'))
-  testthat::expect_error(tester(as_data_frame = 'banana'))
+  # testthat::expect_error(tester(as_data_frame = 'banana'))
+  testthat::expect_error(read_population(year = 2010, as_data_frame = 'banana'))
   testthat::expect_error(tester(showProgress = 'banana' ))
   testthat::expect_error(tester(cache = 'banana'))
   testthat::expect_error(tester(add_labels = 'banana'))
+
 
   # missing labels
   testthat::expect_error(tester(year=2000, add_labels = 'pt'))

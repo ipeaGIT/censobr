@@ -33,7 +33,7 @@ read_population <- function(year = 2010,
   ### check inputs
   checkmate::assert_numeric(year)
   checkmate::assert_vector(columns, null.ok = TRUE)
-  checkmate::assert_logical(as_data_frame)
+  checkmate::assert_logical(as_data_frame, null.ok = FALSE)
   # checkmate::assert_logical(merge_households)
   checkmate::assert_string(add_labels, pattern = 'pt', null.ok = TRUE)
 
@@ -60,14 +60,12 @@ read_population <- function(year = 2010,
   ### read data
   df <- arrow_open_dataset(local_file)
 
-  # ### merge household data
+  # # ### merge household data
   # if (isTRUE(merge_households)) {
-  #   message('Merging household data.')
-  #
   #   df <- merge_household_var(df,
   #                             year = year,
   #                             add_labels = add_labels,
-  #                             showProgress = showProgress)
+  #                             showProgress)
   # }
 
   ### Select

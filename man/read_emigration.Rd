@@ -51,14 +51,17 @@ the sample component of the questionnaire.
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # return data as arrow Dataset
-df <- read_emigration(year = 2010,
-                      showProgress = FALSE)
-
+df <- read_emigration(
+  year = 2010,
+  showProgress = FALSE
+  )
 
 # return data as data.frame
-df <- read_emigration(year = 2010,
-                      as_data_frame = TRUE,
-                      showProgress = FALSE)
+df <- read_emigration(
+  year = 2010,
+  as_data_frame = TRUE,
+  showProgress = FALSE
+  )
 
 \dontshow{\}) # examplesIf}
 }
