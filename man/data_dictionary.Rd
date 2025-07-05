@@ -7,7 +7,7 @@
 data_dictionary(year, dataset, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2010}.}
+\item{year}{Numeric. Year of reference in the format \code{yyyy}.}
 
 \item{dataset}{Character. The dataset of data dictionary to be opened. Options
 include \code{c("population", "households", "families", "mortality", "emigration", "tracts")}.}

@@ -4,6 +4,7 @@
   * New function `get_censobr_cache_dir()`
   * The function `set_censobr_cache_dir()` now sets cache directories that persist across R sessions. Closes [#55](https://github.com/ipeaGIT/censobr/issues/55). The data is saved in versioned directory inside the cache directory.
 
+  The `year` parameter no longer defaults to `2010`.
 
 * Minor changes
   * Improved internal code of `merge_households = TRUE` to avoid duplicated columns 

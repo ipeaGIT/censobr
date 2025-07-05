@@ -30,7 +30,7 @@
 #'   )
 #'
 #'
-read_emigration <- function(year = 2010,
+read_emigration <- function(year,
                             columns = NULL,
                             add_labels = NULL,
                             merge_households = FALSE,
@@ -39,7 +39,7 @@ read_emigration <- function(year = 2010,
                             cache = TRUE){
 
   ### check inputs
-  checkmate::assert_numeric(year)
+  checkmate::assert_numeric(year, any.missing = FALSE)
   checkmate::assert_vector(columns, null.ok = TRUE)
   checkmate::assert_logical(as_data_frame)
   checkmate::assert_logical(merge_households)

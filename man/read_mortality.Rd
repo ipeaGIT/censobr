@@ -5,7 +5,7 @@
 \title{Download microdata of death records from Brazil's census}
 \usage{
 read_mortality(
-  year = 2010,
+  year,
   columns = NULL,
   add_labels = NULL,
   merge_households = FALSE,
@@ -15,7 +15,7 @@ read_mortality(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2010}.}
+\item{year}{Numeric. Year of reference in the format \code{yyyy}.}
 
 \item{columns}{String. A vector of column names to keep. The rest of the
 columns are not read. Defaults to \code{NULL} and read all columns.}
@@ -53,15 +53,19 @@ the sample component of the questionnaire.
 library(censobr)
 
 # return data as arrow Dataset
-df <- read_mortality(year = 2010,
-                     showProgress = FALSE)
+df <- read_mortality(
+  year = 2010,
+  showProgress = FALSE
+  )
 
 # dplyr::glimpse(df)
 
 # return data as data.frame
-df <- read_mortality(year = 2010,
-                     as_data_frame = TRUE,
-                     showProgress = FALSE)
+df <- read_mortality(
+  year = 2010,
+  as_data_frame = TRUE,
+  showProgress = FALSE
+  )
 
 # dplyr::glimpse(df)
 \dontshow{\}) # examplesIf}

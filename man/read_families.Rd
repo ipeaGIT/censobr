@@ -5,7 +5,7 @@
 \title{Download microdata of family records from Brazil's census}
 \usage{
 read_families(
-  year = 2000,
+  year,
   columns = NULL,
   add_labels = NULL,
   as_data_frame = FALSE,
@@ -14,7 +14,7 @@ read_families(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2000}.}
+\item{year}{Numeric. Year of reference in the format \code{yyyy}.}
 
 \item{columns}{String. A vector of column names to keep. The rest of the
 columns are not read. Defaults to \code{NULL} and read all columns.}
@@ -47,8 +47,10 @@ the sample component of the questionnaire.
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # return data as arrow Dataset
-df <- read_families(year = 2000,
-                    showProgress = FALSE)
+df <- read_families(
+  year = 2000,
+  showProgress = FALSE
+  )
 
 \dontshow{\}) # examplesIf}
 }

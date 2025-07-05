@@ -19,11 +19,12 @@
 #' @family Microdata
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # return data as arrow Dataset
-#' df <- read_population(year = 2010,
-#'                       showProgress = FALSE)
+#' df <- read_population(
+#'   year = 2010,
+#'   showProgress = FALSE
+#'   )
 #'
-#'
-read_population <- function(year = 2010,
+read_population <- function(year,
                             columns = NULL,
                             add_labels = NULL,
                             as_data_frame = FALSE,
@@ -31,7 +32,7 @@ read_population <- function(year = 2010,
                             cache = TRUE){
 
   ### check inputs
-  checkmate::assert_numeric(year)
+  checkmate::assert_numeric(year, any.missing = FALSE)
   checkmate::assert_vector(columns, null.ok = TRUE)
   checkmate::assert_logical(as_data_frame, null.ok = FALSE)
   # checkmate::assert_logical(merge_households)

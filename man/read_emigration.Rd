@@ -5,7 +5,7 @@
 \title{Download microdata of emigration records from Brazil's census}
 \usage{
 read_emigration(
-  year = 2010,
+  year,
   columns = NULL,
   add_labels = NULL,
   merge_households = FALSE,
@@ -15,7 +15,7 @@ read_emigration(
 )
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2010}.}
+\item{year}{Numeric. Year of reference in the format \code{yyyy}.}
 
 \item{columns}{String. A vector of column names to keep. The rest of the
 columns are not read. Defaults to \code{NULL} and read all columns.}
