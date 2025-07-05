@@ -4,7 +4,7 @@
 \alias{data_dictionary}
 \title{Data dictionary of Brazil's census data}
 \usage{
-data_dictionary(year = 2010, dataset = NULL, showProgress = TRUE, cache = TRUE)
+data_dictionary(year, dataset, showProgress = TRUE, cache = TRUE)
 }
 \arguments{
 \item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2010}.}
@@ -23,25 +23,26 @@ locally so that the file only needs to be download once. If \code{FALSE},
 the function will download the data again and overwrite the local file.}
 }
 \value{
-Returns \code{NULL} and opens .html or .pdf file on the browser
+Returns \code{NULL} and opens an .html, .pdf or excel file
 }
 \description{
 Open on a browser the data dictionary of Brazil's census data.
 }
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-# Open data dictionary on browser
+# Open data dictionary
 data_dictionary(year = 2010,
                 dataset = 'population',
+                showProgress = FALSE)
+
+data_dictionary(year = 2022,
+                dataset = 'tracts',
                 showProgress = FALSE)
 
 data_dictionary(year = 1980,
                 dataset = 'households',
                 showProgress = FALSE)
 
-data_dictionary(year = 2010,
-                dataset = 'tracts',
-                showProgress = FALSE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
