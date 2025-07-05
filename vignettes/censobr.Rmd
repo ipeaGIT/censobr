@@ -379,7 +379,7 @@ By default, **{censobr}** files are saved in the 'User' directory. However, user
 ```{r, eval=TRUE, warning=FALSE}
 tempf <- fs::path_temp(pattern = "my_temp_dir")
 
-set_censobr_cache_dir(path = tempf)
+censobr::set_censobr_cache_dir(path = tempf)
 
 ```
 
