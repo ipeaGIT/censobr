@@ -13,12 +13,12 @@ library(readxl)
 data.table::setDTthreads(percent = 100)
 options(scipen = 999)
 
-### 0) Useful functions --------------------------------------------------------
+# 0) Useful functions --------------------------------------------------------
 
 
 download_tract <- function(year,
                            overwrite = F,
-                           dest_dir = paste0('./data_raw/tracts/', year)){ # year = 2010, 2022
+                           dest_dir = paste0('./data_raw/tracts/', year, "/")){ # year = 2010, 2022
 
   message(paste0("\nDownloading year: ", year, '\n'))
 
@@ -233,7 +233,7 @@ make_theme_dataset <- function(theme_i, dataset_info, dataset_Basico){
 
     for(dataset_j in datasets_i[-whichMaxRows]){
 
-      data_join_i <- left_join(data_join_i,
+      data_join_i <- full_join(data_join_i,
                                dataset_j,
                                by = "code_tract")
     }
@@ -257,7 +257,7 @@ make_theme_dataset <- function(theme_i, dataset_info, dataset_Basico){
 
 
 
-### 1) download raw data from IBGE ftp -------------------------------------------
+# 1) download raw data from IBGE ftp -------------------------------------------
 
 download_tract(2022, overwrite = F)
 
@@ -301,23 +301,30 @@ all_csv_files <- list.files(path = './data_raw/tracts/2022/csv/',
 
 dataset_info = tribble(
   ~theme, ~prefix, ~file,
-  "Alfabetizacao",           NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_alfabetizacao_BR.csv"                       ,
   "Basico",                  NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_basico_BR_20250417.csv"                     ,
+
   "Domicilio",               "domicilio01",        "./data_raw/tracts/2022/csv/Agregados_por_setores_caracteristicas_domicilio1_BR.csv"          ,
   "Domicilio",               "domicilio02",        "./data_raw/tracts/2022/csv/Agregados_por_setores_caracteristicas_domicilio2_BR_20250417.csv" ,
   "Domicilio",               "domicilio03",        "./data_raw/tracts/2022/csv/Agregados_por_setores_caracteristicas_domicilio3_BR_20250417.csv" ,
-  "Cor_ou_raca",             NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_cor_ou_raca_BR.csv"                         ,
-  "Demografia",              NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_demografia_BR.csv"                          ,
-  "Domicilios_indigenas",    NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_domicilios_indigenas_BR.csv"                ,
-  "Domicilios_quilombolas",  NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_domicilios_quilombolas_BR.csv"              ,
-  "Entorno",                 "entorno_domicilio",  "./data_raw/tracts/2022/csv/Agregados_por_setores_entorno_domiclios_BR.csv"                  ,
-  "Entorno",                 "entorno_faces",      "./data_raw/tracts/2022/csv/Agregados_por_setores_entorno_faces_BR.csv"                       ,
-  "Entorno",                 "entorno_moradores",  "./data_raw/tracts/2022/csv/Agregados_por_setores_entorno_moradores_BR.csv"                   ,
+
+  "Pessoas",                 "alfabetizacao",      "./data_raw/tracts/2022/csv/Agregados_por_setores_alfabetizacao_BR.csv"                       ,
+  "Pessoas",                 "raca",               "./data_raw/tracts/2022/csv/Agregados_por_setores_cor_ou_raca_BR.csv"                         ,
+  "Pessoas",                 "demografia",         "./data_raw/tracts/2022/csv/Agregados_por_setores_demografia_BR.csv"                          ,
+  "Pessoas",                 "parentesco",         "./data_raw/tracts/2022/csv/Agregados_por_setores_parentesco_BR.csv"                          ,
+
+  "ResponsavelRenda",        NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_renda_responsavel_BR.csv"                   ,
+
+  "Indigenas",               "domicilios",         "./data_raw/tracts/2022/csv/Agregados_por_setores_domicilios_indigenas_BR.csv"                ,
+  "Indigenas",               "pessoas",            "./data_raw/tracts/2022/csv/Agregados_por_setores_pessoas_indigenas_BR.csv"                   ,
+
+  "Quilombolas",             "domicilios",         "./data_raw/tracts/2022/csv/Agregados_por_setores_domicilios_quilombolas_BR.csv"              ,
+  "Quilombolas",             "pessoas",            "./data_raw/tracts/2022/csv/Agregados_por_setores_pessoas_quilombolas_BR.csv"                 ,
+
+  "Entorno",                 "domicilios",         "./data_raw/tracts/2022/csv/Agregados_por_setores_entorno_domiclios_BR.csv"                  ,
+  "Entorno",                 "faces",              "./data_raw/tracts/2022/csv/Agregados_por_setores_entorno_faces_BR.csv"                       ,
+  "Entorno",                 "moradores",          "./data_raw/tracts/2022/csv/Agregados_por_setores_entorno_moradores_BR.csv"                   ,
+
   "Obitos",                  NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_obitos_BR.csv"                              ,
-  "Parentesco",              NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_parentesco_BR.csv"                          ,
-  "Pessoas_indigenas",       NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_pessoas_indigenas_BR.csv"                   ,
-  "Pessoas_quilombolas",     NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_pessoas_quilombolas_BR.csv"                 ,
-  "ResponsavelRenda",        NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_renda_responsavel_BR.csv"
 )
 
 
@@ -360,15 +367,32 @@ if(!dir.exists(paths = './data_processed/2022/parquet/')){
 #dataset_i = datasets[1]
 for(dataset_i in datasets){
 
-
   print(dataset_i)
 
   theme_i = paste(unlist(str_split(dataset_i, pattern = "_"))[-1], collapse = "_")
 
-  write_parquet(x = get(dataset_i),
-                sink = paste0('./data_processed/2022/parquet/2022_tracts_', theme_i, ".parquet"))
+  dataset_i <- get(dataset_i)
+  dataset_i <- dataset_i |> mutate(code_tract = as.character(code_tract))
+
+  write_parquet(x = dataset_i,
+                sink = paste0('./data_processed/2022/parquet/2022_tracts_',
+                              theme_i,
+                              "_",
+                              "v0.5.0", # censobr version
+                              #censobr_env$data_release,
+                              ".parquet"),
+                compression='zstd',
+                compression_level = 22)
 
 }
+
+
+
+
+
+
+
+
 
 
 
