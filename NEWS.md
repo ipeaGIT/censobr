@@ -6,6 +6,7 @@
 
 
 * Minor changes
+  * Improved internal code of `merge_households = TRUE` to avoid duplicated columns 
   * Improved package info and error messages with {cli}
   * {censobr} now imports {cli} and {rlang}
 
