@@ -74,7 +74,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Census documentation</h1>
             
-            <h4 data-toc-skip class="date">2025-06-30</h4>
+            <h4 data-toc-skip class="date">2025-07-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/blob/main/vignettes/documentation.Rmd" class="external-link"><code>vignettes/documentation.Rmd</code></a></small>
       <div class="d-none name"><code>documentation.Rmd</code></div>
@@ -185,7 +185,7 @@ X
 X
 </td>
 <td>
-<i>soon</i>
+<i>X</i>
 </td>
 </tr>
 <tr>
@@ -274,12 +274,16 @@ both microdata (sample portion of the census) and for the variables
 available in census tract-level aggregate data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Microdata variables</span></span>
-<span><span class="fu"><a href="../reference/data_dictionary.html">data_dictionary</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
-<span>                dataset <span class="op">=</span> <span class="st">'microdata'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/data_dictionary.html">data_dictionary</a></span><span class="op">(</span></span>
+<span>  year <span class="op">=</span> <span class="fl">2010</span>,</span>
+<span>  dataset <span class="op">=</span> <span class="st">'microdata'</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Census tract-level variables</span></span>
-<span><span class="fu"><a href="../reference/data_dictionary.html">data_dictionary</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span>
-<span>                dataset <span class="op">=</span> <span class="st">'tracts'</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/data_dictionary.html">data_dictionary</a></span><span class="op">(</span></span>
+<span>  year <span class="op">=</span> <span class="fl">2022</span>,</span>
+<span>  dataset <span class="op">=</span> <span class="st">'tracts'</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="questionnaires">Questionnaires<a class="anchor" aria-label="anchor" href="#questionnaires"></a>
@@ -295,12 +299,16 @@ households, or the <code>'short'</code> one that is used in the sample
 component of the cesus.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># short questionnaire</span></span>
-<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2022</span>, </span>
-<span>              type <span class="op">=</span> <span class="st">'short'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span></span>
+<span>  year <span class="op">=</span> <span class="fl">2022</span>, </span>
+<span>  type <span class="op">=</span> <span class="st">'short'</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># long questionnaire</span></span>
-<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2022</span>, </span>
-<span>              type <span class="op">=</span> <span class="st">'long'</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/questionnaire.html">questionnaire</a></span><span class="op">(</span></span>
+<span>  year <span class="op">=</span> <span class="fl">2022</span>, </span>
+<span>  type <span class="op">=</span> <span class="st">'long'</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="interview-manual">Interview manual<a class="anchor" aria-label="anchor" href="#interview-manual"></a>
@@ -311,10 +319,10 @@ instructions for IBGE’s census takers (recenseadores) on how to collect
 the census data.</p>
 <p>Manuals for all censuses since 1970 are available.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># 2010</span></span>
+<code class="sourceCode R"><span><span class="co"># 2022</span></span>
 <span><span class="fu"><a href="../reference/interview_manual.html">interview_manual</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2022</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># 1970</span></span>
+<span><span class="co"># 1960</span></span>
 <span><span class="fu"><a href="../reference/interview_manual.html">interview_manual</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1960</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

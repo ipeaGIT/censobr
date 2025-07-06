@@ -49,12 +49,22 @@
 <ul><li>Major changes
 <ul><li>New function <code><a href="../reference/get_censobr_cache_dir.html">get_censobr_cache_dir()</a></code>
 </li>
-<li>The function <code><a href="../reference/set_censobr_cache_dir.html">set_censobr_cache_dir()</a></code> now sets cache directories that live across R sessions. Closes <a href="https://github.com/ipeaGIT/censobr/issues/55" class="external-link">#55</a>
-</li>
+<li>The function <code><a href="../reference/set_censobr_cache_dir.html">set_censobr_cache_dir()</a></code> now sets cache directories that persist across R sessions. Closes <a href="https://github.com/ipeaGIT/censobr/issues/55" class="external-link">#55</a>. The data is saved in versioned directory inside the cache directory.</li>
+<li>The <code>year</code> parameter no longer defaults to <code>2010</code>.</li>
 </ul></li>
 <li>Minor changes
-<ul><li>Improved package info and error messages with {cli}</li>
+<ul><li>Improved internal code of <code>merge_households = TRUE</code> to avoid duplicated columns</li>
+<li>Improved package info and error messages with {cli}</li>
 <li>{censobr} now imports {cli} and {rlang}</li>
+</ul></li>
+<li>New data set and files included in this version:
+<ul><li>2022 census. Closes <a href="https://github.com/ipeaGIT/censobr/issues/64" class="external-link">#64</a>
+<ul><li>Census-tract level data</li>
+<li>Census-tract level data dictionary</li>
+</ul></li>
+<li>All data sets are save in <code>.parquet</code> compressed using <code>compression='zstd'</code> and <code>compression_level = 22</code>. This has almost halved the size of data files, making downloads much more efficient at minimal cost of reading time.</li>
+<li>All data sets are now sorted by key columns to speed up join operations. Closes <a href="https://github.com/ipeaGIT/censobr/issues/60" class="external-link">#60</a>.</li>
+<li>Fixed annoying message about arrow metadata. closed <a href="https://github.com/ipeaGIT/censobr/issues/56" class="external-link">#56</a>.</li>
 </ul></li>
 </ul></div>
     <div class="section level2">

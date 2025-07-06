@@ -74,7 +74,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Working with larger-than-memory data</h1>
             
-            <h4 data-toc-skip class="date">2025-06-30</h4>
+            <h4 data-toc-skip class="date">2025-07-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/blob/main/vignettes/larger_than_memory.Rmd" class="external-link"><code>vignettes/larger_than_memory.Rmd</code></a></small>
       <div class="d-none name"><code>larger_than_memory.Rmd</code></div>
@@ -140,34 +140,20 @@ observations of the data.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rio</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html" class="external-link">collect</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   code_muni code_state abbrev_state     name_state code_region name_region</span></span>
-<span><span class="co">#&gt; 1   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt; 2   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt; 3   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt; 4   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt; 5   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt; 6   3300100         33           RJ Rio de Janeiro           3     Sudeste</span></span>
-<span><span class="co">#&gt;   code_weighting V0001 V0002         V0011   V0300    V0010 V1001 V1002 V1003</span></span>
-<span><span class="co">#&gt; 1  3300100003001    33 00100 3300100003001 1285657 13.51819     3    05   013</span></span>
-<span><span class="co">#&gt; 2  3300100003001    33 00100 3300100003001 6084726 12.76395     3    05   013</span></span>
-<span><span class="co">#&gt; 3  3300100003002    33 00100 3300100003002  898500 10.68108     3    05   013</span></span>
-<span><span class="co">#&gt; 4  3300100003002    33 00100 3300100003002 2581116 11.61204     3    05   013</span></span>
-<span><span class="co">#&gt; 5  3300100003002    33 00100 3300100003002 3768175 12.93833     3    05   013</span></span>
-<span><span class="co">#&gt; 6  3300100003002    33 00100 3300100003002 4125020 10.66262     3    05   013</span></span>
-<span><span class="co">#&gt;   V1004  V1006             V0703     V0704 V7051 V7052 M0703 M0704 M7051 M7052</span></span>
-<span><span class="co">#&gt; 1    00 Urbana     Março de 2010 Masculino    69    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt; 2    00 Urbana Fevereiro de 2010 Masculino    84    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt; 3    00 Urbana     Abril de 2010 Masculino    38    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt; 4    00 Urbana      Maio de 2010 Masculino    54    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt; 5    00  Rural    Agosto de 2009 Masculino    31    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt; 6    00 Urbana  Setembro de 2009 Masculino    28    NA     2     2     2     2</span></span>
-<span><span class="co">#&gt;                                   V1005</span></span>
-<span><span class="co">#&gt; 1                       Área urbanizada</span></span>
-<span><span class="co">#&gt; 2                   Área não urbanizada</span></span>
-<span><span class="co">#&gt; 3                       Área urbanizada</span></span>
-<span><span class="co">#&gt; 4                       Área urbanizada</span></span>
-<span><span class="co">#&gt; 5 Área rural exclusive aglomerado rural</span></span>
-<span><span class="co">#&gt; 6                       Área urbanizada</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 26</span></span></span>
+<span><span class="co">#&gt;   code_muni code_state abbrev_state name_state     code_region name_region</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">*</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   3<span style="text-decoration: underline;">300</span>100         33 RJ           Rio de Janeiro           3 Sudeste    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   3<span style="text-decoration: underline;">300</span>100         33 RJ           Rio de Janeiro           3 Sudeste    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   3<span style="text-decoration: underline;">300</span>100         33 RJ           Rio de Janeiro           3 Sudeste    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>   3<span style="text-decoration: underline;">300</span>100         33 RJ           Rio de Janeiro           3 Sudeste    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>   3<span style="text-decoration: underline;">300</span>100         33 RJ           Rio de Janeiro           3 Sudeste    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>   3<span style="text-decoration: underline;">300</span>100         33 RJ           Rio de Janeiro           3 Sudeste    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 20 more variables: code_weighting &lt;chr&gt;, V0001 &lt;chr&gt;, V0002 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   V0011 &lt;chr&gt;, V0300 &lt;dbl&gt;, V0010 &lt;dbl&gt;, V1001 &lt;chr&gt;, V1002 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   V1003 &lt;chr&gt;, V1004 &lt;chr&gt;, V1006 &lt;chr&gt;, V0703 &lt;chr&gt;, V0704 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   V7051 &lt;dbl&gt;, V7052 &lt;dbl&gt;, M0703 &lt;chr&gt;, M0704 &lt;chr&gt;, M7051 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M7052 &lt;chr&gt;, V1005 &lt;chr&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="duckdb">2. <code>{duckdb}</code><a class="anchor" aria-label="anchor" href="#duckdb"></a>
