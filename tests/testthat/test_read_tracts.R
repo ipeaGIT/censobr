@@ -61,6 +61,8 @@ test_that("read_tracts 2022 datasets", {
   lapply(X=tbls, FUN = function(y){ # y = 'Preliminares'
     tmp_d <- tester(year = 2022, dataset = y)
     testthat::expect_true( nrow(tmp_d) >= 344841)
+    message(nrow(tmp_d))
+
   } )
 
 })
@@ -76,7 +78,7 @@ test_that("read_tracts 2010 datasets", {
 
   lapply(X=tbls, FUN = function(y){ # y = 'Pessoa'     y = 'Basico'  y = 'Entorno'
     tmp_d <- tester(year = 2010, dataset = y)
-    testthat::expect_true( nrow(tmp_d) >= 303000)
+    testthat::expect_true( nrow(tmp_d) >= 310114)
   } )
 
 })
@@ -94,7 +96,7 @@ test_that("read_tracts 2000 datasets", {
 
   lapply(X=tbls, FUN = function(y){ # y = 'Pessoa'     y = 'Basico'  y = 'Entorno'
     tmp_d <- tester(year = 2000, dataset = y)
-    testthat::expect_true( nrow(tmp_d) >= 210000)
+    testthat::expect_true( nrow(tmp_d) == 215811)
   } )
 
 })
