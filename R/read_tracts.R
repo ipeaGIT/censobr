@@ -5,19 +5,23 @@
 #'
 #' @template year
 #' @param dataset Character. The dataset to be opened.
+#'
+#'    For the 2000 Census, valid options are:
+#'   - `c("Basico", "Domicilio", "Responsavel", "Pessoa", "Instrucao", "Morador")`.
+#'
 #'    For the 2010 Census, valid options are:
-#'   - `c("Basico", "Domicilio", "DomicilioRenda", "Responsavel",
-#'     "ResponsavelRenda", "Pessoa", "PessoaRenda", "Entorno")`.
+#'   - `c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda", "Entorno")`.
+#'
 #'   For the 2022 Census, valid options are:
-#'   - `c("Basico", "Domicilio", "ResponsavelRenda", "Pessoas", "Indigenas",
-#'     "Quilombolas", "Entorno", "Obitos", "Preliminares")`.
+#'   - `c("Basico", "Domicilio", "ResponsavelRenda", "Pessoas", "Indigenas", "Quilombolas", "Entorno", "Obitos", "Preliminares")`.
 #'
 #'   The `censobr` package exposes all original IBGE census tracts datasets, regrouping
 #'   them into broader themes and appending geographic identifiers so that they
 #'   align seamlessly with `geobr` shapefiles.
 #'
 #'   For a complete description of the datasets, themes, and variables, check
-#'   - `data_dictionary(year = 2010, dataset = "tracts")` or
+#'   - `data_dictionary(year = 2000, dataset = "tracts")`,
+#'   - `data_dictionary(year = 2010, dataset = "tracts")`,
 #'   - `data_dictionary(year = 2022, dataset = "tracts")`.
 #'
 #' @template as_data_frame
@@ -60,10 +64,13 @@ read_tracts <- function(year,
 
 
   # data available for the years:
-  years <- c(2010, 2022)
+  years <- c(2000, 2010, 2022)
   if (isFALSE(year %in% years)) {
     error_missing_years(years)
   }
+
+  # data sets available for 2000:
+  data_sets_2000 <- c("Basico", "Domicilio", "Responsavel", "Pessoa", "Instrucao", "Morador")
 
   # data sets available for 2010:
   data_sets_2010 <- c("Basico", "Domicilio", "DomicilioRenda", "Entorno",
@@ -75,6 +82,10 @@ read_tracts <- function(year,
                       "Preliminares")
 
   # check requested data set
+  if (year==2000 & isFALSE(dataset %in% data_sets_2000)) {
+    error_missing_datasets(data_sets_2010)
+  }
+
   if (year==2010 & isFALSE(dataset %in% data_sets_2010)) {
     error_missing_datasets(data_sets_2010)
   }
@@ -84,7 +95,7 @@ read_tracts <- function(year,
   }
 
   ### Get url
-  dataset <- paste0(dataset, '_')
+  dataset  <- paste0(dataset, '_')
   file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/",
                      censobr_env$data_release, "/", year,"_tracts_", dataset,
                      censobr_env$data_release, ".parquet")
