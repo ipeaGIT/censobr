@@ -15,11 +15,21 @@ read_tracts(
 \arguments{
 \item{year}{Numeric. Year of reference in the format \code{yyyy}.}
 
-\item{dataset}{Character. The dataset to be opened.
-For the 2010 Census, valid options are:
+\item{dataset}{Character. The dataset to be opened. The following options are
+available for each edition of the census:
+
+\strong{2000 Census}
+\itemize{
+\item \code{c("Basico", "Domicilio", "Responsavel", "Pessoa", "Instrucao", "Morador")}.
+}
+
+\strong{2010 Census}
 \itemize{
 \item \code{c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda", "Entorno")}.
-For the 2022 Census, valid options are:
+}
+
+\strong{2022 Census}
+\itemize{
 \item \code{c("Basico", "Domicilio", "ResponsavelRenda", "Pessoas", "Indigenas", "Quilombolas", "Entorno", "Obitos", "Preliminares")}.
 }
 
@@ -29,7 +39,8 @@ align seamlessly with \code{geobr} shapefiles.
 
 For a complete description of the datasets, themes, and variables, check
 \itemize{
-\item \code{data_dictionary(year = 2010, dataset = "tracts")} or
+\item \code{data_dictionary(year = 2000, dataset = "tracts")},
+\item \code{data_dictionary(year = 2010, dataset = "tracts")},
 \item \code{data_dictionary(year = 2022, dataset = "tracts")}.
 }}
 

@@ -4,15 +4,16 @@
 #' Download census tract-level aggregate data from Brazil's censuses.
 #'
 #' @template year
-#' @param dataset Character. The dataset to be opened.
+#' @param dataset Character. The dataset to be opened. The following options are
+#'        available for each edition of the census:
 #'
-#'    For the 2000 Census, valid options are:
+#'    **2000 Census**
 #'   - `c("Basico", "Domicilio", "Responsavel", "Pessoa", "Instrucao", "Morador")`.
 #'
-#'    For the 2010 Census, valid options are:
+#'    **2010 Census**
 #'   - `c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda", "Entorno")`.
 #'
-#'   For the 2022 Census, valid options are:
+#'   **2022 Census**
 #'   - `c("Basico", "Domicilio", "ResponsavelRenda", "Pessoas", "Indigenas", "Quilombolas", "Entorno", "Obitos", "Preliminares")`.
 #'
 #'   The `censobr` package exposes all original IBGE census tracts datasets, regrouping
