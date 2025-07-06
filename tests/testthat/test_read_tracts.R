@@ -81,6 +81,24 @@ test_that("read_tracts 2010 datasets", {
 
 })
 
+
+
+
+# 2000 data sets  -----------------------
+
+test_that("read_tracts 2000 datasets", {
+
+  # 2000 different data sets
+  ## check if file have been downloaded
+  tbls <- c("Basico", "Domicilio", "Responsavel", "Pessoa", "Instrucao", "Morador")
+
+  lapply(X=tbls, FUN = function(y){ # y = 'Pessoa'     y = 'Basico'  y = 'Entorno'
+    tmp_d <- tester(year = 2000, dataset = y)
+    testthat::expect_true( nrow(tmp_d) >= 210000)
+  } )
+
+})
+
 # ERRORS and messages  -----------------------
 test_that("read_tracts", {
 

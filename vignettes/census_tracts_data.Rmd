@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 Perhaps the most commonly used datasets from Brazilian censuses are the microdata of individuals and households. Nonetheless, IBGE also makes available some extremely data on population and environmental characteristics aggregated at the census tract level. In this vignette, we show how to use the **{censobr}** package to  easily access census tract-level data using the `read_tracts()` function.
 
-At the moment, this function only includes data from the 2010 and 2022 censuses.
+At the moment, this function includes data from the censuses of 2000, 2010 and 2022.
 
 
 # Data structure
@@ -44,23 +44,27 @@ library(knitr)
 library(kableExtra)
 
 # ---- data ---------------------------------------------------------------
+dic_2000 <- c(
+  "Basico", "Domicilio", "Pessoa", "Responsavel", "Instrucao", "Morador"
+    )
+
 dic_2010 <- c(
-  "`Basico`", "`Entorno`", "`Domicilio`", "`DomicilioRenda`",
-  "`Pessoa`", "`PessoaRenda`", "`Responsavel`", "`ResponsavelRenda`"
-)
+  "Basico", "Domicilio", "Pessoa", "Responsavel", "Entorno",  "ResponsavelRenda", "DomicilioRenda", "PessoaRenda"  
+  )
 
 dic_2022 <- c(
-  "`Basico`", "`Domicilio`", "`Entorno`", "`Indigenas`",
-  "`Quilombolas`", "`Obitos`", "`Pessoas`", "`ResponsavelRenda`",
-  "`Preliminares`"
-)
+  "Basico", "Domicilio", "Pessoas", " ", "Entorno", "ResponsavelRenda", 
+  "Indigenas", "Quilombolas", "Obitos", "Preliminares"
+  )
 
 # pad the shorter vector with blanks so the columns have equal length
-max_len <- max(length(dic_2010), length(dic_2022))
+max_len <- max(length(dic_2000), length(dic_2010), length(dic_2022))
+dic_2000 <- c(dic_2000, rep("", max_len - length(dic_2000)))
 dic_2010 <- c(dic_2010, rep("", max_len - length(dic_2010)))
 dic_2022 <- c(dic_2022, rep("", max_len - length(dic_2022)))
 
-tab <- data.frame(`2010` = dic_2010,
+tab <- data.frame(`2000` = dic_2000,
+                  `2010` = dic_2010,
                   `2022` = dic_2022,
                   check.names = FALSE)
 

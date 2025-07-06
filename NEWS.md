@@ -14,6 +14,8 @@
   * 2022 census. Closes [#64](https://github.com/ipeaGIT/censobr/issues/64)
     * Census-tract level data
     * Census-tract level data dictionary
+  * 2000 census. Closes [#43](https://github.com/ipeaGIT/censobr/issues/43)
+    * Census-tract level data
   * All data sets are save in `.parquet` compressed using `compression='zstd'` and `compression_level = 22`. This has almost halved the size of data files, making downloads much more efficient at minimal cost of reading time.
   * All data sets are now sorted by key columns to speed up join operations. Closes #60.
   * Fixed annoying message about arrow metadata. closed #56.
