@@ -1,15 +1,15 @@
-get_default_cache_dir <- function() {
+get_default_cache_dir <- function() { # nocov start
   fs::path(
     tools::R_user_dir("censobr", which = "cache")
   )
-}
+} # nocov end
 
-get_config_cache_file <- function() {
+get_config_cache_file <- function() { # nocov start
   fs::path(
     tools::R_user_dir("censobr", which = "config"),
     "cache_dir"
   )
-}
+} # nocov end
 
 #' Set custom cache directory for censobr files
 #'
@@ -97,7 +97,7 @@ get_censobr_cache_dir <- function() {
 #'
 #' @return TRUE or FALSE
 #' @keywords internal
-using_default_censobr_cache_dir <- function() {
+using_default_censobr_cache_dir <- function(){ # nocov start
 
   # default dir
   deafault_dir <- get_default_cache_dir()
@@ -111,7 +111,7 @@ using_default_censobr_cache_dir <- function() {
 
   check <- dirname(deafault_dir) == cache_dir
   return(check)
-}
+} # nocov end
 
 #' Manage cached files from the censobr package
 #'
@@ -182,13 +182,12 @@ censobr_cache <- function(list_files = TRUE,
     if (delete_file=='all') {
 
       # delete any files from censobr, current and old data releases
-      # dir_above <- dirname(cache_dir)
-      # unlink(dir_above, recursive = TRUE)
-      unlink(
-        list.files(cache_dir, full.names = TRUE, recursive = FALSE, all.files = TRUE),
-        recursive = TRUE,
-        force     = TRUE   # harmless on Unix, helpful on Windows
-      )
+      # unlink(
+      #   list.files(cache_dir, full.names = TRUE, recursive = FALSE, all.files = TRUE),
+      #   recursive = TRUE,
+      #   force     = TRUE   # harmless on Unix, helpful on Windows
+      # )
+      fs::dir_delete(cache_dir)
 
       cli::cli_alert_success("The following cache directory has been deleted: {cache_dir}")
     }

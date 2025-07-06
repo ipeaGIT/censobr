@@ -73,7 +73,7 @@ download_file <- function(file_url = parent.frame()$file_url,
 #' @return An `arrow::Dataset`
 #'
 #' @keywords internal
-arrow_open_dataset <- function(filename){
+arrow_open_dataset <- function(filename){ # nocov start
 
   tryCatch(
     arrow::open_dataset(filename),
@@ -87,7 +87,7 @@ arrow_open_dataset <- function(filename){
 
     }
   )
-}
+} # nocov end
 
 #' Message when caching file
 #'
@@ -138,14 +138,14 @@ cache_message <- function(local_file = parent.frame()$local_file,
 #' @return An informative error
 #'
 #' @keywords internal
-error_missing_years <- function(y) {
+error_missing_years <- function(y) { # nocov start
 
   years_available <- paste(y, collapse = " ")
   cli::cli_abort(
     "Data currently available only for the years {years_available}.",
     call = rlang::caller_env()
   )
-}
+} # nocov end
 
 #' Error missing data sets
 #'
@@ -153,14 +153,14 @@ error_missing_years <- function(y) {
 #' @return An informative error
 #'
 #' @keywords internal
-error_missing_datasets <- function(d) {
+error_missing_datasets <- function(d) { # nocov start
 
   datasets_available <- paste(d, collapse = ", ")
   cli::cli_abort(
     "Only the following data sets are currently available: {datasets_available}.",
     call = rlang::caller_env()
   )
-}
+} # nocov end
 
 
 
