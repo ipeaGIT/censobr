@@ -96,6 +96,7 @@ get_censobr_cache_dir <- function() {
 #' Check if user is using the default cache dir of censobr
 #'
 #' @return TRUE or FALSE
+#' @keywords internal
 using_default_censobr_cache_dir <- function() {
 
   # default dir
