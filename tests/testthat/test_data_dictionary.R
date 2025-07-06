@@ -15,6 +15,7 @@ tester <- function(year = 2010,
     cache
   )
 }
+
 # Reading the data -----------------------
 
 test_that("data_dictionary", {
