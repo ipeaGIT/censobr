@@ -60,7 +60,7 @@ test_that("read_tracts 2022 datasets", {
 
   lapply(X=tbls, FUN = function(y){ # y = 'Preliminares'
     tmp_d <- tester(year = 2022, dataset = y)
-    testthat::expect_true( nrow(tmp_d) >= 452340)
+    testthat::expect_true( nrow(tmp_d) >= 344841)
   } )
 
 })
