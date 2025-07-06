@@ -62,6 +62,9 @@
 <ul><li>Census-tract level data</li>
 <li>Census-tract level data dictionary</li>
 </ul></li>
+<li>2000 census. Closes <a href="https://github.com/ipeaGIT/censobr/issues/43" class="external-link">#43</a>
+<ul><li>Census-tract level data</li>
+</ul></li>
 <li>All data sets are save in <code>.parquet</code> compressed using <code>compression='zstd'</code> and <code>compression_level = 22</code>. This has almost halved the size of data files, making downloads much more efficient at minimal cost of reading time.</li>
 <li>All data sets are now sorted by key columns to speed up join operations. Closes <a href="https://github.com/ipeaGIT/censobr/issues/60" class="external-link">#60</a>.</li>
 <li>Fixed annoying message about arrow metadata. closed <a href="https://github.com/ipeaGIT/censobr/issues/56" class="external-link">#56</a>.</li>
