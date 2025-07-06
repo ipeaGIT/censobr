@@ -69,14 +69,16 @@
 
 
 <dt id="arg-dataset">dataset<a class="anchor" aria-label="anchor" href="#arg-dataset"></a></dt>
-<dd><p>Character. The dataset to be opened.
-For the 2010 Census, valid options are:</p><ul><li><p><code>c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda", "Entorno")</code>.
-For the 2022 Census, valid options are:</p></li>
-<li><p><code>c("Basico", "Domicilio", "ResponsavelRenda", "Pessoas", "Indigenas", "Quilombolas", "Entorno", "Obitos", "Preliminares")</code>.</p></li>
+<dd><p>Character. The dataset to be opened. The following options are
+available for each edition of the census:</p>
+<p><strong>2000 Census</strong></p><ul><li><p><code>c("Basico", "Domicilio", "Responsavel", "Pessoa", "Instrucao", "Morador")</code>.</p></li>
+</ul><p><strong>2010 Census</strong></p><ul><li><p><code>c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda", "Entorno")</code>.</p></li>
+</ul><p><strong>2022 Census</strong></p><ul><li><p><code>c("Basico", "Domicilio", "ResponsavelRenda", "Pessoas", "Indigenas", "Quilombolas", "Entorno", "Obitos", "Preliminares")</code>.</p></li>
 </ul><p>The <code>censobr</code> package exposes all original IBGE census tracts datasets, regrouping
 them into broader themes and appending geographic identifiers so that they
 align seamlessly with <code>geobr</code> shapefiles.</p>
-<p>For a complete description of the datasets, themes, and variables, check</p><ul><li><p><code>data_dictionary(year = 2010, dataset = "tracts")</code> or</p></li>
+<p>For a complete description of the datasets, themes, and variables, check</p><ul><li><p><code>data_dictionary(year = 2000, dataset = "tracts")</code>,</p></li>
+<li><p><code>data_dictionary(year = 2010, dataset = "tracts")</code>,</p></li>
 <li><p><code>data_dictionary(year = 2022, dataset = "tracts")</code>.</p></li>
 </ul></dd>
 
