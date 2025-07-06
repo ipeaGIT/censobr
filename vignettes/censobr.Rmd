@@ -142,7 +142,7 @@ The package currently includes 6 main functions to download census data:
       <td></td>
       <td><i>em breve</i></td>
       <td>X</td>
-      <td><i>em breve</i></td>
+      <td><i>X</i></td>
     </tr>
   </tbody>
 </table>
@@ -255,8 +255,10 @@ ggplot() +
 In this example, we are going to map the proportion of households connected to a sewage network in Brazilian municipalities First, we can easily download the households data set with the `read_households()` function.
 
 ```{r, message=FALSE}
-hs <- read_households(year = 2010, 
-                      showProgress = FALSE)
+hs <- read_households(
+  year = 2010, 
+  showProgress = FALSE
+  )
 
 ```
 
@@ -278,8 +280,11 @@ In order to create a map with these values, we are going to use the [{geobr} pac
 ```{r warning = FALSE, message=FALSE}
 library(geobr)
 
-muni_sf <- geobr::read_municipality(year = 2010,
-                                    showProgress = FALSE)
+muni_sf <- geobr::read_municipality(
+  year = 2010,
+  showProgress = FALSE
+  )
+
 head(muni_sf)
 ```
 
@@ -304,16 +309,20 @@ In this final example, we're going to visualize how the amount of money people s
 
 First, let's download the municipalities of the metro area of São Paulo.
 ```{r warning = FALSE, message=FALSE}
-metro_muni <- geobr::read_metro_area(year = 2010, 
-                                     showProgress = FALSE) |> 
-              subset(name_metro == "RM São Paulo")
+metro_muni <- geobr::read_metro_area(
+  year = 2010, 
+  showProgress = FALSE) |>
+  subset(name_metro == "RM São Paulo")
+
 ```
 We also need the polygons of the weighting areas (áreas de ponderação). With the code below, we download all weighting areas in the state of São Paulo, and then keep only the ones in the metropolitan region of São Paulo.
 
 ```{r warning = FALSE, message=FALSE}
-wt_areas <- geobr::read_weighting_area(code_weighting = "SP", 
-                                       showProgress = FALSE,
-                                       year = 2010)
+wt_areas <- geobr::read_weighting_area(
+  code_weighting = "SP", 
+  showProgress = FALSE,
+  year = 2010
+  )
 
 wt_areas <- subset(wt_areas, code_muni %in% metro_muni$code_muni)
 head(wt_areas)
@@ -395,6 +404,6 @@ censobr::censobr_cache(
   )
 ```
 
-If you do not remember the location of the cache, you can always run `get_censobr_cache_dir()` to return the path of the cache directory in use.
+If you do not remember the location of the cache, you can always run `get_censobr_cache_dir()` to return the path of the cache directory in use, or run `set_censobr_cache_dir(path = NULL)` to set the default cache directory back.
 
 

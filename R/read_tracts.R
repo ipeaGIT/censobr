@@ -6,21 +6,20 @@
 #' @template year
 #' @param dataset Character. The dataset to be opened.
 #'    For the 2010 Census, valid options are:
-#'   `c("Basico", "Domicilio", "DomicilioRenda", "Responsavel",
+#'   - `c("Basico", "Domicilio", "DomicilioRenda", "Responsavel",
 #'     "ResponsavelRenda", "Pessoa", "PessoaRenda", "Entorno")`.
 #'   For the 2022 Census, valid options are:
-#'   `c("Basico", "Domicilio", "ResponsavelRenda", "Pessoas", "Indigenas",
+#'   - `c("Basico", "Domicilio", "ResponsavelRenda", "Pessoas", "Indigenas",
 #'     "Quilombolas", "Entorno", "Obitos", "Preliminares")`.
 #'
 #'   The `censobr` package exposes all original IBGE census tracts datasets, regrouping
 #'   them into broader themes and appending geographic identifiers so that they
 #'   align seamlessly with `geobr` shapefiles.
 #'
-#'   For a complete description of the datasets, themes, and variables, consult
-#'   `data_dictionary(year = 2010, dataset = "tracts")` and
-#'   `data_dictionary(year = 2022, dataset = "tracts")`.
+#'   For a complete description of the datasets, themes, and variables, check
+#'   - `data_dictionary(year = 2010, dataset = "tracts")` or
+#'   - `data_dictionary(year = 2022, dataset = "tracts")`.
 #'
-#' data_dictionary()
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
@@ -32,28 +31,32 @@
 #' library(censobr)
 #'
 #' # return data as arrow Dataset
-#' df <- read_tracts(year = 2010,
-#'                   dataset = 'PessoaRenda',
-#'                   showProgress = FALSE)
+#' df <- read_tracts(
+#'   year = 2022,
+#'   dataset = 'Domicilio',
+#'   showProgress = FALSE
+#'   )
 #'
 #' # return data as data.frame
-#' df <- read_tracts(year = 2010,
-#'                   dataset = 'Basico',
-#'                   as_data_frame = TRUE,
-#'                   showProgress = FALSE)
+#' df <- read_tracts(
+#'   year = 2010,
+#'   dataset = 'Basico',
+#'   as_data_frame = TRUE,
+#'   showProgress = FALSE
+#'   )
 #'
-read_tracts <- function(year = 2010,
-                        dataset = NULL,
+read_tracts <- function(year,
+                        dataset,
                         as_data_frame = FALSE,
                         showProgress = TRUE,
                         cache = TRUE){
 
   ### check inputs
-  checkmate::assert_numeric(year)
+  checkmate::assert_numeric(year, any.missing = FALSE)
+  checkmate::assert_string(dataset, null.ok = FALSE)
   checkmate::assert_logical(as_data_frame)
   checkmate::assert_logical(showProgress)
   checkmate::assert_logical(cache)
-  checkmate::assert_string(dataset, null.ok = FALSE)
 
 
   # data available for the years:
@@ -65,14 +68,17 @@ read_tracts <- function(year = 2010,
   # data sets available for 2010:
   data_sets_2010 <- c("Basico", "Domicilio", "DomicilioRenda", "Entorno",
                       "ResponsavelRenda", "Responsavel", "PessoaRenda", "Pessoa")
+
+  # data sets available for 2022:
+  data_sets_2022 <- c("Basico", "Domicilio", "Pessoas", "ResponsavelRenda",
+                      "Indigenas", "Quilombolas", "Entorno", "Obitos",
+                      "Preliminares")
+
+  # check requested data set
   if (year==2010 & isFALSE(dataset %in% data_sets_2010)) {
     error_missing_datasets(data_sets_2010)
   }
 
-  # data sets available for 2022:
-  data_sets_2022 <- c("Basico",           "Domicilio",        "Pessoas",          "ResponsavelRenda",
-                      "Indigenas",        "Quilombolas",      "Entorno",          "Obitos",
-                      "Preliminares")
   if (year==2022 & isFALSE(dataset %in% data_sets_2022)) {
     error_missing_datasets(data_sets_2022)
   }

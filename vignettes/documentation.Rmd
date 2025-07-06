@@ -60,7 +60,7 @@ The **{censobr}** package includes a few functions to help users navigate Brazil
             <td></td>
             <td>X</td>
             <td>X</td>
-            <td><i>soon</i></td>
+            <td><i>X</i></td>
         </tr>
         <tr>
             <td>questionnaire()</td>
@@ -101,12 +101,16 @@ The `data_dictionary()` indicate the definition of each variable, and the meanin
 
 ```{r, eval = FALSE}
 # Microdata variables
-data_dictionary(year = 2010,
-                dataset = 'microdata')
+data_dictionary(
+  year = 2010,
+  dataset = 'microdata'
+  )
 
 # Census tract-level variables
-data_dictionary(year = 2010,
-                dataset = 'tracts')
+data_dictionary(
+  year = 2022,
+  dataset = 'tracts'
+  )
 ```
 
 
@@ -118,12 +122,16 @@ Here, users need to pass the `year` parameter indicating the edition of the cens
 
 ```{r, eval = FALSE}
 # short questionnaire
-questionnaire(year = 2022, 
-              type = 'short')
+questionnaire(
+  year = 2022, 
+  type = 'short'
+  )
 
 # long questionnaire
-questionnaire(year = 2022, 
-              type = 'long')
+questionnaire(
+  year = 2022, 
+  type = 'long'
+  )
 ```
 
 
@@ -134,10 +142,10 @@ Finally, the `interview_manual()` function downloads and opens on a browser the 
 Manuals for all censuses since 1970 are available.
 
 ```{r, eval = FALSE}
-# 2010
+# 2022
 interview_manual(year = 2022)
 
-# 1970
+# 1960
 interview_manual(year = 1960)
 
 ```
