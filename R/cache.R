@@ -96,6 +96,7 @@ get_censobr_cache_dir <- function() {
 #' Check if user is using the default cache dir of censobr
 #'
 #' @return TRUE or FALSE
+#' @keywords internal
 using_default_censobr_cache_dir <- function() {
 
   # default dir
@@ -183,7 +184,12 @@ censobr_cache <- function(list_files = TRUE,
       # delete any files from censobr, current and old data releases
       # dir_above <- dirname(cache_dir)
       # unlink(dir_above, recursive = TRUE)
-      unlink(cache_dir, recursive = TRUE)
+      unlink(
+        list.files(cache_dir, full.names = TRUE, recursive = FALSE, all.files = TRUE),
+        recursive = TRUE,
+        force     = TRUE   # harmless on Unix, helpful on Windows
+      )
+
       cli::cli_alert_success("The following cache directory has been deleted: {cache_dir}")
     }
   }

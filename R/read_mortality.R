@@ -19,19 +19,23 @@
 #' library(censobr)
 #'
 #' # return data as arrow Dataset
-#' df <- read_mortality(year = 2010,
-#'                      showProgress = FALSE)
+#' df <- read_mortality(
+#'   year = 2010,
+#'   showProgress = FALSE
+#'   )
 #'
 #' # dplyr::glimpse(df)
 #'
 #' # return data as data.frame
-#' df <- read_mortality(year = 2010,
-#'                      as_data_frame = TRUE,
-#'                      showProgress = FALSE)
+#' df <- read_mortality(
+#'   year = 2010,
+#'   as_data_frame = TRUE,
+#'   showProgress = FALSE
+#'   )
 #'
 #' # dplyr::glimpse(df)
 #'
-read_mortality <- function(year = 2010,
+read_mortality <- function(year,
                            columns = NULL,
                            add_labels = NULL,
                            merge_households = FALSE,
@@ -40,7 +44,7 @@ read_mortality <- function(year = 2010,
                            cache = TRUE){
 
   ### check inputs
-  checkmate::assert_numeric(year)
+  checkmate::assert_numeric(year, any.missing = FALSE)
   checkmate::assert_vector(columns, null.ok = TRUE)
   checkmate::assert_logical(as_data_frame)
   checkmate::assert_logical(merge_households)

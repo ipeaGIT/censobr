@@ -9,40 +9,40 @@
 #' @template showProgress
 #' @template cache
 #'
-#' @return Returns `NULL` and opens .html or .pdf file on the browser
+#' @return Returns `NULL` and opens an .html, .pdf or excel file
 #' @export
 #' @family Census documentation
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
-#' # Open data dictionary on browser
+#' # Open data dictionary
 #' data_dictionary(year = 2010,
 #'                 dataset = 'population',
+#'                 showProgress = FALSE)
+#'
+#' data_dictionary(year = 2022,
+#'                 dataset = 'tracts',
 #'                 showProgress = FALSE)
 #'
 #' data_dictionary(year = 1980,
 #'                 dataset = 'households',
 #'                 showProgress = FALSE)
 #'
-#' data_dictionary(year = 2010,
-#'                 dataset = 'tracts',
-#'                 showProgress = FALSE)
-
-data_dictionary <- function(year = 2010,
-                            dataset = NULL,
+#'
+data_dictionary <- function(year,
+                            dataset,
                             showProgress = TRUE,
                             cache = TRUE){
   # year = 2010
   # dataset = 'population'
 
   ### check inputs
-  checkmate::assert_numeric(year)
-  checkmate::assert_string(dataset)
+  checkmate::assert_numeric(year, any.missing = FALSE)
+  checkmate::assert_string(dataset, na.ok = FALSE)
 
   # data available for data sets:
   data_sets <- c("population", "households", "families", "mortality", "emigration", "tracts")
-  if (isFALSE(dataset %in% data_sets)) { stop( paste0("Error: Dictionary currently only available for the datasets: ",
-                                                    paste(data_sets, collapse = ", "))
-  )}
-
+  if (isFALSE(dataset %in% data_sets)) {
+    error_missing_datasets(data_sets)
+    }
 
   # check year / data availability
   if(dataset == 'tracts'){ years <- c(2000, 2010, 2022) }
@@ -53,10 +53,12 @@ data_dictionary <- function(year = 2010,
   if(dataset == 'emigration'){ years <- c(2010) }
 
   if (isFALSE(year %in% years)) {
-    stop( paste0("Error: Dictionary for ",dataset," data currently only available for the years: ",
-                 paste(years,collapse = " ")))
+    years_available <- paste(years, collapse = " ")
+    cli::cli_abort(
+      "Dictionary for {dataset} data currently only for the years {years_available}.",
+      call = rlang::caller_env()
+      )
     }
-
 
 
   ### Get url
@@ -71,6 +73,8 @@ data_dictionary <- function(year = 2010,
   if (dataset == 'tracts') {
     fname <- paste0(year, '_dictionary_tracts.pdf')
     file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/censo_docs/", fname)
+
+    if(year==2022) {file_url <- gsub(".pdf", ".xlsx", file_url)}
     }
 
   ### Download
@@ -84,12 +88,11 @@ data_dictionary <- function(year = 2010,
   # open data dic on browser
   file_extension <- fs::path_ext(local_file)
 
-  if (file_extension %in% c('pdf', 'htlm')) {
+  if (file_extension %in% c('pdf', 'html')) {
     utils::browseURL(url = local_file)
   } else {
     open_file(path = local_file)
-    }
-
+  }
 
   return(NULL)
 }

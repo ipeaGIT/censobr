@@ -21,43 +21,81 @@ knitr::opts_chunk$set(
 
 Perhaps the most commonly used datasets from Brazilian censuses are the microdata of individuals and households. Nonetheless, IBGE also makes available some extremely data on population and environmental characteristics aggregated at the census tract level. In this vignette, we show how to use the **{censobr}** package to  easily access census tract-level data using the `read_tracts()` function.
 
-At the moment, this function only includes data from the 2010 census.
+At the moment, this function only includes data from the 2010 and 2022 censuses.
 
 
 # Data structure
 
-Aggregated data at the census tract level are split into different datasets, and some of them are scattered across several files. For the sake of convenience, we have gathered all of the files into 8 different datasets:
+Aggregated data at the census tract level are split into different datasets, and some of them are scattered across several files. For the sake of convenience, we have gathered all of the files into different datasets:
 
-- `"Basico"`
-- `"Entorno"`
-- `"Domicilio"`
-- `"Pessoa"`
-- `"Responsavel"`
-- `"PessoaRenda"`
-- `"DomicilioRenda"`
-- `"ResponsavelRenda"`
+`"Basico"`
+`"Entorno"`
+`"Domicilio"`
+`"Pessoa"`
+`"Responsavel"`
+`"PessoaRenda"`
+`"DomicilioRenda"`
+`"ResponsavelRenda"`
+
+
+```{r dict-table, echo = FALSE, message = FALSE}
+# ---- packages -----------------------------------------------------------
+library(knitr)
+library(kableExtra)
+
+# ---- data ---------------------------------------------------------------
+dic_2010 <- c(
+  "`Basico`", "`Entorno`", "`Domicilio`", "`DomicilioRenda`",
+  "`Pessoa`", "`PessoaRenda`", "`Responsavel`", "`ResponsavelRenda`"
+)
+
+dic_2022 <- c(
+  "`Basico`", "`Domicilio`", "`Entorno`", "`Indigenas`",
+  "`Quilombolas`", "`Obitos`", "`Pessoas`", "`ResponsavelRenda`",
+  "`Preliminares`"
+)
+
+# pad the shorter vector with blanks so the columns have equal length
+max_len <- max(length(dic_2010), length(dic_2022))
+dic_2010 <- c(dic_2010, rep("", max_len - length(dic_2010)))
+dic_2022 <- c(dic_2022, rep("", max_len - length(dic_2022)))
+
+tab <- data.frame(`2010` = dic_2010,
+                  `2022` = dic_2022,
+                  check.names = FALSE)
+
+# ---- display ------------------------------------------------------------
+kable(tab, escape = FALSE, align = "l") |>
+  kable_styling(full_width = FALSE, position = "left")
+```
+
 
 All of the data aggregated at census tracts are organized following the same logic.
 
-In the cases when there are multiple files in the same dataset, we add a reference to the number of the file as a prefix to the variable name. To illustrate this, let's have a look at the `"Domicilio"` dataset. This dataset is based on two separate tables: *Domicilio01* and *Domicilio02*. So the names of the columns in this dataset are organized as follows:
+In the cases when there are multiple files in the same dataset, we add a reference to the number of the file as a prefix to the variable name. To illustrate this, let's have a look at the `"Domicilio"` dataset. This dataset is based on three separate tables: *Domicilio01*, *Domicilio02* and *Domicilio03*. So the names of the columns in this dataset are organized as follows:
 
 ```{r warning = FALSE}
 library(censobr)
 
-dom <- read_tracts(year = 2010, 
-                   dataset = 'Domicilio', 
-                   showProgress = FALSE)
+dom <- read_tracts(
+  year = 2022,
+  dataset = 'Domicilio', 
+  showProgress = FALSE
+  )
 
-names(dom)[c(1:20,301:320)]
+names(dom)[c(30:33,119:121, 526:528)]
 ```
 
 ## Dictionary of variables
 
-To check the meaning of each variable, users can run the `data_dictionary()`, which will open on the browser an `.html` or `.pdf` file with the dictionary of variables in each dataset
+To check the meaning of each variable, users can run the `data_dictionary()`, which will open the file with the dictionary of variables in each dataset. The dictionary file is either an `.html`, a `.pdf` or an `.xlsx` file, depending on the data set and year.
 
 
 ```{r warning=FALSE, message=FALSE}
-data_dictionary(year = 2010, dataset = 'tracts')
+data_dictionary(
+  year = 2022, 
+  dataset = 'tracts'
+  )
 
 ```
 
@@ -99,22 +137,71 @@ ggplot() +
 
 
 
-## Example 1: Spatial distribution of income
+## Example 1: 
 
-In this first example we'll be creating a map of the spatial distribution of average income per capita. We can find the information on the the total number of residents in each census tract in the `"Basico"` dataset, variable `"V002"`. Meanwhile, the information on income can be found in the `"DomicilioRenda"` dataset, variable `"V003"`.
+In this first example we are going to map the proportion of households with the presence of trees in their surroundings. To do this, we need to download the `"Entorno"` dataset and sum the variables `domicilios_V05031 + domicilios_V05032 + domicilios_V05033`. 
+
+
+```{r warning = FALSE}
+# download data
+tract_entorno <- censobr::read_tracts(
+  year = 2022,
+  dataset = "Entorno", 
+  showProgress = FALSE
+  )
+
+# filter observations and calculate indicator
+df_trees <- tract_entorno |>
+  filter(code_tract %in% tracts_sf$code_tract) |>
+  group_by(code_tract) |>
+  mutate(total_households = domicilios_V05000,
+         trees = domicilios_V05031 + domicilios_V05032+ domicilios_V05033,
+         trees_prop = trees / total_households) |>
+  select(code_tract, total_households, trees, trees_prop) |>
+  collect()
+
+head(df_trees)
+```
+
+Now we can merge the spatial data with our indicator and see how the presence of trees in the surroundings of households varies spatially.
+
+```{r warning = FALSE}
+bh_tracts <- left_join(tracts_sf, df_trees, by = 'code_tract')
+
+ggplot() +
+  geom_sf(data = bh_tracts, aes(fill = trees_prop), color=NA) +
+  geom_sf(data = muni_bh, color='gray10', fill=NA) +
+  labs(subtitle = 'Share of households with trees in their surroundings.\nBelo Horizonte, 2010') +
+  scale_fill_distiller(palette = "Greens", direction = 1, 
+                       name='Share of\nhouseholds', 
+                       na.value = "gray90",
+                       labels = scales::percent) +
+  theme_void()
+
+```
+
+## Example 2: Spatial distribution of income
+
+In this second example, we are going to create a map of the spatial distribution of average income per capita. Unfortunately, this information was not collected in the 2022 census at the census tract level, so this example is based on the 2010 data.
+
+In the 2010 census, we can find the information on the the total number of residents in each census tract in the `"Basico"` dataset, variable `"V002"`. Meanwhile, the information on income can be found in the `"DomicilioRenda"` dataset, variable `"V003"`.
 
 Using the code below, we download the data and calculate the income per capita of all census tracts in Brazil.
 
 
 ```{r warning = FALSE}
 # download data
-tract_basico <- read_tracts(year = 2010,
-                            dataset = "Basico", 
-                            showProgress = FALSE)
+tract_basico <- censobr::read_tracts(
+  year = 2010,
+  dataset = "Basico", 
+  showProgress = FALSE
+  )
 
-tract_income <- read_tracts(year = 2010,
-                            dataset = "DomicilioRenda", 
-                            showProgress = FALSE)
+tract_income <- censobr::read_tracts(
+  year = 2010,
+  dataset = "DomicilioRenda", 
+  showProgress = FALSE
+  )
 
 # select columns
 tract_basico <- tract_basico |> select('code_tract','V002')
@@ -146,41 +233,3 @@ ggplot() +
 
 ```
 
-## Example 2: 
-
-In this second example, we are going to map the proportion of households with the presence of trees in their surroundings. To do this, we need to download the `"Entorno"` dataset and sum the variables `entorno01_V044 + entorno01_V046 + entorno01_V048`. 
-
-```{r warning = FALSE}
-# download data
-tract_entorno <- read_tracts(year = 2010,
-                             dataset = "Entorno", 
-                             showProgress = FALSE)
-
-# filter observations and calculate indicator
-df_trees <- tract_entorno |>
-                  filter(code_tract %in% tracts_sf$code_tract) |>
-                  mutate(total_households = entorno01_V001,
-                         trees = entorno01_V044 + entorno01_V046 + entorno01_V048,
-                         trees_prop = trees / total_households) |>
-                  select(code_tract, total_households, trees, trees_prop) |>
-                  collect()
-
-head(df_trees)
-```
-
-Now we can merge the spatial data with our indicator and see how the presence of trees in the surroundings of households varies spatially.
-
-```{r warning = FALSE}
-bh_tracts <- left_join(tracts_sf, df_trees, by = 'code_tract')
-
-ggplot() +
-  geom_sf(data = bh_tracts, aes(fill = trees_prop), color=NA) +
-  geom_sf(data = muni_bh, color='gray10', fill=NA) +
-  labs(subtitle = 'Share of households with trees in their surroundings.\nBelo Horizonte, 2010') +
-  scale_fill_distiller(palette = "Greens", direction = 1, 
-                       name='Share of\nhouseholds', 
-                       na.value = "gray90",
-                       labels = scales::percent) +
-  theme_void()
-
-```

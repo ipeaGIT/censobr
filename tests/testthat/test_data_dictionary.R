@@ -20,6 +20,7 @@ tester <- function(year = 2010,
 test_that("data_dictionary", {
 
   # tracts
+  testthat::expect_message( tester(year = 2022, dataset = 'tracts') )
   testthat::expect_message( tester(year = 2010, dataset = 'tracts') )
   testthat::expect_message( tester(year = 2000, dataset = 'tracts') )
   testthat::expect_message( tester(year = 1991, dataset = 'tracts') )
@@ -51,8 +52,6 @@ test_that("data_dictionary", {
   # emigration
   testthat::expect_message( tester(year = 2010, dataset = 'emigration') )
   testthat::expect_error( tester(year = 1991, dataset = 'emigration') )
-
-
 
  })
 

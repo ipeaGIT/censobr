@@ -4,7 +4,7 @@
 #' Download microdata of family records from Brazil's census. Data collected in
 #' the sample component of the questionnaire.
 #'
-#' @param year Numeric. Year of reference in the format `yyyy`. Defaults to `2000`.
+#' @template year
 #' @template columns
 #' @template add_labels
 #' @template as_data_frame
@@ -16,11 +16,13 @@
 #' @family Microdata
 #' @examplesIf identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 #' # return data as arrow Dataset
-#' df <- read_families(year = 2000,
-#'                     showProgress = FALSE)
+#' df <- read_families(
+#'   year = 2000,
+#'   showProgress = FALSE
+#'   )
 #'
 #'
-read_families <- function(year = 2000,
+read_families <- function(year,
                           columns = NULL,
                           add_labels = NULL,
                           as_data_frame = FALSE,
@@ -28,7 +30,7 @@ read_families <- function(year = 2000,
                           cache = TRUE){
 
   ### check inputs
-  checkmate::assert_numeric(year)
+  checkmate::assert_numeric(year, any.missing = FALSE)
   checkmate::assert_vector(columns, null.ok = TRUE)
   checkmate::assert_logical(as_data_frame)
   # checkmate::assert_logical(merge_households)
