@@ -51,7 +51,12 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">censobr_cache</span><span class="op">(</span>list_files <span class="op">=</span> <span class="cn">TRUE</span>, print_tree <span class="op">=</span> <span class="cn">FALSE</span>, delete_file <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">censobr_cache</span><span class="op">(</span></span>
+<span>  list_files <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  print_tree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  delete_file <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -74,6 +79,11 @@ Defaults to <code>FALSE</code>.</p></dd>
 file path of a file cached locally and which should be deleted.
 Defaults to <code>NULL</code>, so that no file is deleted. If <code>delete_file = "all"</code>,
 then all of the cached files are deleted.</p></dd>
+
+
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
+<dd><p>A logical. Whether the function should print informative
+messages. Defaults to <code>TRUE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

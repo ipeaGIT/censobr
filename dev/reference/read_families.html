@@ -60,7 +60,8 @@ the sample component of the questionnaire.</p>
 <span>  add_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  as_data_frame <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  showProgress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  cache <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  cache <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -101,6 +102,11 @@ locally, which is much faster. Defaults to <code>TRUE</code>. The first time the
 user runs the function, <code>censobr</code> will download the file and store it
 locally so that the file only needs to be download once. If <code>FALSE</code>,
 the function will download the data again and overwrite the local file.</p></dd>
+
+
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
+<dd><p>A logical. Whether the function should print informative
+messages. Defaults to <code>TRUE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
