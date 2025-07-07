@@ -4,7 +4,13 @@
 \alias{data_dictionary}
 \title{Data dictionary of Brazil's census data}
 \usage{
-data_dictionary(year, dataset, showProgress = TRUE, cache = TRUE)
+data_dictionary(
+  year,
+  dataset,
+  showProgress = TRUE,
+  cache = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{year}{Numeric. Year of reference in the format \code{yyyy}.}
@@ -21,6 +27,9 @@ locally, which is much faster. Defaults to \code{TRUE}. The first time the
 user runs the function, \code{censobr} will download the file and store it
 locally so that the file only needs to be download once. If \code{FALSE},
 the function will download the data again and overwrite the local file.}
+
+\item{verbose}{A logical. Whether the function should print informative
+messages. Defaults to \code{TRUE}.}
 }
 \value{
 Returns \code{NULL} and opens an .html, .pdf or excel file

@@ -3,13 +3,15 @@
 #' @param file_url String. A url.
 #' @param showProgress Logical.
 #' @param cache Logical.
+#' @param verbose Logical.
 
 #' @return A string to the address of the file
 #'
 #' @keywords internal
 download_file <- function(file_url = parent.frame()$file_url,
                           showProgress = parent.frame()$showProgress,
-                          cache = parent.frame()$cache){ # nocov start
+                          cache = parent.frame()$cache,
+                          verbose = parent.frame()$verbose){ # nocov start
 
   # check input
   checkmate::assert_logical(showProgress)
@@ -25,7 +27,7 @@ download_file <- function(file_url = parent.frame()$file_url,
   local_file <- fs::path(cache_dir, file_name)
 
   # cache message
-  cache_message(local_file, cache)
+  cache_message(local_file, cache, verbose)
 
   # this is necessary to silence download message when reading local file
   if (file.exists(local_file) & isTRUE(cache)) {
@@ -45,7 +47,7 @@ download_file <- function(file_url = parent.frame()$file_url,
   # if anything fails, return NULL (fail gracefully)
   if (any(!downloaded_files$success | is.na(downloaded_files$success))) {
         msg <- paste(
-        "Locak file seems to be corrupted. Please download it again using 'cache = FALSE'.",
+        "Local file seems to be corrupted. Please download it again using 'cache = FALSE'.",
         sprintf("Alternatively, you can remove the corrupted file with 'censobr::censobr_cache(delete_file = \"%s\")'", basename(local_file)),
         sep = "\n")
         cli::cli_alert_danger(msg)
@@ -91,14 +93,16 @@ arrow_open_dataset <- function(filename){ # nocov start
 
 #' Message when caching file
 #'
-#' @param local_file The address of a file passed from the download_file function.
-#' @param cache Logical. Whether the cached data should be used.
-
+#' @param local_file The address of a file passed from the download_file function
+#' @param cache Logical. Whether the cached data should be used
+#' @param verbose Logical. Whether the message should be printed
+#'
 #' @return A message
 #'
 #' @keywords internal
 cache_message <- function(local_file = parent.frame()$local_file,
-                          cache = parent.frame()$cache){ # nocov start
+                          cache = parent.frame()$cache,
+                          verbose = parent.frame()$verbose){ # nocov start
 
 #  local_file <- 'C:\\Users\\user\\AppData\\Local/R/cache/R/censobr_v0.1/2010_deaths.parquet'
 
@@ -106,26 +110,28 @@ cache_message <- function(local_file = parent.frame()$local_file,
   file_name <- basename(local_file[1])
   dir_name <- dirname(local_file[1])
 
-  ## if file already exists
+  if (isTRUE(verbose)) {
+    ## if file already exists
+      # YES cache
+      if (file.exists(local_file) & isTRUE(cache)) {
+         cli::cli_alert_info('Reading data cached locally.')
+         }
+
+      # NO cache
+      if (file.exists(local_file) & isFALSE(cache)) {
+          cli::cli_alert_info('Overwriting data cached locally.')
+         }
+
+    ## if file does not exist yet
     # YES cache
-    if (file.exists(local_file) & isTRUE(cache)) {
-       cli::cli_alert_info('Reading data cached locally.')
-       }
+    if (!file.exists(local_file) & isTRUE(cache)) {
+      cli::cli_alert_info('Downloading data and storing it locally for future use.')
+    }
 
     # NO cache
-    if (file.exists(local_file) & isFALSE(cache)) {
-        cli::cli_alert_info('Overwriting data cached locally.')
-       }
-
-  ## if file does not exist yet
-  # YES cache
-  if (!file.exists(local_file) & isTRUE(cache)) {
-    cli::cli_alert_info('Downloading data and storing it locally for future use.')
-  }
-
-  # NO cache
-  if (!file.exists(local_file) & isFALSE(cache)) {
-    cli::cli_alert_info("Downloading data. Setting 'cache = TRUE' is strongly recommended to speed up future use. File will be stored locally at: {dir_name}")
+    if (!file.exists(local_file) & isFALSE(cache)) {
+      cli::cli_alert_info("Downloading data. Setting 'cache = TRUE' is strongly recommended to speed up future use. File will be stored locally at: {dir_name}")
+      }
     }
   } # nocov end
 

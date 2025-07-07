@@ -11,6 +11,7 @@
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
 #' @return An arrow `Dataset` or a `"data.frame"` object.
 #' @export
@@ -41,12 +42,14 @@ read_mortality <- function(year,
                            merge_households = FALSE,
                            as_data_frame = FALSE,
                            showProgress = TRUE,
-                           cache = TRUE){
+                           cache = TRUE,
+                           verbose = TRUE){
 
   ### check inputs
   checkmate::assert_numeric(year, any.missing = FALSE)
   checkmate::assert_vector(columns, null.ok = TRUE)
   checkmate::assert_logical(as_data_frame)
+  checkmate::assert_logical(verbose)
   checkmate::assert_logical(merge_households)
   checkmate::assert_string(add_labels, pattern = 'pt', null.ok = TRUE)
 
@@ -65,7 +68,8 @@ read_mortality <- function(year,
   ### Download
   local_file <- download_file(file_url = file_url,
                               showProgress = showProgress,
-                              cache = cache)
+                              cache = cache,
+                              verbose = verbose)
 
   # check if download worked
   if(is.null(local_file)) { return(invisible(NULL)) }
@@ -78,7 +82,8 @@ read_mortality <- function(year,
     df <- merge_household_var(df,
                               year = year,
                               add_labels = add_labels,
-                              showProgress = showProgress)
+                              showProgress = showProgress,
+                              verbose = verbose)
     }
 
   ### Select

@@ -8,6 +8,7 @@
 #'        include `c("population", "households", "families", "mortality", "emigration", "tracts")`.
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
 #' @return Returns `NULL` and opens an .html, .pdf or excel file
 #' @export
@@ -30,13 +31,15 @@
 data_dictionary <- function(year,
                             dataset,
                             showProgress = TRUE,
-                            cache = TRUE){
+                            cache = TRUE,
+                            verbose = TRUE){
   # year = 2010
   # dataset = 'population'
 
   ### check inputs
   checkmate::assert_numeric(year, any.missing = FALSE)
   checkmate::assert_string(dataset, na.ok = FALSE)
+  checkmate::assert_logical(verbose, null.ok = FALSE)
 
   # data available for data sets:
   data_sets <- c("population", "households", "families", "mortality", "emigration", "tracts")
@@ -45,7 +48,7 @@ data_dictionary <- function(year,
     }
 
   # check year / data availability
-  if(dataset == 'tracts'){ years <- c(1991, 2000, 2010, 2022) }
+  if(dataset == 'tracts'){ years <- c(1970, 1980, 1991, 2000, 2010, 2022) }
   if(dataset == 'population'){ years <- c(1960, 1970, 1980, 1991, 2000, 2010) }
   if(dataset == 'households'){ years <- c(1960, 1970, 1980, 1991, 2000, 2010) }
   if(dataset == 'families'){ years <- c(2000) }
@@ -80,7 +83,8 @@ data_dictionary <- function(year,
   ### Download
   local_file <- download_file(file_url = file_url,
                             showProgress = showProgress,
-                            cache = cache)
+                            cache = cache,
+                            verbose = verbose)
 
   # check if download worked
   if(is.null(local_file)) { return(NULL) }

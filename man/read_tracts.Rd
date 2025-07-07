@@ -9,7 +9,8 @@ read_tracts(
   dataset,
   as_data_frame = FALSE,
   showProgress = TRUE,
-  cache = TRUE
+  cache = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -57,6 +58,9 @@ locally, which is much faster. Defaults to \code{TRUE}. The first time the
 user runs the function, \code{censobr} will download the file and store it
 locally so that the file only needs to be download once. If \code{FALSE},
 the function will download the data again and overwrite the local file.}
+
+\item{verbose}{A logical. Whether the function should print informative
+messages. Defaults to \code{TRUE}.}
 }
 \value{
 An arrow \code{Dataset} or a \code{"data.frame"} object.

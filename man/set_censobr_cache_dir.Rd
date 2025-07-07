@@ -4,11 +4,14 @@
 \alias{set_censobr_cache_dir}
 \title{Set custom cache directory for censobr files}
 \usage{
-set_censobr_cache_dir(path)
+set_censobr_cache_dir(path, verbose = TRUE)
 }
 \arguments{
 \item{path}{String. The path to an existing directory. It defaults to
 \code{path = NULL}, to use the default directory}
+
+\item{verbose}{A logical. Whether the function should print informative
+messages. Defaults to \code{TRUE}.}
 }
 \value{
 A message pointing to the directory where censobr files are cached.

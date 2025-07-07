@@ -4,6 +4,7 @@
 #' @param year Numeric. Passed from function above.
 #' @param add_labels Character. Passed from function above.
 #' @param showProgress Logical. Passed from function above.
+#' @param verbose Logical. Passed from function above.
 #'
 #' @return An arrow `Dataset` with additional household variables.
 #'
@@ -11,14 +12,16 @@
 merge_household_var <- function(df,
                                 year = parent.frame()$year,
                                 add_labels = parent.frame()$add_labels,
-                                showProgress = parent.frame()$showProgress){
+                                showProgress = parent.frame()$showProgress,
+                                verbose = parent.frame()$verbose){
 
   # download household data
   df_household <- censobr::read_households(
     year = year,
     add_labels = add_labels,
     as_data_frame = FALSE,
-    showProgress = showProgress
+    showProgress = showProgress,
+    verbose = verbose
     )
 
   # set vars to merge

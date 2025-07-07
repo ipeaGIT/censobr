@@ -28,6 +28,7 @@
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
 #' @return An arrow `Dataset` or a `"data.frame"` object.
 #' @export
@@ -54,7 +55,8 @@ read_tracts <- function(year,
                         dataset,
                         as_data_frame = FALSE,
                         showProgress = TRUE,
-                        cache = TRUE){
+                        cache = TRUE,
+                        verbose = TRUE){
 
   ### check inputs
   checkmate::assert_numeric(year, any.missing = FALSE)
@@ -62,6 +64,7 @@ read_tracts <- function(year,
   checkmate::assert_logical(as_data_frame)
   checkmate::assert_logical(showProgress)
   checkmate::assert_logical(cache)
+  checkmate::assert_logical(verbose)
 
 
   # data available for the years:
@@ -104,7 +107,8 @@ read_tracts <- function(year,
   ### Download
   local_file <- download_file(file_url = file_url,
                               showProgress = showProgress,
-                              cache = cache)
+                              cache = cache,
+                              verbose = verbose)
 
   # check if download worked
   if(is.null(local_file)) { return(invisible(NULL)) }

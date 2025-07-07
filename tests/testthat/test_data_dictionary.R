@@ -7,12 +7,14 @@ testthat::skip_on_cran()
 tester <- function(year = 2010,
                    dataset = NULL,
                    showProgress = FALSE,
-                   cache = TRUE) {
+                   cache = TRUE,
+                   verbose = TRUE) {
   data_dictionary(
     year,
     dataset,
     showProgress,
-    cache
+    cache,
+    verbose
   )
 }
 
@@ -62,6 +64,9 @@ test_that("data_dictionary", {
 
   testthat::expect_error( tester(year = 1991, dataset = 'banana') )
   testthat::expect_error( tester(year = banana, dataset = 'population') )
+  testthat::expect_error( tester(year = 1991, verbose = 'banana') )
+
+  testthat::expect_no_message( tester(dataset = 'population',verbose = FALSE) )
 
 })
 

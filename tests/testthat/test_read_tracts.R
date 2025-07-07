@@ -6,18 +6,19 @@ testthat::skip_on_cran()
 testthat::skip_if_not_installed("arrow")
 
 
-
 tester <- function(year = 2010,
-                   dataset = NULL,
+                   dataset = 'Basico',
                    as_data_frame = FALSE,
                    showProgress = FALSE,
-                   cache = TRUE) {
+                   cache = TRUE,
+                   verbose = TRUE) {
   read_tracts(
     year,
     dataset,
     as_data_frame,
     showProgress,
-    cache
+    cache,
+    verbose
   )
 }
 
@@ -37,14 +38,15 @@ test_that("read_tracts", {
   testthat::expect_true(is(test2, "data.frame"))
 
 
-
-
   # check whether cache argument is working
   # check whether cache argument is working
   testthat::expect_message(tester(year = 2010, dataset = 'Basico',
                                   cache = TRUE), regexp = 'locally')
   testthat::expect_message(tester(year = 2010, dataset = 'Basico',
                                   cache = FALSE), regexp = 'Overwriting|future')
+
+  # no message
+  testthat::expect_no_message(tester(verbose = FALSE))
 
 })
 
@@ -61,8 +63,6 @@ test_that("read_tracts 2022 datasets", {
   lapply(X=tbls, FUN = function(y){ # y = 'Preliminares'
     tmp_d <- tester(year = 2022, dataset = y)
     testthat::expect_true( nrow(tmp_d) >= 344841)
-    message(nrow(tmp_d))
-
   } )
 
 })
@@ -105,7 +105,6 @@ test_that("read_tracts 2000 datasets", {
 test_that("read_tracts", {
 
   # Wrong date 4 digits )
-  testthat::expect_error(tester())
   testthat::expect_error(tester(year=999, dataset='Basico'))
   testthat::expect_error(tester(year=999, dataset='Basico'))
   testthat::expect_error(tester(year=2010, dataset='banana'))
@@ -113,6 +112,7 @@ test_that("read_tracts", {
 
   testthat::expect_error(tester(cache='banana'))
   testthat::expect_error(tester(showProgress='banana'))
+  testthat::expect_error(tester(verbose='banana'))
 
   testthat::expect_error(tester(year=2010, dataset='Basico', showProgress = 'banana' ))
   testthat::expect_error(tester(year=2010, dataset='Basico', cache = 'banana' ))

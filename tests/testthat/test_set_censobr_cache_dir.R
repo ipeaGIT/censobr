@@ -12,6 +12,7 @@ test_that("set_censobr_cache_dir", {
 
   # default
   testthat::expect_message( set_censobr_cache_dir(path = NULL) )
+  testthat::expect_no_message( set_censobr_cache_dir(path = NULL, verbose = FALSE) )
 
   # Set custom cache directory
   tempd <- tempdir()
@@ -31,6 +32,8 @@ test_that("set_censobr_cache_dir", {
 
   # back to default path
   set_censobr_cache_dir(path = NULL)
+
+
  })
 
 
