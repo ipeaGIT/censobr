@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">censobr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,33 @@
       <small>Source: <a href="https://github.com/ipeaGIT/censobr/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.5.0" id="censobr-v050">censobr v0.5.0<a class="anchor" aria-label="anchor" href="#censobr-v050"></a></h2><p class="text-muted">CRAN release: 2025-07-07</p>
+<ul><li>Major changes
+<ul><li>New function <code><a href="../reference/get_censobr_cache_dir.html">get_censobr_cache_dir()</a></code>
+</li>
+<li>The function <code><a href="../reference/set_censobr_cache_dir.html">set_censobr_cache_dir()</a></code> now sets cache directories that persist across R sessions. Closes <a href="https://github.com/ipeaGIT/censobr/issues/55" class="external-link">#55</a>. The data is saved in versioned directory inside the cache directory.</li>
+<li>The <code>year</code> parameter no longer defaults to <code>2010</code>.</li>
+<li>New parameter <code>verbose</code> (logical) indicating whether functions should print messsages</li>
+</ul></li>
+<li>Minor changes
+<ul><li>Improved internal code of <code>merge_households = TRUE</code> to avoid duplicated columns</li>
+<li>Improved package info and error messages with {cli}</li>
+<li>{censobr} now imports {cli} and {rlang}</li>
+</ul></li>
+<li>New data set and files included in this version:
+<ul><li>2022 census. Closes <a href="https://github.com/ipeaGIT/censobr/issues/64" class="external-link">#64</a>
+<ul><li>Census-tract level data</li>
+<li>Census-tract level data dictionary</li>
+</ul></li>
+<li>2000 census. Closes <a href="https://github.com/ipeaGIT/censobr/issues/43" class="external-link">#43</a>
+<ul><li>Census-tract level data</li>
+</ul></li>
+<li>All data sets are save in <code>.parquet</code> compressed using <code>compression='zstd'</code> and <code>compression_level = 22</code>. This has almost halved the size of data files, making downloads much more efficient at minimal cost of reading time.</li>
+<li>All data sets are now sorted by key columns to speed up join operations. Closes <a href="https://github.com/ipeaGIT/censobr/issues/60" class="external-link">#60</a>.</li>
+<li>Fixed annoying message about arrow metadata. closed <a href="https://github.com/ipeaGIT/censobr/issues/56" class="external-link">#56</a>.</li>
+</ul></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.1" id="censobr-v041">censobr v0.4.1<a class="anchor" aria-label="anchor" href="#censobr-v041"></a></h2><p class="text-muted">CRAN release: 2025-02-28</p>
 <ul><li>Minor changes
@@ -202,7 +229,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>

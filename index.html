@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">censobr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,10 +106,11 @@
 <li><code><a href="reference/questionnaire.html">questionnaire()</a></code></li>
 <li><code><a href="reference/interview_manual.html">interview_manual()</a></code></li>
 </ol>
-<p>Finally, the package includes two functions to help users manage the data chached locally.</p>
+<p>Finally, the package includes three functions to help users manage the data chached locally.</p>
 <ol start="10" style="list-style-type: decimal">
 <li><code><a href="reference/censobr_cache.html">censobr_cache()</a></code></li>
 <li><code><a href="reference/set_censobr_cache_dir.html">set_censobr_cache_dir()</a></code></li>
+<li><code><a href="reference/get_censobr_cache_dir.html">get_censobr_cache_dir()</a></code></li>
 </ol>
 <p>The syntax of all <strong>{censobr}</strong> functions to read data operate on the same logic so it becomes intuitive to download any data set using a single line of code. Like this:</p>
 <pre><code><span><span class="fu"><a href="reference/read_households.html">read_households</a></span><span class="op">(</span></span>
@@ -118,7 +119,8 @@
 <span>  <span class="va">add_labels</span>,    <span class="co"># add labels to categorical variables</span></span>
 <span>  <span class="va">as_data_frame</span>, <span class="co"># return an Arrow DataSet or a data.frame</span></span>
 <span>  <span class="va">showProgress</span>,  <span class="co"># show download progress bar</span></span>
-<span>  <span class="va">cache</span>          <span class="co"># cache data for faster access later</span></span>
+<span>  <span class="va">cache</span>,         <span class="co"># cache data for faster access later</span></span>
+<span>  <span class="va">verbose</span>        <span class="co"># whether to print informative messages</span></span>
 <span>  <span class="op">)</span></span></code></pre>
 <p><strong><em>Note:</em></strong> all data sets in <strong>{censobr}</strong> are enriched with geography columns following the name standards of the <a href="https://github.com/ipeaGIT/geobr/" class="external-link">{geobr} package</a> to help data manipulation and integration with spatial data from {geobr}. The added columns are: <code>c(‘code_muni’, ‘code_state’, ‘abbrev_state’, ‘name_state’, ‘code_region’, ‘name_region’, ‘code_weighting’)</code>.</p>
 <div class="section level3">
@@ -130,6 +132,8 @@
 <code><a href="reference/censobr_cache.html">censobr_cache()</a></code>: can be used to list and/or delete data files cached locally</li>
 <li>
 <code><a href="reference/set_censobr_cache_dir.html">set_censobr_cache_dir()</a></code>: can be used to set custom cache directory for <strong>{censobr}</strong> files</li>
+<li>
+<code><a href="reference/get_censobr_cache_dir.html">get_censobr_cache_dir()</a></code>: returns the path of the cache directory in use</li>
 </ul>
 </div>
 </div>
@@ -232,7 +236,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
