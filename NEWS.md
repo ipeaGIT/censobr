@@ -1,4 +1,4 @@
-# censobr v0.4.19999 dev
+# censobr v0.5.0
 
 * Major changes
   * New function `get_censobr_cache_dir()`
