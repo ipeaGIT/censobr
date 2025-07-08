@@ -73,7 +73,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Census tract-level data</h1>
             
-            <h4 data-toc-skip class="date">2025-07-07</h4>
+            <h4 data-toc-skip class="date">2025-07-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ipeaGIT/censobr/blob/main/vignettes/census_tracts_data.Rmd" class="external-link"><code>vignettes/census_tracts_data.Rmd</code></a></small>
       <div class="d-none name"><code>census_tracts_data.Rmd</code></div>
@@ -97,10 +97,6 @@ function.</p>
 datasets, and some of them are scattered across several files. For the
 sake of convenience, we have gathered all of the files into different
 datasets:</p>
-<p><code>"Basico"</code> <code>"Entorno"</code> <code>"Domicilio"</code>
-<code>"Pessoa"</code> <code>"Responsavel"</code>
-<code>"PessoaRenda"</code> <code>"DomicilioRenda"</code>
-<code>"ResponsavelRenda"</code></p>
 <table class="table table" style="width: auto !important; ">
 <thead><tr>
 <th style="text-align:left;">
@@ -397,12 +393,12 @@ per capita of all census tracts in Brazil.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   code_tract       V002   V003 income_pc</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 292880205000047   132  <span style="text-decoration: underline;">30</span>119      228.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 292880205000048  <span style="text-decoration: underline;">1</span>422 <span style="text-decoration: underline;">326</span>770      230.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 292880205000049   807 <span style="text-decoration: underline;">143</span>512      178.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 292880205000050   637 <span style="text-decoration: underline;">146</span>616      230.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 292880205000051   678 <span style="text-decoration: underline;">112</span>334      166.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 292880205000052   131  <span style="text-decoration: underline;">30</span>786      235.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 110001505000001   956 <span style="text-decoration: underline;">522</span>231      546.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 110001505000002   859 <span style="text-decoration: underline;">406</span>191      473.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 110001505000003   661 <span style="text-decoration: underline;">241</span>587      365.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 110001505000004   266  <span style="text-decoration: underline;">88</span>502      333.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 110001505000005  <span style="text-decoration: underline;">1</span>206 <span style="text-decoration: underline;">262</span>860      218.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 110001505000006   816 <span style="text-decoration: underline;">262</span>968      322.</span></span></code></pre></div>
 <p>Finally, we can merge the spatial data with our per capita income
 estimates and map the results.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
