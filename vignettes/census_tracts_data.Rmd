@@ -28,16 +28,6 @@ At the moment, this function includes data from the censuses of 2000, 2010 and 2
 
 Aggregated data at the census tract level are split into different datasets, and some of them are scattered across several files. For the sake of convenience, we have gathered all of the files into different datasets:
 
-`"Basico"`
-`"Entorno"`
-`"Domicilio"`
-`"Pessoa"`
-`"Responsavel"`
-`"PessoaRenda"`
-`"DomicilioRenda"`
-`"ResponsavelRenda"`
-
-
 ```{r dict-table, echo = FALSE, message = FALSE}
 # ---- packages -----------------------------------------------------------
 library(knitr)
