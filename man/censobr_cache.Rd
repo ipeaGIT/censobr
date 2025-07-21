@@ -4,7 +4,12 @@
 \alias{censobr_cache}
 \title{Manage cached files from the censobr package}
 \usage{
-censobr_cache(list_files = TRUE, print_tree = FALSE, delete_file = NULL)
+censobr_cache(
+  list_files = TRUE,
+  print_tree = FALSE,
+  delete_file = NULL,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{list_files}{Logical. Whether to print a message with the address of all
@@ -18,6 +23,9 @@ Defaults to \code{FALSE}.}
 file path of a file cached locally and which should be deleted.
 Defaults to \code{NULL}, so that no file is deleted. If \code{delete_file = "all"},
 then all of the cached files are deleted.}
+
+\item{verbose}{A logical. Whether the function should print informative
+messages. Defaults to \code{TRUE}.}
 }
 \value{
 A message indicating which file exist and/or which ones have been

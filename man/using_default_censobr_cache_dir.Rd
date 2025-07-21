@@ -12,3 +12,4 @@ TRUE or FALSE
 \description{
 Check if user is using the default cache dir of censobr
 }
+\keyword{internal}

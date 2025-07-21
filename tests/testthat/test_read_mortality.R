@@ -12,7 +12,8 @@ tester <- function(year = 2010,
                    merge_households = FALSE,
                    as_data_frame = FALSE,
                    showProgress = FALSE,
-                   cache = TRUE) {
+                   cache = TRUE,
+                   verbose = TRUE) {
   read_mortality(
     year,
     columns,
@@ -20,7 +21,8 @@ tester <- function(year = 2010,
     merge_households,
     as_data_frame,
     showProgress,
-    cache
+    cache,
+    verbose
   )
 }
 
@@ -48,6 +50,8 @@ test_that("read_mortality reading", {
   test4 <- test4 |> dplyr::filter(abbrev_state == 'CE') |> as.data.frame()
   testthat::expect_true(paste('\u00c1rea urbanizada') %in% test4$V1005)
 
+  # no message
+  testthat::expect_no_message(tester(verbose = FALSE))
 
   # # merge households
   # df_main <- tester(year = 2010, merge_households = FALSE)
@@ -91,6 +95,7 @@ test_that("read_mortality errors", {
   testthat::expect_error(tester(showProgress = 'banana' ))
   testthat::expect_error(tester(cache = 'banana'))
   testthat::expect_error(tester(add_labels = 'banana'))
+  testthat::expect_error(tester(verbose='banana'))
 
   # missing labels
   testthat::expect_error(tester(year=2000, add_labels = 'pt'))

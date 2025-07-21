@@ -12,7 +12,8 @@ tester <- function(year = 2010,
                    # merge_households = FALSE,
                    as_data_frame = FALSE,
                    showProgress = FALSE,
-                   cache = TRUE) {
+                   cache = TRUE,
+                   verbose = TRUE) {
   read_population(
     year,
     columns,
@@ -20,7 +21,8 @@ tester <- function(year = 2010,
     # merge_households,
     as_data_frame,
     showProgress,
-    cache
+    cache,
+    verbose
     )
   }
 
@@ -84,6 +86,9 @@ test_that("read_population read", {
             dplyr::collect()
 
   testthat::expect_true(paste('\u00c1rea urbanizada') %in% test4$V1005)
+
+  # no message
+  testthat::expect_no_message(tester(verbose = FALSE))
 
 })
 
@@ -151,10 +156,13 @@ test_that("read_population ERRORs", {
   testthat::expect_error(tester(year=999))
   testthat::expect_error(tester(year='999'))
   testthat::expect_error(tester(columns = 'banana'))
-  testthat::expect_error(tester(as_data_frame = 'banana'))
+  # testthat::expect_error(tester(as_data_frame = 'banana'))
+  testthat::expect_error(read_population(year = 2010, as_data_frame = 'banana'))
   testthat::expect_error(tester(showProgress = 'banana' ))
   testthat::expect_error(tester(cache = 'banana'))
   testthat::expect_error(tester(add_labels = 'banana'))
+  testthat::expect_error(tester(verbose='banana'))
+
 
   # missing labels
   testthat::expect_error(tester(year=2000, add_labels = 'pt'))

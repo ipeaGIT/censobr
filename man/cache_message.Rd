@@ -6,13 +6,16 @@
 \usage{
 cache_message(
   local_file = parent.frame()$local_file,
-  cache = parent.frame()$cache
+  cache = parent.frame()$cache,
+  verbose = parent.frame()$verbose
 )
 }
 \arguments{
-\item{local_file}{The address of a file passed from the download_file function.}
+\item{local_file}{The address of a file passed from the download_file function}
 
-\item{cache}{Logical. Whether the cached data should be used.}
+\item{cache}{Logical. Whether the cached data should be used}
+
+\item{verbose}{Logical. Whether the message should be printed}
 }
 \value{
 A message

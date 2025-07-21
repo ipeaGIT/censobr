@@ -4,15 +4,31 @@
 #' Download census tract-level aggregate data from Brazil's censuses.
 #'
 #' @template year
-#' @param dataset Character. The dataset to be opened. For the 2010 Census, the options are:
-#'        `c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda",  "Entorno")`.
-#'        For the 2022 Census, the options are:
-#'        `c("Preliminares", "Alfabetizacao", "Basico", "Domicilio", "Cor_ou_raca", "Demografia", "Domicilios_indigenas", "Domicilios_quilombolas", "Entorno", "Obitos", "Parentesco", "Pessoas_indigenas", "Pessoas_quilombolas", "ResponsavelRenda")`
+#' @param dataset Character. The dataset to be opened. The following options are
+#'        available for each edition of the census:
 #'
+#'    **2000 Census**
+#'   - `c("Basico", "Domicilio", "Responsavel", "Pessoa", "Instrucao", "Morador")`.
+#'
+#'    **2010 Census**
+#'   - `c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda", "Entorno")`.
+#'
+#'   **2022 Census**
+#'   - `c("Basico", "Domicilio", "ResponsavelRenda", "Pessoas", "Indigenas", "Quilombolas", "Entorno", "Obitos", "Preliminares")`.
+#'
+#'   The `censobr` package exposes all original IBGE census tracts datasets, regrouping
+#'   them into broader themes and appending geographic identifiers so that they
+#'   align seamlessly with `geobr` shapefiles.
+#'
+#'   For a complete description of the datasets, themes, and variables, check
+#'   - `data_dictionary(year = 2000, dataset = "tracts")`,
+#'   - `data_dictionary(year = 2010, dataset = "tracts")`,
+#'   - `data_dictionary(year = 2022, dataset = "tracts")`.
 #'
 #' @template as_data_frame
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
 #' @return An arrow `Dataset` or a `"data.frame"` object.
 #' @export
@@ -21,58 +37,69 @@
 #' library(censobr)
 #'
 #' # return data as arrow Dataset
-#' df <- read_tracts(year = 2010,
-#'                   dataset = 'PessoaRenda',
-#'                   showProgress = FALSE)
+#' df <- read_tracts(
+#'   year = 2022,
+#'   dataset = 'Domicilio',
+#'   showProgress = FALSE
+#'   )
 #'
 #' # return data as data.frame
-#' df <- read_tracts(year = 2010,
-#'                   dataset = 'Basico',
-#'                   as_data_frame = TRUE,
-#'                   showProgress = FALSE)
+#' df <- read_tracts(
+#'   year = 2010,
+#'   dataset = 'Basico',
+#'   as_data_frame = TRUE,
+#'   showProgress = FALSE
+#'   )
 #'
-
-year = 2022
-dataset = "Entorno"
-as_data_frame = FALSE
-showProgress = TRUE
-cache = TRUE
-
-read_tracts <- function(year = 2010,
-                        dataset = NULL,
+read_tracts <- function(year,
+                        dataset,
                         as_data_frame = FALSE,
                         showProgress = TRUE,
-                        cache = TRUE){
+                        cache = TRUE,
+                        verbose = TRUE){
 
   ### check inputs
-  checkmate::assert_numeric(year)
+  checkmate::assert_numeric(year, any.missing = FALSE)
+  checkmate::assert_string(dataset, null.ok = FALSE)
   checkmate::assert_logical(as_data_frame)
   checkmate::assert_logical(showProgress)
   checkmate::assert_logical(cache)
-  checkmate::assert_string(dataset, null.ok = FALSE)
+  checkmate::assert_logical(verbose)
 
 
   # data available for the years:
-  years <- c(2010, 2022)
+  years <- c(2000, 2010, 2022)
   if (isFALSE(year %in% years)) {
     error_missing_years(years)
   }
 
+  # data sets available for 2000:
+  data_sets_2000 <- c("Basico", "Domicilio", "Responsavel", "Pessoa", "Instrucao", "Morador")
+
   # data sets available for 2010:
   data_sets_2010 <- c("Basico", "Domicilio", "DomicilioRenda", "Entorno",
                       "ResponsavelRenda", "Responsavel", "PessoaRenda", "Pessoa")
+
+  # data sets available for 2022:
+  data_sets_2022 <- c("Basico", "Domicilio", "Pessoas", "ResponsavelRenda",
+                      "Indigenas", "Quilombolas", "Entorno", "Obitos",
+                      "Preliminares")
+
+  # check requested data set
+  if (year==2000 & isFALSE(dataset %in% data_sets_2000)) {
+    error_missing_datasets(data_sets_2010)
+  }
+
   if (year==2010 & isFALSE(dataset %in% data_sets_2010)) {
     error_missing_datasets(data_sets_2010)
   }
 
-  # data sets available for 2022:
-  data_sets_2022 <- c("Preliminares", "Alfabetizacao", "Basico", "Domicilio", "Cor_ou_raca", "Demografia", "Domicilios_indigenas", "Domicilios_quilombolas", "Entorno", "Obitos", "Parentesco", "Pessoas_indigenas", "Pessoas_quilombolas", "ResponsavelRenda")
   if (year==2022 & isFALSE(dataset %in% data_sets_2022)) {
     error_missing_datasets(data_sets_2022)
   }
 
   ### Get url
-  dataset <- paste0(dataset, '_')
+  dataset  <- paste0(dataset, '_')
   file_url <- paste0("https://github.com/ipeaGIT/censobr/releases/download/",
                      censobr_env$data_release, "/", year,"_tracts_", dataset,
                      censobr_env$data_release, ".parquet")
@@ -80,7 +107,8 @@ read_tracts <- function(year = 2010,
   ### Download
   local_file <- download_file(file_url = file_url,
                               showProgress = showProgress,
-                              cache = cache)
+                              cache = cache,
+                              verbose = verbose)
 
   # check if download worked
   if(is.null(local_file)) { return(invisible(NULL)) }

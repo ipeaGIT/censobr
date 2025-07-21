@@ -4,10 +4,16 @@
 \alias{questionnaire}
 \title{Questionnaires used in the data collection of Brazil's censuses}
 \usage{
-questionnaire(year = 2010, type = NULL, showProgress = TRUE, cache = TRUE)
+questionnaire(
+  year = 2010,
+  type = NULL,
+  showProgress = TRUE,
+  cache = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2010}.}
+\item{year}{Numeric. Year of reference in the format \code{yyyy}.}
 
 \item{type}{Character. The type of questionnaire used in the survey, whether
 the \code{"long"} one used in the sample component of the census, or the
@@ -23,6 +29,9 @@ locally, which is much faster. Defaults to \code{TRUE}. The first time the
 user runs the function, \code{censobr} will download the file and store it
 locally so that the file only needs to be download once. If \code{FALSE},
 the function will download the data again and overwrite the local file.}
+
+\item{verbose}{A logical. Whether the function should print informative
+messages. Defaults to \code{TRUE}.}
 }
 \value{
 Opens a \code{.pdf} file on the browser

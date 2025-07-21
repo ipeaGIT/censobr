@@ -12,7 +12,8 @@ tester <- function(year = 2010,
                    merge_households = FALSE,
                    as_data_frame = FALSE,
                    showProgress = FALSE,
-                   cache = TRUE) {
+                   cache = TRUE,
+                   verbose = TRUE) {
   read_emigration(
     year,
     columns,
@@ -20,7 +21,8 @@ tester <- function(year = 2010,
     merge_households,
     as_data_frame,
     showProgress,
-    cache
+    cache,
+    verbose
   )
 }
 
@@ -47,6 +49,9 @@ test_that("read_emigration reading", {
   test4 <- tester(add_labels = 'pt', columns = c('abbrev_state', 'V1006'))
   test4 <- test4 |> dplyr::filter(abbrev_state == 'CE') |> as.data.frame()
   testthat::expect_true('Urbana' %in% test4$V1006)
+
+  # no message
+  testthat::expect_no_message(tester(verbose = FALSE))
 
 
   # check whether cache argument is working
@@ -79,6 +84,7 @@ test_that("read_emigration errors", {
   testthat::expect_error(tester(showProgress = 'banana' ))
   testthat::expect_error(tester(cache = 'banana'))
   testthat::expect_error(tester(add_labels = 'banana'))
+  testthat::expect_error(tester(verbose='banana'))
 
   # missing labels
   testthat::expect_error(tester(year=2000, add_labels = 'pt'))

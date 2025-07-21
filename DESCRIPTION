@@ -1,7 +1,7 @@
 Type: Package
 Package: censobr
 Title: Download Data from Brazil's Population Census
-Version: 0.4.19999
+Version: 0.5.0
 Authors@R: 
     c(person(given="Rafael H. M.", family="Pereira", 
              email="rafa.pereira.br@gmail.com", 
@@ -49,6 +49,7 @@ Suggests:
     geobr,
     ggplot2 (>= 3.3.1),
     rmarkdown,
+    kableExtra,
     knitr,
     scales,
     testthat

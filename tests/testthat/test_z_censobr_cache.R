@@ -40,7 +40,9 @@ test_that("censobr_cache", {
   testthat::expect_true( file.exists(fname_full) )
   testthat::expect_message( censobr_cache(delete_file = 'all') )
   censobr_cache(delete_file = 'all')
-  testthat::expect_true( length(list.files(cache_dir)) == 0 )
+  testthat::expect_true(
+    length(list.files(cache_dir, recursive = TRUE, full.names = TRUE)) ==0
+  )
 
   # if file does not exist, simply print message
   testthat::expect_message( censobr_cache(delete_file ='aaa') )
@@ -68,6 +70,9 @@ test_that("censobr_cache", {
 
   # check is output is "fs_path" when print_tree = TRUE
   testthat::expect_error(censobr_cache(list_files = FALSE, print_tree = TRUE))
+
+  # no messages
+  testthat::expect_no_message(censobr_cache(list_files = FALSE, verbose = FALSE))
 
   })
 

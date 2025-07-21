@@ -5,19 +5,45 @@
 \title{Download census tract-level data from Brazil's censuses}
 \usage{
 read_tracts(
-  year = 2010,
-  dataset = NULL,
+  year,
+  dataset,
   as_data_frame = FALSE,
   showProgress = TRUE,
-  cache = TRUE
+  cache = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2010}.}
+\item{year}{Numeric. Year of reference in the format \code{yyyy}.}
 
-\item{dataset}{Character. The dataset to be opened. Options currently include
-\code{c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda",  "Entorno")}.
-Preliminary results of the 2022 census are available with \code{"Preliminares"}.}
+\item{dataset}{Character. The dataset to be opened. The following options are
+available for each edition of the census:
+
+\strong{2000 Census}
+\itemize{
+\item \code{c("Basico", "Domicilio", "Responsavel", "Pessoa", "Instrucao", "Morador")}.
+}
+
+\strong{2010 Census}
+\itemize{
+\item \code{c("Basico", "Domicilio", "DomicilioRenda", "Responsavel", "ResponsavelRenda", "Pessoa", "PessoaRenda", "Entorno")}.
+}
+
+\strong{2022 Census}
+\itemize{
+\item \code{c("Basico", "Domicilio", "ResponsavelRenda", "Pessoas", "Indigenas", "Quilombolas", "Entorno", "Obitos", "Preliminares")}.
+}
+
+The \code{censobr} package exposes all original IBGE census tracts datasets, regrouping
+them into broader themes and appending geographic identifiers so that they
+align seamlessly with \code{geobr} shapefiles.
+
+For a complete description of the datasets, themes, and variables, check
+\itemize{
+\item \code{data_dictionary(year = 2000, dataset = "tracts")},
+\item \code{data_dictionary(year = 2010, dataset = "tracts")},
+\item \code{data_dictionary(year = 2022, dataset = "tracts")}.
+}}
 
 \item{as_data_frame}{Logical. When \code{FALSE} (Default), the function returns an
 Arrow Dataset, which allows users to work with larger-than-memory data.
@@ -32,6 +58,9 @@ locally, which is much faster. Defaults to \code{TRUE}. The first time the
 user runs the function, \code{censobr} will download the file and store it
 locally so that the file only needs to be download once. If \code{FALSE},
 the function will download the data again and overwrite the local file.}
+
+\item{verbose}{A logical. Whether the function should print informative
+messages. Defaults to \code{TRUE}.}
 }
 \value{
 An arrow \code{Dataset} or a \code{"data.frame"} object.
@@ -44,16 +73,19 @@ Download census tract-level aggregate data from Brazil's censuses.
 library(censobr)
 
 # return data as arrow Dataset
-df <- read_tracts(year = 2010,
-                  dataset = 'PessoaRenda',
-                  showProgress = FALSE)
+df <- read_tracts(
+  year = 2022,
+  dataset = 'Domicilio',
+  showProgress = FALSE
+  )
 
 # return data as data.frame
-df <- read_tracts(year = 2010,
-                  dataset = 'Basico',
-                  as_data_frame = TRUE,
-                  showProgress = FALSE)
-
+df <- read_tracts(
+  year = 2010,
+  dataset = 'Basico',
+  as_data_frame = TRUE,
+  showProgress = FALSE
+  )
 \dontshow{\}) # examplesIf}
 }
 \concept{Census tract data}

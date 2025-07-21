@@ -5,17 +5,18 @@
 \title{Download microdata of emigration records from Brazil's census}
 \usage{
 read_emigration(
-  year = 2010,
+  year,
   columns = NULL,
   add_labels = NULL,
   merge_households = FALSE,
   as_data_frame = FALSE,
   showProgress = TRUE,
-  cache = TRUE
+  cache = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
-\item{year}{Numeric. Year of reference in the format \code{yyyy}. Defaults to \code{2010}.}
+\item{year}{Numeric. Year of reference in the format \code{yyyy}.}
 
 \item{columns}{String. A vector of column names to keep. The rest of the
 columns are not read. Defaults to \code{NULL} and read all columns.}
@@ -40,6 +41,9 @@ locally, which is much faster. Defaults to \code{TRUE}. The first time the
 user runs the function, \code{censobr} will download the file and store it
 locally so that the file only needs to be download once. If \code{FALSE},
 the function will download the data again and overwrite the local file.}
+
+\item{verbose}{A logical. Whether the function should print informative
+messages. Defaults to \code{TRUE}.}
 }
 \value{
 An arrow \code{Dataset} or a \code{"data.frame"} object.
@@ -51,14 +55,17 @@ the sample component of the questionnaire.
 \examples{
 \dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # return data as arrow Dataset
-df <- read_emigration(year = 2010,
-                      showProgress = FALSE)
-
+df <- read_emigration(
+  year = 2010,
+  showProgress = FALSE
+  )
 
 # return data as data.frame
-df <- read_emigration(year = 2010,
-                      as_data_frame = TRUE,
-                      showProgress = FALSE)
+df <- read_emigration(
+  year = 2010,
+  as_data_frame = TRUE,
+  showProgress = FALSE
+  )
 
 \dontshow{\}) # examplesIf}
 }

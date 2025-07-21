@@ -1,15 +1,15 @@
-get_default_cache_dir <- function() {
+get_default_cache_dir <- function() { # nocov start
   fs::path(
     tools::R_user_dir("censobr", which = "cache")
   )
-}
+} # nocov end
 
-get_config_cache_file <- function() {
+get_config_cache_file <- function() { # nocov start
   fs::path(
     tools::R_user_dir("censobr", which = "config"),
     "cache_dir"
   )
-}
+} # nocov end
 
 #' Set custom cache directory for censobr files
 #'
@@ -19,6 +19,7 @@ get_config_cache_file <- function() {
 #'
 #' @param path String. The path to an existing directory. It defaults to
 #'        `path = NULL`, to use the default directory
+#' @template verbose
 #'
 #' @return A message pointing to the directory where censobr files are cached.
 #'
@@ -35,8 +36,11 @@ get_config_cache_file <- function() {
 #' # back to default path
 #' set_censobr_cache_dir(path = NULL)
 #'
-set_censobr_cache_dir <- function(path) {
+set_censobr_cache_dir <- function(path,
+                                  verbose = TRUE) {
+
   checkmate::assert_string(path, null.ok = TRUE)
+  checkmate::assert_logical(verbose, null.ok = FALSE)
 
   if (is.null(path)) {
     cache_dir <- get_default_cache_dir()
@@ -44,10 +48,12 @@ set_censobr_cache_dir <- function(path) {
     cache_dir <- fs::path_norm(path)
   }
 
-  cli::cli_inform(
-    c("i" = "censobr files will be cached at {.file {cache_dir}}."),
-    class = "censobr_cache_dir"
-  )
+  if (isTRUE(verbose)) {
+    cli::cli_inform(
+      c("i" = "censobr files will be cached at {.file {cache_dir}}."),
+      class = "censobr_cache_dir"
+    )
+  }
 
   config_file <- get_config_cache_file()
 
@@ -96,7 +102,8 @@ get_censobr_cache_dir <- function() {
 #' Check if user is using the default cache dir of censobr
 #'
 #' @return TRUE or FALSE
-using_default_censobr_cache_dir <- function() {
+#' @keywords internal
+using_default_censobr_cache_dir <- function(){ # nocov start
 
   # default dir
   deafault_dir <- get_default_cache_dir()
@@ -110,7 +117,7 @@ using_default_censobr_cache_dir <- function() {
 
   check <- dirname(deafault_dir) == cache_dir
   return(check)
-}
+} # nocov end
 
 #' Manage cached files from the censobr package
 #'
@@ -123,6 +130,7 @@ using_default_censobr_cache_dir <- function() {
 #'        file path of a file cached locally and which should be deleted.
 #'        Defaults to `NULL`, so that no file is deleted. If `delete_file = "all"`,
 #'        then all of the cached files are deleted.
+#' @template verbose
 #'
 #' @return A message indicating which file exist and/or which ones have been
 #'         deleted from the local cache directory.
@@ -137,12 +145,14 @@ using_default_censobr_cache_dir <- function() {
 #'
 censobr_cache <- function(list_files = TRUE,
                           print_tree = FALSE,
-                          delete_file = NULL){
+                          delete_file = NULL,
+                          verbose = TRUE){
 
   # check inputs
   checkmate::assert_logical(list_files, any.missing = FALSE, len = 1)
   checkmate::assert_logical(print_tree, any.missing = FALSE, len = 1)
   checkmate::assert_character(delete_file, null.ok = TRUE)
+  checkmate::assert_logical(verbose, null.ok = FALSE)
 
   if(isFALSE(list_files) & isTRUE(print_tree)) {
     cli::cli_abort("The parameter 'print_tree' can only be TRUE if list_files = TRUE")
@@ -156,9 +166,11 @@ censobr_cache <- function(list_files = TRUE,
 
   # if (!fs::dir_exists(cache_dir)) return(character(0))
 
-  if (length(files)==0) {
-    cli::cli_alert_info("Cache directory is currently empty.")
-    return(character(0))
+  if (isTRUE(verbose)) {
+    if (length(files)==0) {
+      cli::cli_alert_info("Cache directory is currently empty.")
+      return(character(0))
+    }
   }
 
   # if wants to dele file
@@ -167,24 +179,34 @@ censobr_cache <- function(list_files = TRUE,
 
     # IF file does not exist, print message
     if (!any(grepl(delete_file, files)) & delete_file != "all") {
-      cli::cli_alert_warning("The file {delete_file} is not cached.")
+      if (isTRUE(verbose)){
+        cli::cli_alert_warning("The file {delete_file} is not cached.")
+        }
     }
 
     # IF file exists, delete file
     if (any(grepl(delete_file, files))) {
       f <- files[grepl(delete_file, files)]
       unlink(f, recursive = TRUE)
-      cli::cli_alert_success("The file {delete_file} has been removed.")
+      if (isTRUE(verbose)) {
+        cli::cli_alert_success("The file {delete_file} has been removed.")
+        }
     }
 
     # Delete ALL file
     if (delete_file=='all') {
 
       # delete any files from censobr, current and old data releases
-      # dir_above <- dirname(cache_dir)
-      # unlink(dir_above, recursive = TRUE)
-      unlink(cache_dir, recursive = TRUE)
-      cli::cli_alert_success("The following cache directory has been deleted: {cache_dir}")
+      # unlink(
+      #   list.files(cache_dir, full.names = TRUE, recursive = FALSE, all.files = TRUE),
+      #   recursive = TRUE,
+      #   force     = TRUE   # harmless on Unix, helpful on Windows
+      # )
+      fs::dir_delete(cache_dir)
+
+      if (isTRUE(verbose)) {
+        cli::cli_alert_success("The following cache directory has been deleted: {cache_dir}")
+        }
     }
   }
 
@@ -194,7 +216,9 @@ censobr_cache <- function(list_files = TRUE,
   # print file names
   if (isTRUE(list_files)) {
 
-    cli::cli_alert_info("Files currently chached:")
+    if (isTRUE(verbose)) {
+      cli::cli_alert_info("Files currently chached:")
+      }
 
     # print files as a message
     if (isFALSE(print_tree)) {

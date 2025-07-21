@@ -2,6 +2,7 @@ rm(list = ls())
 
 library(arrow)
 library(dplyr)
+library(tidyr)
 library(readr)
 library(data.table)
 library(pbapply)
@@ -15,10 +16,9 @@ options(scipen = 999)
 
 # 0) Useful functions --------------------------------------------------------
 
-
 download_tract <- function(year,
                            overwrite = F,
-                           dest_dir = paste0('./data_raw/tracts/', year, "/")){ # year = 2010, 2022
+                           dest_dir = paste0('./data_raw/tracts/', year, "/")){ # year = 2000, 2010, 2022
 
   message(paste0("\nDownloading year: ", year, '\n'))
 
@@ -28,8 +28,12 @@ download_tract <- function(year,
   if (isFALSE(dir.exists(dest_dir))) { dir.create(dest_dir,
                                                   recursive = T,
                                                   showWarnings = FALSE) }
-
   # get ftp
+  if(year==2000){
+    ftp   <- 'https://ftp.ibge.gov.br/Censos/Censo_Demografico_2000/Dados_do_Universo/Agregado_por_Setores_Censitarios/'
+    files <- NULL
+  }
+
   if(year==2010){
     ftp   <- 'https://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Resultados_do_Universo/Agregados_por_Setores_Censitarios/'
     files <- NULL
@@ -66,7 +70,6 @@ download_tract <- function(year,
                          other_files_df)
   }
 
-
   # Removing existing files from the list of files to download (if overwrite == F)
   if(overwrite == F){
     existing_files = files_df$file %in% list.files(dest_dir)
@@ -92,10 +95,35 @@ download_tract <- function(year,
   }
 }
 
+unzip_census = function(year, filetype = "xls"){
+
+  zipdir  = paste0("./data_raw/tracts/", year, "/zip/")
+  destdir = paste0("./data_raw/tracts/", year, "/", filetype, "/")
+
+  zip_files = list.files(path = zipdir,
+                         pattern = ".zip$",
+                         full.names = T)
+
+  if (isFALSE(dir.exists(destdir))) {
+    dir.create(destdir,
+               recursive = T,
+               showWarnings = FALSE)
+  }
+
+  for(zip_file_i in zip_files){
+    print(zip_file_i)
+
+    unzip(zipfile = zip_file_i,
+          exdir = destdir,
+          unzip = "unzip",
+          overwrite = T)
+  }
+}
+
 # a function for recoding the list of datasets
 recode_datasets = function(df){
 
-  variants <- c("CD_SETOR", "SETOR", "COD_SETOR_M22FINAL")
+  variants <- c("CD_setor", "COD_SETOR", "CD_SETOR", "SETOR", "COD_SETOR_M22FINAL")
 
   present = intersect(names(df), variants)
 
@@ -109,7 +137,7 @@ recode_datasets = function(df){
     ### replace "X" "," "." with NA
     mutate_if(is.character, .funs = \(var){
 
-      var = iconv(var, from = "latin1", to = "utf-8")
+      var = iconv(var, to = "utf-8")
       var = str_squish(var)
       var = ifelse((nchar(var) %in% 1) & (var %in% c("X",",",".")), NA_character_, var)
       var
@@ -127,7 +155,11 @@ recode_datasets = function(df){
     mutate_if(is.character, \(x) ifelse(x %in% "", NA_character_, x))
 
   test_missings = sapply(names(df), \(var){
-    all((df[[var]] %in% c("X", ",", ".", "")) == is.na(df_recoded[[var]]))
+    all(
+      (df[[var]] %in% c("X", ",", ".", "")) == is.na(df_recoded[[var]]) |
+
+        (is.na(df[[var]]) == is.na(df_recoded[[var]]))
+    )
   })
 
   if(!all(test_missings)){
@@ -143,45 +175,41 @@ recode_basico = function(dataset_info){
   dataset_info_basico = dataset_info |>
     filter(theme %in% "Basico")
 
-  datasets_basico = data.table::fread(file = dataset_info_basico$file, sep = ";", dec = ",")
+  # creating list of datasets
+  datasets_i = lapply(dataset_info_basico$file,
+                      \(file) readxl::read_excel(path = file))
+
+  datasets_basico = do.call(bind_rows, datasets_i)
+
   names(datasets_basico) = str_to_upper(names(datasets_basico))
 
-  datasets_basico = recode_datasets(datasets_basico)
+  #summary(datasets_basico)
 
-  datasets_basico_rec <- datasets_basico |>
-    rename(code_tract               = CD_setor   ,
-           situacao                 = SITUACAO   ,
-           code_situacao            = CD_SIT     ,
-           code_type                = CD_TIPO    ,
-           area_km2                 = AREA_KM2   ,
-           code_region              = CD_REGIAO  ,
-           name_region              = NM_REGIAO  ,
-           code_state               = CD_UF      ,
-           name_state               = NM_UF      ,
-           code_muni                = CD_MUN     ,
-           name_muni                = NM_MUN     ,
-           code_district            = CD_DIST    ,
-           name_district            = NM_DIST    ,
-           code_subdistrict         = CD_SUBDIST ,
-           name_subdistrict         = NM_SUBDIST ,
-           code_neighborhood        = CD_BAIRRO  ,
-           name_neighborhood        = NM_BAIRRO  ,
-           code_favela              = CD_FCU     ,
-           name_favela              = NM_FCU     ,
-           code_intermediate        = CD_RGINT   ,
-           name_intermediate        = NM_RGINT   ,
-           code_immediate           = CD_RGI     ,
-           name_immediate           = NM_RGI     ,
-           code_nucleo_urbano       = CD_NU      ,
-           name_nucleo_urbano       = NM_NU      ,
-           code_aglomerado          = CD_AGLOM   ,
-           name_aglomerado          = NM_AGLOM   ,
-           code_urban_concentration = CD_CONCURB ,
-           name_urban_concentration = NM_CONCURB)
+  datasets_basico_rec = recode_datasets(datasets_basico)
 
-  datasets_basico_rec
+  datasets_basico_renamed <- datasets_basico_rec |>
+    rename(code_tract        = CD_setor,
+           code_state        = COD_UF,
+           name_state        = NOME_DA_UF,
+           code_meso         = COD_MESO,
+           name_meso         = NOME_DA_MESO,
+           code_micro        = COD_MICRO,
+           name_micro        = NOME_DA_MICRO,
+           code_metro        = COD_RM,
+           name_metro        = NOME_DA_RM,
+           code_muni         = COD_MUNICIPIO,
+           name_muni         = NOME_DO_MUNICIPIO,
+           code_district     = COD_DISTRITO,
+           name_district     = NOME_DO_DISTRITO,
+           code_subdistrict  = COD_SUBDISTRITO,
+           name_subdistrict  = NOME_DO_SUBDISTRITO,
+           code_neighborhood = COD_BAIRRO,
+           name_neighborhood = NOME_DO_BAIRRO,
+           situacao          = SITUACAO,
+           code_type         = TIPO_DO_SETOR)
+
+  datasets_basico_renamed
 }
-
 
 make_theme_dataset <- function(theme_i, dataset_info, dataset_Basico){
 
@@ -192,36 +220,79 @@ make_theme_dataset <- function(theme_i, dataset_info, dataset_Basico){
     filter(theme %in% theme_i)
 
   # creating list of datasets from the same theme
-  datasets_i = lapply(dataset_info_i$file,
-                      \(file) data.table::fread(file = file, sep = ";", dec = ","))
+
+  # creating list of datasets
+  prefixes = unique(dataset_info_i$prefix)
+
+
+  datasets_i = lapply(prefixes,
+                      FUN = \(prefix_j){
+
+                        print(prefix_j)
+
+                        # Identifica os bancos de dados de cada estado, dentro do subtema prefix_j
+                        prefix_j_files    <- dataset_info_i |> filter(prefix == prefix_j) |> pull(file)
+
+                        # abre os bancos de dados de cada estado
+                        prefix_j_datasets <- lapply(prefix_j_files, \(file) readxl::read_excel(path = file))
+
+                        # transformando todos os nomes de variáveis para maiúsculo
+                        prefix_j_datasets = lapply(prefix_j_datasets, \(x) setNames(x, str_to_upper(names(x))))
+
+                        # empilha
+                        prefix_j_dataset_stacked  <- do.call(bind_rows, prefix_j_datasets)
+                        gc()
+
+                        prefix_j_dataset_stacked
+                      })
   gc(reset = T, full = T, verbose = T)
 
-  datasets_i = lapply(datasets_i, \(x) setNames(x, str_to_upper(names(x))))
-
   # Recoding the dataset
-  datasets_i = lapply(datasets_i, recode_datasets)
+  datasets_i_rec = lapply(1:length(datasets_i),
+                      FUN = \(j){
+                        print(j)
+                        recode_datasets(datasets_i[[j]])
+                        })
 
   # Adding prefixes to themes with more than one table
-  if(nrow(dataset_info_i) > 1){
-    for(i in 1:nrow(dataset_info_i)){
+  if(length(prefixes) > 1){
+    for(j in 1:length(prefixes)){
+      print(j)
 
-      prefix_i = dataset_info_i$prefix[i]
-      names_to_change = setdiff(names(datasets_i[[i]]),  "CD_setor")
+      prefix_j = prefixes[j]
 
-      if(any(grepl(x = names_to_change, pattern = prefix_i))) next
+      datasets_i_rec[[j]]$SITUACAO      = NULL
+      datasets_i_rec[[j]]$TIPO_DO_SETOR = NULL
 
-      newnames = c("code_tract", paste(prefix_i, names_to_change, sep = "_"))
+      names_to_change = setdiff(names(datasets_i_rec[[j]]),  "CD_setor")
 
-      names(datasets_i[[i]]) <- newnames
+      if(any(grepl(x = names_to_change, pattern = prefix_j))) next
+
+      data.table::setnames(x = datasets_i_rec[[j]],
+                           old = "CD_setor",
+                           new = "code_tract")
+
+      datasets_i_rec[[j]] <- datasets_i_rec[[j]] |> select(code_tract, everything())
+
+      newnames = paste(prefix_j, names_to_change, sep = "_")
+
+      data.table::setnames(x = datasets_i_rec[[j]],
+                           old = names_to_change,
+                           new = newnames)
     }
   }else{
-    names(datasets_i[[1]])[1] <- "code_tract"
+    datasets_i_rec[[1]]$SITUACAO      = NULL
+    datasets_i_rec[[1]]$TIPO_DO_SETOR = NULL
+    data.table::setnames(x = datasets_i_rec[[1]],
+                         old = "CD_setor",
+                         new = "code_tract")
+    datasets_i_rec[[1]] <- datasets_i_rec[[1]] |> select(code_tract, everything())
   }
 
 
-  if(length(datasets_i) > 1){
+  if(length(datasets_i_rec) > 1){
 
-    numberOfrows = unlist(lapply(datasets_i, nrow))
+    numberOfrows = unlist(lapply(datasets_i_rec, nrow))
     variance_of_numberOfrows = var(numberOfrows)
 
     if(variance_of_numberOfrows > 0){
@@ -229,19 +300,16 @@ make_theme_dataset <- function(theme_i, dataset_info, dataset_Basico){
     }
 
     whichMaxRows = which.max(numberOfrows)
-    data_join_i = datasets_i[[whichMaxRows]]
+    data_join_i = datasets_i_rec[[whichMaxRows]]
 
-    for(dataset_j in datasets_i[-whichMaxRows]){
-
+    for(dataset_j in datasets_i_rec[-whichMaxRows]){
       data_join_i <- full_join(data_join_i,
                                dataset_j,
                                by = "code_tract")
     }
 
   }else{
-
-    data_join_i = datasets_i[[1]]
-
+    data_join_i = datasets_i_rec[[1]]
   }
 
   # Adding geographic variables
@@ -259,82 +327,37 @@ make_theme_dataset <- function(theme_i, dataset_info, dataset_Basico){
 
 # 1) download raw data from IBGE ftp -------------------------------------------
 
-download_tract(2022, overwrite = F)
+download_tract(2000, overwrite = F)
 
 ## 1.2) unzip all files ------
 unzip = F
-
 if(unzip == T){
-  destdir_csv = "./data_raw/tracts/2022/csv/"
-
-
-  zip_files = list.files(path = './data_raw/tracts/2022/zip/',
-                         pattern = ".zip$",
-                         full.names = T)
-
-  if (isFALSE(dir.exists(destdir_csv))) {
-    dir.create(destdir_csv,
-               recursive = T,
-               showWarnings = FALSE)
-  }
-
-  for(zip_file_i in zip_files){
-    print(zip_file_i)
-
-    unzip(zipfile = zip_file_i,
-          exdir = destdir_csv,
-          unzip = "unzip",
-          overwrite = T)
-  }
+  unzip_census(2000, filetype = "xls")
 }
 
 # 2) Checking files  -----------------------------------------------------------
 
 # list all excel files
-all_csv_files <- list.files(path = './data_raw/tracts/2022/csv/',
+all_xls_files <- list.files(path = './data_raw/tracts/2000/xls/',
                             full.names = T,
                             recursive = T,
-                            pattern = '.csv$',
-                            ignore.case = T)
+                            pattern = '.xls$',
+                            ignore.case = T) %>%
+  .[!grepl(x = ., pattern = "compatibiliza|descri|instalad", ignore.case = T)]
 
+dataset_info = str_split(all_xls_files, pattern = "/") |>
+  sapply(FUN = \(x) last(x)) |>
+  str_remove(pattern = ".xls$|.XLS$") %>%
+  tibble(tmp = .) |>
+  separate(col = tmp, sep = "_", into = c("prefix", "uf")) |>
+  mutate(theme  = str_remove_all(prefix, "[[:digit:]]"),
+         prefix = tolower(prefix),
+         file  = all_xls_files)
 
-
-dataset_info = tribble(
-  ~theme, ~prefix, ~file,
-  "Basico",                  NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_basico_BR_20250417.csv"                     ,
-
-  "Domicilio",               "domicilio01",        "./data_raw/tracts/2022/csv/Agregados_por_setores_caracteristicas_domicilio1_BR.csv"          ,
-  "Domicilio",               "domicilio02",        "./data_raw/tracts/2022/csv/Agregados_por_setores_caracteristicas_domicilio2_BR_20250417.csv" ,
-  "Domicilio",               "domicilio03",        "./data_raw/tracts/2022/csv/Agregados_por_setores_caracteristicas_domicilio3_BR_20250417.csv" ,
-
-  "Pessoas",                 "alfabetizacao",      "./data_raw/tracts/2022/csv/Agregados_por_setores_alfabetizacao_BR.csv"                       ,
-  "Pessoas",                 "raca",               "./data_raw/tracts/2022/csv/Agregados_por_setores_cor_ou_raca_BR.csv"                         ,
-  "Pessoas",                 "demografia",         "./data_raw/tracts/2022/csv/Agregados_por_setores_demografia_BR.csv"                          ,
-  "Pessoas",                 "parentesco",         "./data_raw/tracts/2022/csv/Agregados_por_setores_parentesco_BR.csv"                          ,
-
-  "ResponsavelRenda",        NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_renda_responsavel_BR.csv"                   ,
-
-  "Indigenas",               "domicilios",         "./data_raw/tracts/2022/csv/Agregados_por_setores_domicilios_indigenas_BR.csv"                ,
-  "Indigenas",               "pessoas",            "./data_raw/tracts/2022/csv/Agregados_por_setores_pessoas_indigenas_BR.csv"                   ,
-
-  "Quilombolas",             "domicilios",         "./data_raw/tracts/2022/csv/Agregados_por_setores_domicilios_quilombolas_BR.csv"              ,
-  "Quilombolas",             "pessoas",            "./data_raw/tracts/2022/csv/Agregados_por_setores_pessoas_quilombolas_BR.csv"                 ,
-
-  "Entorno",                 "domicilios",         "./data_raw/tracts/2022/csv/Agregados_por_setores_entorno_domiclios_BR.csv"                  ,
-  "Entorno",                 "faces",              "./data_raw/tracts/2022/csv/Agregados_por_setores_entorno_faces_BR.csv"                       ,
-  "Entorno",                 "moradores",          "./data_raw/tracts/2022/csv/Agregados_por_setores_entorno_moradores_BR.csv"                   ,
-
-  "Obitos",                  NA_character_,        "./data_raw/tracts/2022/csv/Agregados_por_setores_obitos_BR.csv"                              ,
-)
-
-
-if(!all(all_csv_files %in% dataset_info$file)){
-  stop("Not all csv files are listed in dataset_info")
-}
+dataset_info |> janitor::tabyl(theme)
 
 
 # 3) Recoding and preparing the datasets ---------------------------------------
-
 
 themes = dataset_info |> pull(theme) |> unique()
 themes = setdiff(themes, "Basico")
@@ -360,8 +383,8 @@ datasets = grep(ls(), pattern = "^dataset_", value = T)
 datasets = setdiff(datasets, c("dataset_info", "dataset_info_i",  "dataset_Basico_sub", "dataset_i", "dataset_j"))
 
 
-if(!dir.exists(paths = './data_processed/2022/parquet/')){
-    dir.create(path = './data_processed/2022/parquet/', recursive = T)
+if(!dir.exists(paths = './data_processed/2000/parquet/')){
+  dir.create(path = './data_processed/2000/parquet/', recursive = T)
 }
 
 #dataset_i = datasets[1]
@@ -375,7 +398,7 @@ for(dataset_i in datasets){
   dataset_i <- dataset_i |> mutate(code_tract = as.character(code_tract))
 
   write_parquet(x = dataset_i,
-                sink = paste0('./data_processed/2022/parquet/2022_tracts_',
+                sink = paste0('./data_processed/2000/parquet/2000_tracts_',
                               theme_i,
                               "_",
                               "v0.5.0", # censobr version
@@ -385,18 +408,3 @@ for(dataset_i in datasets){
                 compression_level = 22)
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

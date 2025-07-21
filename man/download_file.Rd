@@ -7,7 +7,8 @@
 download_file(
   file_url = parent.frame()$file_url,
   showProgress = parent.frame()$showProgress,
-  cache = parent.frame()$cache
+  cache = parent.frame()$cache,
+  verbose = parent.frame()$verbose
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ download_file(
 \item{showProgress}{Logical.}
 
 \item{cache}{Logical.}
+
+\item{verbose}{Logical.}
 }
 \value{
 A string to the address of the file

@@ -58,7 +58,8 @@ read_households(
   add_labels,    # add labels to categorical variables
   as_data_frame, # return an Arrow DataSet or a data.frame
   showProgress,  # show download progress bar
-  cache          # cache data for faster access later
+  cache,         # cache data for faster access later
+  verbose        # whether to print informative messages
   )
 ```
 

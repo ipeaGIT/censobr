@@ -11,6 +11,7 @@
 #'        `c("long", "short")`.
 #' @template showProgress
 #' @template cache
+#' @template verbose
 #'
 #' @return Opens a `.pdf` file on the browser
 #' @export
@@ -24,7 +25,8 @@
 questionnaire <- function(year = 2010,
                           type = NULL,
                           showProgress = TRUE,
-                          cache = TRUE){
+                          cache = TRUE,
+                          verbose = TRUE){
   # year = 2000
   # type = 'short'
   # type = 'long'
@@ -32,20 +34,27 @@ questionnaire <- function(year = 2010,
   ### check inputs
   checkmate::assert_numeric(year)
   checkmate::assert_string(type)
+  checkmate::assert_logical(verbose, null.ok = FALSE)
 
   # data available for the years:
   years <- c(1960, 1970, 1980, 1991, 2000, 2010, 2022)
-  if (isFALSE(year %in% years)) { stop(  paste0("Error: Questionnaire currently only available for the years: ",
-                                              paste(years, collapse = ", "))
-                                        )}
+  if (isFALSE(year %in% years)) {
+    years_available <- paste(years, collapse = " ")
+    cli::cli_abort(
+      "Questionnaire currently only available for the years {years_available}.",
+      call = rlang::caller_env()
+    )
+  }
 
   # data available for data sets:
   data_sets <- c('long', 'short')
-  if (isFALSE(type %in% data_sets)) { stop( paste0("Error: Questionnaire currently only available for the types: ",
-                                              paste(data_sets, collapse = ", "))
-  )}
-
-
+  if (isFALSE(type %in% data_sets)) {
+    datasets_available <- paste(data_sets, collapse = ", ")
+    cli::cli_abort(
+      "Questionnaire currently only available for the types: {data_sets}.",
+      call = rlang::caller_env()
+    )
+  }
 
   ### Get url
   fname <- paste0(year, '_questionnaire_', type, '.pdf')
@@ -54,7 +63,8 @@ questionnaire <- function(year = 2010,
   ### Download
   local_file <- download_file(file_url = file_url,
                               showProgress = showProgress,
-                              cache = cache)
+                              cache = cache,
+                              verbose = verbose)
   # check if download worked
   if(is.null(local_file)) { return(NULL) }
 

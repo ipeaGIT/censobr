@@ -8,7 +8,8 @@ merge_household_var(
   df,
   year = parent.frame()$year,
   add_labels = parent.frame()$add_labels,
-  showProgress = parent.frame()$showProgress
+  showProgress = parent.frame()$showProgress,
+  verbose = parent.frame()$verbose
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ merge_household_var(
 \item{add_labels}{Character. Passed from function above.}
 
 \item{showProgress}{Logical. Passed from function above.}
+
+\item{verbose}{Logical. Passed from function above.}
 }
 \value{
 An arrow \code{Dataset} with additional household variables.
