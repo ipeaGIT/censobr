@@ -47,6 +47,7 @@ mc_alias_set("censobr", "minioapi-teste.ipea.gov.br:443",
 
 
 # ---------------------------------------------------------------------------------
+# https://cboettig.github.io/duckdbfs/
 
 a <- "https://github.com/ipeaGIT/censobr/releases/download/v0.5.0/1960_households_v0.5.0.parquet"
 
