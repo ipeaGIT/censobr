@@ -1,4 +1,6 @@
-# https://github.com/cboettig/minioclient
+
+
+# duckdbfs ---------------------------------------------------------------------------------
 
 library(arrow)
 library(dplyr)
@@ -36,6 +38,8 @@ df3 <- df |>
 
 
 
+# minioclient -------------------------------------------------------------
+
 # https://github.com/cboettig/minioclient
 library(minioclient)
 
@@ -46,7 +50,7 @@ mc_alias_set("censobr", "minioapi-teste.ipea.gov.br:443",
 
 
 
-# ---------------------------------------------------------------------------------
+# duckdbfs ---------------------------------------------------------------------------------
 # https://cboettig.github.io/duckdbfs/
 
 a <- "https://github.com/ipeaGIT/censobr/releases/download/v0.5.0/1960_households_v0.5.0.parquet"
@@ -71,3 +75,55 @@ countries_meta
 g <- duckdbfs::open_dataset(url,format = "sf")
 in_mem <- g |> to_sf(crs = countries_meta$wkt)
 
+
+
+
+
+
+# pins tests -------
+
+#' https://pins.rstudio.com/
+library(pins)
+
+web_board <-pins::board_url("https://minio.ipea.gov.br/censobr/")
+
+a <- "http://minio.ipea.gov.br/censobr/2010_tracts_Pessoa_v0.5.0.parquet"
+
+
+pins::pin_reactive_download()
+
+# another tests -------
+
+
+get_nbm_bl <- function(geoid_co, release = "latest") {
+
+  con <- DBI::dbConnect(duckdb::duckdb(read_only = TRUE))
+
+
+  DBI::dbExecute(con, sprintf("SET temp_directory ='%s';", tempdir()))
+  on.exit(DBI::dbDisconnect(con), add = TRUE)
+  DBI::dbExecute(con, "INSTALL httpfs;LOAD httpfs")
+  statement <- sprintf(
+    paste0("select *
+ 		  from read_parquet('s3://cori.data.fcc/nbm_block", release_target, "/*/*.parquet')
+    where geoid_co = '%s';"), geoid_co)
+  DBI::dbGetQuery(con, statement)
+}
+
+nbm_bl <- get_nbm_bl(geoid_co = "47051")
+
+
+library(aebdata)
+
+# List all series
+df_series <- "https://www.ipea.gov.br/atlasestado/api/v1/series" |>
+  httr2::request() |>
+  httr2::req_perform() |>
+  httr2::resp_body_json() |>
+  # Select only the title and id to avoid problems with subthemes
+  lapply(`[`, c("titulo", "id")) |>
+   do.call(rbind.data.frame, args = _)
+  # data.table::rbindlist()
+
+names(df_series) <- c("series_title", "series_id")
+head(df_series)
