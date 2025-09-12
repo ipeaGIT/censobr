@@ -36,6 +36,14 @@ df3 <- df |>
   filter(code_state=='11') |>
   collect()
 
+head(df3)
+
+a <- "http://minio.ipea.gov.br/censobr/2010_tracts_Pessoa_v0.5.0.parquet"
+
+
+df4 <- arrow::open_dataset(a) |>
+  filter(code_state=='11') |>
+  collect()
 
 
 # minioclient -------------------------------------------------------------
@@ -127,3 +135,27 @@ df_series <- "https://www.ipea.gov.br/atlasestado/api/v1/series" |>
 
 names(df_series) <- c("series_title", "series_id")
 head(df_series)
+
+
+
+
+library(geobr)
+ library(geoarrow)
+library(arrow)
+library(sf)
+library(dplyr)
+
+df <- geobr::read_state()
+# geoarrow::geoarrow_schema_parse()
+
+arrow::write_parquet(df, 'states.parquet')
+
+
+a <- arrow::open_dataset('states.parquet') |>
+  filter(code_state==11) |>
+  st_as_sf()
+plot(a)
+
+geoarrow::infer_geoarrow_schema(a)
+
+
