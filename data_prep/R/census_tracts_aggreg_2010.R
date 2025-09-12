@@ -7,46 +7,55 @@ library(rvest)
 library(purrr)
 library(stringr)
 library(readxl)
+library(curl)
+library(future)
+library(furrr)
 
 data.table::setDTthreads(percent = 100)
 options(scipen = 999)
 
-# ### 1) download raw data from IBGE ftp -------------------------------------------
-#
-# download_tract <- function(year){ # year = 2010
-#
-#   message(paste0("\nDownloading year: ", year, '\n'))
-#
-#   # create dir if it has not been created already
-#   dest_dir <- paste0('./data_raw/tracts/', year)
-#   if (isFALSE(dir.exists(dest_dir))) { dir.create(dest_dir,
-#                                                   recursive = T,
-#                                                   showWarnings = FALSE) }
-#
-#   # get ftp
-#   if(year==2010){
-#     ftp <- 'https://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Resultados_do_Universo/Agregados_por_Setores_Censitarios/'
-#   }
-#
-#   # get file names
-#   h <- rvest::read_html(ftp)
-#   elements <- rvest::html_elements(h, "a")
-#   files <- rvest::html_attr(elements, "href")
-#   filenameext <- files[ data.table::like(files, '.zip') ]
-#
-#   # Download zipped files
-#   for (i in filenameext){
-#
-#     tempf <- paste0(dest_dir, '/', i)
-#     httr::GET(url = paste0(ftp, i),
-#               httr::progress(),
-#               httr::write_disk(tempf, overwrite = T),
-#               config = httr::config(ssl_verifypeer = FALSE)
-#              )
-#     }
-# }
-#
-# download_tract(2010)
+### 1) download raw data from IBGE ftp -------------------------------------------
+
+download_tract <- function(year){ # year = 2010
+
+  message(paste0("\nDownloading year: ", year, '\n'))
+
+  # create dir if it has not been created already
+  dest_dir <- paste0('./data_raw/tracts/', year)
+  if (isFALSE(dir.exists(dest_dir))) { dir.create(dest_dir,
+                                                  recursive = T,
+                                                  showWarnings = FALSE) }
+
+  # get ftp
+  if(year==2010){
+    ftp <- 'https://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Resultados_do_Universo/Agregados_por_Setores_Censitarios/'
+  }
+
+  # get file names
+  h <- rvest::read_html(ftp)
+  elements <- rvest::html_elements(h, "a")
+  files <- rvest::html_attr(elements, "href")
+  filenameext <- files[ data.table::like(files, '.zip') ]
+
+  # build urls
+  files_to_download <- paste0(ftp, filenameext)
+  dest_files <- paste0(dest_dir, '/', filenameext)
+
+  # Download zipped files
+  out <- curl::multi_download(
+    urls = files_to_download,
+    destfiles = dest_files,
+    progress = TRUE, resume=T
+    )
+
+  if( isFALSE(sum(out$success) == length(files_to_download)) ){
+    stop("Download failed. Try again.")
+  }
+
+  return(out)
+}
+
+download_tract(2010)
 #
 #
 #
@@ -54,7 +63,17 @@ options(scipen = 999)
 #
 #    # manually ffs
 
+zip_files <- list.files(
+  path = "./data_raw/tracts/2010/",
+  pattern = "zip",
+  full.names = T
+  )
 
+lapply(
+  X = zip_files,
+  FUN = utils::unzip,
+  exdir = "./data_raw/tracts/2010/"
+  )
 
 
 
@@ -90,7 +109,7 @@ file.rename(file_to_rename, str_replace_all(file_to_rename, 'responsavel', 'Resp
 
 prep_state <- function(abbrev, tabl){
 
-  # abbrev = "SP_Exceto_"   abbrev = "CE_"   tabl = t
+  # abbrev = "SP_Exceto_"   abbrev = "GO_"   tabl = t
 
   message(abbrev)
 
@@ -117,7 +136,7 @@ prep_state <- function(abbrev, tabl){
 
 ### read and rename tables
 
-read_and_rename <- function(f, tabl){ # f = uf_files[7]
+read_and_rename <- function(f, tabl){ # f = uf_files[2]
 
   ### replace "X" with NA
   ### delete a couple of tracts with ÿ caracter
@@ -129,7 +148,7 @@ read_and_rename <- function(f, tabl){ # f = uf_files[7]
 
 
 
-    # f = "./data_raw/tracts/2010/RO_20231030/Base informaçoes setores2010 universo RO/EXCEL/Entorno05_RO.xls"
+  # f = "./data_raw/tracts/2010/RO_20231030/Base informaçoes setores2010 universo RO/EXCEL/Entorno05_RO.xls"
   # f = "./data_raw/tracts/2010/CE_20231030/Base informaçoes setores2010 universo CE/EXCEL/Entorno05_CE.xls"
 
   message(f)
@@ -141,9 +160,33 @@ read_and_rename <- function(f, tabl){ # f = uf_files[7]
   enc <- ifelse(st=='ES', 'UTF-8', 'Latin-1')
 
   # read data
+  file_extension <- tools::file_ext(f)
+
+  if(file_extension == "xls"){
     temp_df <- readxl::read_xls(f)
+
+  } else if(file_extension == "xlsx") {
+    temp_df <- readxl::read_xlsx(f)
+  }
+  # readxl::read_xlsx(
+  #  # fs::path(
+  #   "R:/Dropbox/git/censobr/data_prep/data_raw/tracts/2010/RS_20241211/Base informaçoes setores2010 universo RS/EXCEL/Domicilio01_RS.xlsx"
+  #   #)
+  #   )
   # temp_df <- data.table::fread(f, fill=T, encoding = enc, colClasses = 'character')
   # temp_df <- vroom::vroom(f, delim = ';')
+
+  # fix column names of table Pessoa02 of Goias. Issue https://github.com/ipeaGIT/censobr/issues/68
+
+
+  if( tabl=="Pessoa"){
+    last6 <- substring(f, nchar(f) - 5)
+    uf <- substring(last6, 1,2)
+
+    if( uf=="GO"){
+      names(temp_df) <- sub("^V(\\d{2})$", "V0\\1", names(temp_df))
+    }
+  }
 
 
   # determine columns with 100% of NA and drop them
@@ -202,6 +245,9 @@ read_and_rename <- function(f, tabl){ # f = uf_files[7]
 
 # 3) Create 1 parquet file for each table / state -----------------------------------------------------------
 
+# create dest dir for clean data
+dir.create('./data/tracts/2010/', recursive = T)
+
 # update list of all csv files
 all_csv_files <- list.files(path = './data_raw/tracts/2010',
                             full.names = T, recursive = T,
@@ -215,6 +261,7 @@ table_names <- str_replace_all(root_names, "[:digit:]", "") |> unique()
 table_names <- table_names[!grepl("-MG.csv",table_names)]  |> unique()
 table_names
 
+table_names <- table_names[!table_names %like% 'Descri']
 
 # get all states
 all_states <- str_trim(str_extract(all_csv_files, "([:upper:][:upper:])")) |> unique()
@@ -226,6 +273,10 @@ all_states <- c(all_states, 'SP_Capital', 'SP_Exceto')
 all_states
 
 all_states <- paste0(all_states, '_')
+
+
+# parallel
+future::plan(future::multisession, workers = 4)
 
 
 for (t in table_names){ # t = 'Basico'         t = 'Pessoa'
@@ -241,20 +292,15 @@ for (t in table_names){ # t = 'Basico'         t = 'Pessoa'
   }
 
   # process each state
-  pblapply(X = all_states, FUN = prep_state, tabl = t)
-  # final_list <- pblapply(X = all_states, FUN = prep_state)
-  #
-  # # final_list[[8]]$`Cod_Grandes RegiÃµes`
-  # # final_list[[1]]$`Cod_Grandes Regiões`
-  #
-  # # rbind all states
-  # final_df <- data.table::rbindlist(final_list, use.names=TRUE)
-  # gc(T)
-  #
-  # # save data
-  # arrow::write_parquet(final_df, paste0('./data/tracts/2010/2010_tracts', t, '.parquet'))
-  # rm(final_df)
-  # gc(T)
+  # pblapply(X = all_states, FUN = prep_state, tabl = t)
+
+  furrr::future_map(
+    .x = all_states,
+    .f = prep_state,
+    tabl = t,
+    .progress = T
+    )
+
   }
 
 
@@ -301,26 +347,20 @@ bind_all <- function(tbl){
 
 
   ## Define the dataset
-  DS <- arrow::open_dataset(sources = temp_f)
-  #  DS <- arrow::open_dataset(sources = temp_f[2])
+  AT <- arrow::open_dataset(sources = temp_f)
+  #  AT <- arrow::open_dataset(sources = temp_f[9])
 
-  ## Create a scanner
-  SO <- Scanner$create(DS)
-
-  ## Load it as Arrow Table
-  AT <- SO$ToTable()
-
-  ## Convert it to an R data frame in memory
-  # not sure this is currently faster
-       AT <- collect(AT)
-      # head(AT)
 
   # make all columns as character
   AT <- mutate(AT, across(everything(), as.character))
 
 
-  # add code_weighting
-  cross <- fread('./data_raw/tracts/2010/composicao_areas_ponderacao_2010.txt', colClasses = 'character')
+  # add code_weighting. You need to manually:
+  #' - downloaded file https://ftp.ibge.gov.br/Censos/Censo_Demografico_2010/Resultados_Gerais_da_Amostra/Microdados/Documentacao.zip
+  #' - unzip it
+  #' - change column names and change encoding
+
+  cross <- data.table::fread('./data_raw/tracts/2010/composicao_areas_ponderacao_2010.txt', colClasses = 'character',encoding = 'UTF-8')
   AT <- left_join(AT, cross, by = 'code_tract')
 
   # add geography variables
@@ -372,7 +412,6 @@ bind_all <- function(tbl){
                                code_neighborhood, name_neighborhood,
                                code_neighborhood, Basico_V1005 # , tipo_setor
                          ))
-
     }
 
 
@@ -389,6 +428,7 @@ bind_all <- function(tbl){
   # AT <-  dplyr::rename_with(AT, ~gsub("Situacao_setor", "V1005", .x))
 
 
+  AT <- collect(AT)
 
   # whenever there is "X" the value gets convert to NA
   message('to numeric')
@@ -397,13 +437,35 @@ bind_all <- function(tbl){
   AT <- mutate(AT, across(all_of(vars), ~ as.numeric(.x)))
 
 
+  # data.table::setDT(AT2)
+  # df_na <- AT2[rowSums(is.na(AT2)) > 0]
+  #
+  # AT |>
+  #   filter(code_tract== "521020805000055") |>
+  #   select(code_tract, pessoa02_V001, pessoa02_V052,
+  #          pessoa02_V095, pessoa02_V117,
+  #          pessoa01_V002, pessoa01_V040) |>
+  #   collect()
+  #
+  # a |>
+  #   filter(code_tract== "521020805000055") |>
+  #   select(code_tract, pessoa02_V001, pessoa02_V052,
+  #          pessoa02_V095, pessoa02_V117,
+  #          pessoa01_V002, pessoa01_V040) |>
+  #   collect()
 
   #  AT <- collect(AT)
 
   message('saving')
   # save
   dest_file <- paste0('2010_tracts_', tbl, '.parquet')
-  arrow::write_parquet(AT, paste0('./data/tracts/2010/clean/', dest_file))
+  # arrow::write_parquet(AT, paste0('./data/tracts/2010/clean/', dest_file))
+
+  arrow::write_parquet(
+    x = AT,
+    sink = paste0('./data/tracts/2010/clean/', dest_file),
+    compression='zstd',
+    compression_level = 22)
 
   rm(AT); gc()
 
@@ -411,12 +473,14 @@ bind_all <- function(tbl){
 }
 
 
-bind_all(tbl = 'DomicilioRenda_')
-bind_all(tbl = 'Basico_')
-bind_all(tbl = 'Entorno_')
-bind_all(tbl = 'Pessoa_')
+dir.create('./data/tracts/2010/clean/', recursive = T)
+pbapply::pblapply(X=table_names, FUN = bind_all)
+# bind_all(tbl = 'DomicilioRenda_')
+# bind_all(tbl = 'Basico_')
+# bind_all(tbl = 'Entorno_')
+# bind_all(tbl = 'Pessoa_')
 
-lapply(X=table_names, FUN = bind_all)
+
 
 
 #
