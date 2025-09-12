@@ -1,3 +1,9 @@
+# censobr v0.6.0 dev
+
+* Data fixes included in this version:
+  * The census tract aggregate table of Pessoa02 from the state of Goias has been fixed
+
+
 # censobr v0.5.0
 
 * Major changes

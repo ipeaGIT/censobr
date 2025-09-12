@@ -319,7 +319,7 @@ add_geography_cols_tracts <- function(arrw, year){
   # get code_muni from weighting area
   col <- case_when(year == 2010 ~ 'code_muni')
 
-  #
+
   # # weighting area
   # if(year %in% c(2000, 2010)){
   #   arrw <- mutate(arrw,

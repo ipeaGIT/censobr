@@ -56,12 +56,10 @@ download_tract <- function(year){ # year = 2010
 }
 
 download_tract(2010)
-#
-#
-#
+
+
+
 # ## 1.2) unzip all files ------
-#
-#    # manually ffs
 
 zip_files <- list.files(
   path = "./data_raw/tracts/2010/",
@@ -364,30 +362,26 @@ bind_all <- function(tbl){
   AT <- left_join(AT, cross, by = 'code_tract')
 
   # add geography variables
-  if(tbl != 'Basico_'){
     AT <- add_geography_cols_tracts(AT, year = 2010)
-  }
-
 
   # rename columns
   if(tbl == 'Basico_'){
 
     options(scipen = 999)
 
-    AT <- dplyr::mutate(AT, code_state = as.character(substr(code_muni, 1, 2)),
-                            Cod_subdistrito = as.numeric(Cod_subdistrito))
-    AT <- dplyr::mutate(AT, Cod_subdistrito = (format(as.character(Cod_subdistrito), scientific = FALSE)))
-    # head(AT) |> collect()
+    # AT <- dplyr::mutate(AT, Cod_subdistrito = as.numeric(Cod_subdistrito))
+    # AT <- dplyr::mutate(AT, Cod_subdistrito = (format(as.character(Cod_subdistrito), scientific = FALSE)))
+    # # head(AT) |> collect()
 
     AT <- dplyr::rename(AT,
                         code_tract = code_tract,
                        # code_muni = Cod_municipio,
                         name_muni = Nome_do_municipio,
-                        abbrev_state = Cod_UF ,
-                        name_state = Nome_da_UF ,
+                       # abbrev_state = Cod_UF ,
+                       # name_state = Nome_da_UF ,
                         code_state = code_state,
-                        code_region = `Cod_Grandes Regiões`,
-                        name_region = Nome_Grande_Regiao,
+                       # code_region = `Cod_Grandes Regiões`,
+                       # name_region = Nome_Grande_Regiao,
                         code_meso = Cod_meso,
                         name_meso = Nome_da_meso,
                         code_micro = Cod_micro,
@@ -403,6 +397,10 @@ bind_all <- function(tbl){
                         Basico_V1005 = Situacao_setor
                        # , tipo_setor = Tipo_setor
                         )
+
+    AT <- AT |>
+      select( -c("Cod_Grandes Regiões", "Nome_Grande_Regiao", "Cod_UF",
+                 "Nome_da_UF", "Cod_municipio"))
 
     ## reoder columns
     AT <- relocate(AT, c(code_tract, code_weighting, code_muni, name_muni, code_state,
@@ -454,7 +452,12 @@ bind_all <- function(tbl){
   #          pessoa01_V002, pessoa01_V040) |>
   #   collect()
 
-  #  AT <- collect(AT)
+  # reoderder rows
+  data.table::setDT(AT)
+  AT <- AT[order(code_muni, code_tract)]
+
+  data.table::setindex(AT, NULL)
+  data.table::setDF(AT)
 
   message('saving')
   # save
@@ -494,4 +497,29 @@ pbapply::pblapply(X=table_names, FUN = bind_all)
 # pessoa 13
 # Responsavel 2
 
+
+
+
+o <- arrow::read_parquet("C:/Users/rafap/Downloads/2010_tracts_Pessoa_v0.5.0.parquet")
+n <- arrow::read_parquet("data/tracts/2010/clean/2010_tracts_Pessoa_.parquet")
+
+setdiff(names(o), names(n))
+
+identical(o, n)
+class(o)
+class(n)
+
+o_class <- sapply(o, class)
+n_class <- sapply(n, class)
+identical(o_class, n_class)
+
+all(o$V001 == n$V001, na.rm = T)
+
+all.equal(n, o, check.attributes = FALSE, tolerance = 1e-8)
+waldo::compare(n, o, ignore_attr = TRUE, max_diffs = Inf)
+
+
+a <- censobr::read_tracts(year = 2010, dataset = 'Basico') |>
+   filter(abbrev_state == "GO") |>
+  collect()
 

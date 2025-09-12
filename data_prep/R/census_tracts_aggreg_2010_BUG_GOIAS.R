@@ -15,9 +15,10 @@ head(go)
 
 
 
-cols_pessoa2 <- names(AT)[names(AT) %like% "pessoa02_"]
+cols_pessoa2 <- names(o)[names(o) %like% "pessoa02_"]
 
-gogo <- AT |>
+gogo <- n |>
+  filter(name_state == "Goiás") |>
   select(c(code_tract, cols_pessoa2 )) |>
   collect()
 
@@ -47,6 +48,7 @@ all(names(go_xls) == names(mg_xls))
 all(names(al_xls) == names(mg_xls))
 
 col_names <- names(go_xls)
+
 
 
 
