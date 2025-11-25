@@ -22,7 +22,7 @@ only needs to run this function once. This set directory is persistent across
 R sessions.
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 
 # Set custom cache directory
 tempd <- tempdir()

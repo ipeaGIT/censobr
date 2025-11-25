@@ -14,7 +14,7 @@ Get the path to the cache directory currently being used for for the censobr
 files
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # get path to cache directory
 get_censobr_cache_dir()
 \dontshow{\}) # examplesIf}

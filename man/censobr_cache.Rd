@@ -35,7 +35,7 @@ deleted from the local cache directory.
 Manage cached files from the censobr package
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # list all files cached
 censobr_cache(list_files = TRUE)
 

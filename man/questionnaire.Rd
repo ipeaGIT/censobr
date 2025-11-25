@@ -41,7 +41,7 @@ Open on a browser the questionnaire used in the data collection of Brazil's
 censuses
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 library(censobr)
 
 # Open questionnaire on browser

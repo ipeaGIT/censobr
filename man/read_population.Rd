@@ -77,7 +77,7 @@ how this dataset was processed on this link \url{https://github.com/antrologos/C
 }
 
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # return data as arrow Dataset
 df <- read_population(
   year = 2010,

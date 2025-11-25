@@ -35,7 +35,7 @@ Open on a browser the interview manual of the data collection of Brazil's
 censuses
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Open interview manual on the browser
 interview_manual(
   year = 2010,
