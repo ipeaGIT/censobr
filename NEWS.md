@@ -3,6 +3,10 @@
 * Data fixes included in this version:
   * The census tract aggregate table of Pessoa02 from the state of Goias has been fixed
 
+* New data set and files included in this version:
+  * Data dictionary of microdata now includes a single Excel file with info for
+  all variables, including auxiliary documentation. For now, available for the years
+  2000 and 2010.
 
 # censobr v0.5.0
 

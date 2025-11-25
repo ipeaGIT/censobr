@@ -53,7 +53,7 @@ data_dictionary <- function(year,
     }
 
   # check year / data availability
-  if(dataset == 'microdata'){ years <- c(2010) }
+  if(dataset == 'microdata'){ years <- c(2000, 2010) }
   if(dataset == 'tracts'){ years <- c(1970, 1980, 1991, 2000, 2010, 2022) }
   if(dataset == 'population'){ years <- c(1960, 1970, 1980, 1991, 2000, 2010) }
   if(dataset == 'households'){ years <- c(1960, 1970, 1980, 1991, 2000, 2010) }
