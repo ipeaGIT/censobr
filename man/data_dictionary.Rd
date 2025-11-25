@@ -15,8 +15,10 @@ data_dictionary(
 \arguments{
 \item{year}{Numeric. Year of reference in the format \code{yyyy}.}
 
-\item{dataset}{Character. The dataset of data dictionary to be opened. Options
-include \code{c("population", "households", "families", "mortality", "emigration", "tracts")}.}
+\item{dataset}{Character. The type of data dictionary to be opened. Options
+include \code{c("microdata", "tracts", "population", "households", "families", "mortality", "emigration")}.
+In the case of \code{"microdata"}, the function opens an Excel file with the
+data dictionary of all variables, including auxiliary documentation.}
 
 \item{showProgress}{Logical. Defaults to \code{TRUE} display download progress
 bar. The progress bar only reflects only the downloading
@@ -38,19 +40,22 @@ Returns \code{NULL} and opens an .html, .pdf or excel file
 Open on a browser the data dictionary of Brazil's census data.
 }
 \examples{
-\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) withAutoprint(\{ # examplesIf}
 # Open data dictionary
-data_dictionary(year = 2010,
-                dataset = 'population',
-                showProgress = FALSE)
+data_dictionary(
+  year = 2010,
+  dataset = 'microdata'
+  )
 
-data_dictionary(year = 2022,
-                dataset = 'tracts',
-                showProgress = FALSE)
+data_dictionary(
+  year = 2022,
+  dataset = 'tracts'
+  )
 
-data_dictionary(year = 1980,
-                dataset = 'households',
-                showProgress = FALSE)
+data_dictionary(
+  year = 1980,
+  dataset = 'households'
+  )
 
 \dontshow{\}) # examplesIf}
 }
