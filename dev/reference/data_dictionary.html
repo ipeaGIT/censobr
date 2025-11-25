@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">censobr</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.4.19999</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.5.0.999</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,8 +69,10 @@
 
 
 <dt id="arg-dataset">dataset<a class="anchor" aria-label="anchor" href="#arg-dataset"></a></dt>
-<dd><p>Character. The dataset of data dictionary to be opened. Options
-include <code>c("population", "households", "families", "mortality", "emigration", "tracts")</code>.</p></dd>
+<dd><p>Character. The type of data dictionary to be opened. Options
+include <code>c("microdata", "tracts", "population", "households", "families", "mortality", "emigration")</code>.
+In the case of <code>"microdata"</code>, the function opens an Excel file with the
+data dictionary of all variables, including auxiliary documentation.</p></dd>
 
 
 <dt id="arg-showprogress">showProgress<a class="anchor" aria-label="anchor" href="#arg-showprogress"></a></dt>
@@ -99,27 +101,30 @@ messages. Defaults to <code>TRUE</code>.</p></dd>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other Census documentation:
-<code><a href="interview_manual.html">interview_manual</a>()</code></p></div>
+<code><a href="interview_manual.html">interview_manual()</a></code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Open data dictionary</span></span></span>
-<span class="r-in"><span><span class="fu">data_dictionary</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2010</span>,</span></span>
-<span class="r-in"><span>                dataset <span class="op">=</span> <span class="st">'population'</span>,</span></span>
-<span class="r-in"><span>                showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">data_dictionary</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  year <span class="op">=</span> <span class="fl">2010</span>,</span></span>
+<span class="r-in"><span>  dataset <span class="op">=</span> <span class="st">'microdata'</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading data and storing it locally for future use.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">data_dictionary</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2022</span>,</span></span>
-<span class="r-in"><span>                dataset <span class="op">=</span> <span class="st">'tracts'</span>,</span></span>
-<span class="r-in"><span>                showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">data_dictionary</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  year <span class="op">=</span> <span class="fl">2022</span>,</span></span>
+<span class="r-in"><span>  dataset <span class="op">=</span> <span class="st">'tracts'</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading data and storing it locally for future use.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">data_dictionary</span><span class="op">(</span>year <span class="op">=</span> <span class="fl">1980</span>,</span></span>
-<span class="r-in"><span>                dataset <span class="op">=</span> <span class="st">'households'</span>,</span></span>
-<span class="r-in"><span>                showProgress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">data_dictionary</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  year <span class="op">=</span> <span class="fl">1980</span>,</span></span>
+<span class="r-in"><span>  dataset <span class="op">=</span> <span class="st">'households'</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Downloading data and storing it locally for future use.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-in"><span></span></span>
@@ -134,7 +139,7 @@ messages. Defaults to <code>TRUE</code>.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
