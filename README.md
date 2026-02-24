@@ -42,7 +42,7 @@ The package currently includes 6 main functions to download & read census data:
 8. `questionnaire()`
 9. `interview_manual()`
 
-Finally, the package includes three functions to help users manage the data chached locally.
+Finally, the package includes three functions to help users manage the data cached locally.
 
 10. `censobr_cache()` 
 11. `set_censobr_cache_dir()`
