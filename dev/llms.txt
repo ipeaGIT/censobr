@@ -51,7 +51,7 @@ information on data variables and methodology:
 9.  [`interview_manual()`](https://ipeagit.github.io/censobr/dev/reference/interview_manual.md)
 
 Finally, the package includes three functions to help users manage the
-data chached locally.
+data cached locally.
 
 10. [`censobr_cache()`](https://ipeagit.github.io/censobr/dev/reference/censobr_cache.md)
 11. [`set_censobr_cache_dir()`](https://ipeagit.github.io/censobr/dev/reference/set_censobr_cache_dir.md)

@@ -221,14 +221,14 @@ tracts_df <- left_join(tract_basico, tract_income) |> collect()
 tracts_df <- tracts_df |> mutate(income_pc = V003 / V002)
 head(tracts_df)
 #> # A tibble: 6 × 4
-#>   code_tract       V002   V003 income_pc
-#>   <chr>           <dbl>  <dbl>     <dbl>
-#> 1 220740505000003   714 145414      204.
-#> 2 220740505000004   436  47457      109.
-#> 3 220740505000005   287  45302      158.
-#> 4 220740505000006   331  47624      144.
-#> 5 220740505000007   846 133232      157.
-#> 6 220740505000008   196  45780      234.
+#>   code_tract       V002  V003 income_pc
+#>   <chr>           <dbl> <dbl>     <dbl>
+#> 1 261020215000008   425 72239      170.
+#> 2 261020215000009   387 75249      194.
+#> 3 261020215000010   467 63703      136.
+#> 4 261020215000011   271 66279      245.
+#> 5 261020215000012   121 22880      189.
+#> 6 261020215000013   166 27601      166.
 ```
 
 Finally, we can merge the spatial data with our per capita income
