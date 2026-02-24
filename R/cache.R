@@ -217,7 +217,7 @@ censobr_cache <- function(list_files = TRUE,
   if (isTRUE(list_files)) {
 
     if (isTRUE(verbose)) {
-      cli::cli_alert_info("Files currently chached:")
+      cli::cli_alert_info("Files currently cached:")
       }
 
     # print files as a message
