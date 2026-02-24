@@ -427,7 +427,7 @@ tempf <- fs::path_temp(pattern = "my_temp_dir")
 
 censobr::set_censobr_cache_dir(path = tempf)
 #> ℹ censobr files will be cached at
-#> /tmp/RtmpQKpoLI/my_temp_dir.
+#> /tmp/Rtmpuvz5mn/my_temp_dir.
 ```
 
 Mind you that the data is saved in a directory inside the cache
@@ -443,7 +443,7 @@ censobr::censobr_cache(
   list_files = TRUE, 
   print_tree = TRUE
   )
-#> /tmp/RtmpQKpoLI/my_temp_dir
+#> /tmp/Rtmpuvz5mn/my_temp_dir
 #> └── data_release_v0.5.0
 #>     └── 2010_emigration_v0.5.0.parquet
 ```
