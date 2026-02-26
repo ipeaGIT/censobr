@@ -2,7 +2,7 @@
 
 * Minor changes
   * The function `data_dictionary()` now does not open the file when 
-  `verbose = FALSE`. Closes [#16](https://github.com/ipeaGIT/censobr/issues/16) 
+  `verbose = FALSE`. Closes [72](https://github.com/ipeaGIT/censobr/issues/72) 
 
 * Data fixes included in this version:
   * The census tract aggregate table of Pessoa02 from the state of Goias has been fixed
