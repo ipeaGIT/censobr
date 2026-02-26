@@ -104,10 +104,12 @@ data_dictionary <- function(year,
   # open data dic on browser
   file_extension <- fs::path_ext(local_file)
 
-  if (file_extension %in% c('pdf', 'html')) {
-    utils::browseURL(url = local_file)
-  } else {
-    open_file(path = local_file)
+  if(verbose){
+    if (file_extension %in% c('pdf', 'html')) {
+      utils::browseURL(url = local_file)
+    } else {
+      open_file(path = local_file)
+    }
   }
 
   return(NULL)
