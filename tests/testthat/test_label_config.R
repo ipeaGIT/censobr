@@ -61,3 +61,70 @@ test_that("label_config_mutations only includes present columns", {
 
 	testthat::expect_identical(names(mutations), "V0617")
 })
+
+test_that("apply_label_config stays lazy for Arrow queries", {
+	testthat::skip_if_not_installed("arrow")
+
+	root <- testthat::test_path("fixtures", "labels")
+	config <- censobr:::load_label_config("population", 2010, "pt", root = root)
+	input <- arrow::arrow_table(data.frame(
+		V0601 = c("1", "2", "9", NA_character_, "7"),
+		V0617 = c("1", "0", "2", NA_character_, ""),
+		untouched = 1:5
+	))
+
+	query <- censobr:::apply_label_config(input, config)
+	output <- dplyr::collect(query)
+
+	testthat::expect_s3_class(query, "arrow_dplyr_query")
+	testthat::expect_identical(
+		output$V0601,
+		c("Masculino", "Feminino", "Ignorado", NA_character_, NA_character_)
+	)
+	testthat::expect_type(output$V0601, "character")
+	testthat::expect_type(output$V0617, "character")
+})
+
+test_that("population pilot configuration preserves published labels", {
+	config <- censobr:::load_label_config(
+		"population", 2010, "pt",
+		root = system.file("labels", package = "censobr")
+	)
+	input <- data.frame(
+		V1006 = c("1", "2", NA_character_, "3"),
+		V0502 = c("01", "19", "20", "99"),
+		V0601 = c("1", "2", "9", "7")
+	)
+
+	output <- censobr:::apply_label_config(input, config)
+
+	testthat::expect_identical(output$V1006, c("Urbana", "Rural", NA_character_, NA_character_))
+	testthat::expect_identical(
+		output$V0502,
+		c("Pessoa responsável pelo domicílio ",
+			"Parente do(a) empregado(a)  doméstico(a)",
+			"Individual em domicílio coletivo", NA_character_)
+	)
+	testthat::expect_identical(output$V0601, c("Masculino", "Feminino", "Ignorado", NA_character_))
+})
+
+test_that("add_labels_population applies the YAML pilot lazily", {
+	testthat::skip_if_not_installed("arrow")
+	input <- arrow::arrow_table(data.frame(
+		V1006 = c("1", "2", "3"),
+		V0502 = c("01", "19", "99"),
+		V0601 = c("1", "9", "7")
+	))
+
+	query <- censobr:::add_labels_population(input, year = 2010, lang = "pt")
+	output <- dplyr::collect(query)
+
+	testthat::expect_s3_class(query, "arrow_dplyr_query")
+	testthat::expect_identical(output$V1006, c("Urbana", "Rural", NA_character_))
+	testthat::expect_identical(
+		output$V0502,
+		c("Pessoa responsável pelo domicílio ",
+			"Parente do(a) empregado(a)  doméstico(a)", NA_character_)
+	)
+	testthat::expect_identical(output$V0601, c("Masculino", "Ignorado", NA_character_))
+})

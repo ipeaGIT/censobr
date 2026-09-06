@@ -1044,28 +1044,9 @@ add_labels_population <- function(
       )
     }
 
-    # sex
-    if ('V0601' %in% cols) {
-      arrw <- arrw |>
-        mutate(
-          V0601 = dplyr::case_when(
-            V0601 == 1 ~ 'Masculino',
-            V0601 == 2 ~ 'Feminino',
-            V0601 == 9 ~ 'Ignorado'
-          )
-        )
-    }
-
-    # FORMA DE DECLARACAO DA IDADE:
-    if ('V6040' %in% cols) {
-      arrw <- arrw |>
-        mutate(
-          V6040 = dplyr::case_when(
-            V6040 == 1 ~ 'Data de nascimento',
-            V6040 == 2 ~ 'Idade declarada'
-          )
-        )
-    }
+    # YAML-backed pilot: these maps are compiled into one mutate().
+    config <- load_label_config(dataset = "population", year = year, lang = lang)
+    arrw <- apply_label_config(arrw, config)
 
     # COR OU RACA
     if ('V0606' %in% cols) {
