@@ -7,4 +7,6 @@ imports:
 mappings:
   - use: urban_rural
     variables:
-      - V1006
+      - name: V1006
+        alias: urban_rural
+        description: Situação urbana ou rural

@@ -19,6 +19,51 @@ label_config_abort <- function(path, message) {
 	cli::cli_abort("Invalid label configuration {.file {path}}: {message}")
 }
 
+label_variable_specs <- function(variables, path = "<configuration>", prefix = "mapping") {
+	fail <- function(message) label_config_abort(path, message)
+	if (is.character(variables)) {
+		if (length(variables) == 0L || anyNA(variables) || any(!nzchar(variables)) ||
+				anyDuplicated(variables)) {
+			fail("{prefix} {.field variables} must be unique non-empty strings")
+		}
+		return(lapply(variables, function(variable) {
+			list(name = variable, alias = NA_character_, description = NA_character_)
+		}))
+	}
+
+	if (!is.list(variables) || length(variables) == 0L) {
+		fail("{prefix} {.field variables} must be strings or name metadata mappings")
+	}
+	specifications <- lapply(seq_along(variables), function(index) {
+		specification <- variables[[index]]
+		specification_prefix <- paste0(prefix, " variable ", index)
+		if (!is.list(specification) || is.null(names(specification)) ||
+				!("name" %in% names(specification))) {
+			fail("{specification_prefix} must contain {.field name}")
+		}
+		unknown <- setdiff(names(specification), c("name", "alias", "description"))
+		if (length(unknown) > 0L) {
+			fail("{specification_prefix} has unsupported field{?s} {.field {unknown}}")
+		}
+		for (field in c("name", "alias", "description")) {
+			if (!(field %in% names(specification))) { next }
+			if (!is.character(specification[[field]]) || length(specification[[field]]) != 1L ||
+					is.na(specification[[field]]) || !nzchar(specification[[field]])) {
+				fail("{specification_prefix} {.field {field}} must be one non-empty string when supplied")
+			}
+		}
+		list(
+			name = specification$name,
+			alias = if ("alias" %in% names(specification)) specification$alias else NA_character_,
+			description = if ("description" %in% names(specification)) specification$description else NA_character_
+		)
+	})
+
+	names <- vapply(specifications, `[[`, character(1), "name")
+	if (anyDuplicated(names)) { fail("{prefix} repeats a {.field name}") }
+	specifications
+}
+
 validate_label_mapping <- function(mapping, path, prefix,
 											require_variables = TRUE) {
 	fail <- function(message) label_config_abort(path, message)
@@ -30,11 +75,7 @@ validate_label_mapping <- function(mapping, path, prefix,
 	if (length(absent) > 0L) { fail("{prefix} missing field{?s} {.field {absent}}") }
 
 	if ("variables" %in% names(mapping)) {
-		variables <- mapping$variables
-		if (!is.character(variables) || length(variables) == 0L || anyNA(variables) ||
-				any(!nzchar(variables)) || anyDuplicated(variables)) {
-			fail("{prefix} {.field variables} must be unique non-empty strings")
-		}
+		label_variable_specs(mapping$variables, path, prefix)
 	}
 
 	if (!is.null(mapping$unmatched) &&
@@ -250,7 +291,8 @@ validate_label_config <- function(config, path = "<configuration>") {
 		mapping <- config$mappings[[index]]
 		prefix <- paste0("mapping ", index, "")
 		validate_label_mapping(mapping, path, prefix)
-		variables <- mapping$variables
+		specifications <- label_variable_specs(mapping$variables, path, prefix)
+		variables <- vapply(specifications, `[[`, character(1), "name")
 		duplicate_variables <- intersect(variables_seen, variables)
 		if (length(duplicate_variables) > 0L) {
 			fail("variable{?s} {.field {duplicate_variables}} appear in more than one mapping")
@@ -332,12 +374,48 @@ label_config_mutations <- function(config, columns) {
 
 	mutations <- list()
 	for (mapping in config$mappings) {
-		available <- intersect(mapping$variables, columns)
-		for (variable in available) {
-			mutations[[variable]] <- label_mapping_expression(variable, mapping)
+		for (specification in label_variable_specs(mapping$variables)) {
+			if (!(specification$name %in% columns)) { next }
+			mutations[[specification$name]] <- label_mapping_expression(specification$name, mapping)
 		}
 	}
 	mutations
+}
+
+#' Return aliases and descriptions declared by one label configuration
+#'
+#' @param config A validated label configuration.
+#' @keywords internal
+label_config_variable_metadata <- function(config) {
+	validate_label_config(config)
+	rows <- list()
+	for (mapping in config$mappings) {
+		for (specification in label_variable_specs(mapping$variables)) {
+			rows[[length(rows) + 1L]] <- data.frame(
+				dataset = config$dataset,
+				year = config$year,
+				language = config$language,
+				variable = specification$name,
+				alias = specification$alias,
+				description = specification$description,
+				stringsAsFactors = FALSE
+			)
+		}
+	}
+	do.call(rbind, rows)
+}
+
+#' List aliases and descriptions for configured label variables
+#'
+#' @param dataset Character scalar.
+#' @param year Numeric scalar.
+#' @param lang Character scalar.
+#' @param root Root directory containing dataset label directories.
+#' @return A data frame with one row per configured variable.
+#' @export
+label_variable_metadata <- function(dataset, year, lang = "pt",
+													root = system.file("labels", package = "censobr")) {
+	label_config_variable_metadata(load_label_config(dataset, year, lang, root))
 }
 
 #' Apply configured categorical labels in one dplyr mutation

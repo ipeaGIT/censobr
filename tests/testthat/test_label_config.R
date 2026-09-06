@@ -50,7 +50,39 @@ test_that("apply_label_config generates character labels in one mutation", {
 	)
 	testthat::expect_identical(output$untouched, input$untouched)
 	testthat::expect_identical(vapply(output, typeof, character(1)),
-														 c(V0601 = "character", V0617 = "character", untouched = "integer"))
+										 c(V0601 = "character", V0617 = "character", untouched = "integer"))
+})
+
+test_that("aliases and descriptions do not rename configured variables", {
+	config <- list(
+		schema_version = 1L,
+		dataset = "population",
+		year = 2010,
+		language = "pt",
+		mappings = list(
+			list(
+				variables = list(list(
+					name = "V0601",
+					alias = "sex",
+					description = "Sexo da pessoa"
+				)),
+				unmatched = NULL,
+				levels = list(
+					list(code = "1", label = "Masculino"),
+					list(code = "2", label = "Feminino")
+				)
+			)
+		)
+	)
+	input <- data.frame(V0601 = c("1", "9", NA_character_))
+
+	output <- censobr:::apply_label_config(input, config)
+	metadata <- censobr:::label_config_variable_metadata(config)
+
+	testthat::expect_identical(names(output), "V0601")
+	testthat::expect_identical(output$V0601, c("Masculino", NA_character_, NA_character_))
+	testthat::expect_identical(metadata$alias, "sex")
+	testthat::expect_identical(metadata$description, "Sexo da pessoa")
 })
 
 test_that("label_config_mutations only includes present columns", {
@@ -66,7 +98,9 @@ test_that("load_label_config expands imported definitions", {
 	root <- testthat::test_path("fixtures", "label_imports")
 	config <- censobr:::load_label_config("population", 2010, "pt", root = root)
 
-	testthat::expect_identical(config$mappings[[1]]$variables, "V1006")
+	specification <- censobr:::label_variable_specs(config$mappings[[1]]$variables)[[1]]
+	testthat::expect_identical(specification$name, "V1006")
+	testthat::expect_identical(specification$alias, "urban_rural")
 	testthat::expect_null(config$mappings[[1]]$unmatched)
 	testthat::expect_identical(
 		vapply(config$mappings[[1]]$levels, `[[`, character(1), "label"),
@@ -156,6 +190,30 @@ test_that("apply_label_config stays lazy for Arrow queries", {
 	)
 	testthat::expect_type(output$V0601, "character")
 	testthat::expect_type(output$V0617, "character")
+})
+
+test_that("variable metadata does not change Arrow query columns", {
+	testthat::skip_if_not_installed("arrow")
+	config <- list(
+		schema_version = 1L,
+		dataset = "population",
+		year = 2010,
+		language = "pt",
+		mappings = list(list(
+			variables = list(list(name = "V0601", alias = "sex")),
+			unmatched = NULL,
+			levels = list(list(code = "1", label = "Masculino"))
+		))
+	)
+	query <- censobr:::apply_label_config(
+		arrow::arrow_table(data.frame(V0601 = c("1", "9"), untouched = 1:2)),
+		config
+	)
+	output <- dplyr::collect(query)
+
+	testthat::expect_s3_class(query, "arrow_dplyr_query")
+	testthat::expect_identical(output$V0601, c("Masculino", NA_character_))
+	testthat::expect_false("sex" %in% names(output))
 })
 
 test_that("population pilot configuration preserves published labels", {
