@@ -1,0 +1,23 @@
+schema_version: 1
+description: >-
+  Declarative categorical labels for censobr microdata. Files are stored as
+  <dataset>/<year>-<language>.yml and must follow this schema.
+required:
+  - schema_version
+  - dataset
+  - year
+  - language
+  - mappings
+mapping_required:
+  - variables
+  - unmatched
+  - levels
+level_required:
+  - code
+  - label
+rules:
+  - Codes and labels are strings; quote codes such as "01" to preserve leading zeros.
+  - Variables may appear in only one mapping per configuration.
+  - Codes may appear only once per mapping.
+  - unmatched: null preserves case_when() behaviour for unknown values.
+  - A string unmatched value labels every non-missing source value not listed in levels.
