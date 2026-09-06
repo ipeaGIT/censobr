@@ -2,15 +2,11 @@ schema_version: 1
 dataset: population
 year: 2010
 language: pt
+imports:
+  - ../_shared/geography.yml
 mappings:
-  - variables:
-      - V1006
-    unmatched: null
-    levels:
-      - code: "1"
-        label: "Urbana"
-      - code: "2"
-        label: "Rural"
+  - use: urban_rural
+    variables: [V1006]
   - variables:
       - V0502
     unmatched: null

@@ -12,6 +12,9 @@ mapping_required:
   - variables
   - unmatched
   - levels
+optional_root_fields:
+  - imports
+  - definitions
 level_required:
   - code
   - label
@@ -21,3 +24,6 @@ rules:
   - Codes may appear only once per mapping.
   - unmatched: null preserves case_when() behaviour for unknown values.
   - A string unmatched value labels every non-missing source value not listed in levels.
+  - imports names relative YAML definition libraries located within inst/labels.
+  - Imported libraries may contain imports and named definitions, but no dataset mappings.
+  - A mapping may use a named definition with use: <definition>; variables and unmatched may override the definition.

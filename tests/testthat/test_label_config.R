@@ -62,6 +62,79 @@ test_that("label_config_mutations only includes present columns", {
 	testthat::expect_identical(names(mutations), "V0617")
 })
 
+test_that("load_label_config expands imported definitions", {
+	root <- testthat::test_path("fixtures", "label_imports")
+	config <- censobr:::load_label_config("population", 2010, "pt", root = root)
+
+	testthat::expect_identical(config$mappings[[1]]$variables, "V1006")
+	testthat::expect_null(config$mappings[[1]]$unmatched)
+	testthat::expect_identical(
+		vapply(config$mappings[[1]]$levels, `[[`, character(1), "label"),
+		c("Urbana", "Rural")
+	)
+})
+
+test_that("label imports reject unsafe and ambiguous references", {
+	root <- tempfile("label-imports-")
+	dir.create(root)
+	on.exit(unlink(root, recursive = TRUE), add = TRUE)
+	dir.create(file.path(root, "population"))
+	dir.create(file.path(root, "shared"))
+
+	writeLines(c(
+		"schema_version: 1", "definitions:", "  urban_rural:",
+		"    unmatched: null", "    levels:", "      - code: \\\"1\\\"", "        label: \\\"Urbana\\\""
+	), file.path(root, "shared", "one.yml"))
+	writeLines(c(
+		"schema_version: 1", "definitions:", "  urban_rural:",
+		"    unmatched: null", "    levels:", "      - code: \\\"2\\\"", "        label: \\\"Rural\\\""
+	), file.path(root, "shared", "two.yml"))
+
+	config_path <- file.path(root, "population", "2010-pt.yml")
+	writeLines(c(
+		"schema_version: 1", "dataset: population", "year: 2010", "language: pt",
+		"imports:", "  - ../shared/one.yml", "  - ../shared/two.yml", "mappings:",
+		"  - use: urban_rural", "    variables: [V1006]"
+	), config_path)
+	testthat::expect_error(
+		censobr:::load_label_config("population", 2010, "pt", root = root),
+		"collide"
+	)
+
+	writeLines(c(
+		"schema_version: 1", "dataset: population", "year: 2010", "language: pt",
+		"imports:", "  - ../../outside.yml", "mappings:",
+		"  - use: urban_rural", "    variables: [V1006]"
+	), config_path)
+	testthat::expect_error(
+		censobr:::load_label_config("population", 2010, "pt", root = root),
+		"outside the label root"
+	)
+
+	writeLines(c(
+		"schema_version: 1", "dataset: population", "year: 2010", "language: pt", "mappings:",
+		"  - use: missing_definition", "    variables: [V1006]"
+	), config_path)
+	testthat::expect_error(
+		censobr:::load_label_config("population", 2010, "pt", root = root),
+		"unknown definition"
+	)
+
+	writeLines(c("schema_version: 1", "imports:", "  - cycle-b.yml"),
+		file.path(root, "shared", "cycle-a.yml"))
+	writeLines(c("schema_version: 1", "imports:", "  - cycle-a.yml"),
+		file.path(root, "shared", "cycle-b.yml"))
+	writeLines(c(
+		"schema_version: 1", "dataset: population", "year: 2010", "language: pt",
+		"imports:", "  - ../shared/cycle-a.yml", "mappings:",
+		"  - use: urban_rural", "    variables: [V1006]"
+	), config_path)
+	testthat::expect_error(
+		censobr:::load_label_config("population", 2010, "pt", root = root),
+		"circular import"
+	)
+})
+
 test_that("apply_label_config stays lazy for Arrow queries", {
 	testthat::skip_if_not_installed("arrow")
 

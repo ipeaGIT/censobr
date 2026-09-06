@@ -15,6 +15,201 @@ clear_label_config_cache <- function() {
 	invisible(NULL)
 }
 
+label_config_abort <- function(path, message) {
+	cli::cli_abort("Invalid label configuration {.file {path}}: {message}")
+}
+
+validate_label_mapping <- function(mapping, path, prefix,
+											require_variables = TRUE) {
+	fail <- function(message) label_config_abort(path, message)
+	if (!is.list(mapping) || is.null(names(mapping))) { fail("{prefix} must be a named mapping") }
+
+	needed <- c("unmatched", "levels")
+	if (require_variables) { needed <- c("variables", needed) }
+	absent <- setdiff(needed, names(mapping))
+	if (length(absent) > 0L) { fail("{prefix} missing field{?s} {.field {absent}}") }
+
+	if ("variables" %in% names(mapping)) {
+		variables <- mapping$variables
+		if (!is.character(variables) || length(variables) == 0L || anyNA(variables) ||
+				any(!nzchar(variables)) || anyDuplicated(variables)) {
+			fail("{prefix} {.field variables} must be unique non-empty strings")
+		}
+	}
+
+	if (!is.null(mapping$unmatched) &&
+			(!is.character(mapping$unmatched) || length(mapping$unmatched) != 1L ||
+			 is.na(mapping$unmatched))) {
+		fail("{prefix} {.field unmatched} must be null or one string")
+	}
+
+	levels <- mapping$levels
+	if (!is.list(levels) || length(levels) == 0L) {
+		fail("{prefix} {.field levels} must be a non-empty list")
+	}
+
+	codes_seen <- character()
+	for (level_index in seq_along(levels)) {
+		level <- levels[[level_index]]
+		if (!is.list(level) || is.null(names(level)) ||
+				!all(c("code", "label") %in% names(level))) {
+			fail("{prefix} level {level_index} must contain {.field code} and {.field label}")
+		}
+		if (!is.character(level$code) || length(level$code) != 1L || is.na(level$code)) {
+			fail("{prefix} level {level_index} {.field code} must be one string")
+		}
+		if (!is.character(level$label) || length(level$label) != 1L || is.na(level$label)) {
+			fail("{prefix} level {level_index} {.field label} must be one string")
+		}
+		if (level$code %in% codes_seen) {
+			fail("{prefix} repeats code {.val {level$code}}")
+		}
+		codes_seen <- c(codes_seen, level$code)
+	}
+
+	invisible(mapping)
+}
+
+validate_label_definitions <- function(definitions, path) {
+	if (is.null(definitions)) { return(list()) }
+	if (!is.list(definitions) || is.null(names(definitions)) ||
+			anyNA(names(definitions)) || any(!nzchar(names(definitions))) ||
+			anyDuplicated(names(definitions))) {
+		label_config_abort(path, "{.field definitions} must be a named mapping")
+	}
+	for (name in names(definitions)) {
+		validate_label_mapping(definitions[[name]], path,
+			paste0("definition {.val {name}}"), require_variables = FALSE)
+	}
+	definitions
+}
+
+validate_label_imports <- function(imports, path) {
+	if (is.null(imports)) { return(character()) }
+	if (!is.character(imports) || length(imports) == 0L || anyNA(imports) ||
+			any(!nzchar(imports)) || anyDuplicated(imports)) {
+		label_config_abort(path, "{.field imports} must be unique non-empty strings")
+	}
+	imports
+}
+
+label_import_path <- function(import, path, root) {
+	if (grepl("^(/|[A-Za-z]:[/\\\\])", import)) {
+		label_config_abort(path, "import {.val {import}} must be relative to the label root")
+	}
+
+	# Resolve `.` and `..` lexically before checking existence. `normalizePath()`
+	# with `mustWork = FALSE` leaves unresolved parent segments in some cases.
+	candidate <- dirname(path)
+	for (part in strsplit(import, "[/\\\\]+")[[1]]) {
+		if (part %in% c("", ".")) { next }
+		candidate <- if (identical(part, "..")) dirname(candidate) else file.path(candidate, part)
+	}
+	candidate <- normalizePath(candidate, mustWork = FALSE)
+	# `root` and `candidate` are both normalizePath()'d, which uses `\` on Windows;
+	# `.Platform$file.sep` is always `/`, so it can't be used to build the prefix here.
+	root_prefix <- paste0(root, if (identical(.Platform$OS.type, "windows")) "\\" else "/")
+	if (!identical(candidate, root) && !startsWith(candidate, root_prefix)) {
+		label_config_abort(path, "import {.val {import}} is outside the label root")
+	}
+	if (!file.exists(candidate)) {
+		label_config_abort(path, "import {.file {import}} does not exist")
+	}
+	# A link within the root can still resolve outside it, so check once more after
+	# canonicalizing an existing import.
+	candidate <- normalizePath(candidate, mustWork = TRUE)
+	if (!identical(candidate, root) && !startsWith(candidate, root_prefix)) {
+		label_config_abort(path, "import {.val {import}} resolves outside the label root")
+	}
+	candidate
+}
+
+load_label_definitions <- function(path, root, stack = character()) {
+	path <- normalizePath(path, mustWork = TRUE)
+	if (path %in% stack) {
+		label_config_abort(path, "circular import detected")
+	}
+
+	library <- yaml::read_yaml(path)
+	if (!is.list(library) || is.null(names(library)) ||
+			(!identical(library$schema_version, 1L) && !identical(library$schema_version, 1))) {
+		label_config_abort(path, "an imported library must be a schema version 1 named mapping")
+	}
+	unknown <- setdiff(names(library), c("schema_version", "imports", "definitions"))
+	if (length(unknown) > 0L) {
+		label_config_abort(path, "an imported library has unsupported field{?s} {.field {unknown}}")
+	}
+
+	definitions <- list()
+	for (import in validate_label_imports(library$imports, path)) {
+		imported <- load_label_definitions(label_import_path(import, path, root), root,
+			c(stack, path))
+		duplicates <- intersect(names(definitions), names(imported))
+		if (length(duplicates) > 0L) {
+			label_config_abort(path, "imported definition{?s} {.field {duplicates}} collide")
+		}
+		definitions <- c(definitions, imported)
+	}
+
+	local <- validate_label_definitions(library$definitions, path)
+	duplicates <- intersect(names(definitions), names(local))
+	if (length(duplicates) > 0L) {
+		label_config_abort(path, "definition{?s} {.field {duplicates}} collide with imports")
+	}
+	c(definitions, local)
+}
+
+expand_label_config_references <- function(config, path, root) {
+	definitions <- list()
+	for (import in validate_label_imports(config$imports, path)) {
+		imported <- load_label_definitions(label_import_path(import, path, root), root)
+		duplicates <- intersect(names(definitions), names(imported))
+		if (length(duplicates) > 0L) {
+			label_config_abort(path, "imported definition{?s} {.field {duplicates}} collide")
+		}
+		definitions <- c(definitions, imported)
+	}
+
+	local <- validate_label_definitions(config$definitions, path)
+	duplicates <- intersect(names(definitions), names(local))
+	if (length(duplicates) > 0L) {
+		label_config_abort(path, "definition{?s} {.field {duplicates}} collide with imports")
+	}
+	definitions <- c(definitions, local)
+
+	if (is.null(config$mappings) || !is.list(config$mappings)) { return(config) }
+	for (index in seq_along(config$mappings)) {
+		mapping <- config$mappings[[index]]
+		if (!is.list(mapping) || is.null(names(mapping)) || !("use" %in% names(mapping))) {
+			next
+		}
+		if (!is.character(mapping$use) || length(mapping$use) != 1L || is.na(mapping$use) ||
+				!nzchar(mapping$use)) {
+			label_config_abort(path, "mapping {index} {.field use} must be one non-empty string")
+		}
+		if (!(mapping$use %in% names(definitions))) {
+			label_config_abort(path, "mapping {index} references unknown definition {.val {mapping$use}}")
+		}
+		allowed <- c("use", "variables", "unmatched")
+		unknown <- setdiff(names(mapping), allowed)
+		if (length(unknown) > 0L) {
+			label_config_abort(path, "mapping {index} reference has unsupported field{?s} {.field {unknown}}")
+		}
+
+		definition <- definitions[[mapping$use]]
+		variables <- if ("variables" %in% names(mapping)) mapping$variables else definition$variables
+		unmatched <- if ("unmatched" %in% names(mapping)) mapping$unmatched else definition$unmatched
+		config$mappings[[index]] <- list(
+			variables = variables,
+			unmatched = unmatched,
+			levels = definition$levels
+		)
+	}
+	config$imports <- NULL
+	config$definitions <- NULL
+	config
+}
+
 #' Validate one parsed label configuration
 #'
 #' @param config A list returned by yaml::read_yaml().
@@ -22,7 +217,7 @@ clear_label_config_cache <- function() {
 #' @keywords internal
 validate_label_config <- function(config, path = "<configuration>") {
 	fail <- function(message) {
-		cli::cli_abort("Invalid label configuration {.file {path}}: {message}")
+		label_config_abort(path, message)
 	}
 
 	if (!is.list(config) || is.null(names(config))) { fail("it must be a named mapping") }
@@ -54,53 +249,13 @@ validate_label_config <- function(config, path = "<configuration>") {
 	for (index in seq_along(config$mappings)) {
 		mapping <- config$mappings[[index]]
 		prefix <- paste0("mapping ", index, "")
-
-		if (!is.list(mapping) || is.null(names(mapping))) { fail("{prefix} must be a named mapping") }
-		needed <- c("variables", "unmatched", "levels")
-		absent <- setdiff(needed, names(mapping))
-		if (length(absent) > 0L) { fail("{prefix} missing field{?s} {.field {absent}}") }
-
+		validate_label_mapping(mapping, path, prefix)
 		variables <- mapping$variables
-		if (!is.character(variables) || length(variables) == 0L || anyNA(variables) ||
-				any(!nzchar(variables)) || anyDuplicated(variables)) {
-			fail("{prefix} {.field variables} must be unique non-empty strings")
-		}
 		duplicate_variables <- intersect(variables_seen, variables)
 		if (length(duplicate_variables) > 0L) {
 			fail("variable{?s} {.field {duplicate_variables}} appear in more than one mapping")
 		}
 		variables_seen <- c(variables_seen, variables)
-
-		# YAML null means that unmatched, non-missing source values become NA.
-		if (!is.null(mapping$unmatched) &&
-				(!is.character(mapping$unmatched) || length(mapping$unmatched) != 1L ||
-				 is.na(mapping$unmatched))) {
-			fail("{prefix} {.field unmatched} must be null or one string")
-		}
-
-		levels <- mapping$levels
-		if (!is.list(levels) || length(levels) == 0L) {
-			fail("{prefix} {.field levels} must be a non-empty list")
-		}
-
-		codes_seen <- character()
-		for (level_index in seq_along(levels)) {
-			level <- levels[[level_index]]
-			if (!is.list(level) || is.null(names(level)) ||
-					!all(c("code", "label") %in% names(level))) {
-				fail("{prefix} level {level_index} must contain {.field code} and {.field label}")
-			}
-			if (!is.character(level$code) || length(level$code) != 1L || is.na(level$code)) {
-				fail("{prefix} level {level_index} {.field code} must be one string")
-			}
-			if (!is.character(level$label) || length(level$label) != 1L || is.na(level$label)) {
-				fail("{prefix} level {level_index} {.field label} must be one string")
-			}
-			if (level$code %in% codes_seen) {
-				fail("{prefix} repeats code {.val {level$code}}")
-			}
-			codes_seen <- c(codes_seen, level$code)
-		}
 	}
 
 	invisible(config)
@@ -131,7 +286,9 @@ load_label_config <- function(dataset, year, lang = "pt",
 		return(get(cache_key, envir = cache, inherits = FALSE))
 	}
 
+	root <- normalizePath(root, mustWork = TRUE)
 	config <- yaml::read_yaml(path)
+	config <- expand_label_config_references(config, path, root)
 	validate_label_config(config, path)
 
 	if (!identical(config$dataset, dataset) || config$year != as.integer(year) ||
