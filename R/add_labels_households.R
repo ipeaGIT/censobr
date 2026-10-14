@@ -18,8 +18,8 @@ add_labels_households <- function(
 
   # ALL YEARS ------------------------------------------------------------------
 
-  # urban vs rural
-  if ('V1006' %in% cols) {
+  # urban vs rural (2000 and 2010 'pt' are labelled by the YAML configuration below)
+  if ('V1006' %in% cols && !isTRUE(year %in% c(2000, 2010) && lang == 'pt')) {
     arrw <- mutate(
       arrw,
       V1006 = case_when(
